@@ -1,0 +1,8 @@
+pwnedpasswords==2.0.0
+beautifulsoup4==4.9.3
+PyInquirer==1.0.3
+Jinja2==3.0.3
+setuptools
+requests
+argparse
+bs4
