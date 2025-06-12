@@ -26,18 +26,8 @@ Profil3r is an [OSINT](https://en.wikipedia.org/wiki/Open-source_intelligence) t
 
 ## Installation
 
-Install PyInquirer, jinja2 and bs4 :
-
 ```bash
-pip3 install PyInquirer jinja2 bs4
-``` 
-
-Install Profil3r :
-
-```bash
-git clone https://github.com/Rog3rSm1th/Profil3r.git
-cd Profil3r/
-sudo python3 setup.py install
+git clone https://github.com/x31337/Profil3r.git && cd Profil3r && python3 -m venv profil3r && source profil3r/bin/activate && pip install -r requirements.txt && python3 profil3r.py
 ```
 ## Features
 
