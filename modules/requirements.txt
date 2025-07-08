@@ -1,44 +1,15 @@
-# Pr0f1l3r v2.0 Requirements - Updated to Latest Versions
-# Modern Social Media Automation and Profiling Tool
+# Core dependencies for the refactored Python modules
 
-# Core web automation
-selenium>=4.27.1
-webdriver-manager>=4.0.2
+requests>=2.25.0
+selenium>=4.0.0
+beautifulsoup4>=4.9.0
+lxml>=4.6.0
+webdriver-manager>=3.5.0 # For easier Selenium driver management
+googlesearch-python>=1.0.1 # For Google dorking in NetworkUtilities
+tabulate>=0.8.9 # For potentially formatting output in CLI
 
-# HTTP requests and web scraping
-requests>=2.32.3
-beautifulsoup4>=4.12.3
-urllib3>=2.2.3
-
-# Data handling and parsing
-json5>=0.9.25
-PyYAML>=6.0.2
-
-# CLI and user interface
-PyInquirer>=1.0.3
-colorama>=0.4.6
-click>=8.1.7
-
-# Utilities
-python-dateutil>=2.9.0
-pathlib2>=2.3.7
-
-# Logging and monitoring
-loguru>=0.7.2
-
-# Security and encryption
-cryptography>=43.0.3
-
-# Additional dependencies for enhanced functionality
-lxml>=5.3.0
-tabulate>=0.9.0
-pyperclip>=1.9.0
-openpyxl>=3.1.5
-pillow>=11.0.0
-
-# Optional: For enhanced functionality
-# Uncomment if needed
-# pyautogui>=0.9.54  # For GUI automation
-# opencv-python>=4.8.1  # For image processing
-# pytesseract>=0.3.10  # For OCR capabilities
-# pillow>=10.1.0  # For image manipulation
+# Note: Specific versions are examples. Adjust as needed for compatibility.
+# Some OSINT/Network utilities might require additional libraries if their
+# underlying API wrappers are used directly or expanded.
+# For example, if direct interaction with specific social media APIs (beyond Facebook Graph API)
+# were added, those SDKs would be listed here.
