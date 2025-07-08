@@ -51,7 +51,7 @@ request( { url: "https://raw.githubusercontent.com/FFace32/facebook-mass-message
 
         app.listen( PORT, () => {
             console.log( `Listening on http://localhost:${PORT}` );
-            open( `http://localhost:${PORT}` );
+            // open( `http://localhost:${PORT}` ); // Disabled for testing
 
             const addresses = [];
             const interfaces = os.networkInterfaces();
@@ -74,6 +74,11 @@ request( { url: "https://raw.githubusercontent.com/FFace32/facebook-mass-message
                     console.log( `http://${address}:${PORT}` );
             }
         } );
+
+        // Add health endpoint
+        app.get('/api/health', (req, res) => {
+            res.json({ status: 'ok', service: 'facebook-mass-messenger', port: PORT });
+        });
 
         require( "./routers/login" )( app, users );
         require( "./routers/message" )( app, users );

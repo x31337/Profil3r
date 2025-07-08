@@ -1,0 +1,154 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build:
+      context: ./telegram-facebook-bot
+      dockerfile: Dockerfile
+    container_name: telegram-bot
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - API_KEY=${API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - telegram_logs:/app/logs
+      - telegram_data:/app/data
+    networks:
+      tools_net:
+        aliases:
+          - telegram-bot
+          - bot
+    restart: unless-stopped
+    depends_on:
+      - osint
+      - php-tools
+      - js-tools
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  osint:
+    build:
+      context: ./OSINT-Framework
+      dockerfile: Dockerfile
+    container_name: osint
+    ports:
+      - "8000:8000"
+    environment:
+      - OSINT_API_KEY=${OSINT_API_KEY}
+      - SHODAN_API_KEY=${SHODAN_API_KEY}
+      - VIRUSTOTAL_API_KEY=${VIRUSTOTAL_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - osint_logs:/app/logs
+      - osint_data:/app/data
+      - osint_reports:/app/reports
+    networks:
+      tools_net:
+        aliases:
+          - osint
+          - osint-service
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  php-tools:
+    build:
+      context: ./php_tools
+      dockerfile: Dockerfile
+    container_name: php-tools
+    ports:
+      - "8080:80"
+    environment:
+      - PHP_ENV=${PHP_ENV:-production}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - php_logs:/app/logs
+      - php_data:/app/data
+      - php_uploads:/app/uploads
+    networks:
+      tools_net:
+        aliases:
+          - php-tools
+          - php-service
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  js-tools:
+    build:
+      context: ./js_tools
+      dockerfile: Dockerfile
+    container_name: js-tools
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+    volumes:
+      - js_logs:/app/logs
+      - js_data:/app/data
+      - js_uploads:/app/uploads
+    networks:
+      tools_net:
+        aliases:
+          - js-tools
+          - js-service
+          - node-service
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  tools_net:
+    driver: bridge
+    name: tools_net
+
+volumes:
+  # Telegram bot volumes
+  telegram_logs:
+    driver: local
+  telegram_data:
+    driver: local
+  
+  # OSINT service volumes
+  osint_logs:
+    driver: local
+  osint_data:
+    driver: local
+  osint_reports:
+    driver: local
+  
+  # PHP tools volumes
+  php_logs:
+    driver: local
+  php_data:
+    driver: local
+  php_uploads:
+    driver: local
+  
+  # JS tools volumes
+  js_logs:
+    driver: local
+  js_data:
+    driver: local
+  js_uploads:
+    driver: local

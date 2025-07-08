@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+*.log
+*.tmp
+.env
+.DS_Store
+cypress/videos/
+cypress/screenshots/
+coverage/
+*.min.js
+*.map

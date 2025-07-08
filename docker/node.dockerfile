@@ -3,10 +3,16 @@
 FROM node:18-alpine as builder
 
 # Set environment variables
+# Set environment variables for Node.js
+# - NODE_ENV: Set to production for optimized builds
+# - NPM_CONFIG_CACHE: Configure npm cache directory
 ENV NODE_ENV=production \
     NPM_CONFIG_CACHE=/tmp/.npm
 
-# Install system dependencies for building
+# Install system dependencies for building native modules
+# - python3: Required for node-gyp builds
+# - make, g++: Build tools for native extensions
+# - git: For installing packages from git repositories
 RUN apk add --no-cache \
     python3 \
     make \
@@ -36,6 +42,9 @@ ENV NODE_ENV=production \
     USER=nodejs
 
 # Install runtime dependencies
+# - curl: For health checks and HTTP requests
+# - ca-certificates: For SSL/TLS connections
+# - dumb-init: Proper signal handling for PID 1
 RUN apk add --no-cache \
     curl \
     ca-certificates \

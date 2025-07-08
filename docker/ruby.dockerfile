@@ -2,12 +2,20 @@
 # Stage 1: Build dependencies
 FROM ruby:3.2-alpine as builder
 
-# Set environment variables
+# Set environment variables for Bundler
+# - BUNDLE_PATH: Location to install gems
+# - BUNDLE_WITHOUT: Exclude development and test groups
+# - BUNDLE_SILENCE_ROOT_WARNING: Suppress root warning for Bundler
 ENV BUNDLE_PATH=/usr/local/bundle \
     BUNDLE_WITHOUT=development:test \
     BUNDLE_SILENCE_ROOT_WARNING=1
 
-# Install system dependencies for building
+# Install system dependencies for building Ruby gems
+# - build-base: Essential build tools (gcc, make, etc.)
+# - git: For installing gems from git repositories
+# - curl: For HTTP requests
+# - ca-certificates: For SSL/TLS connections
+# - libxml2-dev, libxslt-dev, zlib-dev: Development headers
 RUN apk add --no-cache \
     build-base \
     git \

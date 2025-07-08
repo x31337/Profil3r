@@ -2,12 +2,20 @@
 # Stage 1: Build dependencies
 FROM php:8.2-cli-alpine as builder
 
-# Set environment variables
+# Set environment variables for Composer
+# - COMPOSER_ALLOW_SUPERUSER: Allow Composer to run as root
+# - COMPOSER_NO_INTERACTION: Disable interactive prompts in Composer
+# - COMPOSER_CACHE_DIR: Set cache directory for Composer
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     COMPOSER_NO_INTERACTION=1 \
     COMPOSER_CACHE_DIR=/tmp/composer-cache
 
-# Install system dependencies for building
+# Install system dependencies for building PHP extensions
+# - curl: For HTTP requests
+# - git: For Composer packages from git
+# - zip, unzip: For archive handling
+# - libzip-dev, libxml2-dev, libxslt-dev: Development headers
+# - autoconf, gcc, g++, make: Build tools
 RUN apk add --no-cache \
     curl \
     git \

@@ -1,0 +1,53 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true,
+    "jquery": true,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "script"
+  },
+  "globals": {
+    "d3": "readonly",
+    "describe": "readonly",
+    "it": "readonly",
+    "before": "readonly",
+    "after": "readonly",
+    "beforeEach": "readonly",
+    "afterEach": "readonly",
+    "cy": "readonly",
+    "Cypress": "readonly",
+    "expect": "readonly",
+    "$": "readonly",
+    "jQuery": "readonly",
+    "ResizeSensor": "readonly",
+    "accent_fold": "readonly",
+    "define": "readonly",
+    "Elements": "readonly"
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "semi": "off",
+    "quotes": "off",
+    "no-undef": "warn",
+    "no-dupe-keys": "warn",
+    "no-prototype-builtins": "warn",
+    "no-shadow": "warn",
+    "no-extra-semi": "warn",
+    "indent": "off"
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    "*.min.js",
+    "public/d3.*.js",
+    "public/accent-fold.js",
+    "public/ResizeSensor.js"
+  ]
+}

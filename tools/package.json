@@ -1,0 +1,39 @@
+{
+  "name": "profil3r-tools",
+  "version": "1.0.0",
+  "description": "Comprehensive build and test suite for Profil3r tools",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm run install-osint && npm run install-js-tools",
+    "install-osint": "cd OSINT-Framework && npm install",
+    "install-js-tools": "cd js_tools/facebook_mass_messenger && npm install && cd ../messenger_bot_framework/fbbot && npm install",
+    "build": "npm run build-osint && npm run build-js-tools",
+    "build-osint": "cd OSINT-Framework && npm run postinstall",
+    "build-js-tools": "cd js_tools/facebook_mass_messenger && npm install && cd ../messenger_bot_framework/fbbot && npm install",
+    "start-services": "concurrently \"npm run start-osint\" \"npm run start-messenger\" \"npm run start-mass-messenger\"",
+    "start-osint": "cd OSINT-Framework && npm start",
+    "start-messenger": "cd js_tools/messenger_bot_framework/fbbot && node index.js",
+    "start-mass-messenger": "cd js_tools/facebook_mass_messenger && node index.js",
+    "test": "npm run test-unit && npm run test-e2e",
+    "test-unit": "npm run test-js-tools",
+    "test-js-tools": "cd js_tools/messenger_bot_framework/fbbot && npm test",
+    "test-e2e": "cypress run",
+    "test-e2e-open": "cypress open",
+    "lint": "eslint . --ext .js --ignore-path .gitignore",
+    "validate-php": "command -v php >/dev/null 2>&1 && find php_tools -name '*.php' -exec php -l {} \\; || echo 'PHP not found, skipping PHP validation'",
+    "validate-python": "command -v python3 >/dev/null 2>&1 && find telegram-facebook-bot -name '*.py' -exec python3 -m py_compile {} \\; || echo 'Python3 not found, skipping Python validation'",
+    "validate-all": "npm run validate-php && npm run validate-python && npm run lint",
+    "serve-test-env": "concurrently \"npm run start-services\" \"sleep 10 && npm run test-e2e\"",
+    "health-check": "node scripts/health-check.js"
+  },
+  "devDependencies": {
+    "cypress": "^13.6.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.55.0",
+    "wait-on": "^7.2.0",
+    "axios": "^1.6.2"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

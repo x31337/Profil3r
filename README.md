@@ -2,6 +2,22 @@
 
 This repository is a consolidated collection of tools for Facebook automation, OSINT gathering, and other network utilities. It merges functionalities from various scripts and projects into a more organized and modernized structure.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Docker Setup](#docker-setup)
+- [Configuration](#configuration)
+- [Core Modules](#core-modules)
+- [Tools](#tools)
+- [API Reference](#api-reference)
+- [Examples](#examples)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [Disclaimer](#disclaimer)
+
 ## Overview
 
 The primary goal of this refactoring is to:
@@ -9,105 +25,301 @@ The primary goal of this refactoring is to:
 *   **Modernize Code:** Update older code to use current best practices, libraries, and error handling.
 *   **Organize by Functionality:** Group tools and scripts based on their purpose (e.g., Facebook automation, OSINT, network utilities, JavaScript tools).
 
-## Core Python Modules (`modules/`)
+## Quick Start
 
-The main Python-based tools are now organized within the `modules/` directory:
+### Docker (Recommended)
 
-*   **`modules/facebook_automation.py`:**
-    *   Provides the `FacebookAutomation` class for comprehensive Facebook interactions.
-    *   Supports Selenium-based UI automation for login, posting, liking, commenting, reporting, messaging, friending, profile visits, and activity simulation.
-    *   Includes methods for interacting with the Facebook Graph API (user info, friends list, token management) using `requests` and cookie-based sessions.
-    *   Features for Selenium session saving/loading and cookie injection.
-    *   Includes brute-force login capabilities (both Selenium and `requests`-based).
-    *   Uses `FacebookInteractionHelper` for generating sample content.
+```bash
+# Clone repository
+git clone https://github.com/your-repo/Profil3r.git
+cd Profil3r
 
-*   **`modules/osint_utils.py`:**
-    *   Provides the `OsintUtilities` class for various open-source intelligence tasks.
-    *   Includes username reconnaissance across multiple platforms, email finding by name (with API-based validation), GitHub user information lookup, and temporary email generation/checking.
+# Start services
+docker-compose up -d
 
-*   **`modules/network_utils.py`:**
-    *   Provides the `NetworkUtilities` class for network-related tasks.
-    *   Includes IP geolocation, domain information via HackerTarget (DNS lookup, WHOIS, etc.), phone number validation/info via VeriPhone, Google Dorking, and Bitly URL bypassing.
+# Verify services are running
+curl http://localhost:8000/api/health
+curl http://localhost:3000/api/health
+curl http://localhost:4444/api/health
+```
 
-*   **`modules/main.py` (`UnifiedCliApp`):**
-    *   A central command-line interface (CLI) to access the functionalities of the above modules.
-    *   Run interactively: `python -m modules.main` (or `python modules/main.py` from the root).
-    *   Loads configuration from `config.json`.
+### Local Installation
 
-## Other Tools
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-### Profil3r (`profil3r/`)
-*   The original Profil3r OSINT tool for finding social network profiles and email addresses.
-*   It remains largely in its original structure.
-*   Can be invoked via the `UnifiedCliApp` in `modules/main.py` or potentially run directly as per its own documentation (`python profil3r.py ...`).
+# Start interactive CLI
+python -m modules.main
+```
 
-### JavaScript Tools (`js_tools/`)
-This directory contains JavaScript-based applications and scripts, organized by type:
-*   **`js_tools/facebook_mass_messenger/`**: A Node.js application for sending mass messages via a web interface. (Original: `facebook-mass-message/`)
-*   **`js_tools/messenger_bot_framework/`**: Contains `fbbot`, a Node.js library for creating Facebook Messenger bots. (Original: `fbbot/`)
-*   **`js_tools/browser_enhancements/`**: Intended for user scripts. Currently holds information for `fb-ban-dsd.user.js`, a script for adding ban/unban UI elements to Facebook groups. (Original: `fb-ban-dsd.user.js` at root - note: encountered sandbox issues moving this file).
+## Documentation
 
-### PHP Scripts (`php_tools/facebook_scripts/`)
-*   A collection of older PHP scripts for various Facebook interactions (account management, token handling, page creation, etc.).
-*   These are preserved for reference. Most of their intended functionalities are now covered by the Python `FacebookAutomation` module.
-*   (Original: `facebook/` directory - note: encountered sandbox issues deleting this original directory after content copy).
+Comprehensive documentation is available in the `/docs` directory:
 
-### Ruby Script (at root)
-*   `ruby_tool_faceports_reporter_run.rb` (with `ruby_tool_faceports_reporter_README.md`): A Ruby script using `mechanize` for Facebook login and reporting.
-*   Its functionality is largely superseded by the Python `FacebookAutomation` module.
-*   (Original: `faceports/` directory - note: recreated at root due to sandbox issues with directory creation/move for Ruby tools. Original `faceports/` directory might still exist if deletion failed).
+- **[Installation Guide](docs/setup/installation.md)** - Detailed setup instructions
+- **[Docker Deployment](docs/docker/deployment.md)** - Docker configuration and management
+- **[API Reference](docs/api/reference.md)** - REST API endpoints and usage
+- **[Usage Examples](docs/examples/usage-examples.md)** - Code examples and tutorials
+- **[Troubleshooting](docs/troubleshooting/common-issues.md)** - Common issues and solutions
 
-## Configuration (`config.json`)
+## Installation
 
-A central `config.json` file (expected at the root of the project or next to `modules/main.py`) is used to configure:
-*   API keys (e.g., for RealEmail, VeriPhone, GitHub).
-*   Default paths (e.g., cookie files, session files, log directory).
-*   Behavioral parameters for automation (e.g., wait times, log levels).
-*   An example `config.json` might look like:
-    ```json
-    {
-        "log_level": "INFO",
-        "log_directory": "logs",
-        "cli_log_filename": "unified_cli.log",
-        "cookie_file_path": ".fb_cookies.json",
-        "selenium_session_file": "facebook_selenium_session.json",
-        "REALEMAIL_API_KEY": "YOUR_REALEMAIL_API_KEY_HERE",
-        "VERIPHONE_API_KEY": "YOUR_VERIPHONE_API_KEY_HERE",
-        "GITHUB_TOKEN": "YOUR_GITHUB_TOKEN_HERE_OR_BLANK",
-        "default_fb_email": "",
-        "headless": false,
-        "browser": "chrome",
-        "profil3r_config_path": "profil3r/config.json",
-        "wait_general_min": 1.5,
-        "wait_general_max": 3.5
-    }
-    ```
+For detailed installation instructions, see [docs/setup/installation.md](docs/setup/installation.md).
 
-## Setup & Usage
+### Prerequisites
 
-1.  **Clone the repository.**
-2.  **Install Python dependencies:**
-    *   A `requirements.txt` will be provided in the `modules/` directory. Install with `pip install -r modules/requirements.txt`.
-    *   Key Python dependencies include `requests`, `selenium`, `beautifulsoup4`, `lxml`, `webdriver-manager` (recommended).
-3.  **Install JavaScript tool dependencies:**
-    *   For `js_tools/facebook_mass_messenger/`: `cd js_tools/facebook_mass_messenger && npm install`
-    *   For `js_tools/messenger_bot_framework/fbbot/`: `cd js_tools/messenger_bot_framework/fbbot && npm install`
-4.  **Install Ruby dependencies** (if using the Ruby script):
-    *   `sudo apt install libssl-dev zlib1g-dev` (or equivalent for your OS)
-    *   `sudo gem install nokogiri mechanize colorize highline optparse`
-5.  **Configure `config.json`:** Create or update `config.json` in the project root with your API keys and desired settings.
-6.  **Run the main CLI:**
-    *   `python -m modules.main` (from the project root)
-    *   Or `python path/to/your/clone/modules/main.py`
-    *   Follow the interactive prompts.
+- Python 3.8+
+- Node.js 14+
+- Docker & Docker Compose (recommended)
+- Ruby 2.7+ (for Ruby tools)
+
+## Docker Setup
+
+For comprehensive Docker documentation, see [docs/docker/deployment.md](docs/docker/deployment.md).
+
+### Quick Start
+
+```bash
+# Build and start all services
+docker-compose up -d
+
+# Check service status
+docker-compose ps
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+### Health Check Verification
+
+```bash
+# Install wait-on for service verification
+npm install -g wait-on
+
+# Verify all services are healthy
+wait-on http://localhost:8000/api/health http://localhost:3000/api/health http://localhost:4444/api/health
+```
+
+### Service Endpoints
+
+| Service | Port | Health Check | Description |
+|---------|------|--------------|-------------|
+| OSINT Framework | 8000 | `/api/health` | OSINT operations and reconnaissance |
+| JS Tools | 3000 | `/api/health` | JavaScript tools and bot framework |
+| Facebook Messenger | 4444 | `/api/health` | Mass messaging and automation |
+| PHP Tools | 8080 | `/health` | PHP scripts and utilities |
+
+## Configuration
+
+For complete configuration details, see [docs/setup/installation.md](docs/setup/installation.md).
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+# Database configuration
+POSTGRES_DB=profil3r
+POSTGRES_USER=profil3r
+POSTGRES_PASSWORD=your_secure_password
+
+# API Keys
+REALEMAIL_API_KEY=your_realemail_api_key
+VERIPHONE_API_KEY=your_veriphone_api_key
+GITHUB_TOKEN=your_github_token
+
+# Application settings
+LOG_LEVEL=INFO
+HEADLESS=false
+BROWSER=chrome
+```
+
+### Configuration File
+
+Update `config.json` with your settings:
+
+```json
+{
+    "log_level": "INFO",
+    "log_directory": "logs",
+    "REALEMAIL_API_KEY": "your_key_here",
+    "VERIPHONE_API_KEY": "your_key_here",
+    "GITHUB_TOKEN": "your_token_here",
+    "headless": false,
+    "browser": "chrome"
+}
+```
+
+## Core Modules
+
+The toolkit is organized into several core modules:
+
+### Facebook Automation (`modules/facebook_automation.py`)
+- **Selenium-based UI automation** for login, posting, messaging, friending
+- **Facebook Graph API integration** for user info and friends lists
+- **Session management** with cookie saving/loading
+- **Activity simulation** for human-like behavior
+- **Brute-force login capabilities** (Selenium and requests-based)
+
+### OSINT Utilities (`modules/osint_utils.py`)
+- **Username reconnaissance** across multiple platforms
+- **Email validation** with API-based verification
+- **GitHub user information** lookup
+- **Temporary email** generation and checking
+- **Social media profile discovery**
+
+### Network Utilities (`modules/network_utils.py`)
+- **IP geolocation** and analysis
+- **Domain information** via HackerTarget (DNS, WHOIS)
+- **Phone number validation** via VeriPhone
+- **Google Dorking** capabilities
+- **URL bypass** tools (Bitly, etc.)
+
+### Unified CLI (`modules/main.py`)
+- **Interactive command-line interface** for all modules
+- **Configuration management** from `config.json`
+- **Integrated workflows** combining multiple tools
+
+## Tools
+
+### Profil3r OSINT (`profil3r/`)
+- Original OSINT tool for social network profile discovery
+- Integrated with the unified CLI
+- Standalone execution: `python profil3r.py`
+
+### JavaScript Tools (`tools/js_tools/`)
+- **Facebook Mass Messenger** - Web interface for bulk messaging
+- **Messenger Bot Framework** - Node.js library for Facebook bots
+- **Browser Enhancements** - User scripts for enhanced functionality
+
+### PHP Scripts (`tools/php_tools/`)
+- Collection of Facebook interaction scripts
+- Account management and token handling
+- Page creation and management tools
+
+### Ruby Reporter (`ruby_tool_faceports_reporter_run.rb`)
+- Facebook login and reporting automation
+- Uses Mechanize for web automation
+- Complementary to Python modules
+
+## API Reference
+
+For detailed API documentation, see [docs/api/reference.md](docs/api/reference.md).
+
+### Health Check Endpoints
+
+- **OSINT Service**: `http://localhost:8000/api/health`
+- **JS Tools Service**: `http://localhost:3000/api/health`
+- **Facebook Messenger**: `http://localhost:4444/api/health`
+
+### REST API Examples
+
+```bash
+# Username search
+curl "http://localhost:8000/api/osint/username/john_doe"
+
+# Email validation
+curl "http://localhost:8000/api/osint/email/john@example.com"
+
+# Domain analysis
+curl "http://localhost:8000/api/network/domain/example.com"
+```
+
+## Examples
+
+For comprehensive examples and tutorials, see [docs/examples/usage-examples.md](docs/examples/usage-examples.md).
+
+### Basic Usage
+
+```python
+# OSINT operations
+from modules.osint_utils import OsintUtilities
+osint = OsintUtilities()
+results = osint.username_reconnaissance("john_doe")
+
+# Facebook automation
+from modules.facebook_automation import FacebookAutomation
+fb = FacebookAutomation()
+fb.login("email@example.com", "password")
+fb.post_to_timeline("Hello from automation!")
+
+# Network analysis
+from modules.network_utils import NetworkUtilities
+net = NetworkUtilities()
+location = net.ip_geolocation("8.8.8.8")
+```
+
+### CLI Usage
+
+```bash
+# Interactive mode
+python -m modules.main
+
+# Direct execution
+python -m modules.main --osint --username "john_doe"
+```
+
+## Troubleshooting
+
+For common issues and solutions, see [docs/troubleshooting/common-issues.md](docs/troubleshooting/common-issues.md).
+
+### Quick Fixes
+
+```bash
+# Fix permissions
+sudo chown -R $USER:$USER ./logs ./results ./config
+
+# Clean Docker resources
+docker system prune -af
+
+# Check service logs
+docker-compose logs -f
+```
+
+## Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+### Development Setup
+
+```bash
+# Install development dependencies
+pip install -r requirements.txt
+
+# Run tests
+python -m pytest
+
+# Format code
+black modules/
+```
 
 ## Disclaimer
 
 These tools are provided for educational and analytical purposes. Interacting with platforms like Facebook programmatically may violate their Terms of Service. Users are responsible for ensuring their use of these tools is compliant with all applicable laws and platform policies. The developers assume no liability for misuse.
 
-## Sandbox Anomalies Encountered During Refactoring
-This refactoring was performed in a sandboxed environment that exhibited several anomalies with file and directory operations (renaming, moving, deleting). As a result:
-*   The original `facebook/` (PHP scripts) and `faceports/` (Ruby script) directories might still exist at the root, even though their contents were moved or recreated elsewhere. Attempts to delete these empty or original directories consistently failed.
-*   The `fb-ban-dsd.user.js` file also faced issues and its final location/status at the root is uncertain due to these errors; its documentation is placed in `js_tools/browser_enhancements/`.
+## License
 
-These issues are environmental and do not reflect the intended final state of a clean file system. The organized versions of the scripts are in their respective `*_tools/` or `modules/` directories.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For questions, issues, or contributions:
+
+- **Documentation**: Check the `/docs` directory for comprehensive guides
+- **Issues**: Report bugs and feature requests on GitHub
+- **Discussions**: Join community discussions for help and ideas
+- **Email**: Contact the maintainers for security issues
+
+---
+
+**Note**: This toolkit consolidates multiple OSINT and automation tools into a unified, modern platform. All tools are designed for ethical use and educational purposes only.
