@@ -1,0 +1,65 @@
+groups:
+  - name: profil3r_alerts
+    rules:
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'Service {{ $labels.job }} is down'
+          description: '{{ $labels.job }} has been down for more than 1 minute.'
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.9
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High memory usage on {{ $labels.instance }}'
+          description: 'Memory usage is above 90% for more than 2 minutes.'
+
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High CPU usage on {{ $labels.instance }}'
+          description: 'CPU usage is above 80% for more than 5 minutes.'
+
+      - alert: HealthCheckFailed
+        expr: probe_success == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: 'Health check failed for {{ $labels.instance }}'
+          description: 'Health check endpoint {{ $labels.instance }} has been failing for 30 seconds.'
+
+      - alert: ContainerRestarted
+        expr: increase(container_restart_count[5m]) > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Container {{ $labels.name }} has restarted'
+          description: 'Container {{ $labels.name }} has restarted {{ $value }} times in the last 5 minutes.'
+
+      - alert: DiskSpaceUsage
+        expr: (node_filesystem_size_bytes{fstype!="tmpfs"} - node_filesystem_free_bytes{fstype!="tmpfs"}) / node_filesystem_size_bytes{fstype!="tmpfs"} > 0.8
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'High disk usage on {{ $labels.instance }}'
+          description: 'Disk usage is above 80% on {{ $labels.device }} for more than 1 minute.'
+
+      - alert: TooManyConnections
+        expr: rate(nginx_connections_accepted[5m]) > 100
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Too many connections on nginx'
+          description: 'Nginx is accepting more than 100 connections per second for more than 2 minutes.'
