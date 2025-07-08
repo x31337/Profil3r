@@ -1,154 +1,113 @@
-<p align=center>
-  <span> Find the profiles of a person on social networks, as well as their email addresses</span>
-  <br>
-  <a href="https://www.buymeacoffee.com/givocefo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174" ></a></br>
-  <a target="_blank" href="https://www.python.org/downloads/" title="Python version"><img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg"></a>
-  <a target="_blank" href="LICENSE" title="License: MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <a target="_blank" href="https://twitter.com/Rog3rSm1th" title="Python version"><img src="https://img.shields.io/badge/-@Rog3rSm1th-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/Rog3rSm1th"></a>
-</p>
+# Comprehensive Facebook & OSINT Automation Toolkit
 
-<p align="center">
-  <a href="#installation">Installation</a>
-  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#features">Features</a>
-  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#report">Report</a>
-  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#contact">Contact</a>
-</p>
+This repository is a consolidated collection of tools for Facebook automation, OSINT gathering, and other network utilities. It merges functionalities from various scripts and projects into a more organized and modernized structure.
 
+## Overview
 
-Profil3r is an [OSINT](https://en.wikipedia.org/wiki/Open-source_intelligence) tool that allows you to find potential profiles of a person on social networks, as well as their email addresses. This program also alerts you to the presence of a data leak for the found emails.
+The primary goal of this refactoring is to:
+*   **Consolidate Duplicate Logic:** Merge similar functionalities from scattered scripts into unified Python modules.
+*   **Modernize Code:** Update older code to use current best practices, libraries, and error handling.
+*   **Organize by Functionality:** Group tools and scripts based on their purpose (e.g., Facebook automation, OSINT, network utilities, JavaScript tools).
 
-![](https://i.imgur.com/73ZyfKE.gif)
-## 💡 Prerequisite
-[Python 3](https://www.python.org/)
+## Core Python Modules (`modules/`)
 
-## Installation
+The main Python-based tools are now organized within the `modules/` directory:
 
-```bash
-git clone https://github.com/x31337/Profil3r.git && cd Profil3r && python3 -m venv profil3r && source profil3r/bin/activate && pip install -r requirements.txt && python3 profil3r.py
-```
-## Features
+*   **`modules/facebook_automation.py`:**
+    *   Provides the `FacebookAutomation` class for comprehensive Facebook interactions.
+    *   Supports Selenium-based UI automation for login, posting, liking, commenting, reporting, messaging, friending, profile visits, and activity simulation.
+    *   Includes methods for interacting with the Facebook Graph API (user info, friends list, token management) using `requests` and cookie-based sessions.
+    *   Features for Selenium session saving/loading and cookie injection.
+    *   Includes brute-force login capabilities (both Selenium and `requests`-based).
+    *   Uses `FacebookInteractionHelper` for generating sample content.
 
-#### 📙 Domain
-- [x] TLD (.com, .org, .net, etc...)
+*   **`modules/osint_utils.py`:**
+    *   Provides the `OsintUtilities` class for various open-source intelligence tasks.
+    *   Includes username reconnaissance across multiple platforms, email finding by name (with API-based validation), GitHub user information lookup, and temporary email generation/checking.
 
-#### ✉️ Emails 
-- [x] Data leaks
-- [x] Emails
+*   **`modules/network_utils.py`:**
+    *   Provides the `NetworkUtilities` class for network-related tasks.
+    *   Includes IP geolocation, domain information via HackerTarget (DNS lookup, WHOIS, etc.), phone number validation/info via VeriPhone, Google Dorking, and Bitly URL bypassing.
 
-#### 🌐 Social
+*   **`modules/main.py` (`UnifiedCliApp`):**
+    *   A central command-line interface (CLI) to access the functionalities of the above modules.
+    *   Run interactively: `python -m modules.main` (or `python modules/main.py` from the root).
+    *   Loads configuration from `config.json`.
 
-|Service      | Profile Scraping |
-|-------------|------------------|
-| Instagram   | Yes ✔️            |
-| Facebook    | No               |
-| Twitter     | Yes ✔️            |
-| Tiktok      | No               |
-| Pinterest   | No               |
-| Linktr.ee   | Yes ✔️            |
-| MySpace     | Yes ✔️            |
-| Flickr      | Yes ✔️            |
+## Other Tools
 
-#### 🎵 Music
+### Profil3r (`profil3r/`)
+*   The original Profil3r OSINT tool for finding social network profiles and email addresses.
+*   It remains largely in its original structure.
+*   Can be invoked via the `UnifiedCliApp` in `modules/main.py` or potentially run directly as per its own documentation (`python profil3r.py ...`).
 
-|Service      | Profile Scraping |
-|-------------|------------------|
-| Soundcloud  | No               |
-| Spotify     | No               |
-| Smule       | No               |
+### JavaScript Tools (`js_tools/`)
+This directory contains JavaScript-based applications and scripts, organized by type:
+*   **`js_tools/facebook_mass_messenger/`**: A Node.js application for sending mass messages via a web interface. (Original: `facebook-mass-message/`)
+*   **`js_tools/messenger_bot_framework/`**: Contains `fbbot`, a Node.js library for creating Facebook Messenger bots. (Original: `fbbot/`)
+*   **`js_tools/browser_enhancements/`**: Intended for user scripts. Currently holds information for `fb-ban-dsd.user.js`, a script for adding ban/unban UI elements to Facebook groups. (Original: `fb-ban-dsd.user.js` at root - note: encountered sandbox issues moving this file).
 
-#### ‍💻 Programming
+### PHP Scripts (`php_tools/facebook_scripts/`)
+*   A collection of older PHP scripts for various Facebook interactions (account management, token handling, page creation, etc.).
+*   These are preserved for reference. Most of their intended functionalities are now covered by the Python `FacebookAutomation` module.
+*   (Original: `facebook/` directory - note: encountered sandbox issues deleting this original directory after content copy).
 
-|Service      | Profile Scraping |
-|-------------|------------------|
-| Github      | Yes ✔️            |
-| Pastebin    | Yes ✔️            |
-| LessWrong   | Yes ✔️            |
-| Repl.it     | No               |
-| Cracked.to  | No               |
+### Ruby Script (at root)
+*   `ruby_tool_faceports_reporter_run.rb` (with `ruby_tool_faceports_reporter_README.md`): A Ruby script using `mechanize` for Facebook login and reporting.
+*   Its functionality is largely superseded by the Python `FacebookAutomation` module.
+*   (Original: `faceports/` directory - note: recreated at root due to sandbox issues with directory creation/move for Ruby tools. Original `faceports/` directory might still exist if deletion failed).
 
-#### 💬 Forum
+## Configuration (`config.json`)
 
-|Service        | Profile Scraping |
-|---------------|------------------|
-| 0x00sec.org   | No               |
-| Hackernews    | Yes ✔️            |
-| Jeuxvideo.com | Yes ✔            |
+A central `config.json` file (expected at the root of the project or next to `modules/main.py`) is used to configure:
+*   API keys (e.g., for RealEmail, VeriPhone, GitHub).
+*   Default paths (e.g., cookie files, session files, log directory).
+*   Behavioral parameters for automation (e.g., wait times, log levels).
+*   An example `config.json` might look like:
+    ```json
+    {
+        "log_level": "INFO",
+        "log_directory": "logs",
+        "cli_log_filename": "unified_cli.log",
+        "cookie_file_path": ".fb_cookies.json",
+        "selenium_session_file": "facebook_selenium_session.json",
+        "REALEMAIL_API_KEY": "YOUR_REALEMAIL_API_KEY_HERE",
+        "VERIPHONE_API_KEY": "YOUR_VERIPHONE_API_KEY_HERE",
+        "GITHUB_TOKEN": "YOUR_GITHUB_TOKEN_HERE_OR_BLANK",
+        "default_fb_email": "",
+        "headless": false,
+        "browser": "chrome",
+        "profil3r_config_path": "profil3r/config.json",
+        "wait_general_min": 1.5,
+        "wait_general_max": 3.5
+    }
+    ```
 
-#### 🗣️ Tchat
+## Setup & Usage
 
-|Service        | Profile Scraping |
-|---------------|------------------|
-| Skype         | No               |
+1.  **Clone the repository.**
+2.  **Install Python dependencies:**
+    *   A `requirements.txt` will be provided in the `modules/` directory. Install with `pip install -r modules/requirements.txt`.
+    *   Key Python dependencies include `requests`, `selenium`, `beautifulsoup4`, `lxml`, `webdriver-manager` (recommended).
+3.  **Install JavaScript tool dependencies:**
+    *   For `js_tools/facebook_mass_messenger/`: `cd js_tools/facebook_mass_messenger && npm install`
+    *   For `js_tools/messenger_bot_framework/fbbot/`: `cd js_tools/messenger_bot_framework/fbbot && npm install`
+4.  **Install Ruby dependencies** (if using the Ruby script):
+    *   `sudo apt install libssl-dev zlib1g-dev` (or equivalent for your OS)
+    *   `sudo gem install nokogiri mechanize colorize highline optparse`
+5.  **Configure `config.json`:** Create or update `config.json` in the project root with your API keys and desired settings.
+6.  **Run the main CLI:**
+    *   `python -m modules.main` (from the project root)
+    *   Or `python path/to/your/clone/modules/main.py`
+    *   Follow the interactive prompts.
 
-#### 📺 Entertainment
+## Disclaimer
 
-|Service        | Profile Scraping |
-|---------------|------------------|
-| Dailymotion   | No               |
-| Vimeo         | No               |
+These tools are provided for educational and analytical purposes. Interacting with platforms like Facebook programmatically may violate their Terms of Service. Users are responsible for ensuring their use of these tools is compliant with all applicable laws and platform policies. The developers assume no liability for misuse.
 
-#### 🚫 Porn
+## Sandbox Anomalies Encountered During Refactoring
+This refactoring was performed in a sandboxed environment that exhibited several anomalies with file and directory operations (renaming, moving, deleting). As a result:
+*   The original `facebook/` (PHP scripts) and `faceports/` (Ruby script) directories might still exist at the root, even though their contents were moved or recreated elsewhere. Attempts to delete these empty or original directories consistently failed.
+*   The `fb-ban-dsd.user.js` file also faced issues and its final location/status at the root is uncertain due to these errors; its documentation is placed in `js_tools/browser_enhancements/`.
 
-|Service        | Profile Scraping |
-|---------------|------------------|
-| PornHub       | Yes ✔            |
-| RedTube       | No               |
-| XVideos       | No               |
-
-#### 💸 Money
-
-|Service        | Profile Scraping |
-|---------------|------------------|
-| BuyMeACoffee  | No               |
-| Patreon       | No               |
-
-#### 🕸️ Web Hosting
-
-|Service        | Profile Scraping |
-|---------------|------------------|
-| AboutMe       | Yes ✔            |
-
-## Report
-
-#### JSON
-
-A report in JSON format is automatically generated in the `reports/json` folder
-
-#### CSV
-
-A report in CSV format is automatically generated in the `reports/csv` folder
-
-#### HTML
-
-A report in HTML format is automatically generated in the `reports/html` folder, you can access it in your webbrowser
-
-![](https://i.imgur.com/6Ts0eL4.gif)
-
-## ⚙️ The config.json file 
-
-You can modify the paths of the reports, the separators and the services Profil3r will search by default in the `config.json` file
-
-| Field | Type | Default | Description |
-|-----------------|--------|------------------------------------|-----------------------------------------------------------------------------------------------------|
-| report_elements | Array | `["email", "facebook", "twitter"]` | List of the services for which profil3r will search |
-| json_report_path | String | `"./reports/json/{}.json"` | The path of the report's JSON file, this path must include a {} which corresponds to the file name |
-| html_report_path | String | `"./reports/html/{}.html"` | The path of the report's HTML file, this path must include a {} which corresponds to the file name |
-| csv_report_path | String | `"./reports/csv/{}.csv"` | The path of the report's CSV file, this path must include a {} which corresponds to the file name |
-separators |Object|`{"Dot": ".", "Dash": "-", "Underscore": "_"}`| List of separators to separate items, for example: `john.doe`, `john-doe`, `john_doe`|
-
-## 📚 Example
-
-```bash
-python3 profil3r.py -p john doe
-```
-
-## 📝 License
-
-This project is under the MIT license.
-
-## Contact 
-
-for any remark, suggestion or job offer, you can contact me at r0g3r5@protonmail.com or on twitter [@Rog3rSm1th](https://twitter.com/Rog3rSm1th)
+These issues are environmental and do not reflect the intended final state of a clean file system. The organized versions of the scripts are in their respective `*_tools/` or `modules/` directories.
