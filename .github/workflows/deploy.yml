@@ -1,0 +1,285 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  determine-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.env.outputs.environment }}
+      image-tag: ${{ steps.env.outputs.image-tag }}
+    steps:
+      - name: Determine environment and image tag
+        id: env
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+            echo "image-tag=latest" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "image-tag=staging-${{ github.sha }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            echo "environment=production" >> $GITHUB_OUTPUT
+            echo "image-tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "image-tag=latest" >> $GITHUB_OUTPUT
+          fi
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: determine-environment
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=sha,prefix={{branch}}-
+            type=raw,value=${{ needs.determine-environment.outputs.image-tag }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [determine-environment, build-and-push]
+    environment: ${{ needs.determine-environment.outputs.environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.28.0'
+
+      - name: Configure kubectl
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: '3.12.0'
+
+      - name: Deploy to Kubernetes
+        run: |
+          # Set environment-specific variables
+          if [[ "${{ needs.determine-environment.outputs.environment }}" == "production" ]]; then
+            NAMESPACE="profil3r-prod"
+            RELEASE_NAME="profil3r-prod"
+            REPLICAS=3
+            RESOURCES_REQUESTS_CPU="500m"
+            RESOURCES_REQUESTS_MEMORY="512Mi"
+            RESOURCES_LIMITS_CPU="1000m"
+            RESOURCES_LIMITS_MEMORY="1Gi"
+          else
+            NAMESPACE="profil3r-staging"
+            RELEASE_NAME="profil3r-staging"
+            REPLICAS=1
+            RESOURCES_REQUESTS_CPU="250m"
+            RESOURCES_REQUESTS_MEMORY="256Mi"
+            RESOURCES_LIMITS_CPU="500m"
+            RESOURCES_LIMITS_MEMORY="512Mi"
+          fi
+
+          # Create namespace if it doesn't exist
+          kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+
+          # Deploy using Helm
+          helm upgrade --install $RELEASE_NAME ./helm/profil3r \
+            --namespace $NAMESPACE \
+            --set image.repository=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} \
+            --set image.tag=${{ needs.determine-environment.outputs.image-tag }} \
+            --set replicaCount=$REPLICAS \
+            --set resources.requests.cpu=$RESOURCES_REQUESTS_CPU \
+            --set resources.requests.memory=$RESOURCES_REQUESTS_MEMORY \
+            --set resources.limits.cpu=$RESOURCES_LIMITS_CPU \
+            --set resources.limits.memory=$RESOURCES_LIMITS_MEMORY \
+            --set environment=${{ needs.determine-environment.outputs.environment }} \
+            --wait --timeout=600s
+
+          # Wait for rollout to complete
+          kubectl rollout status deployment/$RELEASE_NAME -n $NAMESPACE --timeout=600s
+
+  smoke-tests:
+    runs-on: ubuntu-latest
+    needs: [determine-environment, deploy]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.28.0'
+
+      - name: Configure kubectl
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+
+      - name: Run smoke tests
+        id: smoke-tests
+        run: |
+          # Set environment-specific variables
+          if [[ "${{ needs.determine-environment.outputs.environment }}" == "production" ]]; then
+            NAMESPACE="profil3r-prod"
+            RELEASE_NAME="profil3r-prod"
+            HEALTH_URL="${{ secrets.PROD_HEALTH_URL }}"
+          else
+            NAMESPACE="profil3r-staging"
+            RELEASE_NAME="profil3r-staging"
+            HEALTH_URL="${{ secrets.STAGING_HEALTH_URL }}"
+          fi
+
+          # Wait for pods to be ready
+          kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=profil3r -n $NAMESPACE --timeout=300s
+
+          # Health check
+          echo "Running health check..."
+          for i in {1..30}; do
+            if curl -f -s "$HEALTH_URL/health" > /dev/null; then
+              echo "Health check passed!"
+              break
+            fi
+            echo "Health check attempt $i/30 failed, retrying in 10 seconds..."
+            sleep 10
+            if [[ $i -eq 30 ]]; then
+              echo "Health check failed after 30 attempts"
+              exit 1
+            fi
+          done
+
+          # Basic functionality test
+          echo "Running basic functionality test..."
+          if curl -f -s "$HEALTH_URL/api/status" | grep -q "ok"; then
+            echo "Basic functionality test passed!"
+          else
+            echo "Basic functionality test failed"
+            exit 1
+          fi
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          # Set environment-specific variables
+          if [[ "${{ needs.determine-environment.outputs.environment }}" == "production" ]]; then
+            NAMESPACE="profil3r-prod"
+            RELEASE_NAME="profil3r-prod"
+          else
+            NAMESPACE="profil3r-staging"
+            RELEASE_NAME="profil3r-staging"
+          fi
+
+          echo "Smoke tests failed, rolling back deployment..."
+          kubectl rollout undo deployment/$RELEASE_NAME -n $NAMESPACE
+          kubectl rollout status deployment/$RELEASE_NAME -n $NAMESPACE --timeout=300s
+          
+          # Alternative: Helm rollback
+          # helm rollback $RELEASE_NAME -n $NAMESPACE
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [determine-environment, deploy, smoke-tests]
+    if: always()
+    steps:
+      - name: Notify Slack
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          username: 'GitHub Actions'
+          icon_emoji: ':robot_face:'
+          title: 'Profil3r Deployment'
+          text: |
+            Environment: ${{ needs.determine-environment.outputs.environment }}
+            Image Tag: ${{ needs.determine-environment.outputs.image-tag }}
+            Status: ${{ job.status }}
+            
+            ${{ github.event.head_commit.message }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Notify Discord
+        if: always()
+        uses: Ilshidur/action-discord@master
+        with:
+          args: |
+            🚀 **Profil3r Deployment**
+            
+            **Environment:** ${{ needs.determine-environment.outputs.environment }}
+            **Image Tag:** ${{ needs.determine-environment.outputs.image-tag }}
+            **Status:** ${{ job.status }}
+            
+            **Commit:** ${{ github.event.head_commit.message }}
+            **Actor:** ${{ github.actor }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [determine-environment, deploy, smoke-tests]
+    if: always()
+    steps:
+      - name: Cleanup old images
+        run: |
+          # Keep only the last 5 images for staging, 10 for production
+          if [[ "${{ needs.determine-environment.outputs.environment }}" == "production" ]]; then
+            KEEP_COUNT=10
+          else
+            KEEP_COUNT=5
+          fi
+          
+          echo "Cleaning up old container images, keeping last $KEEP_COUNT versions..."
+          # This would typically use a script or API call to clean up old images
+          # Implementation depends on your container registry
