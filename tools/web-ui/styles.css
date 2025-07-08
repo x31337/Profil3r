@@ -1,0 +1,303 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.header-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.stat {
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat .label {
+  font-weight: bold;
+  color: #555;
+}
+
+.stat .value {
+  font-size: 20px;
+  color: #333;
+}
+
+.main {
+  padding: 40px 0;
+}
+
+.status-section {
+  margin-bottom: 40px;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.status-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-card .status-icon {
+  font-size: 40px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+.status-content h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.status-content .status-text {
+  font-size: 16px;
+  color: #555;
+}
+
+.status-content .status-time {
+  font-size: 14px;
+  color: #888;
+}
+
+.control-section {
+  margin-bottom: 40px;
+}
+
+.control-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.services-section {
+  margin-bottom: 40px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.logs-section {
+  margin-bottom: 40px;
+}
+
+.logs-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.log-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 5px 15px;
+  border: none;
+  background-color: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tab-btn.active {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.tab-btn:hover {
+  background-color: #dcdcdc;
+}
+
+.log-content {
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: monospace;
+}
+
+.log-entry {
+  display: flex;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.log-entry .log-time {
+  color: #888;
+}
+
+.log-entry .log-message {
+  color: #333;
+}
+
+.results-section {
+  margin-bottom: 40px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.result-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.result-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.result-stats .stat {
+  text-align: center;
+}
+
+.result-stats .label {
+  font-size: 14px;
+  color: #777;
+}
+
+.result-stats .value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.result-stats .value.success {
+  color: #28a745;
+}
+
+.result-stats .value.error {
+  color: #dc3545;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+.connection-status {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  color: #28a745;
+}
+
+.notifications {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+}
+
+.notification {
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  border-left: 5px solid;
+}
+
+.notification.success {
+  border-color: #28a745;
+}
+
+.notification.error {
+  border-color: #dc3545;
+}
+
+.notification span {
+  display: block;
+  color: #555;
+}

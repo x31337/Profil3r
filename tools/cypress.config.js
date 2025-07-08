@@ -32,6 +32,35 @@ module.exports = defineConfig({
             config.viewportHeight = 1024;
           }
           return config;
+        },
+        
+        // Auto-build system integration tasks
+        autoBuildNotify({ type, data }) {
+          // Send notifications to auto-build system
+          const WebSocket = require('ws');
+          try {
+            const ws = new WebSocket('ws://localhost:9001');
+            ws.on('open', () => {
+              ws.send(JSON.stringify({
+                type: 'cypress-event',
+                data: { type, data }
+              }));
+              ws.close();
+            });
+          } catch (error) {
+            console.log('Auto-build system not available');
+          }
+          return null;
+        },
+        
+        // Health check task
+        healthCheck(url) {
+          return new Promise((resolve) => {
+            const axios = require('axios');
+            axios.get(url, { timeout: 5000 })
+              .then(response => resolve({ status: 'healthy', code: response.status }))
+              .catch(error => resolve({ status: 'unhealthy', error: error.message }));
+          });
         }
       });
 
@@ -42,10 +71,14 @@ module.exports = defineConfig({
     osint_url: 'http://localhost:8000',
     mass_messenger_url: 'http://localhost:4444',
     messenger_bot_url: 'http://localhost:3000',
+    auto_build_url: 'http://localhost:9000',
     // Visual regression testing settings
     failOnSnapshotDiff: false,
     updateSnapshots: false,
     // Mobile device settings
-    device: 'desktop'
+    device: 'desktop',
+    // Auto-build integration
+    autoFixOnFailure: true,
+    notifyAutoBuild: true
   }
 });
