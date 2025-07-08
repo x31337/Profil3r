@@ -1,0 +1,107 @@
+{{- if .Values.components.core.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "profil3r.fullname" . }}-core
+  labels:
+    {{- include "profil3r.labels" . | nindent 4 }}
+    app.kubernetes.io/component: core
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "profil3r.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: core
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "profil3r.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: core
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "profil3r.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: core
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.components.core.image.repository }}:{{ .Values.components.core.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: PYTHONPATH
+              value: {{ .Values.components.core.config.pythonPath }}
+            - name: CONFIG_FILE
+              value: {{ .Values.components.core.config.configFile }}
+          {{- if .Values.healthChecks.enabled }}
+          livenessProbe:
+            {{- toYaml .Values.healthChecks.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.healthChecks.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.components.core.resources | nindent 12 }}
+          volumeMounts:
+            - name: logs
+              mountPath: /app/logs
+            - name: results
+              mountPath: /app/results
+            - name: config
+              mountPath: /app/config
+            {{- if .Values.configMap.enabled }}
+            - name: config-volume
+              mountPath: /app/config.json
+              subPath: config.json
+            {{- end }}
+      volumes:
+        - name: logs
+          {{- if .Values.volumes.logs.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "profil3r.fullname" . }}-logs
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: results
+          {{- if .Values.volumes.results.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "profil3r.fullname" . }}-results
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: config
+          {{- if .Values.volumes.config.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "profil3r.fullname" . }}-config
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        {{- if .Values.configMap.enabled }}
+        - name: config-volume
+          configMap:
+            name: {{ include "profil3r.fullname" . }}-config
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

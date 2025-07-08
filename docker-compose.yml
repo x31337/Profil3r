@@ -1,0 +1,151 @@
+version: '3.8'
+
+services:
+  # Python core service - Main Profil3r application
+  profil3r-core:
+    build:
+      context: .
+      dockerfile: docker/python.dockerfile
+    container_name: profil3r-core
+    restart: unless-stopped
+    environment:
+      - PYTHONPATH=/app
+      - CONFIG_FILE=/app/config.json
+    volumes:
+      - ./logs:/app/logs
+      - ./results:/app/results
+      - ./config:/app/config
+      - profil3r-data:/app/data
+    networks:
+      - profil3r-network
+    depends_on:
+      - js-tools
+      - php-tools
+      - ruby-reporter
+
+  # JavaScript tools service
+  js-tools:
+    build:
+      context: .
+      dockerfile: docker/node.dockerfile
+    container_name: profil3r-js-tools
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - CONFIG_FILE=/app/config.json
+    volumes:
+      - ./logs:/app/logs
+      - ./results:/app/results
+      - ./config:/app/config
+      - profil3r-data:/app/data
+    ports:
+      - "3000:3000"
+    networks:
+      - profil3r-network
+
+  # PHP scripts service
+  php-tools:
+    build:
+      context: .
+      dockerfile: docker/php.dockerfile
+    container_name: profil3r-php-tools
+    restart: unless-stopped
+    environment:
+      - PHP_MEMORY_LIMIT=256M
+      - PHP_MAX_EXECUTION_TIME=300
+      - CONFIG_FILE=/app/config.json
+    volumes:
+      - ./logs:/app/logs
+      - ./results:/app/results
+      - ./config:/app/config
+      - profil3r-data:/app/data
+    networks:
+      - profil3r-network
+
+  # Ruby reporter service
+  ruby-reporter:
+    build:
+      context: .
+      dockerfile: docker/ruby.dockerfile
+    container_name: profil3r-ruby-reporter
+    restart: unless-stopped
+    environment:
+      - BUNDLE_PATH=/usr/local/bundle
+      - CONFIG_FILE=/app/config.json
+    volumes:
+      - ./logs:/app/logs
+      - ./results:/app/results
+      - ./config:/app/config
+      - profil3r-data:/app/data
+    networks:
+      - profil3r-network
+
+  # Optional: Redis for caching and session management
+  redis:
+    image: redis:7-alpine
+    container_name: profil3r-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - profil3r-network
+    profiles:
+      - cache
+
+  # Optional: PostgreSQL for data persistence
+  postgres:
+    image: postgres:15-alpine
+    container_name: profil3r-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=profil3r
+      - POSTGRES_USER=profil3r
+      - POSTGRES_PASSWORD=profil3r_password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./schema:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - profil3r-network
+    profiles:
+      - database
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: profil3r-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./logs:/var/log/nginx
+    depends_on:
+      - profil3r-core
+      - js-tools
+    networks:
+      - profil3r-network
+    profiles:
+      - proxy
+
+volumes:
+  profil3r-data:
+    driver: local
+  redis-data:
+    driver: local
+  postgres-data:
+    driver: local
+
+networks:
+  profil3r-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16

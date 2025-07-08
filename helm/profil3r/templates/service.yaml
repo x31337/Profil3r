@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "profil3r.fullname" . }}-core
+  labels:
+    {{- include "profil3r.labels" . | nindent 4 }}
+    app.kubernetes.io/component: core
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "profil3r.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: core
+---
+{{- if .Values.components.jsTools.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "profil3r.fullname" . }}-js-tools
+  labels:
+    {{- include "profil3r.labels" . | nindent 4 }}
+    app.kubernetes.io/component: js-tools
+spec:
+  type: {{ .Values.components.jsTools.service.type }}
+  ports:
+    - port: {{ .Values.components.jsTools.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "profil3r.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: js-tools
+{{- end }}

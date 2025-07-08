@@ -1,0 +1,65 @@
+{{- if .Values.volumes.logs.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "profil3r.fullname" . }}-logs
+  labels:
+    {{- include "profil3r.labels" . | nindent 4 }}
+  {{- with .Values.persistence.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.volumes.logs.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.volumes.logs.size }}
+  {{- if .Values.volumes.logs.storageClass }}
+  storageClassName: {{ .Values.volumes.logs.storageClass }}
+  {{- end }}
+---
+{{- end }}
+{{- if .Values.volumes.results.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "profil3r.fullname" . }}-results
+  labels:
+    {{- include "profil3r.labels" . | nindent 4 }}
+  {{- with .Values.persistence.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.volumes.results.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.volumes.results.size }}
+  {{- if .Values.volumes.results.storageClass }}
+  storageClassName: {{ .Values.volumes.results.storageClass }}
+  {{- end }}
+---
+{{- end }}
+{{- if .Values.volumes.config.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "profil3r.fullname" . }}-config
+  labels:
+    {{- include "profil3r.labels" . | nindent 4 }}
+  {{- with .Values.persistence.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.volumes.config.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.volumes.config.size }}
+  {{- if .Values.volumes.config.storageClass }}
+  storageClassName: {{ .Values.volumes.config.storageClass }}
+  {{- end }}
+{{- end }}

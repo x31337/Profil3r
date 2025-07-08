@@ -1,0 +1,231 @@
+# Default values for profil3r
+replicaCount: 1
+
+image:
+  repository: profil3r
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+
+# Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: profil3r.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# Resources
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# Autoscaling
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Node selector
+nodeSelector: {}
+
+# Tolerations
+tolerations: []
+
+# Affinity
+affinity: {}
+
+# Component configurations
+components:
+  # Python core service
+  core:
+    enabled: true
+    image:
+      repository: profil3r/core
+      tag: "latest"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+    config:
+      pythonPath: /app
+      configFile: /app/config.json
+
+  # JavaScript tools service
+  jsTools:
+    enabled: true
+    image:
+      repository: profil3r/js-tools
+      tag: "latest"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    service:
+      type: ClusterIP
+      port: 3000
+
+  # PHP tools service
+  phpTools:
+    enabled: true
+    image:
+      repository: profil3r/php-tools
+      tag: "latest"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    config:
+      memoryLimit: 256M
+      maxExecutionTime: 300
+
+  # Ruby reporter service
+  rubyReporter:
+    enabled: true
+    image:
+      repository: profil3r/ruby-reporter
+      tag: "latest"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+
+# Persistence
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  annotations: {}
+
+# Shared volumes
+volumes:
+  logs:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteMany
+    size: 5Gi
+  results:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteMany
+    size: 10Gi
+  config:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteMany
+    size: 1Gi
+
+# Redis configuration
+redis:
+  enabled: true
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: 8Gi
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  auth:
+    username: profil3r
+    password: profil3r_password
+    database: profil3r
+  primary:
+    persistence:
+      enabled: true
+      size: 20Gi
+
+# ConfigMap for application configuration
+configMap:
+  enabled: true
+  data:
+    config.json: |
+      {
+        "database": {
+          "host": "profil3r-postgresql",
+          "port": 5432,
+          "name": "profil3r",
+          "user": "profil3r",
+          "password": "profil3r_password"
+        },
+        "redis": {
+          "host": "profil3r-redis-master",
+          "port": 6379
+        },
+        "logging": {
+          "level": "INFO",
+          "file": "/app/logs/profil3r.log"
+        }
+      }
+
+# Secrets
+secrets:
+  enabled: true
+  data: {}
+
+# Health checks
+healthChecks:
+  enabled: true
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 8000
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  readinessProbe:
+    httpGet:
+      path: /ready
+      port: 8000
+    initialDelaySeconds: 5
+    periodSeconds: 5

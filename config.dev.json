@@ -1,0 +1,67 @@
+{
+    "config_path": "./config.dev.json",
+    "separators": {
+        "Dot": ".",
+        "Dash": "-",
+        "Underscore": "_"
+    },
+    "report_elements": [
+        "email",
+        "facebook",
+        "twitter",
+        "github"
+    ],
+    "json_report_path": "./reports/dev/json/{}.json",
+    "html_report_path": "./reports/dev/html/{}.html",
+    "csv_report_path": "./reports/dev/csv/{}.csv",
+    "profil3r": {
+        "version": "1.3.11",
+        "timeout": 5,
+        "max_workers": 5,
+        "user_agent": "Mozilla/5.0 (DEV) AppleWebKit/537.36",
+        "retry_count": 1
+    },
+    "language_settings": {
+        "python": {
+            "packages": ["requests", "beautifulsoup4", "lxml"],
+            "virtual_env": "./venv"
+        },
+        "javascript": {
+            "packages": ["axios", "cheerio"],
+            "node_version": "16.x"
+        }
+    },
+    "logging": {
+        "level": "DEBUG",
+        "file": "./logs/dev/profil3r.log",
+        "max_size": 1048576,
+        "backup_count": 3
+    },
+    "plateform": {
+        "email": {
+            "rate_limit": 50,
+            "domains": ["gmail.com", "yahoo.com"],
+            "format": "{permutation}@{domain}",
+            "type": "email",
+            "enabled": "yes"
+        },
+        "facebook": {
+            "rate_limit": 50,
+            "format": "https://facebook.com/{permutation}",
+            "type": "social",
+            "enabled": "yes"
+        },
+        "twitter": {
+            "rate_limit": 50,
+            "format": "https://twitter.com/{permutation}",
+            "type": "social",
+            "enabled": "yes"
+        },
+        "github": {
+            "rate_limit": 50,
+            "format": "https://github.com/{permutation}",
+            "type": "programming",
+            "enabled": "yes"
+        }
+    }
+}
