@@ -1,18 +1,18 @@
-# Pr0f1l3r v2.0 Requirements
+# Pr0f1l3r v2.0 Requirements - Updated to Latest Versions
 # Modern Social Media Automation and Profiling Tool
 
 # Core web automation
-selenium>=4.15.0
-webdriver-manager>=3.8.6
+selenium>=4.27.1
+webdriver-manager>=4.0.2
 
 # HTTP requests and web scraping
-requests>=2.31.0
-beautifulsoup4>=4.12.2
-urllib3>=2.0.7
+requests>=2.32.3
+beautifulsoup4>=4.12.3
+urllib3>=2.2.3
 
 # Data handling and parsing
-json5>=0.9.14
-PyYAML>=6.0.1
+json5>=0.9.25
+PyYAML>=6.0.2
 
 # CLI and user interface
 PyInquirer>=1.0.3
@@ -20,14 +20,21 @@ colorama>=0.4.6
 click>=8.1.7
 
 # Utilities
-python-dateutil>=2.8.2
+python-dateutil>=2.9.0
 pathlib2>=2.3.7
 
 # Logging and monitoring
 loguru>=0.7.2
 
 # Security and encryption
-cryptography>=41.0.7
+cryptography>=43.0.3
+
+# Additional dependencies for enhanced functionality
+lxml>=5.3.0
+tabulate>=0.9.0
+pyperclip>=1.9.0
+openpyxl>=3.1.5
+pillow>=11.0.0
 
 # Optional: For enhanced functionality
 # Uncomment if needed

@@ -8,6 +8,6 @@
   "description": "Advanced Reconnaissance Framework",
   "license": "",
   "dependencies": {
-    "d3": "3.5.16"
+    "d3": "^7.9.0"
   }
 }
