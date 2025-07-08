@@ -32,23 +32,28 @@ This repository provides a PHP-based API for various Facebook interactions. The 
    ```bash
    git clone https://github.com/tuberboy/facebook.git
    cd facebook
+   ```
 
 ## Usage
 
 - Check the repository files, code, and try...
 
 ## Legal Compliance
+
 - **Adhere to Facebook's Policies:** Ensure all actions comply with [Facebook's Terms of Service](https://www.facebook.com/legal/terms) and [Community Standards](https://www.facebook.com/communitystandards/).
 - **Ethical Use:** This tool is for learning purposes. Unauthorized use against Facebook's policies can lead to account suspension or legal action.
 - **Data Privacy:** Handle all data responsibly and obtain necessary consents when required.
 
 ## Contribution
+
 - Contributions aimed at enhancing the educational value of this project are welcome. Please fork the repository and submit a pull request with your improvements.
 
 ## License
+
 - This project is licensed under the `MIT License`. See the `LICENSE` file for more details.
 
 ## Contact
+
 - For questions or concerns, please `open an issue` in this repository.
 
 **Remember:** Always use technology ethically and responsibly.

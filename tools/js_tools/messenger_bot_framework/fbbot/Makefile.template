@@ -1,0 +1,52 @@
+# Sample Makefile for services
+# Copy this to your service directory and customize as needed
+
+.PHONY: build install test clean lint format help
+
+# Default target
+all: build
+
+# Build the service
+build:
+	@echo "Building service..."
+	@# Add your build commands here
+	@# Example for Node.js: npm run build
+	@# Example for Python: pip install -r requirements.txt
+	@# Example for Ruby: bundle install
+	@# Example for PHP: composer install
+
+# Install dependencies
+install:
+	@echo "Installing dependencies..."
+	@# Add your install commands here
+
+# Run tests
+test:
+	@echo "Running tests..."
+	@# Add your test commands here
+
+# Clean build artifacts
+clean:
+	@echo "Cleaning build artifacts..."
+	@# Add your clean commands here
+
+# Lint code
+lint:
+	@echo "Linting code..."
+	@# Add your lint commands here
+
+# Format code
+format:
+	@echo "Formatting code..."
+	@# Add your format commands here
+
+# Show help
+help:
+	@echo "Available targets:"
+	@echo "  build    - Build the service"
+	@echo "  install  - Install dependencies"
+	@echo "  test     - Run tests"
+	@echo "  clean    - Clean build artifacts"
+	@echo "  lint     - Lint code"
+	@echo "  format   - Format code"
+	@echo "  help     - Show this help"

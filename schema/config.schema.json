@@ -1,174 +1,186 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Profil3r Configuration Schema",
-    "type": "object",
-    "properties": {
-        "config_path": {
-            "type": "string",
-            "description": "Path to the configuration file"
-        },
-        "separators": {
-            "type": "object",
-            "properties": {
-                "Dot": { "type": "string" },
-                "Dash": { "type": "string" },
-                "Underscore": { "type": "string" }
-            },
-            "required": ["Dot", "Dash", "Underscore"]
-        },
-        "report_elements": {
-            "type": "array",
-            "items": { "type": "string" },
-            "description": "List of platforms to include in reports"
-        },
-        "json_report_path": {
-            "type": "string",
-            "description": "Path template for JSON reports"
-        },
-        "html_report_path": {
-            "type": "string",
-            "description": "Path template for HTML reports"
-        },
-        "csv_report_path": {
-            "type": "string",
-            "description": "Path template for CSV reports"
-        },
-        "plateform": {
-            "type": "object",
-            "patternProperties": {
-                "^[a-zA-Z0-9._-]+$": {
-                    "type": "object",
-                    "properties": {
-                        "rate_limit": {
-                            "type": "integer",
-                            "minimum": 1,
-                            "description": "Rate limit in requests per minute"
-                        },
-                        "format": {
-                            "type": "string",
-                            "description": "URL format string with {permutation} placeholder"
-                        },
-                        "type": {
-                            "type": "string",
-                            "enum": ["domain", "email", "social", "music", "programming", "forum", "tchat", "entertainment", "porn", "money", "hosting"],
-                            "description": "Platform category"
-                        },
-                        "enabled": {
-                            "type": "string",
-                            "enum": ["yes", "no"],
-                            "description": "Whether the platform is enabled"
-                        },
-                        "domains": {
-                            "type": "array",
-                            "items": { "type": "string" },
-                            "description": "List of email domains (for email type)"
-                        },
-                        "TLD": {
-                            "type": "array",
-                            "items": { "type": "string" },
-                            "description": "List of top-level domains (for domain type)"
-                        }
-                    },
-                    "required": ["rate_limit", "format", "type", "enabled"],
-                    "additionalProperties": false
-                }
-            },
-            "additionalProperties": false
-        },
-        "profil3r": {
-            "type": "object",
-            "properties": {
-                "version": { "type": "string" },
-                "timeout": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "default": 10,
-                    "description": "Request timeout in seconds"
-                },
-                "max_workers": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "default": 10,
-                    "description": "Maximum number of worker threads"
-                },
-                "user_agent": {
-                    "type": "string",
-                    "default": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-                    "description": "User agent string for requests"
-                },
-                "retry_count": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "default": 3,
-                    "description": "Number of retry attempts for failed requests"
-                }
-            },
-            "additionalProperties": false
-        },
-        "language_settings": {
-            "type": "object",
-            "properties": {
-                "python": {
-                    "type": "object",
-                    "properties": {
-                        "packages": {
-                            "type": "array",
-                            "items": { "type": "string" }
-                        },
-                        "virtual_env": { "type": "string" }
-                    }
-                },
-                "javascript": {
-                    "type": "object",
-                    "properties": {
-                        "packages": {
-                            "type": "array",
-                            "items": { "type": "string" }
-                        },
-                        "node_version": { "type": "string" }
-                    }
-                },
-                "php": {
-                    "type": "object",
-                    "properties": {
-                        "packages": {
-                            "type": "array",
-                            "items": { "type": "string" }
-                        },
-                        "php_version": { "type": "string" }
-                    }
-                }
-            },
-            "additionalProperties": false
-        },
-        "logging": {
-            "type": "object",
-            "properties": {
-                "level": {
-                    "type": "string",
-                    "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-                    "default": "INFO"
-                },
-                "file": {
-                    "type": "string",
-                    "description": "Log file path"
-                },
-                "max_size": {
-                    "type": "integer",
-                    "minimum": 1,
-                    "default": 10485760,
-                    "description": "Maximum log file size in bytes"
-                },
-                "backup_count": {
-                    "type": "integer",
-                    "minimum": 0,
-                    "default": 5,
-                    "description": "Number of backup log files to keep"
-                }
-            },
-            "additionalProperties": false
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Profil3r Configuration Schema",
+  "type": "object",
+  "properties": {
+    "config_path": {
+      "type": "string",
+      "description": "Path to the configuration file"
     },
-    "required": ["separators", "report_elements", "plateform"],
-    "additionalProperties": false
+    "separators": {
+      "type": "object",
+      "properties": {
+        "Dot": { "type": "string" },
+        "Dash": { "type": "string" },
+        "Underscore": { "type": "string" }
+      },
+      "required": ["Dot", "Dash", "Underscore"]
+    },
+    "report_elements": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of platforms to include in reports"
+    },
+    "json_report_path": {
+      "type": "string",
+      "description": "Path template for JSON reports"
+    },
+    "html_report_path": {
+      "type": "string",
+      "description": "Path template for HTML reports"
+    },
+    "csv_report_path": {
+      "type": "string",
+      "description": "Path template for CSV reports"
+    },
+    "plateform": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z0-9._-]+$": {
+          "type": "object",
+          "properties": {
+            "rate_limit": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Rate limit in requests per minute"
+            },
+            "format": {
+              "type": "string",
+              "description": "URL format string with {permutation} placeholder"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "domain",
+                "email",
+                "social",
+                "music",
+                "programming",
+                "forum",
+                "tchat",
+                "entertainment",
+                "porn",
+                "money",
+                "hosting"
+              ],
+              "description": "Platform category"
+            },
+            "enabled": {
+              "type": "string",
+              "enum": ["yes", "no"],
+              "description": "Whether the platform is enabled"
+            },
+            "domains": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "List of email domains (for email type)"
+            },
+            "TLD": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "List of top-level domains (for domain type)"
+            }
+          },
+          "required": ["rate_limit", "format", "type", "enabled"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "profil3r": {
+      "type": "object",
+      "properties": {
+        "version": { "type": "string" },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 10,
+          "description": "Request timeout in seconds"
+        },
+        "max_workers": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 10,
+          "description": "Maximum number of worker threads"
+        },
+        "user_agent": {
+          "type": "string",
+          "default": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          "description": "User agent string for requests"
+        },
+        "retry_count": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 3,
+          "description": "Number of retry attempts for failed requests"
+        }
+      },
+      "additionalProperties": false
+    },
+    "language_settings": {
+      "type": "object",
+      "properties": {
+        "python": {
+          "type": "object",
+          "properties": {
+            "packages": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "virtual_env": { "type": "string" }
+          }
+        },
+        "javascript": {
+          "type": "object",
+          "properties": {
+            "packages": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "node_version": { "type": "string" }
+          }
+        },
+        "php": {
+          "type": "object",
+          "properties": {
+            "packages": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "php_version": { "type": "string" }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "logging": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+          "default": "INFO"
+        },
+        "file": {
+          "type": "string",
+          "description": "Log file path"
+        },
+        "max_size": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 10485760,
+          "description": "Maximum log file size in bytes"
+        },
+        "backup_count": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 5,
+          "description": "Number of backup log files to keep"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["separators", "report_elements", "plateform"],
+  "additionalProperties": false
 }

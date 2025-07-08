@@ -9,40 +9,48 @@
       "type": "QUICK_REPLIES",
       "data": {
         "text": "Pick a color:",
-        "quick_replies": [{
-          "content_type": "text",
-          "title": "Red",
-          "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
-        }, {
-          "content_type": "text",
-          "title": "Green",
-          "payload": {
-            "custom": "payload",
-            "for": "quick_reply"
+        "quick_replies": [
+          {
+            "content_type": "text",
+            "title": "Red",
+            "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+          },
+          {
+            "content_type": "text",
+            "title": "Green",
+            "payload": {
+              "custom": "payload",
+              "for": "quick_reply"
+            }
+          },
+          {
+            "content_type": "location"
           }
-        }, {
-          "content_type": "location"
-        }]
+        ]
       }
     },
 
     "expected": {
       "recipient": {
-      	"id": "10157033896470341"
+        "id": "10157033896470341"
       },
       "message": {
         "text": "Pick a color:",
-        "quick_replies": [{
-          "content_type": "text",
-          "title": "Red",
-          "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
-        }, {
-          "content_type": "text",
-          "title": "Green",
-          "payload": "{\"custom\":\"payload\",\"for\":\"quick_reply\"}"
-        }, {
-          "content_type": "location"
-        }]
+        "quick_replies": [
+          {
+            "content_type": "text",
+            "title": "Red",
+            "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+          },
+          {
+            "content_type": "text",
+            "title": "Green",
+            "payload": "{\"custom\":\"payload\",\"for\":\"quick_reply\"}"
+          },
+          {
+            "content_type": "location"
+          }
+        ]
       }
     },
 
@@ -65,105 +73,129 @@
       "type": "QUICK_REPLIES",
       "data": {
         "text": "Pick a number:",
-        "quick_replies": [{
-          "content_type": "text",
-          "title": "#1",
-          "payload": "{one: 1}"
-        }, {
-          "content_type": "text",
-          "title": "#2",
-          "payload": "{two: 2}"
-        }, {
-          "content_type": "text",
-          "title": "#3",
-          "payload": "{three: 3}"
-        }, {
-          "content_type": "text",
-          "title": "#4",
-          "payload": "{four: 4}"
-        }, {
-          "content_type": "text",
-          "title": "#5",
-          "payload": "{five: 5}"
-        }, {
-          "content_type": "text",
-          "title": "#6",
-          "payload": "{six: 6}"
-        }, {
-          "content_type": "text",
-          "title": "#7",
-          "payload": "{seven: 7}"
-        }, {
-          "content_type": "text",
-          "title": "#8",
-          "payload": "{eight: 8}"
-        }, {
-          "content_type": "text",
-          "title": "#9",
-          "payload": "{nine: 9}"
-        }, {
-          "content_type": "text",
-          "title": "#10",
-          "payload": "{ten: 10}"
-        }, {
-          "content_type": "text",
-          "title": "#11",
-          "payload": "{eleven: 11}"
-        }, {
-          "content_type": "text",
-          "title": "#12",
-          "payload": "{twelve: 12}"
-        }]
+        "quick_replies": [
+          {
+            "content_type": "text",
+            "title": "#1",
+            "payload": "{one: 1}"
+          },
+          {
+            "content_type": "text",
+            "title": "#2",
+            "payload": "{two: 2}"
+          },
+          {
+            "content_type": "text",
+            "title": "#3",
+            "payload": "{three: 3}"
+          },
+          {
+            "content_type": "text",
+            "title": "#4",
+            "payload": "{four: 4}"
+          },
+          {
+            "content_type": "text",
+            "title": "#5",
+            "payload": "{five: 5}"
+          },
+          {
+            "content_type": "text",
+            "title": "#6",
+            "payload": "{six: 6}"
+          },
+          {
+            "content_type": "text",
+            "title": "#7",
+            "payload": "{seven: 7}"
+          },
+          {
+            "content_type": "text",
+            "title": "#8",
+            "payload": "{eight: 8}"
+          },
+          {
+            "content_type": "text",
+            "title": "#9",
+            "payload": "{nine: 9}"
+          },
+          {
+            "content_type": "text",
+            "title": "#10",
+            "payload": "{ten: 10}"
+          },
+          {
+            "content_type": "text",
+            "title": "#11",
+            "payload": "{eleven: 11}"
+          },
+          {
+            "content_type": "text",
+            "title": "#12",
+            "payload": "{twelve: 12}"
+          }
+        ]
       }
     },
 
     "expected": {
       "recipient": {
-      	"id": "10157033896470342"
+        "id": "10157033896470342"
       },
       "message": {
         "text": "Pick a number:",
-        "quick_replies": [{
-          "content_type": "text",
-          "title": "#1",
-          "payload": "{one: 1}"
-        }, {
-          "content_type": "text",
-          "title": "#2",
-          "payload": "{two: 2}"
-        }, {
-          "content_type": "text",
-          "title": "#3",
-          "payload": "{three: 3}"
-        }, {
-          "content_type": "text",
-          "title": "#4",
-          "payload": "{four: 4}"
-        }, {
-          "content_type": "text",
-          "title": "#5",
-          "payload": "{five: 5}"
-        }, {
-          "content_type": "text",
-          "title": "#6",
-          "payload": "{six: 6}"
-        }, {
-          "content_type": "text",
-          "title": "#7",
-          "payload": "{seven: 7}"
-        }, {
-          "content_type": "text",
-          "title": "#8",
-          "payload": "{eight: 8}"
-        }, {
-          "content_type": "text",
-          "title": "#9",
-          "payload": "{nine: 9}"
-        }, {
-          "content_type": "text",
-          "title": "#10",
-          "payload": "{ten: 10}"
-        }]
+        "quick_replies": [
+          {
+            "content_type": "text",
+            "title": "#1",
+            "payload": "{one: 1}"
+          },
+          {
+            "content_type": "text",
+            "title": "#2",
+            "payload": "{two: 2}"
+          },
+          {
+            "content_type": "text",
+            "title": "#3",
+            "payload": "{three: 3}"
+          },
+          {
+            "content_type": "text",
+            "title": "#4",
+            "payload": "{four: 4}"
+          },
+          {
+            "content_type": "text",
+            "title": "#5",
+            "payload": "{five: 5}"
+          },
+          {
+            "content_type": "text",
+            "title": "#6",
+            "payload": "{six: 6}"
+          },
+          {
+            "content_type": "text",
+            "title": "#7",
+            "payload": "{seven: 7}"
+          },
+          {
+            "content_type": "text",
+            "title": "#8",
+            "payload": "{eight: 8}"
+          },
+          {
+            "content_type": "text",
+            "title": "#9",
+            "payload": "{nine: 9}"
+          },
+          {
+            "content_type": "text",
+            "title": "#10",
+            "payload": "{ten: 10}"
+          }
+        ]
       }
     },
 

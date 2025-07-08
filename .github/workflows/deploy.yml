@@ -223,7 +223,7 @@ jobs:
           echo "Smoke tests failed, rolling back deployment..."
           kubectl rollout undo deployment/$RELEASE_NAME -n $NAMESPACE
           kubectl rollout status deployment/$RELEASE_NAME -n $NAMESPACE --timeout=300s
-          
+
           # Alternative: Helm rollback
           # helm rollback $RELEASE_NAME -n $NAMESPACE
 
@@ -245,7 +245,7 @@ jobs:
             Environment: ${{ needs.determine-environment.outputs.environment }}
             Image Tag: ${{ needs.determine-environment.outputs.image-tag }}
             Status: ${{ job.status }}
-            
+
             ${{ github.event.head_commit.message }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -256,11 +256,11 @@ jobs:
         with:
           args: |
             🚀 **Profil3r Deployment**
-            
+
             **Environment:** ${{ needs.determine-environment.outputs.environment }}
             **Image Tag:** ${{ needs.determine-environment.outputs.image-tag }}
             **Status:** ${{ job.status }}
-            
+
             **Commit:** ${{ github.event.head_commit.message }}
             **Actor:** ${{ github.actor }}
         env:
@@ -279,7 +279,7 @@ jobs:
           else
             KEEP_COUNT=5
           fi
-          
+
           echo "Cleaning up old container images, keeping last $KEEP_COUNT versions..."
           # This would typically use a script or API call to clean up old images
           # Implementation depends on your container registry

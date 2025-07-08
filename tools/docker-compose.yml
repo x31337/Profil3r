@@ -24,7 +24,7 @@ services:
       - php-tools
       - js-tools
     healthcheck:
-      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      test: ['CMD', 'python', '-c', 'import sys; sys.exit(0)']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -36,7 +36,7 @@ services:
       dockerfile: Dockerfile
     container_name: osint
     ports:
-      - "8000:8000"
+      - '8000:8000'
     environment:
       - OSINT_API_KEY=${OSINT_API_KEY}
       - SHODAN_API_KEY=${SHODAN_API_KEY}
@@ -53,7 +53,15 @@ services:
           - osint-service
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/api/health"]
+      test:
+        [
+          'CMD',
+          'wget',
+          '--quiet',
+          '--tries=1',
+          '--spider',
+          'http://localhost:8000/api/health'
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -65,7 +73,7 @@ services:
       dockerfile: Dockerfile
     container_name: php-tools
     ports:
-      - "8080:80"
+      - '8080:80'
     environment:
       - PHP_ENV=${PHP_ENV:-production}
       - DATABASE_URL=${DATABASE_URL}
@@ -81,7 +89,15 @@ services:
           - php-service
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health"]
+      test:
+        [
+          'CMD',
+          'wget',
+          '--quiet',
+          '--tries=1',
+          '--spider',
+          'http://localhost:80/health'
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -93,7 +109,7 @@ services:
       dockerfile: Dockerfile
     container_name: js-tools
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=${NODE_ENV:-production}
       - JWT_SECRET=${JWT_SECRET}
@@ -111,7 +127,15 @@ services:
           - node-service
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      test:
+        [
+          'CMD',
+          'wget',
+          '--quiet',
+          '--tries=1',
+          '--spider',
+          'http://localhost:3000/api/health'
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -128,7 +152,7 @@ volumes:
     driver: local
   telegram_data:
     driver: local
-  
+
   # OSINT service volumes
   osint_logs:
     driver: local
@@ -136,7 +160,7 @@ volumes:
     driver: local
   osint_reports:
     driver: local
-  
+
   # PHP tools volumes
   php_logs:
     driver: local
@@ -144,7 +168,7 @@ volumes:
     driver: local
   php_uploads:
     driver: local
-  
+
   # JS tools volumes
   js_logs:
     driver: local

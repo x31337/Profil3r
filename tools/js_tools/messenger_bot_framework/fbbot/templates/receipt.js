@@ -10,26 +10,34 @@ module.exports = renderReceipt;
  * @param   {object} receipt - receipt object to render with receipt template
  * @returns {object} - receipt template message payload
  */
-function renderReceipt(receipt)
-{
-  var message, limit = 100;
+function renderReceipt(receipt) {
+  var message,
+    limit = 100;
 
-  if (receipt.elements.length > limit)
-  {
-    this.logger.warn({message: 'Truncated provided list of elements to first ' + limit + ' elements (maximum for the Receipt Template)', receipt: receipt});
+  if (receipt.elements.length > limit) {
+    this.logger.warn({
+      message:
+        'Truncated provided list of elements to first ' +
+        limit +
+        ' elements (maximum for the Receipt Template)',
+      receipt: receipt
+    });
     receipt.elements = receipt.elements.slice(0, limit);
   }
 
   message = {
     attachment: {
-      type   : 'template',
+      type: 'template',
       payload: merge(receipt, {
         template_type: 'receipt'
       })
     }
   };
 
-  this.logger.debug({message: 'Generated message payload with Receipt Template', payload: message});
+  this.logger.debug({
+    message: 'Generated message payload with Receipt Template',
+    payload: message
+  });
 
   return message;
 }

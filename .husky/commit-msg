@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Ensure we're in the right directory
+cd "$(dirname "$0")/.."
+
+# Check if commitlint is available
+if ! command -v npx >/dev/null 2>&1; then
+  echo "Warning: npx not found. Skipping commit message validation."
+  exit 0
+fi
+
+# Run commitlint to validate commit message
+npx --no-install commitlint --edit "$1"

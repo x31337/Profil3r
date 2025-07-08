@@ -8,13 +8,18 @@ module.exports = renderGeneric;
  * @param   {array} elements - list of elements to render with generic template
  * @returns {object} - generic template message payload
  */
-function renderGeneric(elements)
-{
-  var message, limit = 10;
+function renderGeneric(elements) {
+  var message,
+    limit = 10;
 
-  if (elements.length > limit)
-  {
-    this.logger.warn({message: 'Truncated provided list of elements to first ' + limit + ' elements (maximum for the Generic Template)', elements: elements});
+  if (elements.length > limit) {
+    this.logger.warn({
+      message:
+        'Truncated provided list of elements to first ' +
+        limit +
+        ' elements (maximum for the Generic Template)',
+      elements: elements
+    });
     elements = elements.slice(0, limit);
   }
 
@@ -23,12 +28,15 @@ function renderGeneric(elements)
       type: 'template',
       payload: {
         template_type: 'generic',
-        elements     : elements
+        elements: elements
       }
     }
   };
 
-  this.logger.debug({message: 'Generated message payload with Generic Template', payload: message});
+  this.logger.debug({
+    message: 'Generated message payload with Generic Template',
+    payload: message
+  });
 
   return message;
 }

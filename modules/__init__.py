@@ -4,15 +4,15 @@
 # e.g., from modules import FacebookAutomation
 
 from .facebook_automation import FacebookAutomation, FacebookInteractionHelper
-from .osint_utils import OsintUtilities
 from .network_utils import NetworkUtilities
+from .osint_utils import OsintUtilities
 
 __all__ = [
     "FacebookAutomation",
     "FacebookInteractionHelper",
     "OsintUtilities",
-    "NetworkUtilities"
+    "NetworkUtilities",
 ]
 
-__version__ = "3.0.0" # Updated version reflecting major refactor
+__version__ = "3.0.0"  # Updated version reflecting major refactor
 __author__ = "Jules @ TaskWeaver"

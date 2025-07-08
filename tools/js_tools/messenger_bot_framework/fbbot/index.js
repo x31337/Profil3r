@@ -1,29 +1,27 @@
-var util          = require('util')
-  , events        = require('events')
-  , bole          = require('bole')
-  , merge         = require('deeply')
-  , agnostic      = require('agnostic')
+var util = require('util'),
+  events = require('events'),
+  bole = require('bole'),
+  merge = require('deeply'),
+  agnostic = require('agnostic'),
   // , cache      = require('async-cache')
   // , stringify  = require('fast-safe-stringify')
-  , verify        = require('./lib/verify_endpoint.js')
-  , send          = require('./lib/send.js')
-  , middleware    = require('./lib/middleware.js')
-  , inMiddleware  = require('./incoming/index.js')
-  , outMiddleware = require('./outgoing/index.js')
-  , Traverse      = require('./traverse/index.js')
-  , inTraverse    = require('./traverse/incoming.js')
-  , outTraverse   = require('./traverse/outgoing.js')
-  ;
-
+  verify = require('./lib/verify_endpoint.js'),
+  send = require('./lib/send.js'),
+  middleware = require('./lib/middleware.js'),
+  inMiddleware = require('./incoming/index.js'),
+  outMiddleware = require('./outgoing/index.js'),
+  Traverse = require('./traverse/index.js'),
+  inTraverse = require('./traverse/incoming.js'),
+  outTraverse = require('./traverse/outgoing.js');
 module.exports = Fbbot;
 util.inherits(Fbbot, events.EventEmitter);
 
 // defaults
 Fbbot.defaults = {
   bodyMaxLength: '1mb',
-  bodyEncoding : 'utf8',
-  timeout      : 5000,
-  apiUrl       : 'https://graph.facebook.com/v2.6/me/messages?access_token='
+  bodyEncoding: 'utf8',
+  timeout: 5000,
+  apiUrl: 'https://graph.facebook.com/v2.6/me/messages?access_token='
 };
 
 // expose logger
@@ -54,8 +52,7 @@ Fbbot.prototype._verifyEndpoint = verify;
  * @param {object} options - list of customization parameters
  * @constructor
  */
-function Fbbot(options)
-{
+function Fbbot(options) {
   if (!(this instanceof Fbbot)) return new Fbbot(options);
 
   /**
@@ -68,16 +65,16 @@ function Fbbot(options)
    * Store credentials
    * @type {object}
    */
-  this.credentials =
-  {
+  this.credentials = {
     // keep simple naming for internal reference
-    token : this.options.pageAccessToken || this.options.token,
+    token: this.options.pageAccessToken || this.options.token,
     secret: this.options.verifyToken || this.options.secret
   };
 
-  if (!this.credentials.token || !this.credentials.secret)
-  {
-    throw new Error('Both `token` (pageAccessToken) and `secret` (verifyToken) are required');
+  if (!this.credentials.token || !this.credentials.secret) {
+    throw new Error(
+      'Both `token` (pageAccessToken) and `secret` (verifyToken) are required'
+    );
   }
 
   // compose apiUrl
@@ -113,13 +110,16 @@ function Fbbot(options)
    * @private
    */
   this._incoming = new Traverse(inTraverse.steps, {
-    entry     : middleware.entryPoint,
+    entry: middleware.entryPoint,
     middleware: inTraverse.middleware.bind(this),
-    emitter   : inTraverse.emitter.bind(this),
-    prefix    : inTraverse.prefix
+    emitter: inTraverse.emitter.bind(this),
+    prefix: inTraverse.prefix
   });
   // wrap linkParent method
-  this._incoming.linkParent = inTraverse.linkParent.bind(null, this._incoming.linkParent);
+  this._incoming.linkParent = inTraverse.linkParent.bind(
+    null,
+    this._incoming.linkParent
+  );
 
   /**
    * create outgoing traverse paths
@@ -128,11 +128,14 @@ function Fbbot(options)
    */
   this._outgoing = new Traverse(outTraverse.steps, {
     middleware: outTraverse.middleware.bind(this),
-    emitter   : outTraverse.emitter.bind(this),
-    prefix    : outTraverse.prefix
+    emitter: outTraverse.emitter.bind(this),
+    prefix: outTraverse.prefix
   });
   // wrap linkParent method
-  this._outgoing.linkParent = outTraverse.linkParent.bind(null, this._outgoing.linkParent);
+  this._outgoing.linkParent = outTraverse.linkParent.bind(
+    null,
+    this._outgoing.linkParent
+  );
 }
 
 /**
@@ -143,13 +146,11 @@ function Fbbot(options)
  * @param {EventEmitter} request - incoming http request object
  * @param {function} respond - http response function
  */
-Fbbot.prototype._handler = function(request, respond)
-{
+Fbbot.prototype._handler = function (request, respond) {
   this.logger.info(request);
 
   // GET request handling
-  if (request.method == 'GET')
-  {
+  if (request.method == 'GET') {
     this._verifyEndpoint(request, respond);
     return;
   }
@@ -158,8 +159,10 @@ Fbbot.prototype._handler = function(request, respond)
   // https://developers.facebook.com/docs/messenger-platform/webhook-reference#response
   respond(200);
 
-  this._incoming.traverse(request.body, function(err, payload)
-  {
-    this.emit('end', err, payload);
-  }.bind(this));
+  this._incoming.traverse(
+    request.body,
+    function (err, payload) {
+      this.emit('end', err, payload);
+    }.bind(this)
+  );
 };

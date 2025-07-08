@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  profil3r-python:
+    environment:
+      - FLASK_ENV=staging
+      - DEBUG=false
+      - LOG_LEVEL=info
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "5000:5000"
+
+  profil3r-node:
+    environment:
+      - NODE_ENV=staging
+      - DEBUG=false
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "3000:3000"
+
+  profil3r-php:
+    environment:
+      - PHP_ENV=staging
+      - XDEBUG_MODE=off
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "80:80"
+
+  profil3r-ruby:
+    environment:
+      - RAILS_ENV=staging
+      - RACK_ENV=staging
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4567/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "4567:4567"
+
+  profil3r-core:
+    environment:
+      - ENV=staging
+      - DEBUG=false
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "8000:8000"

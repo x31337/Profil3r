@@ -26,6 +26,7 @@ npm install --save fbbot
 ## Table of Contents
 
 <!-- TOC -->
+
 - [Examples](#examples)
   - [Listening for messages](#listening-for-messages)
   - [Adding middleware](#adding-middleware)
@@ -81,7 +82,7 @@ var express = require('express');
 var Fbbot = require('fbbot');
 
 var app = express();
-var fbbot = new Fbbot({token: '...', secret: '...'});
+var fbbot = new Fbbot({ token: '...', secret: '...' });
 
 // plug-in fbbot
 // It will also listen for GET requests to authorize fb app.
@@ -91,8 +92,7 @@ app.all('/webhook', fbbot.requestHandler);
 app.listen(8080);
 
 // catching messages
-fbbot.on('message', function(message, send)
-{
+fbbot.on('message', function (message, send) {
   // message.type <-- type of the message (text, attachment, quick_reply, sticker, etc)
   // message.user <-- user object
   // message.text <-- text for text messages
@@ -101,15 +101,13 @@ fbbot.on('message', function(message, send)
 });
 
 // handle only text messages
-fbbot.on('message.text', function(message, send)
-{
+fbbot.on('message.text', function (message, send) {
   // message.user <-- user object
   // message.text <-- text for text messages
   // send <-- send method with baked in user.id `send(fbbot.<message_type>, <payload>, <callback>)`
 });
 
-fbbot.on('postback', function(postback, send)
-{
+fbbot.on('postback', function (postback, send) {
   // postback.user <-- user object
   // postback.payload <-- parsed payload
   // send <-- send method with baked in user.id `send(fbbot.<message_type>, <payload>, <callback>)`
@@ -125,7 +123,7 @@ var express = require('express');
 var Fbbot = require('fbbot');
 
 var app = express();
-var fbbot = new Fbbot({token: '...', secret: '...'});
+var fbbot = new Fbbot({ token: '...', secret: '...' });
 
 // plug-in fbbot
 app.all('/webhook', fbbot.requestHandler);
@@ -133,11 +131,9 @@ app.all('/webhook', fbbot.requestHandler);
 // or you can use standard express https capabilities
 app.listen(8080);
 
-fbbot.use('message', function(payload, callback)
-{
+fbbot.use('message', function (payload, callback) {
   // do something with the payload, async or sync
-  setTimeout(function()
-  {
+  setTimeout(function () {
     payload.fooWasHere = true;
     // pass it to callback
     callback(null, payload);
@@ -145,12 +141,10 @@ fbbot.use('message', function(payload, callback)
 });
 
 // catching messages
-fbbot.on('message', function(message, send)
-{
+fbbot.on('message', function (message, send) {
   // modified message payload
   message.fooWasHere; // true
 });
-
 ```
 
 More middleware examples could be found in [incoming](incoming/) folder.
@@ -165,7 +159,7 @@ var express = require('express');
 var Fbbot = require('fbbot');
 
 var app = express();
-var fbbot = new Fbbot({token: '...', secret: '...'});
+var fbbot = new Fbbot({ token: '...', secret: '...' });
 
 // plug-in fbbot
 app.all('/webhook', fbbot.requestHandler);
@@ -175,15 +169,13 @@ app.listen(8080);
 
 // "standalone" send function
 // send reguar text message
-fbbot.send(1234567890, fbbot.TEXT, 'Hi there!', function(error, response)
-{
+fbbot.send(1234567890, fbbot.TEXT, 'Hi there!', function (error, response) {
   // error <!-- message composition error or transport error
   // response <-- response from the remote server
 });
 
 // sending messages as reply
-fbbot.on('message', function(message, send)
-{
+fbbot.on('message', function (message, send) {
   // tailored to the user
   // callback is optional
   send(fbbot.IMAGE, 'https://petersapparel.com/img/shirt.png');
@@ -199,15 +191,14 @@ More details could be found in [test-send.js](test/test-send.js).
 
 ```javascript
 var Fbbot = require('fbbot');
-var fbbot = new Fbbot({token: '...', secret: '...', logger: myCustomLogger});
+var fbbot = new Fbbot({ token: '...', secret: '...', logger: myCustomLogger });
 
 // turn on logging
 // uses `bole` out of the box
 Fbbot.logger.output({
-  level : 'info',
+  level: 'info',
   stream: process.stdout
 });
-
 ```
 
 ## API
@@ -222,7 +213,7 @@ fbbot.use([String hook ,] Function handler)
 
 If no `hook` specified, provided function will be applied to entire incoming payload.
 
-- `hook`: *(optional)* hook handle to attach middleware handler to.
+- `hook`: _(optional)_ hook handle to attach middleware handler to.
 - `handler`: middleware handler, expected to have following signature:
 
 ```javascript
@@ -251,7 +242,7 @@ listener(Object payload, Function send)
 
 - `payload`: chunk of the payload corresponding to the attached hook.<sup>1</sup>
 - `send`: function being tailored specifically for the event – baked in user id where it's available,
-and set of convenience methods for sending specific message types, [listed below](#convenience-methods).
+  and set of convenience methods for sending specific message types, [listed below](#convenience-methods).
 
 <sup>1</sup> Message payload augmented with `type` property and reference `user` object. All payloads have prototype object with reference to the "parent" object.
 
@@ -269,9 +260,9 @@ fbbot.send(String|Object user, [String type ,] [String|Array|Object payload ,] [
 ```
 
 - `user`: user id or phone number, provided via string (user id) or object with `id` or `phone_number` properties.
-- `type`: *(optional)* message type, if not provided, will fallback to `Fbbot#MESSAGE` type.
-- `payload`: *(optional)* payload object for the chosen message type, not expected for `MARK_SEEN`, `TYPING_ON` and `TYPING_OFF` types.
-- `callback`: *(optional)* standard error-back pattern, with `response` object as second argument.
+- `type`: _(optional)_ message type, if not provided, will fallback to `Fbbot#MESSAGE` type.
+- `payload`: _(optional)_ payload object for the chosen message type, not expected for `MARK_SEEN`, `TYPING_ON` and `TYPING_OFF` types.
+- `callback`: _(optional)_ standard error-back pattern, with `response` object as second argument.
 
 List of available message types could be found [below](#message-types).
 
@@ -419,23 +410,28 @@ Example payload:
     "type": "template",
     "payload": {
       "template_type": "generic",
-      "elements": [{
-        "title": "Welcome to Peter's Hats",
-        "item_url": "https://petersfancybrownhats.com",
-        "image_url": "https://petersfancybrownhats.com/company_image.png",
-        "subtitle": "We've got the right hat for everyone.",
-        "buttons": [{
-          "type": "web_url",
-          "url": "https://petersfancybrownhats.com",
-          "title": "View Website"
-        }, {
-          "type": "postback",
-          "title": "Start Chatting",
-          "payload": {
-            "developer": ["defined", "payload"],
-          }
-        }]
-      }]
+      "elements": [
+        {
+          "title": "Welcome to Peter's Hats",
+          "item_url": "https://petersfancybrownhats.com",
+          "image_url": "https://petersfancybrownhats.com/company_image.png",
+          "subtitle": "We've got the right hat for everyone.",
+          "buttons": [
+            {
+              "type": "web_url",
+              "url": "https://petersfancybrownhats.com",
+              "title": "View Website"
+            },
+            {
+              "type": "postback",
+              "title": "Start Chatting",
+              "payload": {
+                "developer": ["defined", "payload"]
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }
@@ -486,15 +482,18 @@ Example payload:
     "item_url": "https://petersfancybrownhats.com",
     "image_url": "https://petersfancybrownhats.com/company_image.png",
     "subtitle": "We've got the right hat for everyone.",
-    "buttons": [{
-      "type": "web_url",
-      "url": "https://petersfancybrownhats.com",
-      "title": "View Website"
-    }, {
-      "type": "postback",
-      "title": "Start Chatting",
-      "payload": "DEVELOPER_DEFINED_PAYLOAD"
-    }]
+    "buttons": [
+      {
+        "type": "web_url",
+        "url": "https://petersfancybrownhats.com",
+        "title": "View Website"
+      },
+      {
+        "type": "postback",
+        "title": "Start Chatting",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD"
+      }
+    ]
   },
 
   {
@@ -502,17 +501,20 @@ Example payload:
     "item_url": "https://petersokredboots.com",
     "image_url": "https://petersokredboots.com/company_image.png",
     "subtitle": "We've got the left boots for everyone.",
-    "buttons": [{
-      "type": "web_url",
-      "url": "https://petersokredboots.com",
-      "title": "View Website"
-    }, {
-      "type": "postback",
-      "title": "Start Chatting",
-      "payload": {
-        "developer": ["defined", "payload"],
+    "buttons": [
+      {
+        "type": "web_url",
+        "url": "https://petersokredboots.com",
+        "title": "View Website"
+      },
+      {
+        "type": "postback",
+        "title": "Start Chatting",
+        "payload": {
+          "developer": ["defined", "payload"]
+        }
       }
-    }]
+    ]
   }
 ]
 ```
@@ -526,8 +528,7 @@ Example payload:
 ```json
 {
   "text": "What do you want to do next?",
-  "buttons":
-  [
+  "buttons": [
     {
       "type": "web_url",
       "url": "https://petersapparel.parseapp.com",
@@ -537,7 +538,7 @@ Example payload:
       "type": "postback",
       "title": "Start Chatting",
       "payload": {
-        "developer": ["defined", "payload"],
+        "developer": ["defined", "payload"]
       }
     }
   ]
@@ -558,21 +559,24 @@ Example payload:
   "payment_method": "Visa 2345",
   "order_url": "http://petersapparel.parseapp.com/order?order_id=123456",
   "timestamp": "1428444852",
-  "elements": [{
-    "title": "Classic White T-Shirt",
-    "subtitle": "100% Soft and Luxurious Cotton",
-    "quantity": 2,
-    "price": 50,
-    "currency": "USD",
-    "image_url": "http://petersapparel.parseapp.com/img/whiteshirt.png"
-  }, {
-    "title": "Classic Gray T-Shirt",
-    "subtitle": "100% Soft and Luxurious Cotton",
-    "quantity": 1,
-    "price": 25,
-    "currency": "USD",
-    "image_url": "http://petersapparel.parseapp.com/img/grayshirt.png"
-  }],
+  "elements": [
+    {
+      "title": "Classic White T-Shirt",
+      "subtitle": "100% Soft and Luxurious Cotton",
+      "quantity": 2,
+      "price": 50,
+      "currency": "USD",
+      "image_url": "http://petersapparel.parseapp.com/img/whiteshirt.png"
+    },
+    {
+      "title": "Classic Gray T-Shirt",
+      "subtitle": "100% Soft and Luxurious Cotton",
+      "quantity": 1,
+      "price": 25,
+      "currency": "USD",
+      "image_url": "http://petersapparel.parseapp.com/img/grayshirt.png"
+    }
+  ],
   "address": {
     "street_1": "1 Hacker Way",
     "street_2": "",
@@ -582,18 +586,21 @@ Example payload:
     "country": "US"
   },
   "summary": {
-    "subtotal": 75.00,
+    "subtotal": 75.0,
     "shipping_cost": 4.95,
     "total_tax": 6.19,
     "total_cost": 56.14
   },
-  "adjustments": [{
-    "name": "New Customer Discount",
-    "amount": 20
-  }, {
-    "name": "$10 Off Coupon",
-    "amount": 10
-  }]
+  "adjustments": [
+    {
+      "name": "New Customer Discount",
+      "amount": 20
+    },
+    {
+      "name": "$10 Off Coupon",
+      "amount": 10
+    }
+  ]
 }
 ```
 
@@ -606,20 +613,24 @@ Example payload:
 ```json
 {
   "text": "Pick a color:",
-  "quick_replies": [{
-    "content_type": "text",
-    "title": "Red",
-    "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
-  }, {
-    "content_type": "text",
-    "title": "Green",
-    "payload": {
-      "custom": "payload",
-      "for": "quick_reply"
+  "quick_replies": [
+    {
+      "content_type": "text",
+      "title": "Red",
+      "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+    },
+    {
+      "content_type": "text",
+      "title": "Green",
+      "payload": {
+        "custom": "payload",
+        "for": "quick_reply"
+      }
+    },
+    {
+      "content_type": "location"
     }
-  }, {
-    "content_type": "location"
-  }]
+  ]
 }
 ```
 
@@ -631,7 +642,7 @@ Same hooks work (applied) for both middleware and event listeners.
 
 Available incoming hooks (in the following order):
 
-- `payload`: *(default, if no hook specified)* applied to entire payload.
+- `payload`: _(default, if no hook specified)_ applied to entire payload.
 - `entry`: applied per each entry of the payload.
 - `messaging`: applied per each messaging element of the payload.
 - `delivery`: applied to delivery notifications.

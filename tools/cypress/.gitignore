@@ -1,0 +1,43 @@
+# Cypress artifacts
+screenshots/
+videos/
+snapshots/__diff_output__/
+snapshots/__image_snapshots__/
+snapshots/diffs/
+
+# Generated files
+downloads/
+fixtures/generated/
+
+# Cypress cache
+.cypress/
+
+# Test results
+results/
+reports/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node modules (if any cypress plugins are installed locally)
+node_modules/
+
+# Environment variables (if any)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

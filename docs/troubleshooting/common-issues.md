@@ -7,6 +7,7 @@
 **Symptoms**: Cannot write to logs, results, or config directories
 
 **Solution**:
+
 ```bash
 # Fix file permissions
 sudo chown -R $USER:$USER ./logs ./results ./config
@@ -22,6 +23,7 @@ docker-compose up -d
 **Symptoms**: "Port already in use" errors
 
 **Solution**:
+
 ```bash
 # Check port usage
 netstat -tulpn | grep :3000
@@ -41,6 +43,7 @@ sudo kill -9 $(lsof -t -i:4444)
 **Symptoms**: Docker build failures, container crashes
 
 **Solution**:
+
 ```bash
 # Clean up Docker resources
 docker system prune -af
@@ -59,6 +62,7 @@ docker system df
 **Symptoms**: Services show as unhealthy in `docker-compose ps`
 
 **Solution**:
+
 ```bash
 # Check service logs
 docker-compose logs -f [service-name]
@@ -77,6 +81,7 @@ docker-compose restart [service-name]
 **Symptoms**: Database connection errors, migration failures
 
 **Solution**:
+
 ```bash
 # Check database container
 docker-compose ps postgres
@@ -96,6 +101,7 @@ docker-compose exec postgres psql -U profil3r -d profil3r
 **Symptoms**: Missing API keys, configuration errors
 
 **Solution**:
+
 ```bash
 # Check environment variables
 docker-compose exec profil3r-core env | grep -E "(API|KEY|TOKEN)"

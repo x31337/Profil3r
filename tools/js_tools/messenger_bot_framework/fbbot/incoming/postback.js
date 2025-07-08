@@ -8,10 +8,8 @@ module.exports = postback;
  * @param {object} payload - messaging envelop object
  * @param {function} callback - invoked after parsing is done
  */
-function postback(payload, callback)
-{
-  if (typeof payload.payload == 'string')
-  {
+function postback(payload, callback) {
+  if (typeof payload.payload == 'string') {
     payload.payload = JSON.parse(payload.payload);
   }
 

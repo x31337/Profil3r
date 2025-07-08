@@ -7,47 +7,54 @@
   },
   "body": {
     "object": "page",
-    "entry": [{
-      "id": "514061682115264",
-      "time": 1469431949973,
-      "messaging": [{
-        "sender": {
-          "id": "10157033896470455"
-        },
-        "recipient": {
-          "id": "514061682115264"
-        },
-        "timestamp": 1469431949973,
-        "postback": {
-          "payload": "{\"action\":\"property\",\"url\":\"/properties/for_sale/CA/170011\",\"id\":\"170011\",\"back\":{\"action\":\"search\",\"url\":\"/for_sale/94301_zip/\",\"type\":\"h\",\"text\":\"94301\",\"page\":1}}"
-        }
-      }]
-    }]
+    "entry": [
+      {
+        "id": "514061682115264",
+        "time": 1469431949973,
+        "messaging": [
+          {
+            "sender": {
+              "id": "10157033896470455"
+            },
+            "recipient": {
+              "id": "514061682115264"
+            },
+            "timestamp": 1469431949973,
+            "postback": {
+              "payload": "{\"action\":\"property\",\"url\":\"/properties/for_sale/CA/170011\",\"id\":\"170011\",\"back\":{\"action\":\"search\",\"url\":\"/for_sale/94301_zip/\",\"type\":\"h\",\"text\":\"94301\",\"page\":1}}"
+            }
+          }
+        ]
+      }
+    ]
   },
 
-  "+expected":
-  {
+  "+expected": {
     "plan": 14,
-    "entry": [{
-      "messaging": [{
-        "postback": {
-          "payload": {
-            "action": "property",
-            "url": "/properties/for_sale/CA/170011",
-            "id": "170011",
-            "back": {
-              "action": "search",
-              "url": "/for_sale/94301_zip/",
-              "type": "h",
-              "text": "94301",
-              "page": 1
+    "entry": [
+      {
+        "messaging": [
+          {
+            "postback": {
+              "payload": {
+                "action": "property",
+                "url": "/properties/for_sale/CA/170011",
+                "id": "170011",
+                "back": {
+                  "action": "search",
+                  "url": "/for_sale/94301_zip/",
+                  "type": "h",
+                  "text": "94301",
+                  "page": 1
+                }
+              },
+              "user": {
+                "id": "10157033896470455"
+              }
             }
-          },
-          "user": {
-            "id": "10157033896470455"
           }
-        }
-      }]
-    }]
+        ]
+      }
+    ]
   }
 }

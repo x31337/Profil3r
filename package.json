@@ -1,12 +1,15 @@
 {
   "name": "profil3r-quality-tools",
   "version": "1.0.0",
+  "type": "module",
   "description": "Code quality and formatting tools for Profil3r project",
   "scripts": {
     "prepare": "husky install",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write .",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "commitlint": "commitlint --edit",
+    "semantic-release": "semantic-release"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
@@ -33,7 +36,15 @@
     "lint-staged": "^15.2.0",
     "eslint": "^9.15.0",
     "@eslint/js": "^9.15.0",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "semantic-release": "^22.0.8",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.3",
+    "@semantic-release/npm": "^11.0.1",
+    "conventional-changelog-conventionalcommits": "^7.0.2"
   },
   "engines": {
     "node": ">=16.0.0"

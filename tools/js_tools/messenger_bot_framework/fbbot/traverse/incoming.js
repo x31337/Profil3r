@@ -1,20 +1,17 @@
-var messaging = require('../lib/messaging.js')
-  , normalize = require('../lib/normalize.js')
-  ;
-
+var messaging = require('../lib/messaging.js'),
+  normalize = require('../lib/normalize.js');
 module.exports = {
-
   // list of receive steps
   steps: {
-    'payload'   : 'entry',
-    'entry'     : 'messaging',
-    'messaging' : messaging.getType, // function that returns next step based on payload
-    'message'   : ['quick_reply', 'attachments'] // list of possible paths
+    payload: 'entry',
+    entry: 'messaging',
+    messaging: messaging.getType, // function that returns next step based on payload
+    message: ['quick_reply', 'attachments'] // list of possible paths
   },
 
   linkParent: linkParent,
   middleware: middleware,
-  emitter   : emitter
+  emitter: emitter
 };
 
 /**
@@ -27,8 +24,7 @@ module.exports = {
  * @param   {mixed} nextPayload - next step payload object
  * @returns {mixed} - augmented next step payload object
  */
-function linkParent(original, branch, parentPayload, nextPayload)
-{
+function linkParent(original, branch, parentPayload, nextPayload) {
   // get proper name
   var normalized = normalize(branch);
 
@@ -36,14 +32,12 @@ function linkParent(original, branch, parentPayload, nextPayload)
 
   // add normalized handle reference
   // skip if it's empty string
-  if (normalized)
-  {
+  if (normalized) {
     result.__proto__[normalized] = parentPayload;
   }
 
   // add user object reference
-  if (parentPayload.user)
-  {
+  if (parentPayload.user) {
     result.__proto__['user'] = parentPayload.user;
   }
 
@@ -58,31 +52,40 @@ function linkParent(original, branch, parentPayload, nextPayload)
  * @param {object} payload - initial payload object from facebook messenger
  * @param {function} callback - invoked upon error or when all entries were processed
  */
-function middleware(branch, payload, callback)
-{
+function middleware(branch, payload, callback) {
   // get proper name
   var normalized = normalize(branch);
 
-  this.logger.debug({message: 'Running middleware for incoming payload', branch: branch, normalized: normalized, payload: payload});
+  this.logger.debug({
+    message: 'Running middleware for incoming payload',
+    branch: branch,
+    normalized: normalized,
+    payload: payload
+  });
 
   // add branch reference to the parent object
 
   // run through all registered middleware
-  this._run(normalized, payload, function(error, resolvedPayload)
-  {
-    var normalizeType;
+  this._run(
+    normalized,
+    payload,
+    function (error, resolvedPayload) {
+      var normalizeType;
 
-    if (payload.type)
-    {
-      normalizeType = normalize(payload.type);
-      this._run([normalized, normalizeType].join('.'), resolvedPayload, callback);
-    }
-    // be done here
-    else
-    {
-      callback(error, resolvedPayload);
-    }
-  }.bind(this));
+      if (payload.type) {
+        normalizeType = normalize(payload.type);
+        this._run(
+          [normalized, normalizeType].join('.'),
+          resolvedPayload,
+          callback
+        );
+      }
+      // be done here
+      else {
+        callback(error, resolvedPayload);
+      }
+    }.bind(this)
+  );
 }
 
 /**
@@ -92,18 +95,21 @@ function middleware(branch, payload, callback)
  * @param {string} event - event handle
  * @param {object} payload - current payload object
  */
-function emitter(event, payload)
-{
+function emitter(event, payload) {
   // get proper name
-  var normalizeType, normalized = normalize(event);
+  var normalizeType,
+    normalized = normalize(event);
 
   // notify listeners
   this.emit(normalized, payload, (payload.user || {}).send);
 
   // notify listeners of the specific type
-  if (payload.type)
-  {
+  if (payload.type) {
     normalizeType = normalize(payload.type);
-    this.emit([normalized, normalizeType].join('.'), payload, (payload.user || {}).send);
+    this.emit(
+      [normalized, normalizeType].join('.'),
+      payload,
+      (payload.user || {}).send
+    );
   }
 }

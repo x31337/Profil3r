@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  profil3r-python:
+    build:
+      context: .
+      dockerfile: docker/python.dockerfile
+    environment:
+      - FLASK_ENV=development
+      - DEBUG=true
+      - LOG_LEVEL=debug
+    volumes:
+      - .:/app
+      - python_cache:/app/__pycache__
+    ports:
+      - "5001:5000"
+    command: ["python", "-m", "flask", "run", "--host=0.0.0.0", "--debug"]
+
+  profil3r-node:
+    build:
+      context: .
+      dockerfile: docker/node.dockerfile
+    environment:
+      - NODE_ENV=development
+      - DEBUG=*
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    ports:
+      - "3001:3000"
+    command: ["npm", "run", "dev"]
+
+  profil3r-php:
+    build:
+      context: .
+      dockerfile: docker/php.dockerfile
+    environment:
+      - PHP_ENV=development
+      - XDEBUG_MODE=debug
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+
+  profil3r-ruby:
+    build:
+      context: .
+      dockerfile: docker/ruby.dockerfile
+    environment:
+      - RAILS_ENV=development
+      - RACK_ENV=development
+    volumes:
+      - .:/app
+      - ruby_gems:/app/vendor
+    ports:
+      - "4567:4567"
+    command: ["ruby", "app.rb", "-o", "0.0.0.0"]
+
+  profil3r-core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ENV=development
+      - DEBUG=true
+    volumes:
+      - .:/app
+    ports:
+      - "8001:8000"
+
+volumes:
+  python_cache:
+  node_modules:
+  ruby_gems:

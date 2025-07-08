@@ -43,9 +43,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell",
       "line_number": 88,
-      "line_range": [
-        88
-      ],
+      "line_range": [88],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b605_start_process_with_a_shell.html",
       "test_id": "B605",
       "test_name": "start_process_with_a_shell"
@@ -63,9 +61,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 88,
-      "line_range": [
-        88
-      ],
+      "line_range": [88],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -83,9 +79,7 @@
       "issue_severity": "LOW",
       "issue_text": "Consider possible security implications associated with the subprocess module.",
       "line_number": 277,
-      "line_range": [
-        277
-      ],
+      "line_range": [277],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/blacklists/blacklist_imports.html#b404-import-subprocess",
       "test_id": "B404",
       "test_name": "blacklist"
@@ -103,15 +97,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 282,
-      "line_range": [
-        282,
-        283,
-        284,
-        285,
-        286,
-        287,
-        288
-      ],
+      "line_range": [282, 283, 284, 285, 286, 287, 288],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -129,15 +115,7 @@
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
       "line_number": 282,
-      "line_range": [
-        282,
-        283,
-        284,
-        285,
-        286,
-        287,
-        288
-      ],
+      "line_range": [282, 283, 284, 285, 286, 287, 288],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
@@ -155,9 +133,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell",
       "line_number": 1190,
-      "line_range": [
-        1190
-      ],
+      "line_range": [1190],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b605_start_process_with_a_shell.html",
       "test_id": "B605",
       "test_name": "start_process_with_a_shell"
@@ -175,9 +151,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 1190,
-      "line_range": [
-        1190
-      ],
+      "line_range": [1190],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -195,9 +169,7 @@
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
       "line_number": 1250,
-      "line_range": [
-        1250
-      ],
+      "line_range": [1250],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
@@ -215,14 +187,7 @@
       "issue_severity": "HIGH",
       "issue_text": "Starting a process with a shell, possible injection detected, security issue.",
       "line_number": 1380,
-      "line_range": [
-        1380,
-        1381,
-        1382,
-        1383,
-        1384,
-        1385
-      ],
+      "line_range": [1380, 1381, 1382, 1383, 1384, 1385],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b605_start_process_with_a_shell.html",
       "test_id": "B605",
       "test_name": "start_process_with_a_shell"

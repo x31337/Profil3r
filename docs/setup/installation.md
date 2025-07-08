@@ -12,12 +12,14 @@
 ### Option 1: Docker (Recommended)
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-repo/Profil3r.git
    cd Profil3r
    ```
 
 2. Build and start services:
+
    ```bash
    docker-compose build
    docker-compose up -d
@@ -31,17 +33,20 @@
 ### Option 2: Local Installation
 
 1. **Install Python dependencies:**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 2. **Install JavaScript dependencies:**
+
    ```bash
    cd tools/js_tools/facebook_mass_messenger && npm install
    cd ../messenger_bot_framework/fbbot && npm install
    ```
 
 3. **Install Ruby dependencies:**
+
    ```bash
    sudo apt install libssl-dev zlib1g-dev
    sudo gem install nokogiri mechanize colorize highline optparse

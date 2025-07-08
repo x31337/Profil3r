@@ -1,5 +1,7 @@
-from profil3r.core.colors import Colors
 import threading
+
+from profil3r.core.colors import Colors
+
 
 def run(self):
     self.print_logo()
@@ -10,11 +12,25 @@ def run(self):
     self.get_permutations()
 
     # Number of permutations to test per service
-    print(Colors.BOLD + "[+]" + Colors.ENDC + " {} permutations to test for each service, you can reduce this number by selecting less options if it takes too long".format(len(self.permutations_list)))
+    print(
+        Colors.BOLD
+        + "[+]"
+        + Colors.ENDC
+        + " {} permutations to test for each service, you can reduce this number by selecting less options if it takes too long".format(
+            len(self.permutations_list)
+        )
+    )
 
     modules = self.get_report_modules()
 
-    print("\n" + "Profil3r will search : \n " + Colors.BOLD + "[+] " + Colors.ENDC +  "{} \n".format(str('\n ' + Colors.BOLD + "[+] " + Colors.ENDC).join(modules)))
+    print(
+        "\n"
+        + "Profil3r will search : \n "
+        + Colors.BOLD
+        + "[+] "
+        + Colors.ENDC
+        + "{} \n".format(str("\n " + Colors.BOLD + "[+] " + Colors.ENDC).join(modules))
+    )
 
     for module in modules:
         thread = threading.Thread(target=self.modules[module]["method"])

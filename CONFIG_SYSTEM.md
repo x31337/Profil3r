@@ -1,10 +1,12 @@
 # Profil3r Configuration System
 
-This document describes the centralized configuration system for Profil3r, which provides environment-aware configuration management and validation.
+This document describes the centralized configuration system for Profil3r, which provides
+environment-aware configuration management and validation.
 
 ## Overview
 
 The new configuration system provides:
+
 - **Centralized schema validation** using JSON Schema
 - **Environment-specific configurations** (dev, ci, prod)
 - **Automated validation** for CI/CD pipelines
@@ -29,15 +31,19 @@ Profil3r/
 
 ## Configuration Schema
 
-The configuration schema (`schema/config.schema.json`) defines the structure for all configuration files and includes:
+The configuration schema (`schema/config.schema.json`) defines the structure for all configuration
+files and includes:
 
 ### Core Configuration
+
 - `separators`: Character separators for username permutations
 - `report_elements`: List of platforms to include in reports
 - `*_report_path`: Path templates for different report formats
 
 ### Platform Configuration (`plateform`)
+
 Each platform entry supports:
+
 - `rate_limit`: Requests per minute limit
 - `format`: URL format with `{permutation}` placeholder
 - `type`: Platform category (social, email, domain, etc.)
@@ -46,18 +52,22 @@ Each platform entry supports:
 - `TLD`: Top-level domains (for domain platforms)
 
 ### Profil3r Settings
+
 - `timeout`: Request timeout in seconds
 - `max_workers`: Maximum concurrent threads
 - `user_agent`: HTTP user agent string
 - `retry_count`: Number of retry attempts
 
 ### Language Settings
+
 Support for Python, JavaScript, and PHP:
+
 - `packages`: Required packages/dependencies
 - `*_version`: Language version requirements
 - `virtual_env`: Virtual environment path
 
 ### Logging Configuration
+
 - `level`: Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
 - `file`: Log file path
 - `max_size`: Maximum log file size in bytes
@@ -66,18 +76,21 @@ Support for Python, JavaScript, and PHP:
 ## Environment Configurations
 
 ### Development (`config.dev.json`)
+
 - Lower rate limits for faster testing
 - Debug logging enabled
 - Minimal platform set
 - Local report paths
 
 ### CI/CD (`config.ci.json`)
+
 - Moderate rate limits
 - Info-level logging
 - Test-specific settings
 - CI-friendly paths
 
 ### Production (`config.prod.json`)
+
 - Higher rate limits for performance
 - Warning-level logging only
 - Full platform set
@@ -88,11 +101,13 @@ Support for Python, JavaScript, and PHP:
 ### Python Validator (`scripts/validate_config.py`)
 
 Basic usage:
+
 ```bash
 python3 scripts/validate_config.py config.json
 ```
 
 Advanced usage:
+
 ```bash
 # Validate multiple files
 python3 scripts/validate_config.py config.*.json
@@ -107,11 +122,13 @@ python3 scripts/validate_config.py --quiet config.json
 ### CI/CD Integration (`scripts/validate_all_configs.sh`)
 
 For automated validation in pipelines:
+
 ```bash
 ./scripts/validate_all_configs.sh
 ```
 
 This script:
+
 - Checks for Python 3 availability
 - Installs jsonschema if needed
 - Validates all configuration files
@@ -130,7 +147,7 @@ def load_config(env='prod'):
     config_file = f"config.{env}.json"
     if not Path(config_file).exists():
         config_file = "config.json"  # Fallback to default
-    
+
     with open(config_file, 'r') as f:
         return json.load(f)
 
@@ -142,6 +159,7 @@ timeout = config.get('profil3r', {}).get('timeout', 10)
 ### Adding New Platforms
 
 1. Add platform definition to all environment configs:
+
 ```json
 {
   "plateform": {
@@ -161,6 +179,7 @@ timeout = config.get('profil3r', {}).get('timeout', 10)
 ### Pipeline Integration
 
 #### GitHub Actions
+
 ```yaml
 - name: Validate Configuration
   run: |
@@ -169,6 +188,7 @@ timeout = config.get('profil3r', {}).get('timeout', 10)
 ```
 
 #### GitLab CI
+
 ```yaml
 validate_config:
   script:
@@ -177,6 +197,7 @@ validate_config:
 ```
 
 #### Jenkins
+
 ```groovy
 stage('Validate Config') {
     steps {
@@ -210,6 +231,7 @@ stage('Validate Config') {
 ### Updating Existing Code
 
 Replace hardcoded config access:
+
 ```python
 # Old way
 timeout = 10  # hardcoded
@@ -240,6 +262,7 @@ timeout = config.get('profil3r', {}).get('timeout', 10)
 ### Debugging
 
 Enable debug logging to see detailed configuration loading:
+
 ```json
 {
   "logging": {
@@ -251,6 +274,7 @@ Enable debug logging to see detailed configuration loading:
 ### Performance Tuning
 
 Adjust these settings based on your needs:
+
 - `rate_limit`: Higher for better performance, lower for rate limit compliance
 - `max_workers`: More workers = faster execution (but more resource usage)
 - `timeout`: Longer for slow networks, shorter for faster failure detection
@@ -259,6 +283,7 @@ Adjust these settings based on your needs:
 ## Contributing
 
 When adding new features:
+
 1. Update the schema (`schema/config.schema.json`)
 2. Add to all environment configs
 3. Update this documentation
@@ -268,6 +293,7 @@ When adding new features:
 ## Support
 
 For issues with the configuration system:
+
 1. Check this documentation
 2. Validate your configuration files
 3. Review the JSON schema

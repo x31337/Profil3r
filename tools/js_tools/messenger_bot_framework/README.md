@@ -9,11 +9,12 @@ This tool was originally located in the `fbbot` directory at the root of the rep
 ## Functionality
 
 From a brief analysis, `fbbot` appears to provide a framework for:
-*   Handling incoming messages and events from the Facebook Messenger Platform.
-*   Processing different types of messages (text, postbacks, quick replies).
-*   A middleware-based architecture for incoming and outgoing message processing.
-*   Helper utilities for constructing various Messenger API message types (buttons, templates, quick replies).
-*   A `Traverse` utility, possibly for navigating complex message objects or defining conversation flows.
+
+- Handling incoming messages and events from the Facebook Messenger Platform.
+- Processing different types of messages (text, postbacks, quick replies).
+- A middleware-based architecture for incoming and outgoing message processing.
+- Helper utilities for constructing various Messenger API message types (buttons, templates, quick replies).
+- A `Traverse` utility, possibly for navigating complex message objects or defining conversation flows.
 
 It seems to be built to work with HTTP servers (Express, Hapi, Node's native http) to receive webhook events from Facebook.
 
@@ -22,6 +23,7 @@ It seems to be built to work with HTTP servers (Express, Hapi, Node's native htt
 Refer to the original documentation or source code of `fbbot` (specifically `index.js` and the files in `incoming/`, `outgoing/`, and `templates/`) for details on how to integrate and use this framework for building a Messenger bot.
 
 A typical use case would involve:
+
 1.  Setting up an HTTP server.
 2.  Initializing `Fbbot` with your Facebook Page Access Token and a Verify Token.
 3.  Using `fbbot.requestHandler` as a middleware for your server to process incoming webhook requests from Facebook.
@@ -31,10 +33,11 @@ A typical use case would involve:
 ## Dependencies
 
 Key dependencies likely include:
-*   `agnostic` (for HTTP server compatibility)
-*   `bole` (for logging)
-*   `deeply` (for merging objects)
-*   `asynckit`
+
+- `agnostic` (for HTTP server compatibility)
+- `bole` (for logging)
+- `deeply` (for merging objects)
+- `asynckit`
 
 Refer to `package.json` within the `fbbot` directory for a full list.
 

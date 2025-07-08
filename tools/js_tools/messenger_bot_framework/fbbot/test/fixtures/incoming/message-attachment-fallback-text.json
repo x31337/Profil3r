@@ -7,44 +7,53 @@
   },
   "body": {
     "object": "page",
-    "entry": [{
-      "id": "514061682115264",
-      "time": 1469437728090,
-      "messaging": [{
-        "sender": {
-          "id": "10157033896470455"
-        },
-        "recipient": {
-          "id": "514061682115264"
-        },
-        "timestamp": 1469437728018,
-        "message": {
-          "mid": "mid.1469437727898:3d506401f2e7407653",
-          "seq": 2284,
-          "text": "https://developers.facebook.com/docs/messenger-platform/plugin-reference",
-          "attachments": [{
-            "title": "Plugin Reference - Messenger Platform - Documentation - Facebook for Developers",
-            "url": "https://developers.facebook.com/docs/messenger-platform/plugin-reference",
-            "type": "fallback",
-            "payload": null
-          }]
-        }
-      }]
-    }]
+    "entry": [
+      {
+        "id": "514061682115264",
+        "time": 1469437728090,
+        "messaging": [
+          {
+            "sender": {
+              "id": "10157033896470455"
+            },
+            "recipient": {
+              "id": "514061682115264"
+            },
+            "timestamp": 1469437728018,
+            "message": {
+              "mid": "mid.1469437727898:3d506401f2e7407653",
+              "seq": 2284,
+              "text": "https://developers.facebook.com/docs/messenger-platform/plugin-reference",
+              "attachments": [
+                {
+                  "title": "Plugin Reference - Messenger Platform - Documentation - Facebook for Developers",
+                  "url": "https://developers.facebook.com/docs/messenger-platform/plugin-reference",
+                  "type": "fallback",
+                  "payload": null
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
   },
 
-  "+expected":
-  {
+  "+expected": {
     "plan": 14,
-    "entry": [{
-      "messaging": [{
-        "message": {
-          "type": "attachment",
-          "user": {
-            "id": "10157033896470455"
+    "entry": [
+      {
+        "messaging": [
+          {
+            "message": {
+              "type": "attachment",
+              "user": {
+                "id": "10157033896470455"
+              }
+            }
           }
-        }
-      }]
-    }]
+        ]
+      }
+    ]
   }
 }

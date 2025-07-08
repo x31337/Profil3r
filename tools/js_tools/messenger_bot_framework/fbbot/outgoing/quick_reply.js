@@ -7,10 +7,8 @@ module.exports = quickReply;
  * @param {object} payload - quick_reply object
  * @param {function} callback - invoked after stringification is done
  */
-function quickReply(payload, callback)
-{
-  if (typeof payload.payload != 'string')
-  {
+function quickReply(payload, callback) {
+  if (typeof payload.payload != 'string') {
     payload.payload = JSON.stringify(payload.payload);
   }
 

@@ -1,0 +1,143 @@
+pull_request_rules:
+  # Auto-merge Dependabot PRs when CI passes
+  - name: automatic merge for dependabot
+    conditions:
+      - author=dependabot[bot]
+      - status-success=CI Pipeline
+      - status-success=Code Quality Checks
+      - '#approved-reviews-by>=1'
+      - '#changes-requested-reviews-by=0'
+      - label!=work-in-progress
+      - label!=do-not-merge
+      - base=main
+    actions:
+      merge:
+        method: squash
+        commit_message_template: |
+          {{ title }} (#{{ number }})
+
+          {{ body }}
+      delete_head_branch: {}
+      comment:
+        message: |
+          🤖 **Mergify**: Automatically merging Dependabot PR after successful CI checks.
+
+          - ✅ CI Pipeline passed
+          - ✅ Code Quality checks passed
+          - ✅ Required approvals obtained
+
+  # Auto-merge regular PRs with conventional commits
+  - name: automatic merge for conventional commits
+    conditions:
+      - status-success=CI Pipeline
+      - status-success=Code Quality Checks
+      - '#approved-reviews-by>=2'
+      - '#changes-requested-reviews-by=0'
+      - label!=work-in-progress
+      - label!=do-not-merge
+      - base=main
+      - title~=^(feat|fix|docs|style|refactor|perf|test|chore)(\(.+\))?: .+
+    actions:
+      merge:
+        method: squash
+        commit_message_template: |
+          {{ title }} (#{{ number }})
+
+          {{ body }}
+      delete_head_branch: {}
+      comment:
+        message: |
+          🤖 **Mergify**: Automatically merging PR with conventional commit format.
+
+          - ✅ CI Pipeline passed
+          - ✅ Code Quality checks passed
+          - ✅ Required approvals obtained
+          - ✅ Conventional commit format detected
+
+  # Auto-rebase PRs when base branch is updated
+  - name: automatic rebase
+    conditions:
+      - base=main
+      - '#approved-reviews-by>=1'
+      - label!=work-in-progress
+      - label!=do-not-merge
+    actions:
+      rebase:
+        bot_account: mergify[bot]
+
+  # Auto-request reviews for PRs
+  - name: automatic review request
+    conditions:
+      - base=main
+      - '#approved-reviews-by=0'
+      - '#review-requested=0'
+      - label!=work-in-progress
+      - -author=dependabot[bot]
+    actions:
+      request_reviews:
+        teams:
+          - profil3r-maintainers
+        users:
+          - profil3r-maintainers
+
+  # Add labels based on PR content
+  - name: label dependabot PRs
+    conditions:
+      - author=dependabot[bot]
+    actions:
+      label:
+        add:
+          - dependencies
+          - bot
+
+  # Add labels for conventional commits
+  - name: label feature PRs
+    conditions:
+      - title~=^feat(\(.+\))?: .+
+    actions:
+      label:
+        add:
+          - enhancement
+
+  - name: label bug fix PRs
+    conditions:
+      - title~=^fix(\(.+\))?: .+
+    actions:
+      label:
+        add:
+          - bug
+
+  - name: label documentation PRs
+    conditions:
+      - title~=^docs(\(.+\))?: .+
+    actions:
+      label:
+        add:
+          - documentation
+
+  # Prevent merge if CI fails
+  - name: prevent merge on CI failure
+    conditions:
+      - or:
+          - status-failure=CI Pipeline
+          - status-failure=Code Quality Checks
+    actions:
+      comment:
+        message: |
+          ❌ **Mergify**: Cannot merge PR due to failing CI checks.
+
+          Please fix the failing checks before attempting to merge.
+
+queue_rules:
+  # Merge queue for better handling of concurrent PRs
+  - name: default
+    conditions:
+      - status-success=CI Pipeline
+      - status-success=Code Quality Checks
+      - '#approved-reviews-by>=1'
+      - '#changes-requested-reviews-by=0'
+      - label!=work-in-progress
+      - label!=do-not-merge
+    merge_method: squash
+    update_method: rebase
+    disallow_checks_interruption_from_queued: true

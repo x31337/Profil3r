@@ -1,0 +1,427 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [python, javascript, php, ruby]
+      fail-fast: false
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Python
+      if: matrix.language == 'python'
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Setup Node.js
+      if: matrix.language == 'javascript'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Setup PHP
+      if: matrix.language == 'php'
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+    
+    - name: Setup Ruby
+      if: matrix.language == 'ruby'
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+    
+    - name: Install Python dependencies
+      if: matrix.language == 'python'
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 black
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Install JavaScript dependencies
+      if: matrix.language == 'javascript'
+      run: npm ci
+    
+    - name: Install PHP dependencies
+      if: matrix.language == 'php'
+      run: |
+        if [ -f composer.json ]; then composer install --no-dev --optimize-autoloader; fi
+    
+    - name: Install Ruby dependencies
+      if: matrix.language == 'ruby'
+      run: |
+        gem install rubocop
+        if [ -f Gemfile ]; then bundle install; fi
+    
+    - name: Run Python linting
+      if: matrix.language == 'python'
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        black --check --diff .
+    
+    - name: Run JavaScript linting
+      if: matrix.language == 'javascript'
+      run: |
+        npx eslint . --ext .js,.jsx,.ts,.tsx
+    
+    - name: Run PHP linting
+      if: matrix.language == 'php'
+      run: |
+        find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected"
+    
+    - name: Run Ruby linting
+      if: matrix.language == 'ruby'
+      run: |
+        rubocop --format progress
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [python, javascript, php, ruby]
+      fail-fast: false
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Python
+      if: matrix.language == 'python'
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Setup Node.js
+      if: matrix.language == 'javascript'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Setup PHP
+      if: matrix.language == 'php'
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mbstring, xml, ctype, json, tokenizer
+    
+    - name: Setup Ruby
+      if: matrix.language == 'ruby'
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+    
+    - name: Install Python dependencies
+      if: matrix.language == 'python'
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Install JavaScript dependencies
+      if: matrix.language == 'javascript'
+      run: npm ci
+    
+    - name: Install PHP dependencies
+      if: matrix.language == 'php'
+      run: |
+        composer install --optimize-autoloader
+        composer require --dev phpunit/phpunit
+    
+    - name: Install Ruby dependencies
+      if: matrix.language == 'ruby'
+      run: |
+        gem install rspec
+        if [ -f Gemfile ]; then bundle install; fi
+    
+    - name: Run Python tests
+      if: matrix.language == 'python'
+      run: |
+        pytest --cov=. --cov-report=xml --cov-report=term-missing
+    
+    - name: Run JavaScript tests
+      if: matrix.language == 'javascript'
+      run: |
+        npm test --workspaces
+    
+    - name: Run PHP tests
+      if: matrix.language == 'php'
+      run: |
+        if [ -f phpunit.xml ]; then ./vendor/bin/phpunit; else echo "No phpunit.xml found, skipping PHP tests"; fi
+    
+    - name: Run Ruby tests
+      if: matrix.language == 'ruby'
+      run: |
+        if [ -f spec ]; then rspec; else echo "No spec directory found, skipping Ruby tests"; fi
+    
+    - name: Upload coverage to Coveralls
+      if: matrix.language == 'python'
+      uses: coverallsapp/github-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        file: coverage.xml
+        fail-on-error: true
+        minimum-coverage: 90
+
+  build-images:
+    runs-on: ubuntu-latest
+    needs: [lint, unit-tests]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    
+    - name: Build additional service images
+      run: |
+        # Build from docker-compose files if they exist
+        if [ -f docker-compose.yml ]; then
+          docker-compose build
+          docker-compose push || echo "Push failed, might need registry authentication"
+        fi
+        
+        # Build from docker directory if it exists
+        if [ -d docker ]; then
+          for dockerfile in docker/*/Dockerfile; do
+            if [ -f "$dockerfile" ]; then
+              service_name=$(basename $(dirname $dockerfile))
+              echo "Building $service_name from $dockerfile"
+              docker build -f "$dockerfile" -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$service_name .
+              docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$service_name
+            fi
+          done
+        fi
+
+  e2e-cypress:
+    runs-on: ubuntu-latest
+    needs: [build-images]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Pull built images
+      run: |
+        docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    
+    - name: Start services with docker-compose
+      run: |
+        # Use the built images in docker-compose
+        export IMAGE_TAG=${{ github.sha }}
+        if [ -f docker-compose.yml ]; then
+          docker-compose up -d
+        elif [ -f docker-compose.prod.yml ]; then
+          docker-compose -f docker-compose.prod.yml up -d
+        else
+          echo "No docker-compose file found"
+          exit 1
+        fi
+        
+        # Wait for services to be ready
+        sleep 30
+        
+        # Check if services are running
+        docker-compose ps
+    
+    - name: Setup Node.js for Cypress
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Install Cypress
+      run: |
+        npm install --save-dev cypress
+        npx cypress install
+    
+    - name: Run Cypress tests
+      run: |
+        # Run Cypress in parallel with record (requires CYPRESS_RECORD_KEY)
+        if [ -n "${{ secrets.CYPRESS_RECORD_KEY }}" ]; then
+          npx cypress run --record --parallel --key ${{ secrets.CYPRESS_RECORD_KEY }}
+        else
+          # Run without record if no key provided
+          npx cypress run --parallel
+        fi
+      env:
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        CYPRESS_baseUrl: http://localhost:3000
+    
+    - name: Upload Cypress screenshots
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-screenshots
+        path: cypress/screenshots
+    
+    - name: Upload Cypress videos
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: cypress-videos
+        path: cypress/videos
+    
+    - name: Stop services
+      if: always()
+      run: |
+        docker-compose down -v
+
+  security:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tool: [python-safety, npm-audit, trivy]
+      fail-fast: false
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Python
+      if: matrix.tool == 'python-safety'
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Setup Node.js
+      if: matrix.tool == 'npm-audit'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install Python dependencies
+      if: matrix.tool == 'python-safety'
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Install JavaScript dependencies
+      if: matrix.tool == 'npm-audit'
+      run: npm ci
+    
+    - name: Run Safety (Python)
+      if: matrix.tool == 'python-safety'
+      run: |
+        safety check --json --output safety-report.json || true
+        safety check
+    
+    - name: Run npm audit (JavaScript)
+      if: matrix.tool == 'npm-audit'
+      run: |
+        npm audit --audit-level=high
+    
+    - name: Run Trivy vulnerability scanner
+      if: matrix.tool == 'trivy'
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+    
+    - name: Upload Trivy scan results to GitHub Security tab
+      if: matrix.tool == 'trivy'
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+    
+    - name: Upload security artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-reports-${{ matrix.tool }}
+        path: |
+          safety-report.json
+          trivy-results.sarif
+
+  coverage-check:
+    runs-on: ubuntu-latest
+    needs: [unit-tests]
+    if: always()
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Run coverage check
+      run: |
+        pytest --cov=. --cov-report=xml --cov-report=term-missing --cov-fail-under=90
+    
+    - name: Upload coverage to Coveralls
+      uses: coverallsapp/github-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        file: coverage.xml
+        fail-on-error: true
+        minimum-coverage: 90

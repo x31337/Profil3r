@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  profil3r-python:
+    build:
+      context: .
+      dockerfile: docker/python.dockerfile
+    image: profil3r-python:${GITHUB_SHA:-latest}
+    restart: unless-stopped
+    networks:
+      - profil3r-network
+
+  profil3r-node:
+    build:
+      context: .
+      dockerfile: docker/node.dockerfile
+    image: profil3r-node:${GITHUB_SHA:-latest}
+    restart: unless-stopped
+    networks:
+      - profil3r-network
+
+  profil3r-php:
+    build:
+      context: .
+      dockerfile: docker/php.dockerfile
+    image: profil3r-php:${GITHUB_SHA:-latest}
+    restart: unless-stopped
+    networks:
+      - profil3r-network
+
+  profil3r-ruby:
+    build:
+      context: .
+      dockerfile: docker/ruby.dockerfile
+    image: profil3r-ruby:${GITHUB_SHA:-latest}
+    restart: unless-stopped
+    networks:
+      - profil3r-network
+
+  profil3r-core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: profil3r-core:${GITHUB_SHA:-latest}
+    restart: unless-stopped
+    networks:
+      - profil3r-network
+
+networks:
+  profil3r-network:
+    driver: bridge

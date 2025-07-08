@@ -1,7 +1,5 @@
-var find      = require('array-find')
-  , normalize = require('../lib/normalize.js')
-  ;
-
+var find = require('array-find'),
+  normalize = require('../lib/normalize.js');
 module.exports = typeCast;
 
 // order here is important, not just alphabetical, although I did try to keep it nice
@@ -29,12 +27,12 @@ var types = [
  * @param {object} payload - message object
  * @param {function} callback - invoked after type casting is done
  */
-function typeCast(payload, callback)
-{
-  var type = find(types, function(t){ return (t in payload); });
+function typeCast(payload, callback) {
+  var type = find(types, function (t) {
+    return t in payload;
+  });
 
-  if (type)
-  {
+  if (type) {
     payload.type = normalize(type);
   }
 

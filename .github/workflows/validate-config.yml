@@ -13,27 +13,27 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install jsonschema>=4.0.0
-    
-    - name: Validate configuration files
-      run: ./scripts/validate_all_configs.sh
-    
-    - name: Test individual configs
-      run: |
-        python3 scripts/validate_config.py config.json
-        python3 scripts/validate_config.py config.dev.json
-        python3 scripts/validate_config.py config.ci.json
-        python3 scripts/validate_config.py config.prod.json
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jsonschema>=4.0.0
+
+      - name: Validate configuration files
+        run: ./scripts/validate_all_configs.sh
+
+      - name: Test individual configs
+        run: |
+          python3 scripts/validate_config.py config.json
+          python3 scripts/validate_config.py config.dev.json
+          python3 scripts/validate_config.py config.ci.json
+          python3 scripts/validate_config.py config.prod.json

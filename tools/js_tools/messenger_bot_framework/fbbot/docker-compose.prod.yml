@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  profil3r-python:
+    environment:
+      - FLASK_ENV=production
+      - DEBUG=false
+      - LOG_LEVEL=info
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "5000"
+
+  profil3r-node:
+    environment:
+      - NODE_ENV=production
+      - DEBUG=false
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "3000"
+
+  profil3r-php:
+    environment:
+      - PHP_ENV=production
+      - XDEBUG_MODE=off
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "80"
+
+  profil3r-ruby:
+    environment:
+      - RAILS_ENV=production
+      - RACK_ENV=production
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4567/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "4567"
+
+  profil3r-core:
+    environment:
+      - ENV=production
+      - DEBUG=false
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "8000"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - profil3r-python
+      - profil3r-node
+      - profil3r-php
+      - profil3r-ruby
+      - profil3r-core
+    networks:
+      - profil3r-network

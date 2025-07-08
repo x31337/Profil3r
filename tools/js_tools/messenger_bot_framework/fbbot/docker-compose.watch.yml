@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  profil3r-python:
+    extends:
+      file: docker-compose.dev.yml
+      service: profil3r-python
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - __pycache__/
+        - action: restart
+          path: requirements.txt
+    command: |
+      sh -c '
+        pip install watchdog &&
+        watchmedo auto-restart --directory=/app --pattern="*.py" --recursive -- python -m flask run --host=0.0.0.0 --debug
+      '
+  
+  profil3r-node:
+    extends:
+      file: docker-compose.dev.yml
+      service: profil3r-node
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - __pycache__/
+        - action: restart
+          path: package.json
+    command: |
+      sh -c '
+        npm install -g nodemon &&
+        nodemon --watch . --ext js,json --ignore node_modules/ index.js
+      '
+  
+  profil3r-php:
+    extends:
+      file: docker-compose.dev.yml
+      service: profil3r-php
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /var/www/html
+          ignore:
+            - node_modules/
+            - vendor/
+        - action: restart
+          path: composer.json
+  
+  profil3r-ruby:
+    extends:
+      file: docker-compose.dev.yml
+      service: profil3r-ruby
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - vendor/
+        - action: restart
+          path: Gemfile
+    command: |
+      sh -c '
+        gem install rerun &&
+        rerun --background --pattern "**/*.rb" -- ruby app.rb -o 0.0.0.0
+      '
+  
+  profil3r-core:
+    extends:
+      file: docker-compose.dev.yml
+      service: profil3r-core
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - __pycache__/

@@ -54,15 +54,15 @@ docker-compose --profile cache --profile database --profile proxy up
 
 ## Port Mappings
 
-| Service | Internal Port | External Port | Description |
-|---------|---------------|---------------|-------------|
-| profil3r-core | 8000 | - | Main application (no external access) |
-| js-tools | 3000 | 3000 | JavaScript tools web interface |
-| php-tools | 80 | - | PHP scripts (no external access) |
-| ruby-reporter | - | - | Ruby reporter (no web interface) |
-| redis | 6379 | 6379 | Redis cache (optional) |
-| postgres | 5432 | 5432 | PostgreSQL database (optional) |
-| nginx | 80/443 | 80/443 | Reverse proxy (optional) |
+| Service       | Internal Port | External Port | Description                           |
+| ------------- | ------------- | ------------- | ------------------------------------- |
+| profil3r-core | 8000          | -             | Main application (no external access) |
+| js-tools      | 3000          | 3000          | JavaScript tools web interface        |
+| php-tools     | 80            | -             | PHP scripts (no external access)      |
+| ruby-reporter | -             | -             | Ruby reporter (no web interface)      |
+| redis         | 6379          | 6379          | Redis cache (optional)                |
+| postgres      | 5432          | 5432          | PostgreSQL database (optional)        |
+| nginx         | 80/443        | 80/443        | Reverse proxy (optional)              |
 
 ## Volume Management
 
@@ -74,14 +74,14 @@ docker-compose --profile cache --profile database --profile proxy up
 
 ### Host Bind Mounts
 
-| Host Path | Container Path | Description |
-|-----------|----------------|-------------|
-| `./logs` | `/app/logs` | Application logs |
-| `./results` | `/app/results` | Output results |
-| `./config` | `/app/config` | Configuration files |
-| `./nginx.conf` | `/etc/nginx/nginx.conf` | Nginx configuration |
-| `./ssl` | `/etc/nginx/ssl` | SSL certificates |
-| `./schema` | `/docker-entrypoint-initdb.d` | Database schema |
+| Host Path      | Container Path                | Description         |
+| -------------- | ----------------------------- | ------------------- |
+| `./logs`       | `/app/logs`                   | Application logs    |
+| `./results`    | `/app/results`                | Output results      |
+| `./config`     | `/app/config`                 | Configuration files |
+| `./nginx.conf` | `/etc/nginx/nginx.conf`       | Nginx configuration |
+| `./ssl`        | `/etc/nginx/ssl`              | SSL certificates    |
+| `./schema`     | `/docker-entrypoint-initdb.d` | Database schema     |
 
 ## Health Checks
 

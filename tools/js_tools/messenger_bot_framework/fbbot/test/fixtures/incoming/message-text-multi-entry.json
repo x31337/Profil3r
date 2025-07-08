@@ -1,5 +1,5 @@
 {
- "headers": {
+  "headers": {
     "host": "localhost",
     "accept": "*/*",
     "accept-encoding": "deflate, gzip",
@@ -7,64 +7,77 @@
   },
   "body": {
     "object": "page",
-    "entry": [{
-      "id": "514061682115264",
-      "time": 1469430646874,
-      "messaging": [{
-        "sender": {
-          "id": "10157033896470455"
-        },
-        "recipient": {
-          "id": "514061682115264"
-        },
-        "timestamp": 1469430646786,
-        "message": {
-          "mid": "mid.1469430646641:faf898695ebb3f0f86",
-          "seq": 2236,
-          "text": "94301"
-        }
-      }]
-    }, {
-      "id": "847061682115597",
-      "time": 1469430646997,
-      "messaging": [{
-        "sender": {
-          "id": "21267033896471566"
-        },
-        "recipient": {
-          "id": "514061682115264"
-        },
-        "timestamp": 1469430646985,
-        "message": {
-          "mid": "mid.1469435039239:1fc6e19f056a982685",
-          "seq": 2237,
-          "text": "90210"
-        }
-      }]
-    }]
+    "entry": [
+      {
+        "id": "514061682115264",
+        "time": 1469430646874,
+        "messaging": [
+          {
+            "sender": {
+              "id": "10157033896470455"
+            },
+            "recipient": {
+              "id": "514061682115264"
+            },
+            "timestamp": 1469430646786,
+            "message": {
+              "mid": "mid.1469430646641:faf898695ebb3f0f86",
+              "seq": 2236,
+              "text": "94301"
+            }
+          }
+        ]
+      },
+      {
+        "id": "847061682115597",
+        "time": 1469430646997,
+        "messaging": [
+          {
+            "sender": {
+              "id": "21267033896471566"
+            },
+            "recipient": {
+              "id": "514061682115264"
+            },
+            "timestamp": 1469430646985,
+            "message": {
+              "mid": "mid.1469435039239:1fc6e19f056a982685",
+              "seq": 2237,
+              "text": "90210"
+            }
+          }
+        ]
+      }
+    ]
   },
 
-  "+expected":
-  {
+  "+expected": {
     "plan": 23,
-    "entry": [{
-      "messaging": [{
-        "message": {
-          "type": "text",
-          "user": {
-            "id": "10157033896470455"
+    "entry": [
+      {
+        "messaging": [
+          {
+            "message": {
+              "type": "text",
+              "user": {
+                "id": "10157033896470455"
+              }
+            }
           }
-        }
-      }]
-    }, {
-      "messaging": [{
-        "message": {
-          "type": "text",
-          "user": {
-            "id": "21267033896471566"
+        ]
+      },
+      {
+        "messaging": [
+          {
+            "message": {
+              "type": "text",
+              "user": {
+                "id": "21267033896471566"
+              }
+            }
           }
-        }
-      }]
-    }]
+        ]
+      }
+    ]
   }
 }

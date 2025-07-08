@@ -3,9 +3,10 @@
 ## Health Check Endpoints
 
 ### OSINT Service
+
 - **URL**: `http://localhost:8000/api/health`
 - **Method**: GET
-- **Response**: 
+- **Response**:
   ```json
   {
     "status": "ok",
@@ -15,6 +16,7 @@
   ```
 
 ### JS Tools Service
+
 - **URL**: `http://localhost:3000/api/health`
 - **Method**: GET
 - **Response**:
@@ -29,6 +31,7 @@
   ```
 
 ### Facebook Mass Messenger
+
 - **URL**: `http://localhost:4444/api/health`
 - **Method**: GET
 - **Response**:
@@ -43,34 +46,39 @@
 ## OSINT API Endpoints
 
 ### Username Search
+
 - **URL**: `http://localhost:8000/api/osint/username/{username}`
 - **Method**: GET
-- **Parameters**: 
+- **Parameters**:
   - `username` (string): Username to search
 - **Response**: JSON object with platform results
 
 ### Email Lookup
+
 - **URL**: `http://localhost:8000/api/osint/email/{email}`
 - **Method**: GET
-- **Parameters**: 
+- **Parameters**:
   - `email` (string): Email address to validate
 - **Response**: JSON object with validation results
 
 ### Domain Information
+
 - **URL**: `http://localhost:8000/api/network/domain/{domain}`
 - **Method**: GET
-- **Parameters**: 
+- **Parameters**:
   - `domain` (string): Domain to analyze
 - **Response**: JSON object with domain information
 
 ## JavaScript Tools API
 
 ### Mass Messenger Interface
+
 - **URL**: `http://localhost:3000/messenger`
 - **Method**: GET/POST
 - **Description**: Web interface for sending mass messages
 
 ### Bot Framework
+
 - **URL**: `http://localhost:3000/bot`
 - **Method**: GET/POST
 - **Description**: Facebook Messenger bot management interface
@@ -78,6 +86,7 @@
 ## Authentication
 
 Most endpoints require authentication via:
+
 - API Keys (configured in environment variables)
 - Session cookies (for Facebook-related operations)
 - Bearer tokens (for protected endpoints)
@@ -103,6 +112,7 @@ All APIs return standardized error responses:
 ```
 
 Common error codes:
+
 - `INVALID_REQUEST`: Malformed request
 - `UNAUTHORIZED`: Authentication required
 - `RATE_LIMITED`: Too many requests

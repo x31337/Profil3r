@@ -1,7 +1,7 @@
 body {
   background-color: #ffffff;
   font-size: 14px;
-  font-family: "Helvetica Neue", Helvetica;
+  font-family: 'Helvetica Neue', Helvetica;
 }
 
 #body {
@@ -16,16 +16,16 @@ body {
   text-align: center;
 }
 
-.dark-Mode{
+.dark-Mode {
   background-color: #000;
   color: #fff;
   .node text {
     fill: #fff;
   }
-  .legend{
+  .legend {
     color: #fff;
   }
-  path.link{
+  path.link {
     stroke: #444;
   }
 }

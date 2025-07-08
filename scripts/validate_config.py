@@ -11,19 +11,20 @@ Exit codes:
 2 - File not found or other error
 """
 
-import json
-import jsonschema
-import sys
-import os
 import argparse
+import json
+import os
+import sys
 from pathlib import Path
-from jsonschema import validate, ValidationError
+
+import jsonschema
+from jsonschema import ValidationError, validate
 
 
 def load_json_file(filepath):
     """Load and parse JSON file with error handling."""
     try:
-        with open(filepath, 'r', encoding='utf-8') as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
         print(f"Error: File '{filepath}' not found", file=sys.stderr)
@@ -38,19 +39,19 @@ def load_json_file(filepath):
 
 def validate_config(config_path, schema_path="schema/config.schema.json"):
     """Validate configuration file against schema."""
-    
+
     # Find schema file relative to script location
     script_dir = Path(__file__).parent.parent
     schema_file = script_dir / schema_path
-    
+
     if not schema_file.exists():
         print(f"Error: Schema file not found at {schema_file}", file=sys.stderr)
         sys.exit(2)
-    
+
     # Load schema and config
     schema = load_json_file(schema_file)
     config = load_json_file(config_path)
-    
+
     # Validate configuration
     try:
         validate(instance=config, schema=schema)
@@ -75,49 +76,43 @@ def main():
   python validate_config.py config.json
   python validate_config.py config.dev.json
   python validate_config.py config.*.json  # Validate all environment configs
-        """
+        """,
     )
-    
+
     parser.add_argument(
-        "config_files", 
-        nargs="+",
-        help="Configuration file(s) to validate"
+        "config_files", nargs="+", help="Configuration file(s) to validate"
     )
-    
+
     parser.add_argument(
-        "--schema", 
+        "--schema",
         default="schema/config.schema.json",
-        help="Path to schema file (default: schema/config.schema.json)"
+        help="Path to schema file (default: schema/config.schema.json)",
     )
-    
-    parser.add_argument(
-        "--quiet", 
-        action="store_true",
-        help="Only output errors"
-    )
-    
+
+    parser.add_argument("--quiet", action="store_true", help="Only output errors")
+
     args = parser.parse_args()
-    
+
     valid_count = 0
     total_count = 0
-    
+
     for config_file in args.config_files:
         total_count += 1
         if not args.quiet:
             print(f"Validating {config_file}...")
-        
+
         if validate_config(config_file, args.schema):
             valid_count += 1
         else:
             if not args.quiet:
                 print()
-    
+
     if not args.quiet:
         print(f"\nValidation complete: {valid_count}/{total_count} files valid")
-    
+
     if valid_count != total_count:
         sys.exit(1)
-    
+
     sys.exit(0)
 
 

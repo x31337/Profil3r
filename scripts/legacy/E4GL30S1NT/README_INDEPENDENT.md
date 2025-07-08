@@ -5,11 +5,13 @@ This is an independent OSINT (Open Source Intelligence) tool for gathering infor
 ## Installation
 
 1. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 2. Run the install script:
+
 ```bash
 chmod +x install_deps.sh
 ./install_deps.sh
@@ -42,6 +44,7 @@ See LICENSE file for details.
 ## Security Reports
 
 This module includes bandit security reports:
+
 - `bandit_report.json`
 - `bandit_report_final_v2.json`
 

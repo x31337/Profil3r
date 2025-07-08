@@ -180,16 +180,16 @@ done
 
 ```json
 {
-    "log_level": "INFO",
-    "log_directory": "logs",
-    "cookie_file_path": ".fb_cookies.json",
-    "REALEMAIL_API_KEY": "your_key_here",
-    "VERIPHONE_API_KEY": "your_key_here",
-    "GITHUB_TOKEN": "your_token_here",
-    "headless": false,
-    "browser": "chrome",
-    "wait_general_min": 1.5,
-    "wait_general_max": 3.5
+  "log_level": "INFO",
+  "log_directory": "logs",
+  "cookie_file_path": ".fb_cookies.json",
+  "REALEMAIL_API_KEY": "your_key_here",
+  "VERIPHONE_API_KEY": "your_key_here",
+  "GITHUB_TOKEN": "your_token_here",
+  "headless": false,
+  "browser": "chrome",
+  "wait_general_min": 1.5,
+  "wait_general_max": 3.5
 }
 ```
 
@@ -197,22 +197,22 @@ done
 
 ```json
 {
-    "log_level": "DEBUG",
-    "log_directory": "logs",
-    "cli_log_filename": "unified_cli.log",
-    "cookie_file_path": ".fb_cookies.json",
-    "selenium_session_file": "facebook_selenium_session.json",
-    "REALEMAIL_API_KEY": "your_realemail_key",
-    "VERIPHONE_API_KEY": "your_veriphone_key",
-    "GITHUB_TOKEN": "your_github_token",
-    "default_fb_email": "your_fb_email@example.com",
-    "headless": true,
-    "browser": "chrome",
-    "profil3r_config_path": "profil3r/config.json",
-    "wait_general_min": 2.0,
-    "wait_general_max": 5.0,
-    "max_retries": 3,
-    "timeout": 30
+  "log_level": "DEBUG",
+  "log_directory": "logs",
+  "cli_log_filename": "unified_cli.log",
+  "cookie_file_path": ".fb_cookies.json",
+  "selenium_session_file": "facebook_selenium_session.json",
+  "REALEMAIL_API_KEY": "your_realemail_key",
+  "VERIPHONE_API_KEY": "your_veriphone_key",
+  "GITHUB_TOKEN": "your_github_token",
+  "default_fb_email": "your_fb_email@example.com",
+  "headless": true,
+  "browser": "chrome",
+  "profil3r_config_path": "profil3r/config.json",
+  "wait_general_min": 2.0,
+  "wait_general_max": 5.0,
+  "max_retries": 3,
+  "timeout": 30
 }
 ```
 
@@ -227,23 +227,23 @@ from modules.network_utils import NetworkUtilities
 def investigate_target(username, email=None, phone=None):
     osint = OsintUtilities()
     net = NetworkUtilities()
-    
+
     results = {}
-    
+
     # Username reconnaissance
     results['username'] = osint.username_reconnaissance(username)
-    
+
     # Email validation if provided
     if email:
         results['email'] = osint.email_validation(email)
-    
-    # Phone validation if provided  
+
+    # Phone validation if provided
     if phone:
         results['phone'] = net.phone_validation(phone)
-    
+
     # GitHub information
     results['github'] = osint.github_user_info(username)
-    
+
     return results
 
 # Use the workflow
@@ -259,21 +259,21 @@ import time
 
 def mass_friend_and_message(targets, message_template):
     fb = FacebookAutomation()
-    
+
     # Login once
     fb.login("your_email@example.com", "your_password")
-    
+
     for target in targets:
         try:
             # Send friend request
             fb.send_friend_request(target)
             time.sleep(30)  # Wait between requests
-            
+
             # Send message
             message = message_template.format(name=target)
             fb.send_message(target, message)
             time.sleep(60)  # Wait between messages
-            
+
         except Exception as e:
             print(f"Error with {target}: {e}")
             continue

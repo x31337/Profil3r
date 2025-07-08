@@ -1,6 +1,8 @@
 # Comprehensive Facebook & OSINT Automation Toolkit
 
-This repository is a consolidated collection of tools for Facebook automation, OSINT gathering, and other network utilities. It merges functionalities from various scripts and projects into a more organized and modernized structure.
+This repository is a consolidated collection of tools for Facebook automation, OSINT gathering, and
+other network utilities. It merges functionalities from various scripts and projects into a more
+organized and modernized structure.
 
 ## Table of Contents
 
@@ -21,9 +23,13 @@ This repository is a consolidated collection of tools for Facebook automation, O
 ## Overview
 
 The primary goal of this refactoring is to:
-*   **Consolidate Duplicate Logic:** Merge similar functionalities from scattered scripts into unified Python modules.
-*   **Modernize Code:** Update older code to use current best practices, libraries, and error handling.
-*   **Organize by Functionality:** Group tools and scripts based on their purpose (e.g., Facebook automation, OSINT, network utilities, JavaScript tools).
+
+- **Consolidate Duplicate Logic:** Merge similar functionalities from scattered scripts into unified
+  Python modules.
+- **Modernize Code:** Update older code to use current best practices, libraries, and error
+  handling.
+- **Organize by Functionality:** Group tools and scripts based on their purpose (e.g., Facebook
+  automation, OSINT, network utilities, JavaScript tools).
 
 ## Quick Start
 
@@ -65,7 +71,8 @@ Comprehensive documentation is available in the `/docs` directory:
 
 ## Installation
 
-For detailed installation instructions, see [docs/setup/installation.md](docs/setup/installation.md).
+For detailed installation instructions, see
+[docs/setup/installation.md](docs/setup/installation.md).
 
 ### Prerequisites
 
@@ -106,12 +113,12 @@ wait-on http://localhost:8000/api/health http://localhost:3000/api/health http:/
 
 ### Service Endpoints
 
-| Service | Port | Health Check | Description |
-|---------|------|--------------|-------------|
-| OSINT Framework | 8000 | `/api/health` | OSINT operations and reconnaissance |
-| JS Tools | 3000 | `/api/health` | JavaScript tools and bot framework |
-| Facebook Messenger | 4444 | `/api/health` | Mass messaging and automation |
-| PHP Tools | 8080 | `/health` | PHP scripts and utilities |
+| Service            | Port | Health Check  | Description                         |
+| ------------------ | ---- | ------------- | ----------------------------------- |
+| OSINT Framework    | 8000 | `/api/health` | OSINT operations and reconnaissance |
+| JS Tools           | 3000 | `/api/health` | JavaScript tools and bot framework  |
+| Facebook Messenger | 4444 | `/api/health` | Mass messaging and automation       |
+| PHP Tools          | 8080 | `/health`     | PHP scripts and utilities           |
 
 ## Configuration
 
@@ -144,13 +151,13 @@ Update `config.json` with your settings:
 
 ```json
 {
-    "log_level": "INFO",
-    "log_directory": "logs",
-    "REALEMAIL_API_KEY": "your_key_here",
-    "VERIPHONE_API_KEY": "your_key_here",
-    "GITHUB_TOKEN": "your_token_here",
-    "headless": false,
-    "browser": "chrome"
+  "log_level": "INFO",
+  "log_directory": "logs",
+  "REALEMAIL_API_KEY": "your_key_here",
+  "VERIPHONE_API_KEY": "your_key_here",
+  "GITHUB_TOKEN": "your_token_here",
+  "headless": false,
+  "browser": "chrome"
 }
 ```
 
@@ -159,6 +166,7 @@ Update `config.json` with your settings:
 The toolkit is organized into several core modules:
 
 ### Facebook Automation (`modules/facebook_automation.py`)
+
 - **Selenium-based UI automation** for login, posting, messaging, friending
 - **Facebook Graph API integration** for user info and friends lists
 - **Session management** with cookie saving/loading
@@ -166,6 +174,7 @@ The toolkit is organized into several core modules:
 - **Brute-force login capabilities** (Selenium and requests-based)
 
 ### OSINT Utilities (`modules/osint_utils.py`)
+
 - **Username reconnaissance** across multiple platforms
 - **Email validation** with API-based verification
 - **GitHub user information** lookup
@@ -173,6 +182,7 @@ The toolkit is organized into several core modules:
 - **Social media profile discovery**
 
 ### Network Utilities (`modules/network_utils.py`)
+
 - **IP geolocation** and analysis
 - **Domain information** via HackerTarget (DNS, WHOIS)
 - **Phone number validation** via VeriPhone
@@ -180,6 +190,7 @@ The toolkit is organized into several core modules:
 - **URL bypass** tools (Bitly, etc.)
 
 ### Unified CLI (`modules/main.py`)
+
 - **Interactive command-line interface** for all modules
 - **Configuration management** from `config.json`
 - **Integrated workflows** combining multiple tools
@@ -187,21 +198,25 @@ The toolkit is organized into several core modules:
 ## Tools
 
 ### Profil3r OSINT (`profil3r/`)
+
 - Original OSINT tool for social network profile discovery
 - Integrated with the unified CLI
 - Standalone execution: `python profil3r.py`
 
 ### JavaScript Tools (`tools/js_tools/`)
+
 - **Facebook Mass Messenger** - Web interface for bulk messaging
 - **Messenger Bot Framework** - Node.js library for Facebook bots
 - **Browser Enhancements** - User scripts for enhanced functionality
 
 ### PHP Scripts (`tools/php_tools/`)
+
 - Collection of Facebook interaction scripts
 - Account management and token handling
 - Page creation and management tools
 
 ### Ruby Reporter (`ruby_tool_faceports_reporter_run.rb`)
+
 - Facebook login and reporting automation
 - Uses Mechanize for web automation
 - Complementary to Python modules
@@ -231,7 +246,8 @@ curl "http://localhost:8000/api/network/domain/example.com"
 
 ## Examples
 
-For comprehensive examples and tutorials, see [docs/examples/usage-examples.md](docs/examples/usage-examples.md).
+For comprehensive examples and tutorials, see
+[docs/examples/usage-examples.md](docs/examples/usage-examples.md).
 
 ### Basic Usage
 
@@ -265,7 +281,8 @@ python -m modules.main --osint --username "john_doe"
 
 ## Troubleshooting
 
-For common issues and solutions, see [docs/troubleshooting/common-issues.md](docs/troubleshooting/common-issues.md).
+For common issues and solutions, see
+[docs/troubleshooting/common-issues.md](docs/troubleshooting/common-issues.md).
 
 ### Quick Fixes
 
@@ -305,7 +322,10 @@ black modules/
 
 ## Disclaimer
 
-These tools are provided for educational and analytical purposes. Interacting with platforms like Facebook programmatically may violate their Terms of Service. Users are responsible for ensuring their use of these tools is compliant with all applicable laws and platform policies. The developers assume no liability for misuse.
+These tools are provided for educational and analytical purposes. Interacting with platforms like
+Facebook programmatically may violate their Terms of Service. Users are responsible for ensuring
+their use of these tools is compliant with all applicable laws and platform policies. The developers
+assume no liability for misuse.
 
 ## License
 
@@ -322,4 +342,5 @@ For questions, issues, or contributions:
 
 ---
 
-**Note**: This toolkit consolidates multiple OSINT and automation tools into a unified, modern platform. All tools are designed for ethical use and educational purposes only.
+**Note**: This toolkit consolidates multiple OSINT and automation tools into a unified, modern
+platform. All tools are designed for ethical use and educational purposes only.

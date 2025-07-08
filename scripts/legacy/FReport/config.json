@@ -1,6 +1,6 @@
 {
-    "checkpoint": "noskip",
-    "default_login": "login",
-    "lang": "en_EN",
-    "last_logged_in_email": ""
+  "checkpoint": "noskip",
+  "default_login": "login",
+  "lang": "en_EN",
+  "last_logged_in_email": ""
 }

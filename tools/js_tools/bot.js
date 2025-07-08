@@ -62,9 +62,9 @@ app.get('/', (req, res) => {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    service: 'js-tools-bot-framework', 
+  res.json({
+    status: 'ok',
+    service: 'js-tools-bot-framework',
     port: PORT,
     uptime: process.uptime(),
     timestamp: new Date().toISOString()
@@ -116,7 +116,7 @@ app.listen(PORT, () => {
   console.log(`🚀 JS Tools Bot Framework server listening on port ${PORT}`);
   console.log(`📡 Webhook endpoint: http://localhost:${PORT}/webhook`);
   console.log(`🔧 Health check: http://localhost:${PORT}/api/health`);
-  
+
   // Display network addresses
   const addresses = [];
   const interfaces = os.networkInterfaces();
@@ -129,7 +129,7 @@ app.listen(PORT, () => {
       }
     }
   }
-  
+
   if (addresses.length) {
     console.log('\n📍 Other possible addresses:');
     for (const address of addresses) {

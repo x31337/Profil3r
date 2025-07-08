@@ -3,7 +3,7 @@ name: profil3r
 description: A comprehensive OSINT investigation platform for social media profiling
 type: application
 version: 1.0.0
-appVersion: "2.0.0"
+appVersion: '2.0.0'
 home: https://github.com/Rog3rSm1th/Profil3r
 sources:
   - https://github.com/Rog3rSm1th/Profil3r
@@ -18,10 +18,10 @@ keywords:
   - security
 dependencies:
   - name: redis
-    version: "17.15.2"
-    repository: "https://charts.bitnami.com/bitnami"
+    version: '17.15.2'
+    repository: 'https://charts.bitnami.com/bitnami'
     condition: redis.enabled
   - name: postgresql
-    version: "12.12.10"
-    repository: "https://charts.bitnami.com/bitnami"
+    version: '12.12.10'
+    repository: 'https://charts.bitnami.com/bitnami'
     condition: postgresql.enabled

@@ -11,6 +11,7 @@ The core Python modules provide the main functionality for Facebook automation, 
 Located in `modules/facebook_automation.py`
 
 #### Key Features
+
 - Selenium-based browser automation
 - Facebook Graph API integration
 - Session management with persistent cookies
@@ -61,6 +62,7 @@ fb.like_posts_by_keyword("automation")
 Located in `modules/osint_utils.py`
 
 #### Key Features
+
 - Username reconnaissance across platforms
 - Email validation and discovery
 - GitHub user information lookup
@@ -104,6 +106,7 @@ github_info = osint.github_user_info("username")
 Located in `modules/network_utils.py`
 
 #### Key Features
+
 - IP geolocation and analysis
 - Domain information lookup
 - Phone number validation
@@ -148,6 +151,7 @@ dns_info = net.dns_lookup("example.com")
 Located in `modules/main.py`
 
 #### Features
+
 - Interactive command-line interface
 - Configuration management
 - Integrated workflows
@@ -169,13 +173,13 @@ The CLI reads from `config.json`:
 
 ```json
 {
-    "log_level": "INFO",
-    "log_directory": "logs",
-    "REALEMAIL_API_KEY": "your_key",
-    "VERIPHONE_API_KEY": "your_key",
-    "GITHUB_TOKEN": "your_token",
-    "headless": false,
-    "browser": "chrome"
+  "log_level": "INFO",
+  "log_directory": "logs",
+  "REALEMAIL_API_KEY": "your_key",
+  "VERIPHONE_API_KEY": "your_key",
+  "GITHUB_TOKEN": "your_token",
+  "headless": false,
+  "browser": "chrome"
 }
 ```
 
@@ -236,6 +240,7 @@ Key Python packages required:
 - `tqdm` - Progress bars
 
 Install with:
+
 ```bash
 pip install -r requirements.txt
 ```

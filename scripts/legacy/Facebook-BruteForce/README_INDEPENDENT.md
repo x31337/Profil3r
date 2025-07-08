@@ -8,6 +8,7 @@ This module is for educational and authorized penetration testing only. Unauthor
 
 1. Install Python 3.6+
 2. Install dependencies:
+
 ```bash
 pip install requests beautifulsoup4
 ```
@@ -35,6 +36,7 @@ python fb.py
 ## Configuration
 
 The script uses:
+
 - Minimum password length: 6 characters
 - Built-in rate limiting
 - Session cookies for persistence
@@ -42,6 +44,7 @@ The script uses:
 ## Legal Notice
 
 This tool must only be used:
+
 - On accounts you own
 - With explicit written permission
 - For authorized security testing

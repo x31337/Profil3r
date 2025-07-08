@@ -1,0 +1,38 @@
+{
+  "name": "profil3r-integration-tests",
+  "version": "1.0.0",
+  "description": "Integration tests for Profil3r Node.js services",
+  "main": "test_api.js",
+  "scripts": {
+    "test": "mocha test_api.js --timeout 30000 --recursive",
+    "test:watch": "mocha test_api.js --watch --timeout 30000",
+    "test:coverage": "nyc mocha test_api.js --timeout 30000",
+    "test:report": "mocha test_api.js --reporter json --timeout 30000 > test-results.json",
+    "test:html": "mocha test_api.js --reporter html --timeout 30000 > test-results.html"
+  },
+  "keywords": ["integration", "tests", "profil3r", "nodejs"],
+  "author": "Profil3r Team",
+  "license": "MIT",
+  "dependencies": {
+    "supertest": "^6.3.3",
+    "express": "^4.18.2",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "nyc": "^15.1.0",
+    "mochawesome": "^7.1.3",
+    "sinon": "^17.0.1",
+    "chai-http": "^4.4.0"
+  },
+  "nyc": {
+    "reporter": ["html", "text", "lcov"],
+    "exclude": ["node_modules/**", "test/**"],
+    "check-coverage": true,
+    "lines": 80,
+    "functions": 80,
+    "branches": 80,
+    "statements": 80
+  }
+}

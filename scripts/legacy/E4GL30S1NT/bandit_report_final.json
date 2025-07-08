@@ -43,9 +43,7 @@
       "issue_severity": "LOW",
       "issue_text": "Consider possible security implications associated with the subprocess module.",
       "line_number": 14,
-      "line_range": [
-        14
-      ],
+      "line_range": [14],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/blacklists/blacklist_imports.html#b404-import-subprocess",
       "test_id": "B404",
       "test_name": "blacklist"
@@ -63,9 +61,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell",
       "line_number": 89,
-      "line_range": [
-        89
-      ],
+      "line_range": [89],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b605_start_process_with_a_shell.html",
       "test_id": "B605",
       "test_name": "start_process_with_a_shell"
@@ -83,9 +79,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 89,
-      "line_range": [
-        89
-      ],
+      "line_range": [89],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -103,15 +97,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 285,
-      "line_range": [
-        285,
-        286,
-        287,
-        288,
-        289,
-        290,
-        291
-      ],
+      "line_range": [285, 286, 287, 288, 289, 290, 291],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -129,15 +115,7 @@
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
       "line_number": 285,
-      "line_range": [
-        285,
-        286,
-        287,
-        288,
-        289,
-        290,
-        291
-      ],
+      "line_range": [285, 286, 287, 288, 289, 290, 291],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
@@ -155,9 +133,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell",
       "line_number": 1176,
-      "line_range": [
-        1176
-      ],
+      "line_range": [1176],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b605_start_process_with_a_shell.html",
       "test_id": "B605",
       "test_name": "start_process_with_a_shell"
@@ -175,9 +151,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 1176,
-      "line_range": [
-        1176
-      ],
+      "line_range": [1176],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -195,9 +169,7 @@
       "issue_severity": "LOW",
       "issue_text": "Standard pseudo-random generators are not suitable for security/cryptographic purposes.",
       "line_number": 1236,
-      "line_range": [
-        1236
-      ],
+      "line_range": [1236],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/blacklists/blacklist_calls.html#b311-random",
       "test_id": "B311",
       "test_name": "blacklist"
@@ -215,9 +187,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 1373,
-      "line_range": [
-        1373
-      ],
+      "line_range": [1373],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -235,9 +205,7 @@
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
       "line_number": 1373,
-      "line_range": [
-        1373
-      ],
+      "line_range": [1373],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"
@@ -255,9 +223,7 @@
       "issue_severity": "LOW",
       "issue_text": "Starting a process with a partial executable path",
       "line_number": 1374,
-      "line_range": [
-        1374
-      ],
+      "line_range": [1374],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b607_start_process_with_partial_path.html",
       "test_id": "B607",
       "test_name": "start_process_with_partial_path"
@@ -275,9 +241,7 @@
       "issue_severity": "LOW",
       "issue_text": "subprocess call - check for execution of untrusted input.",
       "line_number": 1374,
-      "line_range": [
-        1374
-      ],
+      "line_range": [1374],
       "more_info": "https://bandit.readthedocs.io/en/1.8.3/plugins/b603_subprocess_without_shell_equals_true.html",
       "test_id": "B603",
       "test_name": "subprocess_without_shell_equals_true"

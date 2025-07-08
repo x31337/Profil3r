@@ -2,15 +2,15 @@ sudo: false
 
 language: node_js
 node_js:
-  - "0.12"
-  - "iojs"
-  - "4"
-  - "5"
-  - "6"
+  - '0.12'
+  - 'iojs'
+  - '4'
+  - '5'
+  - '6'
 
 os:
-- osx
-- linux
+  - osx
+  - linux
 
 install:
   - travis_retry npm install
@@ -23,4 +23,4 @@ script:
   - npm run ci-test
 
 after_success:
-  - "cat coverage/lcov.info | ./node_modules/.bin/coveralls"
+  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls'

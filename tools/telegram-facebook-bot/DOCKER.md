@@ -40,6 +40,7 @@ The bot requires proper configuration files to function. See the main README.md 
 ## Troubleshooting
 
 If you encounter issues:
+
 1. Check that your configuration files are properly mounted
 2. Verify your Telegram bot token is correct
 3. Ensure the Facebook pages you're monitoring are accessible

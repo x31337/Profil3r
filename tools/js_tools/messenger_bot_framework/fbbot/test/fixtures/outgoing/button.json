@@ -5,18 +5,21 @@
       "type": "BUTTON",
       "data": {
         "text": "What do you want to do next?",
-        "buttons": [{
-          "type": "web_url",
-          "url": "https://petersapparel.parseapp.com",
-          "title": "Show Website"
-        }, {
-          "type": "postback",
-          "title": "Start Chatting",
-          "payload": {
-            "custom": "payload",
-            "provides_as": "object"
+        "buttons": [
+          {
+            "type": "web_url",
+            "url": "https://petersapparel.parseapp.com",
+            "title": "Show Website"
+          },
+          {
+            "type": "postback",
+            "title": "Start Chatting",
+            "payload": {
+              "custom": "payload",
+              "provides_as": "object"
+            }
           }
-        }]
+        ]
       }
     },
 
@@ -30,15 +33,18 @@
           "payload": {
             "template_type": "button",
             "text": "What do you want to do next?",
-            "buttons": [{
-              "type": "web_url",
-              "url": "https://petersapparel.parseapp.com",
-              "title": "Show Website"
-            }, {
-              "type": "postback",
-              "title": "Start Chatting",
-              "payload": "{\"custom\":\"payload\",\"provides_as\":\"object\"}"
-            }]
+            "buttons": [
+              {
+                "type": "web_url",
+                "url": "https://petersapparel.parseapp.com",
+                "title": "Show Website"
+              },
+              {
+                "type": "postback",
+                "title": "Start Chatting",
+                "payload": "{\"custom\":\"payload\",\"provides_as\":\"object\"}"
+              }
+            ]
           }
         }
       }
@@ -62,23 +68,28 @@
       "type": "BUTTON",
       "data": {
         "text": "What do you want to do next?",
-        "buttons": [{
-          "type":"phone_number",
-          "title":"Call Representative",
-          "payload":"+15105551234"
-        }, {
-          "type": "postback",
-          "title": "Second Chatting",
-          "payload": "USER_DEFINED_SECOND_PAYLOAD"
-        }, {
-          "type": "web_url",
-          "url": "https://third.parseapp.com",
-          "title": "Show Third Website"
-        }, {
-          "type": "postback",
-          "title": "Fourth Chatting",
-          "payload": "USER_DEFINED_FOURTH_PAYLOAD"
-        }]
+        "buttons": [
+          {
+            "type": "phone_number",
+            "title": "Call Representative",
+            "payload": "+15105551234"
+          },
+          {
+            "type": "postback",
+            "title": "Second Chatting",
+            "payload": "USER_DEFINED_SECOND_PAYLOAD"
+          },
+          {
+            "type": "web_url",
+            "url": "https://third.parseapp.com",
+            "title": "Show Third Website"
+          },
+          {
+            "type": "postback",
+            "title": "Fourth Chatting",
+            "payload": "USER_DEFINED_FOURTH_PAYLOAD"
+          }
+        ]
       }
     },
 
@@ -92,19 +103,23 @@
           "payload": {
             "template_type": "button",
             "text": "What do you want to do next?",
-            "buttons": [{
-              "type":"phone_number",
-              "title":"Call Representative",
-              "payload":"+15105551234"
-            }, {
-              "type": "postback",
-              "title": "Second Chatting",
-              "payload": "USER_DEFINED_SECOND_PAYLOAD"
-            }, {
-              "type": "web_url",
-              "url": "https://third.parseapp.com",
-              "title": "Show Third Website"
-            }]
+            "buttons": [
+              {
+                "type": "phone_number",
+                "title": "Call Representative",
+                "payload": "+15105551234"
+              },
+              {
+                "type": "postback",
+                "title": "Second Chatting",
+                "payload": "USER_DEFINED_SECOND_PAYLOAD"
+              },
+              {
+                "type": "web_url",
+                "url": "https://third.parseapp.com",
+                "title": "Show Third Website"
+              }
+            ]
           }
         }
       }
