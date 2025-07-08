@@ -1,15 +1,15 @@
-var Hapi = require('hapi'),
+const Hapi = require('hapi'),
   tape = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
 tape('hapi', function (test) {
   common.iterateRequests(function (request, handle, callback) {
-    var payloadType = handle.split('-')[0];
+    const payloadType = handle.split('-')[0];
 
     test.test('with ' + handle, function (t) {
       t.plan(request.expected.plan);
 
-      var server = new Hapi.Server(),
+      const server = new Hapi.Server(),
         fbbot = new Fbbot(common.fbbot);
       // setup hapi server
       server.connection({ port: common.server.port });
@@ -47,7 +47,7 @@ tape('hapi', function (test) {
 tape('hapi - handshake - success', function (t) {
   t.plan(4);
 
-  var server = new Hapi.Server(),
+  const server = new Hapi.Server(),
     fbbot = new Fbbot(common.fbbot);
   // setup hapi server
   server.connection({ port: common.server.port });
@@ -85,7 +85,7 @@ tape('hapi - handshake - success', function (t) {
 tape('hapi - handshake - failed', function (t) {
   t.plan(4);
 
-  var server = new Hapi.Server(),
+  const server = new Hapi.Server(),
     fbbot = new Fbbot(common.fbbot);
   // setup hapi server
   server.connection({ port: common.server.port });

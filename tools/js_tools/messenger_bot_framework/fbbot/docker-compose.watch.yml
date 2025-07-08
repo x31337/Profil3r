@@ -20,7 +20,7 @@ services:
         pip install watchdog &&
         watchmedo auto-restart --directory=/app --pattern="*.py" --recursive -- python -m flask run --host=0.0.0.0 --debug
       '
-  
+
   profil3r-node:
     extends:
       file: docker-compose.dev.yml
@@ -40,7 +40,7 @@ services:
         npm install -g nodemon &&
         nodemon --watch . --ext js,json --ignore node_modules/ index.js
       '
-  
+
   profil3r-php:
     extends:
       file: docker-compose.dev.yml
@@ -55,7 +55,7 @@ services:
             - vendor/
         - action: restart
           path: composer.json
-  
+
   profil3r-ruby:
     extends:
       file: docker-compose.dev.yml
@@ -75,7 +75,7 @@ services:
         gem install rerun &&
         rerun --background --pattern "**/*.rb" -- ruby app.rb -o 0.0.0.0
       '
-  
+
   profil3r-core:
     extends:
       file: docker-compose.dev.yml

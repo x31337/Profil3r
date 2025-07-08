@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const app = require('../../tools/js_tools/messenger_bot_framework/fbbot/server');  // Adjust path as needed
+const app = require('../../tools/js_tools/messenger_bot_framework/fbbot/server'); // Adjust path as needed
 
 // Basic integration tests
 
@@ -20,10 +20,7 @@ describe('API Endpoints', () => {
   });
 
   it('POST /setmessage - should return failure for invalid input', async () => {
-    await request(app)
-      .post('/setmessage')
-      .send({ invalid: true })
-      .expect(400);
+    await request(app).post('/setmessage').send({ invalid: true }).expect(400);
   });
 
   it('GET /getmessage - should return a message', async () => {
@@ -34,11 +31,8 @@ describe('API Endpoints', () => {
   });
 
   it('POST /sendmessage - should fail without valid session', async () => {
-    await request(app)
-      .post('/sendmessage')
-      .expect(400);
+    await request(app).post('/sendmessage').expect(400);
   });
 
   // Add more tests as needed
 });
-

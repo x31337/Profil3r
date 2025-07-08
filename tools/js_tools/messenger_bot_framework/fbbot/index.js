@@ -1,4 +1,4 @@
-var util = require('util'),
+const util = require('util'),
   events = require('events'),
   bole = require('bole'),
   merge = require('deeply'),

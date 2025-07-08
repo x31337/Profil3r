@@ -18,13 +18,23 @@ The automated Git flow system implements:
 
 Mergify automates PR management with the following features:
 
+#### Auto-approve All Future PRs
+
+- **Trigger**: Any PR opened to main branch
+- **Conditions**:
+  - Not a draft PR
+  - No `work-in-progress` label
+  - No `do-not-merge` label
+  - Not created by Mergify bot
+- **Action**: Immediately approve PR with explanatory comment
+
 #### Auto-merge Dependabot PRs
 
 - **Trigger**: When Dependabot creates a PR
 - **Conditions**:
   - CI Pipeline passes
   - Code Quality checks pass
-  - At least 1 approval
+  - At least 1 approval (auto-provided)
   - No requested changes
 - **Action**: Automatically merge with squash method
 
@@ -34,7 +44,7 @@ Mergify automates PR management with the following features:
 - **Conditions**:
   - CI Pipeline passes
   - Code Quality checks pass
-  - At least 2 approvals
+  - At least 1 approval (auto-provided)
   - No requested changes
   - Title follows conventional commit format
 - **Action**: Automatically merge with squash method
@@ -144,8 +154,10 @@ Automates versioning and changelog generation:
    ```
 
 3. **Approvals**:
-   - Regular PRs need 2 approvals for auto-merge
-   - Dependabot PRs need 1 approval for auto-merge
+   - All PRs are automatically approved by Mergify bot
+   - Auto-merge triggers once CI passes (no manual approvals needed)
+   - Use `work-in-progress` label to prevent auto-approval
+   - Use `do-not-merge` label to prevent auto-merge
 
 ### For Maintainers
 

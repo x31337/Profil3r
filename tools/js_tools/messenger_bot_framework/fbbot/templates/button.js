@@ -9,7 +9,7 @@ module.exports = renderButton;
  * @returns {object} - button template message payload
  */
 function renderButton(data) {
-  var message,
+  let message,
     limit = 3;
 
   if (data.buttons.length > limit) {

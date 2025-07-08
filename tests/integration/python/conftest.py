@@ -1,14 +1,17 @@
 """
 Integration test configuration for Python services
 """
-import pytest
+
 import asyncio
-import httpx
-import docker
-import time
-import os
 import logging
-from typing import AsyncGenerator, Dict, Any
+import os
+import time
+from typing import Any, AsyncGenerator, Dict
+
+import httpx
+import pytest
+
+import docker
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,33 +23,30 @@ TEST_CONFIG = {
             "name": "profil3r-core",
             "health_endpoint": "/health",
             "port": 5000,
-            "base_url": "http://localhost:5000"
+            "base_url": "http://localhost:5000",
         },
         "js-tools": {
-            "name": "profil3r-js-tools", 
+            "name": "profil3r-js-tools",
             "health_endpoint": "/api/health",
             "port": 3000,
-            "base_url": "http://localhost:3000"
+            "base_url": "http://localhost:3000",
         },
         "osint-framework": {
             "name": "profil3r-osint-framework",
-            "health_endpoint": "/api/health", 
+            "health_endpoint": "/api/health",
             "port": 8000,
-            "base_url": "http://localhost:8000"
+            "base_url": "http://localhost:8000",
         },
         "facebook-messenger": {
             "name": "profil3r-facebook-messenger",
             "health_endpoint": "/api/health",
             "port": 4444,
-            "base_url": "http://localhost:4444"
-        }
+            "base_url": "http://localhost:4444",
+        },
     },
-    "timeouts": {
-        "service_startup": 60,
-        "health_check": 30,
-        "request": 10
-    }
+    "timeouts": {"service_startup": 60, "health_check": 30, "request": 10},
 }
+
 
 @pytest.fixture(scope="session")
 def event_loop():
@@ -55,10 +55,12 @@ def event_loop():
     yield loop
     loop.close()
 
+
 @pytest.fixture(scope="session")
 def docker_client():
     """Docker client for managing containers."""
     return docker.from_env()
+
 
 @pytest.fixture(scope="session")
 async def docker_compose_services(docker_client):
@@ -66,49 +68,51 @@ async def docker_compose_services(docker_client):
     Start docker-compose services and wait for them to be healthy.
     """
     import subprocess
-    
+
     # Start docker-compose services
     logger.info("Starting docker-compose services...")
     result = subprocess.run(
         ["docker-compose", "up", "-d"],
         capture_output=True,
         text=True,
-        cwd=os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+        cwd=os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
     )
-    
+
     if result.returncode != 0:
         pytest.fail(f"Failed to start docker-compose services: {result.stderr}")
-    
+
     # Wait for services to be healthy
     await wait_for_services_healthy()
-    
+
     yield
-    
+
     # Cleanup: stop services
     logger.info("Stopping docker-compose services...")
     subprocess.run(["docker-compose", "down"], capture_output=True)
+
 
 async def wait_for_services_healthy():
     """Wait for all services to be healthy."""
     timeout = TEST_CONFIG["timeouts"]["service_startup"]
     start_time = time.time()
-    
+
     while time.time() - start_time < timeout:
         all_healthy = True
-        
+
         for service_name, service_config in TEST_CONFIG["services"].items():
             if not await check_service_health(service_config):
                 all_healthy = False
                 logger.info(f"Service {service_name} not ready yet...")
                 break
-        
+
         if all_healthy:
             logger.info("All services are healthy!")
             return
-        
+
         await asyncio.sleep(2)
-    
+
     raise TimeoutError("Services did not become healthy within timeout period")
+
 
 async def check_service_health(service_config: Dict[str, Any]) -> bool:
     """Check if a service is healthy."""
@@ -121,16 +125,21 @@ async def check_service_health(service_config: Dict[str, Any]) -> bool:
         logger.debug(f"Health check failed: {e}")
         return False
 
+
 @pytest.fixture
 async def http_client() -> AsyncGenerator[httpx.AsyncClient, None]:
     """HTTP client for making requests to services."""
     async with httpx.AsyncClient(timeout=TEST_CONFIG["timeouts"]["request"]) as client:
         yield client
 
+
 @pytest.fixture
 def service_urls():
     """Service URLs for testing."""
-    return {name: config["base_url"] for name, config in TEST_CONFIG["services"].items()}
+    return {
+        name: config["base_url"] for name, config in TEST_CONFIG["services"].items()
+    }
+
 
 @pytest.fixture
 def test_data():
@@ -151,17 +160,19 @@ def test_data():
         "message_data": {
             "recipient": "test@example.com",
             "message": "Test message",
-            "delay": 0
-        }
+            "delay": 0,
+        },
     }
+
 
 @pytest.fixture
 def auth_headers():
     """Authentication headers for protected endpoints."""
     return {
         "Authorization": f"Bearer {os.getenv('TEST_API_TOKEN', 'test-token')}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
+
 
 @pytest.fixture
 def api_endpoints():
@@ -171,25 +182,26 @@ def api_endpoints():
             "profil3r-core": "/health",
             "js-tools": "/api/health",
             "osint-framework": "/api/health",
-            "facebook-messenger": "/api/health"
+            "facebook-messenger": "/api/health",
         },
         "osint": {
             "username": "/api/osint/username/{username}",
             "email": "/api/osint/email/{email}",
-            "domain": "/api/network/domain/{domain}"
+            "domain": "/api/network/domain/{domain}",
         },
         "messenger": {
             "login": "/api/messenger/login",
             "send": "/api/messenger/send",
             "status": "/api/messenger/status",
-            "history": "/api/messenger/history"
+            "history": "/api/messenger/history",
         },
         "facebook": {
             "friends": "/api/facebook/friends",
             "messages": "/api/facebook/messages",
-            "groups": "/api/facebook/groups"
-        }
+            "groups": "/api/facebook/groups",
+        },
     }
+
 
 @pytest.fixture
 def rate_limit_config():
@@ -197,8 +209,9 @@ def rate_limit_config():
     return {
         "osint_endpoints": {"requests": 60, "window": 60},
         "facebook_operations": {"requests": 10, "window": 60},
-        "health_checks": {"requests": None, "window": None}
+        "health_checks": {"requests": None, "window": None},
     }
+
 
 # Performance test fixtures
 @pytest.fixture
@@ -207,9 +220,10 @@ def performance_thresholds():
     return {
         "health_check": 0.5,  # 500ms
         "osint_lookup": 5.0,  # 5 seconds
-        "message_send": 10.0, # 10 seconds
-        "bulk_operations": 30.0  # 30 seconds
+        "message_send": 10.0,  # 10 seconds
+        "bulk_operations": 30.0,  # 30 seconds
     }
+
 
 # Error scenarios
 @pytest.fixture
@@ -224,26 +238,32 @@ def error_scenarios():
         "not_found": {"status_code": 404},
         "method_not_allowed": {"status_code": 405},
         "payload_too_large": {"status_code": 413},
-        "internal_server_error": {"status_code": 500}
+        "internal_server_error": {"status_code": 500},
     }
+
 
 # Utility functions
 def generate_load_test_data(count: int = 100):
     """Generate test data for load testing."""
     import random
     import string
-    
+
     data = []
     for i in range(count):
-        data.append({
-            "username": f"testuser{i}",
-            "email": f"test{i}@example.com",
-            "domain": f"example{i}.com",
-            "message": f"Test message {i} {''.join(random.choices(string.ascii_letters, k=20))}"
-        })
+        data.append(
+            {
+                "username": f"testuser{i}",
+                "email": f"test{i}@example.com",
+                "domain": f"example{i}.com",
+                "message": f"Test message {i} {''.join(random.choices(string.ascii_letters, k=20))}",
+            }
+        )
     return data
 
-async def measure_response_time(client: httpx.AsyncClient, method: str, url: str, **kwargs):
+
+async def measure_response_time(
+    client: httpx.AsyncClient, method: str, url: str, **kwargs
+):
     """Measure response time for a request."""
     start_time = time.time()
     response = await client.request(method, url, **kwargs)

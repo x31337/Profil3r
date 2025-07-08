@@ -1,4 +1,4 @@
-var clone = require('deeply'),
+const clone = require('deeply'),
   send = require('../lib/send.js'),
   messaging = require('../lib/messaging.js');
 module.exports = userInit;
@@ -12,7 +12,7 @@ module.exports = userInit;
  * @param {function} callback - invoked after type casting is done
  */
 function userInit(payload, callback) {
-  var type = messaging.getType(payload);
+  const type = messaging.getType(payload);
 
   if (payload.sender && payload[type]) {
     // detach new object from the source

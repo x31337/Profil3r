@@ -1,4 +1,4 @@
-var payloads = {};
+const payloads = {};
 
 module.exports = {
   perRequest: perRequest,
@@ -29,7 +29,7 @@ function perRequest(fbbot, payloadType, request, t, callback) {
 
   // [payloadType] middleware
   fbbot.use(payloadType, function (payload, cb) {
-    var expected = payloads[payloadType]['middleware'].shift();
+    const expected = payloads[payloadType]['middleware'].shift();
 
     t.deepEquals(
       payload,
@@ -52,7 +52,7 @@ function perRequest(fbbot, payloadType, request, t, callback) {
 
   // [payloadType] event
   fbbot.on(payloadType, function (payload, send) {
-    var expected = payloads[payloadType]['event'].shift();
+    const expected = payloads[payloadType]['event'].shift();
 
     t.equal(
       typeof send,
@@ -132,7 +132,7 @@ function perMessage(fbbot, payloadType, envelop, t) {
       payloads[payloadType][envelop.message.type] = [];
 
       fbbot.on('message.' + envelop.message.type, function (message) {
-        var expected = payloads[payloadType][message.type].shift();
+        const expected = payloads[payloadType][message.type].shift();
 
         t.deepEquals(
           message,

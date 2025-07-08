@@ -1,4 +1,4 @@
-var qs = require('querystring'),
+const qs = require('querystring'),
   path = require('path'),
   http = require('http'),
   util = require('util'),
@@ -15,7 +15,7 @@ var qs = require('querystring'),
     array: merge.adapters.arraysCombine
   };
 // expose suite methods
-var common = (module.exports = {
+const common = (module.exports = {
   server: {
     endpoint: '/webhook',
     port: 56789
@@ -70,7 +70,7 @@ var common = (module.exports = {
 glob
   .sync(path.join(__dirname, './fixtures/incoming/*.json'))
   .forEach(function (file) {
-    var name = path.basename(file, '.json');
+    const name = path.basename(file, '.json');
 
     common.requests[name] = require(file);
 
@@ -88,7 +88,7 @@ glob
 glob
   .sync(path.join(__dirname, './fixtures/outgoing/*.json'))
   .forEach(function (file) {
-    var name = path.basename(file, '.json');
+    const name = path.basename(file, '.json');
     common.sendings[name] = require(file);
   });
 
@@ -160,10 +160,10 @@ function sendRequest(type, callback) {
   if (!common.requests[type])
     throw new Error('Unsupported request type: ' + type + '.');
 
-  var url = 'http://localhost:' + common.server.port + common.server.endpoint;
-  var body = JSON.stringify(common.requests[type].body);
+  const url = 'http://localhost:' + common.server.port + common.server.endpoint;
+  const body = JSON.stringify(common.requests[type].body);
 
-  var options = {
+  const options = {
     method: 'POST',
     headers: common.requests[type].headers
   };
@@ -182,8 +182,8 @@ function sendHandshake(type, callback) {
   if (!common.handshakes[type])
     throw new Error('Unsupported handshake type: ' + type + '.');
 
-  var url = 'http://localhost:' + common.server.port + common.server.endpoint;
-  var query = qs.stringify(common.handshakes[type].query);
+  const url = 'http://localhost:' + common.server.port + common.server.endpoint;
+  const query = qs.stringify(common.handshakes[type].query);
 
   request(url + '?' + query, callback);
 }
@@ -199,7 +199,7 @@ function startApiServer(handler, callback) {
     .createServer(agnostic(handler))
     .listen(common.api.port, function () {
       // supply endpoint to the consumer
-      var tailoredOptions = util._extend(common.fbbot, {
+      const tailoredOptions = util._extend(common.fbbot, {
         apiUrl: 'http://localhost:' + common.api.port + '/?access_token='
       });
       callback(tailoredOptions, server.close.bind(server));

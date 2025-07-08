@@ -1,4 +1,4 @@
-var test = require('tape'),
+const test = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
 // reusable attachment
@@ -16,7 +16,7 @@ var test = require('tape'),
 // }
 
 common.iterateSendings(function (sending, handle, callback) {
-  var type = handle.split('-')[0];
+  const type = handle.split('-')[0];
 
   test.test(
     'send ' +
@@ -34,7 +34,7 @@ common.iterateSendings(function (sending, handle, callback) {
       );
 
       // Id takes over phone_humber
-      var expectedPhone = sending.arguments.user['phone_number'],
+      const expectedPhone = sending.arguments.user['phone_number'],
         expectedId =
           sending.arguments.user.id ||
           (expectedPhone ? null : sending.arguments.user);
@@ -53,7 +53,7 @@ common.iterateSendings(function (sending, handle, callback) {
           respond(sending.response);
         },
         function (fbbotOptions, done) {
-          var args = [],
+          let args = [],
             fbbot;
 
           // custom per test endpoint

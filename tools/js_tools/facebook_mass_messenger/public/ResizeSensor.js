@@ -20,7 +20,7 @@
   }
   // https://github.com/Semantic-Org/Semantic-UI/issues/3855
   // https://github.com/marcj/css-element-queries/issues/257
-  var globalWindow =
+  const globalWindow =
     typeof window != 'undefined' && window.Math == Math
       ? window
       : typeof self != 'undefined' && self.Math == Math
@@ -29,7 +29,7 @@
   // Only used for the dirty checking, so the event callback count is limited to max 1 call per fps per sensor.
   // In combination with the event based resize sensor this saves cpu time, because the sensor is too fast and
   // would generate too many unnecessary events.
-  var requestAnimationFrame =
+  const requestAnimationFrame =
     globalWindow.requestAnimationFrame ||
     globalWindow.mozRequestAnimationFrame ||
     globalWindow.webkitRequestAnimationFrame ||
@@ -44,15 +44,15 @@
    * @param {Function}                  callback
    */
   function forEachElement(elements, callback) {
-    var elementsType = Object.prototype.toString.call(elements);
-    var isCollectionTyped =
+    const elementsType = Object.prototype.toString.call(elements);
+    const isCollectionTyped =
       '[object Array]' === elementsType ||
       '[object NodeList]' === elementsType ||
       '[object HTMLCollection]' === elementsType ||
       '[object Object]' === elementsType ||
       ('undefined' !== typeof jQuery && elements instanceof jQuery) || //jquery
       ('undefined' !== typeof Elements && elements instanceof Elements); //mootools
-    var i = 0,
+    let i = 0,
       j = elements.length;
     if (isCollectionTyped) {
       for (; i < j; i++) {
@@ -76,7 +76,7 @@
       };
     }
 
-    var rect = element.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     return {
       width: Math.round(rect.width),
       height: Math.round(rect.height)
@@ -103,18 +103,18 @@
    *
    * @constructor
    */
-  var ResizeSensor = function (element, callback) {
+  const ResizeSensor = function (element, callback) {
     /**
      *
      * @constructor
      */
     function EventQueue() {
-      var q = [];
+      let q = [];
       this.add = function (ev) {
         q.push(ev);
       };
 
-      var i, j;
+      let i, j;
       this.call = function (sizeInfo) {
         for (i = 0, j = q.length; i < j; i++) {
           q[i].call(this, sizeInfo);
@@ -122,7 +122,7 @@
       };
 
       this.remove = function (ev) {
-        var newQueue = [];
+        const newQueue = [];
         for (i = 0, j = q.length; i < j; i++) {
           if (q[i] !== ev) newQueue.push(q[i]);
         }
@@ -153,7 +153,7 @@
       element.resizeSensor.dir = 'ltr';
       element.resizeSensor.className = 'resize-sensor';
 
-      var style = {
+      const style = {
         pointerEvents: 'none',
         position: 'absolute',
         left: '0px',
@@ -165,7 +165,7 @@
         visibility: 'hidden',
         maxWidth: '100%'
       };
-      var styleChild = {
+      const styleChild = {
         position: 'absolute',
         left: '0px',
         top: '0px',
@@ -174,19 +174,19 @@
 
       setStyle(element.resizeSensor, style);
 
-      var expand = document.createElement('div');
+      const expand = document.createElement('div');
       expand.className = 'resize-sensor-expand';
       setStyle(expand, style);
 
-      var expandChild = document.createElement('div');
+      const expandChild = document.createElement('div');
       setStyle(expandChild, styleChild);
       expand.appendChild(expandChild);
 
-      var shrink = document.createElement('div');
+      const shrink = document.createElement('div');
       shrink.className = 'resize-sensor-shrink';
       setStyle(shrink, style);
 
-      var shrinkChild = document.createElement('div');
+      const shrinkChild = document.createElement('div');
       setStyle(shrinkChild, styleChild);
       setStyle(shrinkChild, { width: '200%', height: '200%' });
       shrink.appendChild(shrinkChild);
@@ -195,8 +195,8 @@
       element.resizeSensor.appendChild(shrink);
       element.appendChild(element.resizeSensor);
 
-      var computedStyle = window.getComputedStyle(element);
-      var position = computedStyle
+      const computedStyle = window.getComputedStyle(element);
+      const position = computedStyle
         ? computedStyle.getPropertyValue('position')
         : null;
       if (
@@ -207,16 +207,16 @@
         element.style.position = 'relative';
       }
 
-      var dirty, rafId;
-      var size = getElementSize(element);
-      var lastWidth = 0;
-      var lastHeight = 0;
-      var initialHiddenCheck = true;
-      var lastAnimationFrame = 0;
+      let dirty, rafId;
+      let size = getElementSize(element);
+      let lastWidth = 0;
+      let lastHeight = 0;
+      let initialHiddenCheck = true;
+      let lastAnimationFrame = 0;
 
-      var resetExpandShrink = function () {
-        var width = element.offsetWidth;
-        var height = element.offsetHeight;
+      const resetExpandShrink = function () {
+        const width = element.offsetWidth;
+        const height = element.offsetHeight;
 
         expandChild.style.width = width + 10 + 'px';
         expandChild.style.height = height + 10 + 'px';
@@ -228,10 +228,10 @@
         shrink.scrollTop = height + 10;
       };
 
-      var reset = function () {
+      const reset = function () {
         // Check if element is hidden
         if (initialHiddenCheck) {
-          var invisible =
+          const invisible =
             element.offsetWidth === 0 && element.offsetHeight === 0;
           if (invisible) {
             // Check in next frame
@@ -254,7 +254,7 @@
       };
       element.resizeSensor.resetSensor = reset;
 
-      var onResized = function () {
+      const onResized = function () {
         rafId = 0;
 
         if (!dirty) return;
@@ -267,7 +267,7 @@
         }
       };
 
-      var onScroll = function () {
+      const onScroll = function () {
         size = getElementSize(element);
         dirty = size.width !== lastWidth || size.height !== lastHeight;
 
@@ -278,7 +278,7 @@
         reset();
       };
 
-      var addEvent = function (el, name, cb) {
+      const addEvent = function (el, name, cb) {
         if (el.attachEvent) {
           el.attachEvent('on' + name, cb);
         } else {
@@ -330,11 +330,11 @@
   };
 
   if (typeof MutationObserver !== 'undefined') {
-    var observer = new MutationObserver(function (mutations) {
-      for (var i in mutations) {
+    const observer = new MutationObserver(function (mutations) {
+      for (const i in mutations) {
         if (mutations.hasOwnProperty(i)) {
-          var items = mutations[i].addedNodes;
-          for (var j = 0; j < items.length; j++) {
+          const items = mutations[i].addedNodes;
+          for (let j = 0; j < items.length; j++) {
             if (items[j].resizeSensor) {
               ResizeSensor.reset(items[j]);
             }

@@ -1,15 +1,15 @@
-var http = require('http'),
+const http = require('http'),
   tape = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
 tape('http', function (test) {
   common.iterateRequests(function (request, handle, callback) {
-    var payloadType = handle.split('-')[0];
+    const payloadType = handle.split('-')[0];
 
     test.test('with ' + handle, function (t) {
       t.plan(request.expected.plan);
 
-      var server,
+      let server,
         fbbot = new Fbbot(common.fbbot);
       // setup tests per instance
       common.setupTests(fbbot, payloadType, request, t, callback);
@@ -39,7 +39,7 @@ tape('http', function (test) {
 tape('http - handshake - success', function (t) {
   t.plan(4);
 
-  var server,
+  let server,
     fbbot = new Fbbot(common.fbbot);
   // create server plug-in fbbot
   server = http.createServer(fbbot.requestHandler);
@@ -65,7 +65,7 @@ tape('http - handshake - success', function (t) {
 tape('http - handshake - failed', function (t) {
   t.plan(4);
 
-  var server,
+  let server,
     fbbot = new Fbbot(common.fbbot);
   // create server plug-in fbbot
   server = http.createServer(fbbot.requestHandler);

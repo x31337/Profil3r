@@ -1,10 +1,10 @@
-var tape = require('tape'),
+const tape = require('tape'),
   Traverse = require('../traverse/index.js'),
   steps = { '': 'a', a: 'b', b: 'c' };
 tape('traverse - default', function (t) {
   t.plan(6);
 
-  var slider,
+  let slider,
     original = (slider = { a: { b: { c: { d: 25 } } } }),
     // + "auto" constructor
     tr = Traverse(steps, {
@@ -32,7 +32,7 @@ tape('traverse - default', function (t) {
 tape('traverse - short circuit', function (t) {
   t.plan(2);
 
-  var original = { a: { b: 42 } },
+  const original = { a: { b: 42 } },
     tr = new Traverse(steps);
   tr.traverse(original, function (err, result) {
     t.equal(err.message, 'payload <b> is not an Object');
@@ -43,7 +43,7 @@ tape('traverse - short circuit', function (t) {
 tape('traverse - middleware error', function (t) {
   t.plan(3);
 
-  var original = { a: { b: { c: { d: 25 } } } },
+  const original = { a: { b: { c: { d: 25 } } } },
     tr = new Traverse(steps, {
       middleware: function (branch, payload, cb) {
         t.deepEqual(
@@ -68,7 +68,7 @@ tape('traverse - middleware error', function (t) {
 tape('traverse - broken middleware', function (t) {
   t.plan(4);
 
-  var original = { a: { b: { c: { d: 25 } } } },
+  const original = { a: { b: { c: { d: 25 } } } },
     tr = new Traverse(steps, {
       middleware: function (branch, payload, cb) {
         t.deepEqual(

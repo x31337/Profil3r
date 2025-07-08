@@ -6,7 +6,7 @@ $(function () {
 
     $('#login').prop('disabled', true);
 
-    var code = $('#code');
+    const code = $('#code');
     $.post(
       '/login',
       {
@@ -18,7 +18,7 @@ $(function () {
         if (result.error) {
           $('#login').prop('disabled', false);
 
-          var error = result.error;
+          let error = result.error;
           if (error === 'login-approval') {
             $('#code-group').show();
             code.prop('required', true);
@@ -26,7 +26,7 @@ $(function () {
             error = 'Please enter your 2-Factor Auth code.';
           }
 
-          var modal = $('#error');
+          const modal = $('#error');
           modal.find('.modal-body').text(error);
           modal.modal();
         } else location.href = '/';

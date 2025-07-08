@@ -1,4 +1,4 @@
-var util = require('util'),
+const util = require('util'),
   events = require('events'),
   typeOf = require('precise-typeof'),
   find = require('array-find'),
@@ -95,7 +95,7 @@ Traverse.prototype.traverse = function (branch, payload, callback) {
     this.prefixedBranch(branch),
     payload,
     function (error, resolvedPayload) {
-      var nextStep = this.steps[branch],
+      let nextStep = this.steps[branch],
         nextStepPayload;
 
       if (error) {
@@ -205,7 +205,7 @@ Traverse.prototype.traverse = function (branch, payload, callback) {
  * @returns {mixed} - augmented next step payload object
  */
 Traverse.prototype.linkParent = function (branch, parentPayload, nextPayload) {
-  var parent = { parent: parentPayload };
+  const parent = { parent: parentPayload };
 
   // keep "friendly" reference to the parent object
   parent[branch] = parentPayload;

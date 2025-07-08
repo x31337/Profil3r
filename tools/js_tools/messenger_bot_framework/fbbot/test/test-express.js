@@ -1,14 +1,14 @@
-var express = require('express'),
+const express = require('express'),
   test = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
 common.iterateRequests(function (request, handle, callback) {
-  var payloadType = handle.split('-')[0];
+  const payloadType = handle.split('-')[0];
 
   test.test('express with ' + handle, function (t) {
     t.plan(request.expected.plan);
 
-    var server,
+    let server,
       app = express(),
       fbbot = new Fbbot(common.fbbot);
     // setup tests per instance
@@ -38,7 +38,7 @@ common.iterateRequests(function (request, handle, callback) {
 test('express - handshake - success', function (t) {
   t.plan(4);
 
-  var server,
+  let server,
     app = express(),
     fbbot = new Fbbot(common.fbbot);
   // plug-in fbbot
@@ -65,7 +65,7 @@ test('express - handshake - success', function (t) {
 test('express - handshake - failed', function (t) {
   t.plan(4);
 
-  var server,
+  let server,
     app = express(),
     fbbot = new Fbbot(common.fbbot);
   // plug-in fbbot
