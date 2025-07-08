@@ -1,0 +1,35 @@
+{
+  "name": "facebook-mass-message",
+  "version": "2.0.0",
+  "description": "Send a mass message on Facebook",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "FuckFace",
+  "license": "MIT",
+  "repository": "github:FFace32/facebook-mass-message",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-loki": "^1.1.0",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "ts-messenger-api": "^1.0.2",
+    "lokijs": "^1.5.8",
+    "open": "^6.4.0",
+    "pkg": "^4.4.2",
+    "request": "^2.88.0",
+    "seedrandom": "^3.0.5"
+  },
+  "pkg": {
+    "assets": [
+      "favicon/**/*",
+      "node_modules/**/*",
+      "public/**/*",
+      "views/**/*"
+    ]
+  }
+}

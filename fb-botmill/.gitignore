@@ -1,0 +1,8 @@
+target/
+/bin/
+.settings/
+.classpath
+.settings/org.eclipse.wst.common.component
+.project
+src/test/java/co/aurasphere/botmill/fb/test/TestClass.java
+src/test/resources/logback.xml
