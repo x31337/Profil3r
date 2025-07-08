@@ -1,0 +1,41 @@
+{
+  "name": "profil3r-quality-tools",
+  "version": "1.0.0",
+  "description": "Code quality and formatting tools for Profil3r project",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
+    "format": "prettier --write .",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,html,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.py": [
+      "black",
+      "isort",
+      "flake8"
+    ],
+    "*.php": [
+      "php-cs-fixer fix"
+    ],
+    "*.rb": [
+      "rubocop -A"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "eslint": "^9.15.0",
+    "@eslint/js": "^9.15.0",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
