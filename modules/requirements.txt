@@ -1,0 +1,37 @@
+# Pr0f1l3r v2.0 Requirements
+# Modern Social Media Automation and Profiling Tool
+
+# Core web automation
+selenium>=4.15.0
+webdriver-manager>=3.8.6
+
+# HTTP requests and web scraping
+requests>=2.31.0
+beautifulsoup4>=4.12.2
+urllib3>=2.0.7
+
+# Data handling and parsing
+json5>=0.9.14
+PyYAML>=6.0.1
+
+# CLI and user interface
+PyInquirer>=1.0.3
+colorama>=0.4.6
+click>=8.1.7
+
+# Utilities
+python-dateutil>=2.8.2
+pathlib2>=2.3.7
+
+# Logging and monitoring
+loguru>=0.7.2
+
+# Security and encryption
+cryptography>=41.0.7
+
+# Optional: For enhanced functionality
+# Uncomment if needed
+# pyautogui>=0.9.54  # For GUI automation
+# opencv-python>=4.8.1  # For image processing
+# pytesseract>=0.3.10  # For OCR capabilities
+# pillow>=10.1.0  # For image manipulation
