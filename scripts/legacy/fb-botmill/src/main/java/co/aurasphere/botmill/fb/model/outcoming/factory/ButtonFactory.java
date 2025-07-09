@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,7 +38,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.list.DefaultAction;
 
 /**
  * Factory class for building {@link Button} objects.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
  */
@@ -52,7 +52,7 @@ public class ButtonFactory {
 
 	/**
 	 * Creates a button which redirects to an URL when clicked.
-	 * 
+	 *
 	 * @param title
 	 *            the button label.
 	 * @param url
@@ -65,7 +65,7 @@ public class ButtonFactory {
 
 	/**
 	 * Creates a default action button (based on Web URL) for list template.
-	 * 
+	 *
 	 * @param url
 	 *            the redirect URL.
 	 * @return a {@link DefaultAction}.
@@ -92,7 +92,7 @@ public class ButtonFactory {
 
 	/**
 	 * Creates a button which sends a payload back when clicked.
-	 * 
+	 *
 	 * @param title
 	 *            the button label.
 	 * @param payload
@@ -105,7 +105,7 @@ public class ButtonFactory {
 
 	/**
 	 * Creates a button with a phone number.
-	 * 
+	 *
 	 * @param title
 	 *            the button label.
 	 * @param phoneNumber
@@ -121,7 +121,7 @@ public class ButtonFactory {
 	/**
 	 * Creates a default action (which is based off from Url Button) which
 	 * redirects to an URL when clicked.
-	 * 
+	 *
 	 * @return a {@link Button}.
 	 */
 	public static Button createShareButton() {
@@ -156,7 +156,7 @@ public class ButtonFactory {
 	/**
 	 * Creates a login button (which is based off from Url Button) which
 	 * redirects to an URL when clicked.
-	 * 
+	 *
 	 * @param url
 	 *            the url on which the user will be authenticated.
 	 * @return a {@link Button}
@@ -167,7 +167,7 @@ public class ButtonFactory {
 
 	/**
 	 * Creates a logout button which redirects to an URL when clicked.
-	 * 
+	 *
 	 * @return a {@link Button}.
 	 */
 	public static Button createLogoutButton() {
@@ -176,7 +176,7 @@ public class ButtonFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

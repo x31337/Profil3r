@@ -1,0 +1,2 @@
+[bandit]
+exclude_dirs = node_modules,venv,dist,vendor,tools/node_modules,tools/js_tools/messenger_bot_framework/fbbot/node_modules

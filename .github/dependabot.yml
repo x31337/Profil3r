@@ -1,172 +1,237 @@
 version: 2
 updates:
   # Enable version updates for Python
-  - package-ecosystem: "pip"
-    directory: "/"
+  - package-ecosystem: 'pip'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
     open-pull-requests-limit: 10
     reviewers:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     assignees:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     labels:
-      - "dependencies"
-      - "python"
-    target-branch: "main"
-    rebase-strategy: "auto"
-    # Group minor and patch updates together
+      - 'dependencies'
+      - 'python'
+    target-branch: 'main'
+    rebase-strategy: 'auto'
+    # Security updates get priority
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
-          - "*"
+          - '*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
+
+  # Enable version updates for npm (root directory)
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+    open-pull-requests-limit: 10
+    reviewers:
+      - 'profil3r-maintainers'
+    assignees:
+      - 'profil3r-maintainers'
+    commit-message:
+      prefix: 'deps'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'javascript'
+      - 'root'
+    target-branch: 'main'
+    rebase-strategy: 'auto'
+    groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
+      minor-and-patch:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
 
   # Enable version updates for npm (main tools directory)
-  - package-ecosystem: "npm"
-    directory: "/tools"
+  - package-ecosystem: 'npm'
+    directory: '/tools'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
     open-pull-requests-limit: 10
     reviewers:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     assignees:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     labels:
-      - "dependencies"
-      - "javascript"
-    target-branch: "main"
-    rebase-strategy: "auto"
+      - 'dependencies'
+      - 'javascript'
+    target-branch: 'main'
+    rebase-strategy: 'auto'
     # Ignore dev dependencies that are frequently updated
     ignore:
-      - dependency-name: "eslint"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "cypress"
-        update-types: ["version-update:semver-major"]
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'cypress'
+        update-types: ['version-update:semver-major']
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
-          - "*"
+          - '*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
 
   # Enable version updates for npm (OSINT-Framework)
-  - package-ecosystem: "npm"
-    directory: "/tools/OSINT-Framework"
+  - package-ecosystem: 'npm'
+    directory: '/tools/OSINT-Framework'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
     open-pull-requests-limit: 5
     reviewers:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     assignees:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     labels:
-      - "dependencies"
-      - "javascript"
-      - "osint-framework"
-    target-branch: "main"
-    rebase-strategy: "auto"
+      - 'dependencies'
+      - 'javascript'
+      - 'osint-framework'
+    target-branch: 'main'
+    rebase-strategy: 'auto'
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
-          - "*"
+          - '*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
 
   # Enable version updates for npm (facebook_mass_messenger)
-  - package-ecosystem: "npm"
-    directory: "/tools/js_tools/facebook_mass_messenger"
+  - package-ecosystem: 'npm'
+    directory: '/tools/js_tools/facebook_mass_messenger'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
     open-pull-requests-limit: 5
     reviewers:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     assignees:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     labels:
-      - "dependencies"
-      - "javascript"
-      - "facebook-tools"
-    target-branch: "main"
-    rebase-strategy: "auto"
+      - 'dependencies'
+      - 'javascript'
+      - 'facebook-tools'
+    target-branch: 'main'
+    rebase-strategy: 'auto'
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
-          - "*"
+          - '*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
 
   # Enable version updates for npm (messenger_bot_framework)
-  - package-ecosystem: "npm"
-    directory: "/tools/js_tools/messenger_bot_framework/fbbot"
+  - package-ecosystem: 'npm'
+    directory: '/tools/js_tools/messenger_bot_framework/fbbot'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
     open-pull-requests-limit: 5
     reviewers:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     assignees:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     labels:
-      - "dependencies"
-      - "javascript"
-      - "messenger-bot"
-    target-branch: "main"
-    rebase-strategy: "auto"
+      - 'dependencies'
+      - 'javascript'
+      - 'messenger-bot'
+    target-branch: 'main'
+    rebase-strategy: 'auto'
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
-          - "*"
+          - '*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
 
   # Enable version updates for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
     open-pull-requests-limit: 5
     reviewers:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     assignees:
-      - "profil3r-maintainers"
+      - 'profil3r-maintainers'
     commit-message:
-      prefix: "ci"
-      include: "scope"
+      prefix: 'ci'
+      include: 'scope'
     labels:
-      - "dependencies"
-      - "ci"
-    target-branch: "main"
-    rebase-strategy: "auto"
+      - 'dependencies'
+      - 'ci'
+    target-branch: 'main'
+    rebase-strategy: 'auto'

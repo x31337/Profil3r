@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,15 +32,15 @@ import co.aurasphere.botmill.fb.support.FbBotMillMonitor;
 /**
  * Class that contains all the context information used to handle bots and
  * communicate with Facebook. The context is a singleton.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
- * 
+ *
  */
 public class FbBotMillContext {
 
 	/**
-	 * A list of the registered bots in the context. A {@link FbBot} 
+	 * A list of the registered bots in the context. A {@link FbBot}
 	 * can't be used unless it's registered to the context.
 	 */
 	private List<FbBot> registeredBots;
@@ -48,11 +48,11 @@ public class FbBotMillContext {
 	/**
 	 * The validation token used for the Facebook webhook. For more informations
 	 * read Facebook Messenger Platform documentation.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/quickstart"
 	 *      />Facebook Messenger Platform documentation</a>
-	 * 
+	 *
 	 */
 	private String validationToken;
 
@@ -64,11 +64,11 @@ public class FbBotMillContext {
 	/**
 	 * The page token used by Facebook for authentication. For more informations
 	 * read Facebook Messenger Platform documentation.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/quickstart"
 	 *      />Facebook Messenger Platform documentation</a>
-	 * 
+	 *
 	 */
 	private String pageToken;
 
@@ -79,12 +79,12 @@ public class FbBotMillContext {
 
 	/**
 	 * A list of the registered monitors in the context.
-	 * 
+	 *
 	 * @since 1.1.0
 	 */
 	private List<FbBotMillMonitor> registeredMonitors;
-	
-	
+
+
 	/** The message envelope. */
 	public MessageEnvelope messageEnvelope;
 
@@ -100,7 +100,7 @@ public class FbBotMillContext {
 	/**
 	 * Registers an {@link FbBot} to the context. A bot can't be used
 	 * unless it's registered to the context.
-	 * 
+	 *
 	 * @param fbBot
 	 *            the bot to register.
 	 */
@@ -194,12 +194,12 @@ public class FbBotMillContext {
 
 	/**
 	 * Convenience method for quickly setting up the FbBotMill environment.
-	 * 
+	 *
 	 * @param pageToken
 	 *            the validation token for the Facebook page.
 	 * @param validationToken
 	 *            the validation token for the Facebook webhook.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/quickstart">
 	 *      Facebook Messenger Platform documentation</a>
@@ -212,7 +212,7 @@ public class FbBotMillContext {
 	/**
 	 * Registers a monitor to the context. A monitor needs to be registered to
 	 * this context in order to be used.
-	 * 
+	 *
 	 * @param monitor
 	 *            the monitor to be registered.
 	 * @since 1.1.0
@@ -223,17 +223,17 @@ public class FbBotMillContext {
 
 	/**
 	 * Gets the list of registered monitors to this context.
-	 * 
+	 *
 	 * @return a list of registered monitors to this context.
 	 * @since 1.1.0
 	 */
 	public List<FbBotMillMonitor> getRegisteredMonitors() {
 		return this.registeredMonitors;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

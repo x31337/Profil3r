@@ -36,16 +36,16 @@
                                 <tr>
                                     <td><b>{{ service }}</b></td>
                                     <td> <span class="badge badge-{{ accounts["type"] }}">{{ accounts["type"] }}</span> </td>
-                                    <td>    
+                                    <td>
                                         {% if (accounts["type"] == "email") or (service == "skype")%}
                                         <i>{{ account['value'] }}</i>
                                         {% else %}
-                                        <a href="{{ account['value'] }}" target="_blank">{{ account['value'] }}</a> 
+                                        <a href="{{ account['value'] }}" target="_blank">{{ account['value'] }}</a>
                                         {% endif %}
                                     </td>
                                     <td>
                                         {% if (accounts["type"] == "email") %}
-                                            {% if account["breached"] %} 
+                                            {% if account["breached"] %}
                                             ✔️
                                             {% else %}
                                             ❌

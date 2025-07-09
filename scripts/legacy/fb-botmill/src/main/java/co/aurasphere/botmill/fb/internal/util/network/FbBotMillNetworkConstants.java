@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,7 +33,7 @@ import co.aurasphere.botmill.fb.FbBotMillContext;
  * @see <a href=
  *      "https://developers.facebook.com/docs/messenger-platform/quickstart">
  *      Facebook's Messenger Platform Documentation</a>
- * 
+ *
  */
 public class FbBotMillNetworkConstants {
 
@@ -46,7 +46,7 @@ public class FbBotMillNetworkConstants {
 	/**
 	 * GET parameter indicating the type of request from Facebook. Used only
 	 * during WebHook initial registration.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/quickstart"
 	 *      > Facebook's Messenger Platform Documentation</a>
@@ -59,7 +59,7 @@ public class FbBotMillNetworkConstants {
 	 * defined during configuration phase. The Servlet will check that the token
 	 * is the same registered in the {@link FbBotMillContext} and, if that's the
 	 * case, proceed with registration.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/quickstart"
 	 *      > Facebook's Messenger Platform Documentation</a>
@@ -71,7 +71,7 @@ public class FbBotMillNetworkConstants {
 	 * during WebHook initial registration. Facebook will send an hub challenge
 	 * as defined during configuration phase and expects the app to reply with
 	 * the same challenge to complete the WebHook registration.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/quickstart"
 	 *      > Facebook's Messenger Platform Documentation</a>
@@ -80,7 +80,7 @@ public class FbBotMillNetworkConstants {
 
 	/**
 	 * Hub mode expected from Facebook for WebHook initial registration.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/quickstart"
 	 *      > Facebook's Messenger Platform Documentation</a>
@@ -94,7 +94,7 @@ public class FbBotMillNetworkConstants {
 
 	/**
 	 * Facebook's REST path for the Send API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference"
 	 *      > Facebook's Messenger Send API Documentation</a>
@@ -103,7 +103,7 @@ public class FbBotMillNetworkConstants {
 
 	/**
 	 * Facebook's REST path for the Thread Settings API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/thread-settings"
 	 *      > Facebook's Messenger Thread Settings Documentation</a>
@@ -112,7 +112,7 @@ public class FbBotMillNetworkConstants {
 
 	/**
 	 * Facebook's REST path for the Messenger Profile API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/messenger-profile"
 	 *      > Facebook's Messenger Profile Documentation</a>
@@ -121,7 +121,7 @@ public class FbBotMillNetworkConstants {
 
 	/**
 	 * Facebook's GET parameters for the User Profile API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/user-profile"
 	 *      >Facebook's Messenger User Profile API Documentation</a>
@@ -130,7 +130,7 @@ public class FbBotMillNetworkConstants {
 
 	/**
 	 * Facebook's REST path for the Upload API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/attachment-upload/v2.8"
 	 *      > Facebook's Messenger Upload API Documentation</a>
@@ -139,7 +139,7 @@ public class FbBotMillNetworkConstants {
 
 	/**
 	 * Facebook's REST path for the Messenger Code API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/messenger-code"
 	 *      > Facebook's Messenger Code API Documentation</a>
@@ -149,7 +149,7 @@ public class FbBotMillNetworkConstants {
 	/**
 	 * Facebook's REST path for Getting Daily Unique Active Thread Counts
 	 * through Messaging Insight API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/insights/page-messaging"
 	 *      > Facebook's Messaging Insight API Documentation</a>
@@ -159,7 +159,7 @@ public class FbBotMillNetworkConstants {
 	/**
 	 * Facebook's REST path for Getting Daily Unique Conversation Counts through
 	 * Messaging Insight API.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/insights/page-messaging"
 	 *      > Facebook's Messaging Insight API Documentation</a>
@@ -168,7 +168,7 @@ public class FbBotMillNetworkConstants {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

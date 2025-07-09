@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -46,7 +46,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.airline.TravelClass;
  *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template"
  *      > Facebook's Messenger Platform Airline Itinerary Template
  *      Documentation</a>
- * 
+ *
  */
 public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator {
 
@@ -57,7 +57,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 
 	/**
 	 * Default constructor. Creates a builder for an Airline Itinerary Template.
-	 * 
+	 *
 	 * @param introMessage
 	 *            the message to send before the template. Can't be empty.
 	 * @param locale
@@ -77,7 +77,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	 *            <a href=
 	 *            "https://developers.facebook.com/docs/payments/reference/supportedcurrencies"
 	 *            > Facebook's currency support</a>
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template"
 	 *      > Facebook's Messenger Platform Airline Itinerary Template
@@ -93,7 +93,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 
 	/**
 	 * Sets the tax amount for this itinerary. This field is optional.
-	 * 
+	 *
 	 * @param tax
 	 *            the tax amount.
 	 * @return this builder.
@@ -105,7 +105,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 
 	/**
 	 * Sets the base price for this itinerary. This field is optional.
-	 * 
+	 *
 	 * @param basePrice
 	 *            the base price.
 	 * @return this builder.
@@ -118,7 +118,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	/**
 	 * Adds a {@link PassengerInfo} object to this template. This field is
 	 * mandatory for this template. There must be at least one element.
-	 * 
+	 *
 	 * @param passengerId
 	 *            the passenger ID. It can't be empty.
 	 * @param name
@@ -138,7 +138,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	/**
 	 * Adds a {@link PassengerInfo} object to this template. This field is
 	 * mandatory for this template. There must be at least one element.
-	 * 
+	 *
 	 * @param passengerId
 	 *            the passenger ID. It can't be empty.
 	 * @param name
@@ -192,7 +192,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	/**
 	 * Adds a {@link PassengerSegmentInfo} object to this template. This field
 	 * is mandatory for this template. There must be at least one element.
-	 * 
+	 *
 	 * @param segmentInfo
 	 *            the segment info to add.
 	 * @return this builder.
@@ -206,7 +206,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	/**
 	 * Adds a {@link PriceInfo} object to this template. This field is optional.
 	 * There can be at most 4 price info objects per template.
-	 * 
+	 *
 	 * @param title
 	 *            the price info title. It can't be empty.
 	 * @param amount
@@ -223,7 +223,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	/**
 	 * Adds a {@link PriceInfo} object to this template. This field is optional.
 	 * There can be at most 4 price info objects per template.
-	 * 
+	 *
 	 * @param title
 	 *            the price info title. It can't be empty.
 	 * @param amount
@@ -246,7 +246,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	/**
 	 * Adds a {@link PriceInfo} object to this template. This field is optional.
 	 * There can be at most 4 price info objects per template.
-	 * 
+	 *
 	 * @param priceInfo
 	 *            the price info object to add.
 	 * @return this builder.
@@ -260,7 +260,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	 * Adds a {@link FlightInfoExtended} object to this template. This object is
 	 * mandatory and can't be null for Airline templates. There can be multiple
 	 * flight info object but there must be at least one.
-	 * 
+	 *
 	 * @param flightNumber
 	 *            the flight number. It can't be empty.
 	 * @param connectionId
@@ -282,7 +282,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	 * Adds a {@link FlightInfoExtended} object to this template. This object is
 	 * mandatory and can't be null for Airline templates. There can be multiple
 	 * flight info object but there must be at least one.
-	 * 
+	 *
 	 * @param flightInfo
 	 *            the flight info to add.
 	 * @return this builder.
@@ -298,7 +298,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	 * mandatory and can't be null for Airline templates. Used only by delegated
 	 * classes. Should not be called directly. Use
 	 * {@link #addFlightInfo(FlightInfoExtended)} instead.
-	 * 
+	 *
 	 * @param flightInfo
 	 *            the {@link FlightInfo} object to add.
 	 */
@@ -311,7 +311,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	/**
 	 * Sets the theme color for this template. This field is optional. If not
 	 * specified, the template will use Facebook's default theme (light blue).
-	 * 
+	 *
 	 * @param themeColor
 	 *            the color for this template. The Color must be a valid RGB
 	 *            color in the format #RRGGBB.
@@ -360,7 +360,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 	 * Builds the {@link FbBotMillResponse} that the bot should return. The
 	 * template builders, like this, delegate an
 	 * {@link AttachmentMessageBuilder} to build the message.
-	 * 
+	 *
 	 * @param envelope
 	 *            a {@link MessageEnvelope} object representing the incoming
 	 *            message.
@@ -373,7 +373,7 @@ public class AirlineItineraryTemplateBuilder extends FlightInfoBuilderDelegator 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.factory.AirlineBaseTemplateBuilder
 	 * #toString()

@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +51,7 @@ import co.aurasphere.botmill.fb.support.FbBotMillMonitor;
 
 /**
  * Base FbBot bean which contains utility methods for handling an envelope.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
  */
@@ -65,7 +65,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Retrieves a text message from an envelope. It never returns null.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope.
 	 * @return the text message if found or an empty String otherwise. It never
@@ -82,7 +82,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Retrieves a quick reply payload from an envelope. It never returns null.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope.
 	 * @return the text message if found or an empty String otherwise. It never
@@ -100,7 +100,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Retrieves a text message from an envelope. It never returns null.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope.
 	 * @return the message envelope if found or an empty String otherwise. It
@@ -116,7 +116,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Retrieves the recipient ID from an envelope. It never returns null.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope.
 	 * @return the recipient ID if found or an empty String otherwise. It never
@@ -132,7 +132,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Retrieves the sender ID from an envelope. It never returns null.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope.
 	 * @return the sender ID if found or an empty String otherwise. It never
@@ -148,7 +148,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Retrieves the recipient from an envelope. It never returns null.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope.
 	 * @return a {@link User} containing the recipient if found, empty
@@ -165,7 +165,7 @@ public class FbBotMillBean {
 	/**
 	 * Retrieves the location from an envelope. It return nulls if none was
 	 * retrieved.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope
 	 * @return a {@link LocationCoordinates} containing the coordinates that the
@@ -186,7 +186,7 @@ public class FbBotMillBean {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the image message.
 	 *
@@ -199,13 +199,13 @@ public class FbBotMillBean {
 				&& envelope.getMessage().getAttachments() != null
 				&& envelope.getMessage().getAttachments().get(0) != null
 				&& envelope.getMessage().getAttachments().get(0).getType() == AttachmentType.IMAGE) {
-			
-		
+
+
 			return envelope.getMessage().getAttachments().get(0);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the audio message.
 	 *
@@ -218,13 +218,13 @@ public class FbBotMillBean {
 				&& envelope.getMessage().getAttachments() != null
 				&& envelope.getMessage().getAttachments().get(0) != null
 				&& envelope.getMessage().getAttachments().get(0).getType() == AttachmentType.AUDIO) {
-			
-		
+
+
 			return envelope.getMessage().getAttachments().get(0);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the video message.
 	 *
@@ -237,13 +237,13 @@ public class FbBotMillBean {
 				&& envelope.getMessage().getAttachments() != null
 				&& envelope.getMessage().getAttachments().get(0) != null
 				&& envelope.getMessage().getAttachments().get(0).getType() == AttachmentType.VIDEO) {
-			
-		
+
+
 			return envelope.getMessage().getAttachments().get(0);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the file message.
 	 *
@@ -256,8 +256,8 @@ public class FbBotMillBean {
 				&& envelope.getMessage().getAttachments() != null
 				&& envelope.getMessage().getAttachments().get(0) != null
 				&& envelope.getMessage().getAttachments().get(0).getType() == AttachmentType.FILE) {
-			
-		
+
+
 			return envelope.getMessage().getAttachments().get(0);
 		}
 		return null;
@@ -265,7 +265,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Retrieves the sender from an envelope. It never returns null.
-	 * 
+	 *
 	 * @param envelope
 	 *            the message envelope.
 	 * @return a {@link User} containing the sender if found, empty otherwise.
@@ -281,7 +281,7 @@ public class FbBotMillBean {
 
 	/**
 	 * Returns the kind of callback received for the current envelope.
-	 * 
+	 *
 	 * @param envelope
 	 *            the envelope to inspect.
 	 * @return a {@link FbBotMillEventType} representing the current callback
@@ -382,7 +382,7 @@ public class FbBotMillBean {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

@@ -50,9 +50,9 @@ build_image() {
     local dockerfile=$2
     local full_image_name="${DOCKER_REGISTRY}/${PROJECT_NAME}-${component}:${VERSION}"
     local latest_image_name="${DOCKER_REGISTRY}/${PROJECT_NAME}-${component}:latest"
-    
+
     log_info "Building ${component} image..."
-    
+
     # Build with version tag
     docker build \
         -f "${DOCKER_DIR}/${dockerfile}" \
@@ -62,9 +62,9 @@ build_image() {
         --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
         --build-arg VCS_REF="$(git rev-parse --short HEAD 2>/dev/null || echo 'unknown')" \
         "${BUILD_CONTEXT}"
-    
+
     log_success "Built ${component} image: ${full_image_name}"
-    
+
     # Return image names for later use
     echo "${full_image_name},${latest_image_name}"
 }
@@ -73,9 +73,9 @@ build_image() {
 push_images() {
     local component=$1
     local images=$2
-    
+
     log_info "Pushing ${component} images..."
-    
+
     IFS=',' read -ra IMAGE_ARRAY <<< "$images"
     for image in "${IMAGE_ARRAY[@]}"; do
         docker push "${image}"
@@ -86,7 +86,7 @@ push_images() {
 # Security scan
 scan_image() {
     local image=$1
-    
+
     if command -v docker-scan &> /dev/null; then
         log_info "Scanning ${image} for vulnerabilities..."
         docker scan "${image}" || log_warning "Security scan failed for ${image}"
@@ -149,7 +149,7 @@ services:
     environment:
       - RUBY_ENV=development
 EOF
-    
+
     log_success "Created docker-compose.override.yml for development"
 }
 
@@ -157,33 +157,33 @@ EOF
 build_all() {
     local push_flag=$1
     local scan_flag=$2
-    
+
     log_info "Starting unified build process for Profil3r v${VERSION}"
-    
+
     # Create necessary directories
     mkdir -p logs results config
-    
+
     # Build all components
     declare -A built_images
     for component in "${!COMPONENTS[@]}"; do
         dockerfile="${COMPONENTS[$component]}"
         images=$(build_image "$component" "$dockerfile")
         built_images["$component"]="$images"
-        
+
         # Security scan if requested
         if [ "$scan_flag" = true ]; then
             IFS=',' read -ra IMAGE_ARRAY <<< "$images"
             scan_image "${IMAGE_ARRAY[0]}"
         fi
     done
-    
+
     # Push images if requested
     if [ "$push_flag" = true ]; then
         for component in "${!built_images[@]}"; do
             push_images "$component" "${built_images[$component]}"
         done
     fi
-    
+
     log_success "All components built successfully!"
 }
 
@@ -191,7 +191,7 @@ build_all() {
 deploy() {
     local environment=$1
     local compose_file="docker-compose.yml"
-    
+
     case $environment in
         "dev"|"development")
             create_dev_override
@@ -205,40 +205,40 @@ deploy() {
             exit 1
             ;;
     esac
-    
+
     log_info "Deploying to $environment environment..."
-    
+
     # Update images in docker-compose with current version
     export VERSION
     docker-compose -f "$compose_file" pull
     docker-compose -f "$compose_file" up -d
-    
+
     log_success "Deployment completed!"
 }
 
 # Cleanup function
 cleanup() {
     log_info "Cleaning up Docker resources..."
-    
+
     # Remove dangling images
     docker image prune -f
-    
+
     # Remove unused volumes
     docker volume prune -f
-    
+
     # Remove unused networks
     docker network prune -f
-    
+
     log_success "Cleanup completed!"
 }
 
 # Health check function
 health_check() {
     log_info "Running health checks..."
-    
+
     # Check if all services are running
     services=("profil3r-core" "profil3r-js-tools" "profil3r-php-tools" "profil3r-ruby-reporter")
-    
+
     for service in "${services[@]}"; do
         if docker-compose ps "$service" | grep -q "Up"; then
             log_success "$service is running"
@@ -284,7 +284,7 @@ main() {
     local command=""
     local push_flag=false
     local scan_flag=false
-    
+
     # Parse arguments
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -332,7 +332,7 @@ main() {
                 ;;
         esac
     done
-    
+
     # Execute command
     case $command in
         "build")

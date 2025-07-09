@@ -35,21 +35,21 @@ app.get('/', (req, res) => {
           <h1>🚀 JS Tools - Facebook Messenger Bot Framework</h1>
           <p class="status">✅ Server is running on port ${PORT}</p>
         </div>
-        
+
         <div class="service">
           <h3>📨 Facebook Mass Messenger</h3>
           <p>Send mass messages on Facebook Messenger with an intuitive web interface.</p>
           <p><strong>Features:</strong> Session management, message templating, friend list management</p>
           <p><a href="/facebook-mass-messenger/">Open Facebook Mass Messenger</a></p>
         </div>
-        
+
         <div class="service">
           <h3>🤖 Messenger Bot Framework</h3>
           <p>Minimal framework/SDK for Facebook Messenger bots. BYOS (Bring Your Own Server)</p>
           <p><strong>Features:</strong> Webhook handling, message processing, bot templates</p>
           <p><a href="/messenger-bot-framework/">Open Messenger Bot Framework</a></p>
         </div>
-        
+
         <div class="info">
           <h3>🔧 Health Check</h3>
           <p>API endpoint for health monitoring: <a href="/api/health">/api/health</a></p>

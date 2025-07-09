@@ -9,7 +9,7 @@ module.exports = renderGeneric;
  * @returns {object} - generic template message payload
  */
 function renderGeneric(elements) {
-  var message,
+  let message,
     limit = 10;
 
   if (elements.length > limit) {

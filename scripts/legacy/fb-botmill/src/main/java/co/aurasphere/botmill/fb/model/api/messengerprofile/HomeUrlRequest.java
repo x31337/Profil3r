@@ -14,6 +14,6 @@ public class HomeUrlRequest {
 	public void setHomeUrl(HomeUrl homeUrl) {
 		this.homeUrl = homeUrl;
 	}
-	
-	
+
+
 }

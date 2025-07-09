@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -50,7 +50,7 @@ import co.aurasphere.botmill.fb.model.incoming.handler.IncomingToOutgoingMessage
  * {@link BotDefinition} in which the initial configuration is done. If not such
  * class is found or can't be loaded, a ServletException is thrown during
  * initialization.
- * 
+ *
  * The FbBotMillServlet supports GET requests only for the Subscribing phase and
  * POST requests for all the Facebook callbacks. For more information about how
  * the communication is handled, check the documentation for {@link #doGet},
@@ -59,11 +59,11 @@ import co.aurasphere.botmill.fb.model.incoming.handler.IncomingToOutgoingMessage
  *
  * @author Donato Rimenti
  * @author Alvin Reyes
- * 
+ *
  * @see <a href=
  *      "https://developers.facebook.com/docs/messenger-platform/quickstart">
  *      Facebook Subscription info</a>
- * 
+ *
  */
 public class FbBotMillServlet extends BotMillServlet {
 
@@ -77,7 +77,7 @@ public class FbBotMillServlet extends BotMillServlet {
 	 * The serial version UID.
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 
 	/**
 	 * Specifies how to handle a GET request. GET requests are used by Facebook
@@ -188,7 +188,7 @@ public class FbBotMillServlet extends BotMillServlet {
 	 * empty String otherwise. Used to unwrap the GET arguments from an
 	 * {@link HttpServletRequest#getParameterMap()} which returns a String array
 	 * for each GET parameter.
-	 * 
+	 *
 	 * @param parameter
 	 *            the String array to unwrap.
 	 * @return the first String of the array if found or the empty String
@@ -203,7 +203,7 @@ public class FbBotMillServlet extends BotMillServlet {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

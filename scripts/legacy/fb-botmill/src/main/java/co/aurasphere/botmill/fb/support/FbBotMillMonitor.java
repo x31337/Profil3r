@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -43,7 +43,7 @@ import co.aurasphere.botmill.fb.model.outcoming.FbBotMillResponse;
  * occurs. In order to use these callbacks, you will need to implement this
  * interface and register it to the FbBotMillContext using the method
  * {@link FbBotMillContext#registerMonitor(FbBotMillMonitor)}.
- * 
+ *
  * @author Donato Rimenti
  * @since 1.1.0
  */
@@ -52,7 +52,7 @@ public interface FbBotMillMonitor {
 	/**
 	 * Callback processed each time the bot sends data and gets a reply back
 	 * from the Facebook's server.
-	 * 
+	 *
 	 * @param data
 	 *            the Facebook response to the last AutoReply the bot sent.
 	 */
@@ -61,7 +61,7 @@ public interface FbBotMillMonitor {
 	/**
 	 * Callback processed each time the bot sends data and gets an error back
 	 * from the Facebook's server.
-	 * 
+	 *
 	 * @param error
 	 *            the Facebook error.
 	 */
@@ -74,7 +74,7 @@ public interface FbBotMillMonitor {
 	 * purpose is data monitoring, analysis and statistics. Since the operations
 	 * involved in this process may be heavy, in order to let the bots return a
 	 * response to the user quickly, this callback is postponed.
-	 * 
+	 *
 	 * @param request
 	 *            the incoming raw servlet request.
 	 * @param data
@@ -90,7 +90,7 @@ public interface FbBotMillMonitor {
 	 * purpose is data monitoring, analysis and statistics. Since the operations
 	 * involved in this process may be heavy, in order to let the bots return a
 	 * response to the user quickly, this callback is postponed.
-	 * 
+	 *
 	 * @param request
 	 *            the incoming raw servlet request.
 	 */
@@ -99,7 +99,7 @@ public interface FbBotMillMonitor {
 	/**
 	 * Callback processed each time there is a validation error on the response
 	 * produced by the bots.
-	 * 
+	 *
 	 * @param response
 	 *            the invalid response produced by the bot.
 	 * @param constraintViolations

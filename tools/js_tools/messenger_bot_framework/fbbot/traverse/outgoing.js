@@ -1,4 +1,4 @@
-var normalize = require('../lib/normalize.js');
+const normalize = require('../lib/normalize.js');
 
 module.exports = {
   // list of receive steps
@@ -7,13 +7,13 @@ module.exports = {
     message: ['attachment', 'quick_replies'],
     attachment: 'payload',
     payload: ['buttons', 'elements'],
-    elements: 'buttons'
+    elements: 'buttons',
   },
 
   linkParent: linkParent,
   middleware: middleware,
   emitter: emitter,
-  prefix: 'send'
+  prefix: 'send',
 };
 
 /**
@@ -28,9 +28,9 @@ module.exports = {
  */
 function linkParent(original, branch, parentPayload, nextPayload) {
   // get proper name
-  var normalized = normalize(branch);
+  const normalized = normalize(branch);
 
-  var result = original(branch, parentPayload, nextPayload);
+  const result = original(branch, parentPayload, nextPayload);
 
   // add normalized handle reference
   // skip if it's empty string
@@ -51,13 +51,13 @@ function linkParent(original, branch, parentPayload, nextPayload) {
  */
 function middleware(branch, payload, callback) {
   // get proper name
-  var normalized = normalize(branch);
+  const normalized = normalize(branch);
 
   this.logger.debug({
     message: 'Running middleware for outgoing payload',
     branch: branch,
     normalized: normalized,
-    payload: payload
+    payload: payload,
   });
 
   // add branch reference to the parent object
@@ -67,7 +67,7 @@ function middleware(branch, payload, callback) {
     normalized,
     payload,
     function (error, resolvedPayload) {
-      var normalizeType;
+      let normalizeType;
 
       if (payload['template_type']) {
         normalizeType = normalize(payload['template_type']);
@@ -101,7 +101,7 @@ function middleware(branch, payload, callback) {
  */
 function emitter(event, payload) {
   // get proper name
-  var normalized = normalize(event);
+  const normalized = normalize(event);
 
   // notify listeners
   this.emit(normalized, payload);

@@ -1,6 +1,6 @@
 'use strict';
 
-var messageID = -1;
+let messageID = -1;
 
 function get(url, data, success, dataType) {
   if (typeof data === 'function') {
@@ -19,13 +19,13 @@ function post(url, data, success) {
 }
 
 function updateMessagePreview() {
-  var item = getSelectedItem();
+  const item = getSelectedItem();
   if (item) {
-    var data = item.children('.circle-check');
+    const data = item.children('.circle-check');
     get(
       '/getmessage',
       { id: data.data('id'), seed: data.data('seed') },
-      function (result) {
+      function(result) {
         $('#messagePreview').val(result.message);
       },
       'json'
@@ -34,8 +34,8 @@ function updateMessagePreview() {
 }
 
 function addVariable(name, value, readonly, friendOnly) {
-  var variable = $('#variable').html();
-  var item;
+  const variable = $('#variable').html();
+  let item;
 
   if (!friendOnly) {
     item = $(variable);
@@ -44,8 +44,8 @@ function addVariable(name, value, readonly, friendOnly) {
     item
       .find('#templateValue')
       .val(value)
-      .on('input', function () {
-        post('/setvariable', { name: name, value: $(this).val() }, function () {
+      .on('input', function() {
+        post('/setvariable', { name: name, value: $(this).val() }, function() {
           updateMessagePreview();
         });
       })
@@ -53,10 +53,10 @@ function addVariable(name, value, readonly, friendOnly) {
       .removeAttr('placeholder');
     item
       .find('#removeVariable')
-      .on('click', function () {
+      .on('click', function() {
         $(this).parent().parent().remove();
 
-        $('#friendVariableList li').each(function () {
+        $('#friendVariableList li').each(function() {
           if ($(this).find('.form-control').eq(0).val() === name) {
             $(this).remove();
 
@@ -64,7 +64,7 @@ function addVariable(name, value, readonly, friendOnly) {
           }
         });
 
-        post('/removevariable', { name: name }, function () {
+        post('/removevariable', { name: name }, function() {
           updateMessagePreview();
         });
       })
@@ -73,7 +73,7 @@ function addVariable(name, value, readonly, friendOnly) {
     $('#variableList').append(item);
   }
 
-  var selecteditem = getSelectedItem();
+  const selecteditem = getSelectedItem();
   if (!selecteditem) return;
 
   item = $(variable);
@@ -81,7 +81,7 @@ function addVariable(name, value, readonly, friendOnly) {
   item
     .find('#templateValue')
     .val(friendOnly ? value : '')
-    .on('input', function () {
+    .on('input', function() {
       if (name === 'nname') {
         selecteditem.find('.nickname').text($(this).val()).trigger('input');
 
@@ -95,7 +95,7 @@ function addVariable(name, value, readonly, friendOnly) {
           name: name,
           value: $(this).val()
         },
-        function () {
+        function() {
           updateMessagePreview();
         }
       );
@@ -109,8 +109,8 @@ function addVariable(name, value, readonly, friendOnly) {
 }
 
 function setSelectAll(select) {
-  var button = $('#friendListSelect');
-  var icon = button.children().eq(0);
+  const button = $('#friendListSelect');
+  const icon = button.children().eq(0);
 
   icon.removeClass('fa-circle fa-check-circle');
   if (select) {
@@ -123,7 +123,7 @@ function setSelectAll(select) {
 }
 
 function getSelectedItem() {
-  var item = $('.friend.active');
+  const item = $('.friend.active');
   if (item.length) return item;
 
   return null;
@@ -141,10 +141,10 @@ function setSelectedItem(item) {
       id: item.children('.circle-check').data('id'),
       all: $('#showAll').is(':checked')
     },
-    function (result) {
+    function(result) {
       $('#friendVariableList li').remove();
 
-      Object.keys(result).forEach(function (key) {
+      Object.keys(result).forEach(function(key) {
         addVariable(key, result[key].value, result[key].readonly, true);
       });
     },
@@ -157,8 +157,8 @@ function load(message) {
 
   get(
     '/getvariables',
-    function (result) {
-      Object.keys(result).forEach(function (key) {
+    function(result) {
+      Object.keys(result).forEach(function(key) {
         addVariable(key, result[key]);
       });
 
@@ -169,13 +169,13 @@ function load(message) {
 
   get(
     '/getfriends',
-    function (result) {
+    function(result) {
       if (!result.length) return;
 
-      var friends = $('.circle-check');
+      const friends = $('.circle-check');
       if (result.length === friends.length) setSelectAll(true);
 
-      friends.each(function () {
+      friends.each(function() {
         if (result.indexOf($(this).data('id')) > -1)
           $(this).children('span').toggle();
       });
@@ -184,25 +184,25 @@ function load(message) {
   );
 }
 
-$(function () {
-  $('#message').on('input', function () {
-    post('/setmessage', { message: $(this).val() }, function () {
+$(function() {
+  $('#message').on('input', function() {
+    post('/setmessage', { message: $(this).val() }, function() {
       updateMessagePreview();
     });
   });
 
-  $('#variableForm').on('submit', function (event) {
+  $('#variableForm').on('submit', function(event) {
     event.preventDefault();
 
-    var name = $('#name');
-    var value = $('#value');
+    const name = $('#name');
+    const value = $('#value');
 
     post(
       '/setvariable',
       { name: name.val(), value: value.val(), check: true },
-      function (result) {
+      function(result) {
         if (result.error) {
-          var modal = $('#errorModal');
+          const modal = $('#errorModal');
           modal.find('.modal-body').text(result.error);
           modal.modal();
         } else {
@@ -218,26 +218,27 @@ $(function () {
     );
   });
 
-  var friendList = $('#friendList');
-  var listWidth = 0;
-  $(window).on('resize', function () {
+  const friendList = $('#friendList');
+  let listWidth = 0;
+  $(window).on('resize', function() {
     listWidth = 0;
     friendList.css('min-width', 0);
   });
 
-  $('#friendListSearch').on('input', function () {
+  $('#friendListSearch').on('input', function() {
     if (!listWidth) listWidth = friendList.width();
     if (!$(this).val().length) listWidth = 0;
     friendList.css('min-width', listWidth);
 
-    var first = false,
+    let first = false,
       last = null;
 
-    var search = accent_fold($.trim($(this).val())).toLowerCase();
+    const search = accent_fold($.trim($(this).val())).toLowerCase();
     $('#friendList li')
       .show()
-      .filter(function () {
-        var ret = accent_fold($(this).text()).toLowerCase().indexOf(search) < 0;
+      .filter(function() {
+        const ret =
+          accent_fold($(this).text()).toLowerCase().indexOf(search) < 0;
 
         $(this).removeClass(
           'first-visible-list-group-item last-visible-list-group-item'
@@ -258,11 +259,11 @@ $(function () {
     if (last) last.addClass('last-visible-list-group-item');
   });
 
-  $('#friendListSelect').on('click', function () {
-    var selectAll = $(this).children().eq(0).hasClass('fa-circle');
-    var ids = [];
+  $('#friendListSelect').on('click', function() {
+    const selectAll = $(this).children().eq(0).hasClass('fa-circle');
+    const ids = [];
 
-    $('.circle-check span').each(function () {
+    $('.circle-check span').each(function() {
       ids.push($(this).parent().data('id'));
 
       if (selectAll) $(this).show();
@@ -274,12 +275,12 @@ $(function () {
     post('/setfriend', { ids: ids, checked: selectAll });
   });
 
-  $('.circle-check').on('click', function () {
-    var span = $(this).children('span');
+  $('.circle-check').on('click', function() {
+    const span = $(this).children('span');
     span.toggle();
 
-    var selectAll = true;
-    $('.circle-check span').each(function () {
+    let selectAll = true;
+    $('.circle-check span').each(function() {
       if ($(this).is(':hidden')) {
         setSelectAll(false);
         selectAll = false;
@@ -296,9 +297,9 @@ $(function () {
     });
   });
 
-  $('.nickname').on('input', function () {
-    var element = $(this);
-    var item = element.parent().parent().parent();
+  $('.nickname').on('input', function() {
+    const element = $(this);
+    const item = element.parent().parent().parent();
 
     if (!item.is(getSelectedItem())) setSelectedItem(item);
 
@@ -308,7 +309,7 @@ $(function () {
         id: item.children('.circle-check').data('id'),
         nickname: element.text()
       },
-      function (result) {
+      function(result) {
         if (result && result.length) element.text(result);
 
         $('#friendVariableList')
@@ -323,14 +324,14 @@ $(function () {
     );
   });
 
-  $('.friend').on('click', function () {
+  $('.friend').on('click', function() {
     if ($(this).is(getSelectedItem())) return;
 
     setSelectedItem($(this));
   });
 
-  $('#regenerate').on('click', function () {
-    var item = getSelectedItem();
+  $('#regenerate').on('click', function() {
+    const item = getSelectedItem();
     if (!item) return;
 
     item
@@ -340,25 +341,25 @@ $(function () {
     updateMessagePreview();
   });
 
-  $('#showAll').on('change', function () {
-    var item = getSelectedItem();
+  $('#showAll').on('change', function() {
+    const item = getSelectedItem();
     if (item) setSelectedItem(item);
   });
 
-  $('#send').on('click', function () {
+  $('#send').on('click', function() {
     $(this).prop('disabled', true);
 
-    var seeds = {};
-    $('.circle-check').each(function () {
+    const seeds = {};
+    $('.circle-check').each(function() {
       seeds[$(this).data('id')] = $(this).data('seed');
     });
 
     post(
       '/sendmessage',
       { seeds: seeds },
-      function (result) {
+      function(result) {
         if (result.error) {
-          var modal = $('#errorModal');
+          const modal = $('#errorModal');
           modal
             .find('.modal-body')
             .text(result.error)
@@ -370,20 +371,20 @@ $(function () {
     );
   });
 
-  $('#logout').on('click', function () {
-    post('/logout', function () {
+  $('#logout').on('click', function() {
+    post('/logout', function() {
       location.href = '/';
     });
   });
 
   get(
     '/getmessage',
-    function (result) {
+    function(result) {
       if (result.messages) {
-        var modal = $('#messagesModal');
-        for (var i = 0; i < result.messages.length; ++i) {
-          var message = $($('#messageTemplate').html());
-          message.on('click', function () {
+        const modal = $('#messagesModal');
+        for (let i = 0; i < result.messages.length; ++i) {
+          const message = $($('#messageTemplate').html());
+          message.on('click', function() {
             $('#messages li').removeClass('active');
             $(this).toggleClass('active');
             $('#ok').removeAttr('disabled');
@@ -394,9 +395,9 @@ $(function () {
         }
         modal.modal({ backdrop: 'static', keyboard: false });
 
-        $('#ok').on('click', function () {
+        $('#ok').on('click', function() {
           messageID = 0;
-          $('#messages li').each(function () {
+          $('#messages li').each(function() {
             if (!$(this).hasClass('active')) ++messageID;
             else return false;
           });
@@ -405,8 +406,8 @@ $(function () {
           modal.modal('hide');
         });
 
-        $('#new').on('click', function () {
-          post('/newmessage', function (result) {
+        $('#new').on('click', function() {
+          post('/newmessage', function(result) {
             messageID = parseInt(result);
             load('');
 
@@ -422,8 +423,8 @@ $(function () {
   );
 
   // Is there a way I can do this better?
-  new ResizeSensor($('#userData'), function () {
-    var height = Math.max($('#userData').height(), 270);
+  new ResizeSensor($('#userData'), function() {
+    const height = Math.max($('#userData').height(), 270);
 
     friendList.css('max-height', Math.max(height - 103, 0));
   });

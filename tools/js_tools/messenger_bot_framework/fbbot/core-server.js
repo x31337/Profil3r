@@ -12,7 +12,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({
     message: 'Hello from Core Service!',
-    service: 'profil3r-core', 
+    service: 'profil3r-core',
     version: '1.0.0'
   });
 });

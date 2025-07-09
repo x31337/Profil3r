@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,10 +32,10 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * The Class PersistentMenuRequest.
- * 
+ *
  * The Persistent Menu Request is the main object we sent thru our post request which will
  * create the necessary JSON structured data to create the persistent menu of the bots
- * 
+ *
  * @author Alvin P. Reyes
  *
  */
@@ -43,19 +43,19 @@ public class PersistentMenuRequest implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The persistent menu. */
 	@SerializedName("persistent_menu")
 	private List<PersistentMenu> persistentMenu;
 
-	
+
 	/**
 	 * Instantiates a new persistent menu request.
 	 */
 	public PersistentMenuRequest() {
 		this.persistentMenu = new ArrayList<PersistentMenu>();
 	}
-	
+
 	/**
 	 * Gets the persistent menu.
 	 *
@@ -73,7 +73,7 @@ public class PersistentMenuRequest implements Serializable {
 	public void setPersistentMenu(List<PersistentMenu> persistentMenu) {
 		this.persistentMenu = persistentMenu;
 	}
-	
+
 	/**
 	 * Adds the persistent menu.
 	 *
@@ -82,7 +82,7 @@ public class PersistentMenuRequest implements Serializable {
 	public void addPersistentMenu(PersistentMenu persistentMenu) {
 		this.persistentMenu.add(persistentMenu);
 	}
-	
+
 	/**
 	 * Adds the all persistent menu.
 	 *
@@ -90,6 +90,6 @@ public class PersistentMenuRequest implements Serializable {
 	 */
 	public void addAllPersistentMenu(List<PersistentMenu> persistentMenus) {
 		this.persistentMenu.addAll(persistentMenus);
-	}	
-	
+	}
+
 }
