@@ -55,7 +55,7 @@ identified vulnerabilities:
 1. **Environment-Based Configuration**
    - All sensitive settings now use environment variables
    - Secure defaults for production deployment
-   - Debug mode disabled by default
+   - Debug mode is disabled by default
 
 2. **Network Security**
    - Default binding to localhost instead of all interfaces
@@ -73,7 +73,7 @@ We take security seriously and appreciate responsible disclosure of security vul
 
 #### Step 1: Report the Vulnerability
 
-- **Email**: security@profil3r.org (if available) or create a private issue
+- **Email**: 32862241+joseguzman1337@users.noreply.github.com, or create a private issue
 - **GitHub Security Advisory**: Use GitHub's private vulnerability reporting feature
 - **Response Time**: We aim to acknowledge reports within 48 hours
 
@@ -95,7 +95,7 @@ We take security seriously and appreciate responsible disclosure of security vul
 
 ### 🚨 **Emergency Security Issues**
 
-For critical security issues that pose immediate risk:
+For critical security issues that pose an immediate risk:
 
 - **Contact**: Reach out immediately via multiple channels
 - **Response**: We aim to respond within 24 hours for critical issues
@@ -147,4 +147,4 @@ We continuously monitor for security issues through:
 
 ---
 
-_This security policy is reviewed and updated regularly. Last updated: July 9 2025_
+_This security policy is reviewed and updated regularly. Last updated: July 9, 2025_
