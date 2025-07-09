@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -43,7 +43,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.receipt.Summary;
  * @see <a href=
  *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/receipt-template"
  *      > Facebook's Messenger Platform Receipt Template Documentation</a>
- * 
+ *
  */
 public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 
@@ -80,7 +80,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 
 	/**
 	 * Sets the merchant name. If present this is shown as logo text.
-	 * 
+	 *
 	 * @param merchantName
 	 *            the merchant name to set.
 	 * @return this builder.
@@ -92,7 +92,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 
 	/**
 	 * Sets the timestamp of the order, in seconds.
-	 * 
+	 *
 	 * @param timestamp
 	 *            the timestamp to set.
 	 * @return this builder.
@@ -104,7 +104,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 
 	/**
 	 * Sets the URL of order.
-	 * 
+	 *
 	 * @param orderUrl
 	 *            the URL of order to set.
 	 * @return this builder.
@@ -118,7 +118,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	 * Adds a {@link ReceiptTemplateElement} to this template. This field can't
 	 * be empty. The elements must be at most 100 and the sorting is not
 	 * guaranteed.
-	 * 
+	 *
 	 * @param element
 	 *            the element to add.
 	 * @return this builder.
@@ -132,7 +132,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	 * Adds a {@link ReceiptTemplateElement} to this template. This field can't
 	 * be empty. The elements must be at most 100 and the sorting is not
 	 * guaranteed.
-	 * 
+	 *
 	 * @param title
 	 *            the title of the item. This field is mandatory and can't be
 	 *            empty or null.
@@ -145,7 +145,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	/**
 	 * The shipping address. The address is optional. If you do not ship an
 	 * item, you may omit these fields.
-	 * 
+	 *
 	 * @param address
 	 *            the address to set.
 	 * @return this builder.
@@ -158,7 +158,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	/**
 	 * The shipping address. The address is optional. If you do not ship an
 	 * item, you may omit these fields.
-	 * 
+	 *
 	 * @return an {@link AddressBuilder} to build the address.
 	 */
 	public AddressBuilder setAddress() {
@@ -168,7 +168,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	/**
 	 * Sets the payment {@link Summary}. This field is required and can't be
 	 * null.
-	 * 
+	 *
 	 * @param summary
 	 *            the summary to set.
 	 * @return this builder.
@@ -183,7 +183,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	 * null. These numbers should be valid and well formatted decimal numbers,
 	 * using '.' (dot) as the decimal separator. Note that most currencies only
 	 * accept up to 2 decimal places.
-	 * 
+	 *
 	 * @param subtotal
 	 *            the subtotal.
 	 * @param shippingCost
@@ -204,7 +204,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	/**
 	 * Adds an {@link Adjustment} to this builder. Adjustments allow a way to
 	 * insert adjusted pricing (e.g., sales). Adjustments are optional.
-	 * 
+	 *
 	 * @param adjustment
 	 *            the adjustment to add.
 	 * @return this builder.
@@ -217,7 +217,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 	/**
 	 * Adds an {@link Adjustment} to this builder. Adjustments allow a way to
 	 * insert adjusted pricing (e.g., sales). Adjustments are optional.
-	 * 
+	 *
 	 * @param name
 	 *            the name of the adjustment.
 	 * @param amount
@@ -272,7 +272,7 @@ public class ReceiptTemplateBuilder extends TemplateBaseBuilder {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.factory.TemplateBaseBuilder#
 	 * toString()

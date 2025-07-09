@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,9 +34,9 @@ import co.aurasphere.botmill.fb.internal.util.validation.FbBotMillValidationCons
 
 /**
  * Object which represents a Greeting Text for Thread Settings.
- * 
+ *
  * @author Donato Rimenti
- * 
+ *
  */
 public class Greeting implements Serializable {
 
@@ -67,13 +67,13 @@ public class Greeting implements Serializable {
 	 * The message that will be shown to the user. This message can include the
 	 * user name. To do that, add to the String the following placeholders
 	 * constants from this class:
-	 * 
+	 *
 	 * <pre>
-	 * - {@link #USER_FIRST_NAME} 
-	 * - {@link #USER_LAST_NAME} 
+	 * - {@link #USER_FIRST_NAME}
+	 * - {@link #USER_LAST_NAME}
 	 * - {@link #USER_FULL_NAME}
 	 * </pre>
-	 * 
+	 *
 	 * This message can be at most
 	 * {@value FbBotMillValidationConstants#THREAD_SETTINGS_GREETING_MESSAGE_MAX_LENGTH}
 	 * characters long. The placeholders for the last and full name use 18
@@ -114,7 +114,7 @@ public class Greeting implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -127,7 +127,7 @@ public class Greeting implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -149,7 +149,7 @@ public class Greeting implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

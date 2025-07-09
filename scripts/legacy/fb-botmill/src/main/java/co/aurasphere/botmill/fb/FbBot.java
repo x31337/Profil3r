@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,10 +40,10 @@ import co.aurasphere.botmill.fb.model.incoming.MessageEnvelope;
 
 /**
  * Base {@link BotDefinition} implementation.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
- * 
+ *
  */
 public abstract class FbBot implements BotDefinition {
 
@@ -70,13 +70,13 @@ public abstract class FbBot implements BotDefinition {
 	 * annotated method.
 	 */
 	private volatile FbBotMillEvent event;
-	
+
 	/** The envelope. */
 	private volatile MessageEnvelope envelope;
-	
+
 	/** The action frame. */
 	private volatile ActionFrame actionFrame;
-	
+
 	/**
 	 * Sets the event.
 	 *
@@ -84,7 +84,7 @@ public abstract class FbBot implements BotDefinition {
 	 */
 	public synchronized void setEvent(FbBotMillEvent event) {this.event = event;}
 	public synchronized FbBotMillEvent getEvent() {return this.event;}
-	
+
 	/**
 	 * Sets the envelope.
 	 *
@@ -95,25 +95,25 @@ public abstract class FbBot implements BotDefinition {
 
 	/**
 	 * Base constructor. Instantiates a bot and registers it to the context.
-	 * 
+	 *
 	 * @param botmillPolicy
 	 *            the policy this bot should follow.
 	 */
 	public FbBot(BotMillPolicy botmillPolicy) {
 		logger.debug("AbstractFbot - Start Initialize");
-		
+
 		this.botMillPolicy = botmillPolicy;
 		this.actionFrameList = new ArrayList<ActionFrame>();
 		this.buildAnnotatedInitBehaviour();
-		
-		
+
+
 		// Create the botmill session.
-		
+
 		FbBotMillContext.getInstance().register(this);
 
 		logger.debug("AbstractFbot - End Initialize");
 	}
-	
+
 
 	/**
 	 * Base constructor. Instantiates a bot and registers it to the context.
@@ -126,7 +126,7 @@ public abstract class FbBot implements BotDefinition {
 	 * This is the method to define the behaviour of the bot. As of the
 	 * introduction of the Annotation based configuration, this is overriden on
 	 * the supertype level.
-	 * 
+	 *
 	 * The method can still be overriden by a concrete Bot class and use to
 	 * define behaviour.
 	 */
@@ -135,7 +135,7 @@ public abstract class FbBot implements BotDefinition {
 
 	/**
 	 * Adds an {@link ActionFrame} to this bot.
-	 * 
+	 *
 	 * @param actionFrame
 	 *            the actionFrame to add.
 	 */
@@ -145,7 +145,7 @@ public abstract class FbBot implements BotDefinition {
 
 	/**
 	 * Adds an {@link ActionFrame} to this bot.
-	 * 
+	 *
 	 * @param event
 	 *            the {@link FbBotMillEvent} to handle.
 	 * @param reply
@@ -158,7 +158,7 @@ public abstract class FbBot implements BotDefinition {
 
 	/**
 	 * Adds an {@link ActionFrame} to this bot with multiple reply.
-	 * 
+	 *
 	 * @param event
 	 *            the {@link FbBotMillEvent} to handle.
 	 * @param replies
@@ -206,7 +206,7 @@ public abstract class FbBot implements BotDefinition {
 	protected final synchronized BotMillSession botMillSession() {
 		return this.botMillSession;
 	}
-	
+
 	/**
 	 * This method is used to create a reply.
 	 *
@@ -216,7 +216,7 @@ public abstract class FbBot implements BotDefinition {
 	protected void reply(AutoReply reply) {
 		reply.reply(this.getEnvelope());
 	}
-	
+
 	/**
 	 * Adds the reply.
 	 *
@@ -228,7 +228,7 @@ public abstract class FbBot implements BotDefinition {
 		}
 		actionFrame.addReply(reply);
 	}
-	
+
 	/**
 	 * Execute replies.
 	 */
@@ -247,7 +247,7 @@ public abstract class FbBot implements BotDefinition {
 		actionFrame = null;
 	}
 
-	
+
 	/**
 	 * Checks if there's any registered {@link FbBotMillEvent} for the incoming
 	 * callback. If there's any, then the callback is handled. The chain will be
@@ -256,12 +256,12 @@ public abstract class FbBot implements BotDefinition {
 	 * processed until the first callback matches. Otherwise, if the policy is
 	 * {@link BotMillPolicy#PROCESS_ALL}, all the chain will always be
 	 * processed.
-	 * 
+	 *
 	 * @param envelope
 	 *            the incoming message.
 	 */
 	public void processMessage(MessageEnvelope envelope) {
-		
+
 		for (ActionFrame f : this.actionFrameList) {
 			// If the policy is FIRST_ONLY stop processing the chain at the
 			// first trigger.
@@ -282,7 +282,7 @@ public abstract class FbBot implements BotDefinition {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -301,7 +301,7 @@ public abstract class FbBot implements BotDefinition {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -335,7 +335,7 @@ public abstract class FbBot implements BotDefinition {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 //	@Override

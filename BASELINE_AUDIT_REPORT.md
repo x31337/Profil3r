@@ -1,26 +1,26 @@
 # Baseline Audit Report
 
-**Date:** July 9, 2025
-**Project:** Profil3r
-**Audit Type:** Step 1 - Baseline Audit & Environment Provisioning
+**Date:** July 9, 2025 **Project:** Profil3r **Audit Type:** Step 1 - Baseline Audit & Environment
+Provisioning
 
 ## Environment Verification
 
 ### Development Host Dependencies
 
-| Tool | Version | Status | Notes |
-|------|---------|--------|-------|
-| Node.js | v24.3.0 | ✅ PASS | Meets requirement (≥16) |
-| npm | 11.4.2 | ✅ PASS | Available |
-| Git | 2.39.5 (Apple Git-154) | ✅ PASS | Available |
-| PM2 | N/A | ❌ FAIL | Not installed |
-| Python3 | 3.13.5 | ✅ PASS | Available |
-| PHP | N/A | ❌ FAIL | Not installed |
-| Chrome | Available | ✅ PASS | Found at /Applications/Google Chrome.app |
-| Firefox | N/A | ❌ FAIL | Not found |
-| Edge | N/A | ❌ FAIL | Not found |
+| Tool    | Version                | Status  | Notes                                    |
+| ------- | ---------------------- | ------- | ---------------------------------------- |
+| Node.js | v24.3.0                | ✅ PASS | Meets requirement (≥16)                  |
+| npm     | 11.4.2                 | ✅ PASS | Available                                |
+| Git     | 2.39.5 (Apple Git-154) | ✅ PASS | Available                                |
+| PM2     | N/A                    | ❌ FAIL | Not installed                            |
+| Python3 | 3.13.5                 | ✅ PASS | Available                                |
+| PHP     | N/A                    | ❌ FAIL | Not installed                            |
+| Chrome  | Available              | ✅ PASS | Found at /Applications/Google Chrome.app |
+| Firefox | N/A                    | ❌ FAIL | Not found                                |
+| Edge    | N/A                    | ❌ FAIL | Not found                                |
 
 ### Missing Dependencies
+
 - PM2 (process manager)
 - PHP (required for PHP tools)
 - Firefox browser
@@ -29,42 +29,49 @@
 ## Package Installation Results
 
 ### Root Project (`/Users/x/x/Profil3r`)
+
 - **Status:** ✅ SUCCESS
 - **Output:** Added 366 packages, audited 713 packages
 - **Issues:** None
 - **Vulnerabilities:** 0
 
 ### Integration Tests (`tests/integration/node`)
-- **Status:** ✅ SUCCESS  
+
+- **Status:** ✅ SUCCESS
 - **Output:** Added 353 packages, audited 354 packages
 - **Issues:** Deprecation warnings (non-critical)
 - **Vulnerabilities:** 0
 
 ### Tools (`tools/`)
+
 - **Status:** ❌ FAIL
 - **Error:** ERESOLVE dependency conflict
 - **Issue:** cypress-image-snapshot@4.0.1 requires cypress@^4.5.0 but project uses cypress@^13.6.0
 - **Fix Required:** Update cypress-image-snapshot or use --legacy-peer-deps
 
 ### JS Tools (`tools/js_tools`)
+
 - **Status:** ⚠️ PARTIAL
 - **Output:** Added 327 packages, audited 328 packages
 - **Issues:** Multiple deprecation warnings
 - **Vulnerabilities:** 7 (2 moderate, 3 high, 2 critical)
 
 ### OSINT Framework (`tools/OSINT-Framework`)
+
 - **Status:** ✅ SUCCESS
 - **Output:** Up to date, audited 108 packages
 - **Issues:** 1 low severity vulnerability
 - **Vulnerabilities:** 1 low
 
 ### Facebook Mass Messenger (`tools/js_tools/facebook_mass_messenger`)
+
 - **Status:** ✅ SUCCESS
 - **Output:** Up to date, audited 399 packages
 - **Issues:** None
 - **Vulnerabilities:** 6 (3 moderate, 3 high)
 
 ### Messenger Bot Framework (`tools/js_tools/messenger_bot_framework/fbbot`)
+
 - **Status:** ✅ SUCCESS
 - **Output:** Up to date, audited 692 packages
 - **Issues:** None
@@ -73,21 +80,24 @@
 ## Test Infrastructure Status
 
 ### Python Tests
+
 - **Framework:** pytest 8.4.1
 - **Status:** ❌ FAIL
-- **Issues:** 
+- **Issues:**
   - Missing pytest-asyncio plugin
   - All 10 tests failing due to async support
   - Tests configured for async but async plugin not installed
 - **Location:** `tests/integration/python/`
 
 ### Node.js Tests
+
 - **Framework:** Mocha (in integration tests)
 - **Status:** ⚠️ PARTIAL
 - **Issues:** Not configured at root level
 - **Location:** `tests/integration/node/`
 
 ### Coverage
+
 - **Current Coverage:** 0% (1043/1043 lines uncovered)
 - **Tool:** Python coverage
 - **Status:** ❌ FAIL
@@ -96,12 +106,14 @@
 ## Web UI Status
 
 ### OSINT Framework UI
+
 - **URL:** http://localhost:8000
 - **Status:** Available (server configured)
 - **File:** `tools/OSINT-Framework/health-server.js`
 - **Health Endpoint:** `/api/health`
 
 ### Node.js Service UI
+
 - **URL:** http://localhost:3000
 - **Status:** Available (server configured)
 - **File:** `tools/js_tools/messenger_bot_framework/fbbot/server.js`
@@ -110,6 +122,7 @@
 ## Build System Status
 
 ### Root Project
+
 - **Available Scripts:**
   - `npm run lint` - ESLint
   - `npm run format` - Prettier
@@ -119,6 +132,7 @@
 - **Missing:** Test script
 
 ### Tools Package
+
 - **Available Scripts:**
   - Comprehensive test suite (unit, e2e, cross-browser)
   - Build system for multiple services
@@ -149,17 +163,20 @@
 ## Recommendations
 
 1. **Fix Dependency Conflicts**
+
    ```bash
    cd tools && npm install --legacy-peer-deps
    ```
 
 2. **Install Missing Dependencies**
+
    ```bash
    npm install -g pm2
    pip install pytest-asyncio
    ```
 
 3. **Address Security Vulnerabilities**
+
    ```bash
    npm audit fix --force
    ```
@@ -204,17 +221,17 @@
 
 ### ✅ Environment Status (Updated)
 
-| Tool | Version | Status | Notes |
-|------|---------|--------|-------|
-| Node.js | v24.3.0 | ✅ PASS | Meets requirement (≥16) |
-| npm | 11.4.2 | ✅ PASS | Available |
-| Git | 2.39.5 (Apple Git-154) | ✅ PASS | Available |
-| PM2 | 6.0.8 | ✅ PASS | **FIXED** - Installed globally |
-| Python3 | 3.13.5 | ✅ PASS | Available |
-| PHP | 8.4.10 | ✅ PASS | **FIXED** - Installed via Homebrew |
-| Chrome | Available | ✅ PASS | Found at /Applications/Google Chrome.app |
-| Firefox | 140.0.4 | ✅ PASS | **FIXED** - Installed via Homebrew |
-| Edge | 138.0.3351.77 | ✅ PASS | **FIXED** - Installed via Homebrew |
+| Tool    | Version                | Status  | Notes                                    |
+| ------- | ---------------------- | ------- | ---------------------------------------- |
+| Node.js | v24.3.0                | ✅ PASS | Meets requirement (≥16)                  |
+| npm     | 11.4.2                 | ✅ PASS | Available                                |
+| Git     | 2.39.5 (Apple Git-154) | ✅ PASS | Available                                |
+| PM2     | 6.0.8                  | ✅ PASS | **FIXED** - Installed globally           |
+| Python3 | 3.13.5                 | ✅ PASS | Available                                |
+| PHP     | 8.4.10                 | ✅ PASS | **FIXED** - Installed via Homebrew       |
+| Chrome  | Available              | ✅ PASS | Found at /Applications/Google Chrome.app |
+| Firefox | 140.0.4                | ✅ PASS | **FIXED** - Installed via Homebrew       |
+| Edge    | 138.0.3351.77          | ✅ PASS | **FIXED** - Installed via Homebrew       |
 
 ## Next Steps
 
@@ -229,7 +246,5 @@
 
 ---
 
-**Report Generated:** July 9, 2025 (Updated)
-**System:** macOS (Apple Silicon)
-**Working Directory:** `/Users/x/x/Profil3r`
-**Status:** **MAJOR ISSUES RESOLVED** ✅
+**Report Generated:** July 9, 2025 (Updated) **System:** macOS (Apple Silicon) **Working
+Directory:** `/Users/x/x/Profil3r` **Status:** **MAJOR ISSUES RESOLVED** ✅

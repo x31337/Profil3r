@@ -229,7 +229,6 @@ class ServiceManager {
     });
   }
 
-
   async performHealthCheck(service) {
     try {
       const response = await axios.get(

@@ -86,7 +86,7 @@
     "build_system": {
       "root_scripts": {
         "lint": "available",
-        "format": "available", 
+        "format": "available",
         "pre-commit": "available",
         "commitlint": "available",
         "semantic-release": "available",

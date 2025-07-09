@@ -1,8 +1,9 @@
 """
 Simple health check tests for existing services
 """
-import pytest
+
 import httpx
+import pytest
 
 
 @pytest.mark.asyncio
@@ -16,7 +17,7 @@ async def test_osint_health():
         assert data["service"] == "osint-framework"
 
 
-@pytest.mark.asyncio 
+@pytest.mark.asyncio
 async def test_js_tools_health():
     """Test JS tools health endpoint."""
     async with httpx.AsyncClient() as client:

@@ -7,10 +7,10 @@
 <!DOCTYPE html>
 <html
   lang="en"
-  
+
   data-color-mode="auto" data-light-theme="light" data-dark-theme="dark"
   data-a11y-animated-images="system" data-a11y-link-underlines="true"
-  
+
   >
 
 
@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://github.githubassets.com" crossorigin>
   <link rel="preconnect" href="https://avatars.githubusercontent.com">
 
-  
+
 
   <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/light-d1334f2b22bf.css" /><link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/light_high_contrast-f695a361c6b2.css" /><link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/dark-f73a069fd33e.css" /><link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/dark_high_contrast-3a0d87f72ad4.css" /><link data-color-theme="light" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light-d1334f2b22bf.css" /><link data-color-theme="light_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_high_contrast-f695a361c6b2.css" /><link data-color-theme="light_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_colorblind-367eb9a4565a.css" /><link data-color-theme="light_colorblind_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_colorblind_high_contrast-34780c9e589c.css" /><link data-color-theme="light_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_tritanopia-2ddc677c041d.css" /><link data-color-theme="light_tritanopia_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_tritanopia_high_contrast-b479ee0af6fe.css" /><link data-color-theme="dark" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark-f73a069fd33e.css" /><link data-color-theme="dark_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_high_contrast-3a0d87f72ad4.css" /><link data-color-theme="dark_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_colorblind-b17a8392e6c4.css" /><link data-color-theme="dark_colorblind_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_colorblind_high_contrast-03758f901c24.css" /><link data-color-theme="dark_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_tritanopia-a1cc7dba9f73.css" /><link data-color-theme="dark_tritanopia_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_tritanopia_high_contrast-55c33b3b3010.css" /><link data-color-theme="dark_dimmed" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_dimmed-55459b36aa6d.css" /><link data-color-theme="dark_dimmed_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_dimmed_high_contrast-b615f369440d.css" />
 
@@ -34,9 +34,9 @@
     <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-fe85dc7854c9.css" />
     <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-608c56995de0.css" />
     <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/github-a660dbaf2af8.css" />
-  
 
-  
+
+
 
 
   <script type="application/json" id="client-env">{"locale":"en","featureFlags":["alternate_user_config_repo","api_insights_show_missing_data_banner","appearance_settings","attestations_filtering","attestations_sorting","client_version_header","codespaces_prebuild_region_target_update","contact_requests_implicit_opt_in","contentful_lp_copilot_extensions","contentful_lp_flex_features","contentful_lp_footnotes","copilot_chat_attach_multiple_images","copilot_chat_custom_instructions","copilot_chat_repo_custom_instructions_preview","copilot_chat_vision_in_claude","copilot_chat_vision_skip_thread_create","copilot_chat_wholearea_dd","copilot_custom_copilots_feature_preview","copilot_duplicate_thread","copilot_free_to_paid_telem","copilot_ftp_settings_upgrade","copilot_ftp_upgrade_to_pro_from_models","copilot_ftp_your_copilot_settings","copilot_immersive_agent_sessions_direct_creation","copilot_immersive_structured_model_picker","copilot_new_immersive_references_ui","copilot_no_floating_button","copilot_read_shared_conversation","copilot_spaces_support_forks","copilot_spark_allow_empty_commit","copilot_spark_single_user_iteration","copilot_spark_use_streaming","copilot_task_oriented_assistive_prompts","copilot_workbench_connection_reload_banner","copilot_workbench_iterate_panel","copilot_workbench_preview_analytics","copilot_workbench_refresh_on_wsod","custom_copilots_128k_window","custom_copilots_capi_mode","custom_copilots_issues_prs","direct_to_salesforce","dotcom_chat_client_side_skills","failbot_report_error_react_apps_on_page","ghost_pilot_confidence_truncation_25","ghost_pilot_confidence_truncation_40","insert_before_patch","issues_catch_non_json_graphql_response","issues_preserve_tokens_in_urls","issues_react_blur_item_picker_on_close","issues_react_bots_timeline_pagination","issues_react_create_milestone","issues_react_prohibit_title_fallback","issues_react_remove_placeholders","issues_react_set_height_in_markdown","issues_tab_counter_updates","lifecycle_label_name_updates","link_contact_sales_swp_marketo","marketing_pages_search_explore_provider","memex_mwl_filter_field_delimiter","nonreporting_relay_graphql_status_codes","primer_primitives_experimental","primer_react_select_panel_with_modern_action_list","remove_child_patch","sample_network_conn_type","scheduled_reminders_updated_limits","site_homepage_contentful","site_msbuild_hide_integrations","site_msbuild_launch","site_msbuild_webgl_hero","spark_commit_on_default_branch","spark_sync_repository_after_iteration","swp_enterprise_contact_form","use_copilot_avatar","use_paginated_repo_picker_cost_center_form","viewscreen_sandbox","workbench_store_readonly"]}</script>
@@ -72,7 +72,7 @@
 <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/behaviors-3ddb9230f426.js" defer="defer"></script>
 <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_delegated-events_dist_index_js-node_modules_github_catalyst_lib_index_js-ea8eaa-eefe25567449.js" defer="defer"></script>
 <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/notifications-global-40e14cc64ab7.js" defer="defer"></script>
-  
+
   <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/vendors-node_modules_github_mini-throttle_dist_index_js-node_modules_github_remote-form_dist_-364c09-676193b64e17.js" defer="defer"></script>
 <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/app_assets_modules_github_diffs_blob-lines_ts-app_assets_modules_github_diffs_linkable-line-n-1bee7c-7d51467a62a1.js" defer="defer"></script>
 <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/gist-c0033a69088c.js" defer="defer"></script>
@@ -87,7 +87,7 @@
   <meta name="route-action" content="show" data-turbo-transient>
   <meta name="fetch-nonce" content="v2:426bb80e-fb8e-4029-4bb7-bdeb2877c2c9">
 
-    
+
   <meta name="current-catalog-service-hash" content="56253a530ab9027b25719525dcbe6007461a3202218f6f5dfce5a601c121cbcb">
 
 
@@ -97,7 +97,7 @@
 
 
   <meta name="github-keyboard-shortcuts" content="copilot" data-turbo-transient="true" />
-  
+
 
   <meta name="selected-link" value="gist_code" data-turbo-transient>
   <link rel="assets" href="https://github.githubassets.com/">
@@ -108,18 +108,18 @@
 
   <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;gist-id&gt;" data-turbo-transient="true" />
 
-  
+
 
 
 
 
     <meta name="user-login" content="">
 
-  
+
 
     <meta name="viewport" content="width=device-width">
 
-    
+
 
       <meta name="description" content="GitHub Gist: instantly share code, notes, and snippets.">
 
@@ -131,7 +131,7 @@
 
       <meta name="twitter:image" content="https://github.githubassets.com/assets/gist-og-image-54fd7dc0713e.png" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="fb-ban-dsd.user.js" /><meta name="twitter:description" content="GitHub Gist: instantly share code, notes, and snippets." />
   <meta property="og:image" content="https://github.githubassets.com/assets/gist-og-image-54fd7dc0713e.png" /><meta property="og:image:alt" content="GitHub Gist: instantly share code, notes, and snippets." /><meta property="og:site_name" content="Gist" /><meta property="og:type" content="article" /><meta property="og:title" content="fb-ban-dsd.user.js" /><meta property="og:url" content="https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0" /><meta property="og:description" content="GitHub Gist: instantly share code, notes, and snippets." /><meta property="article:author" content="262588213843476" /><meta property="article:publisher" content="262588213843476" />
-  
+
 
 
 
@@ -181,7 +181,7 @@
 
   <body class="logged-out env-production page-responsive" style="word-wrap: break-word;">
     <div data-turbo-body class="logged-out env-production page-responsive" style="word-wrap: break-word;">
-      
+
 
 
 
@@ -190,8 +190,8 @@
 
       <span data-view-component="true" class="progress-pjax-loader Progress position-fixed width-full">
     <span style="width: 0%;" data-view-component="true" class="Progress-item progress-pjax-loader-bar left-0 top-0 color-bg-accent-emphasis"></span>
-</span>      
-      
+</span>
+
       <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/primer-react-a57080a0a6e8.js" defer="defer"></script>
 <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/react-core-1980138d4f65.js" defer="defer"></script>
 <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/react-lib-8705026b409a.js" defer="defer"></script>
@@ -209,7 +209,7 @@
   data-attempted-ssr="false"
   data-react-profiling="false"
 >
-  
+
   <script type="application/json" data-target="react-partial.embeddedData">{"props":{"docsUrl":"https://docs.github.com/get-started/accessibility/keyboard-shortcuts"}}</script>
   <div data-target="react-partial.reactRoot"></div>
 </react-partial>
@@ -217,7 +217,7 @@
 
 
 
-      
+
 
             <div class="Header js-details-container Details flex-wrap flex-md-nowrap p-responsive" role="banner" >
   <div class="Header-item d-none d-md-flex">
@@ -247,9 +247,9 @@
         <primer-text-field class="FormControl width-full FormControl--fullWidth">
       <label class="sr-only FormControl-label" for="q">
         Search Gists
-</label>    
+</label>
   <div class="FormControl-input-wrap">
-    
+
       <input placeholder="Search..." aria-describedby="validation-39289a8b-a5f3-4e08-a938-19fc7b3cc75f" data-target="primer-text-field.inputElement " class="form-control FormControl-input FormControl-medium rounded-right-0" type="text" name="q" id="q" />
 </div>
       <div class="FormControl-inlineValidation" id="validation-39289a8b-a5f3-4e08-a938-19fc7b3cc75f" hidden="hidden">
@@ -261,7 +261,7 @@
 </svg></span>
   <span></span>
 </div>
-    
+
 </primer-text-field>
       <button id="icon-button-df8fed69-3a8c-44e8-a2ca-31f8e71e53d6" aria-labelledby="tooltip-c1022222-a90f-4d74-877e-b91eb03658f5" type="submit" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium rounded-left-0">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search Button-visual">
     <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
@@ -311,7 +311,7 @@
 
 
       <div hidden="hidden" data-view-component="true" class="js-stale-session-flash stale-session-flash flash flash-warn flash-full">
-  
+
         <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
     <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
 </svg>
@@ -325,7 +325,7 @@
 </button><tool-tip id="tooltip-9402a19d-7029-4212-a8cf-6d20606c9f60" for="icon-button-311659b6-b863-4d0b-b603-7d5a71446318" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Dismiss alert</tool-tip>
 
 
-  
+
 </div>
     </div>
 
@@ -344,7 +344,7 @@
 
 
   <template class="js-flash-template">
-    
+
 <div class="flash flash-full   {{ className }}">
   <div >
     <button autofocus class="flash-close js-flash-close" type="button" aria-label="Dismiss this message">
@@ -353,7 +353,7 @@
 </svg>
     </button>
     <div aria-atomic="true" role="alert" class="js-flash-alert">
-      
+
       <div>{{ message }}</div>
 
     </div>
@@ -363,7 +363,7 @@
 </div>
 
 
-    
+
 
 
 
@@ -379,7 +379,7 @@
   >
         <div itemscope itemtype="http://schema.org/Code">
     <main id="gist-pjax-container">
-      
+
 
   <div class="gist-detail-intro gist-banner pb-3">
     <div class="text-center container-lg px-3">
@@ -392,8 +392,8 @@
 
 <div class="gisthead pagehead pb-0 pt-3 mb-4">
   <div class="px-0">
-    
-  
+
+
 <div class="mb-3 d-flex px-3 px-md-3 px-lg-5">
   <div class="flex-auto min-width-0 width-fit mr-3">
     <div class="d-flex">
@@ -432,32 +432,32 @@
 
 <anchored-position data-target="action-menu.overlay" id="gist_options-overlay" anchor="gist_options-button" align="start" side="outside-bottom" anchor-offset="normal" popover="auto" data-view-component="true">
   <div data-view-component="true" class="Overlay Overlay--size-auto">
-    
+
       <div data-view-component="true" class="Overlay-body Overlay-body--paddingNone">          <action-list>
   <div data-view-component="true">
     <ul aria-labelledby="gist_options-button" id="gist_options-list" role="menu" data-view-component="true" class="ActionListWrap--inset ActionListWrap">
         <li rel="nofollow" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;DOWNLOAD_ZIP&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="e4235223acf23f7ff0a0808e3895d3c5f8dcbb5c3db8cc6c88d513b66e4865dd" data-ga-click="Gist, download zip, location:gist overview" data-targets="action-list.items" data-item-id="download_from_gist_options" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <a tabindex="-1" id="item-82df5f13-bcc1-476d-8acc-6ed3fd18a9fa" href="/tareq1988/e75fc99fc13cdbe309b0/archive/af243a819d87c6c95fb179490e75bbb1b22aa6bf.zip" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
         <span class="ActionListItem-visual ActionListItem-visual--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-download">
     <path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"></path><path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"></path>
 </svg>
         </span>
-      
+
         <span data-view-component="true" class="ActionListItem-label">
           Download ZIP
-</span>      
+</span>
 </a>
-  
+
 </li>
-</ul>    
+</ul>
 </div></action-list>
 
 
 </div>
-      
+
 </div></anchored-position>  </focus-group>
 </action-menu>  </div>
   <ul class="d-md-flex d-none pagehead-actions float-none">
@@ -500,7 +500,7 @@
 
   <ul class="d-flex d-md-none px-3 mb-2 pagehead-actions float-none" >
     <li>
-      
+
 <div data-view-component="true" class="flex-items-center d-inline-flex">
   <action-menu data-menu-input="gist-share-url-sized-down" data-select-variant="single" data-dynamic-label="" data-view-component="true" class="flex-shrink-0">
   <focus-group direction="vertical" mnemonics retain>
@@ -517,13 +517,13 @@
 
 <anchored-position data-target="action-menu.overlay" id="action-menu-1d84c613-2820-47eb-ba37-2742efbb3005-overlay" anchor="action-menu-1d84c613-2820-47eb-ba37-2742efbb3005-button" align="start" side="outside-bottom" anchor-offset="normal" popover="auto" data-view-component="true">
   <div data-view-component="true" class="Overlay Overlay--size-auto">
-    
+
       <div data-view-component="true" class="Overlay-body Overlay-body--paddingNone">          <action-list>
   <div data-view-component="true">
     <ul aria-labelledby="action-menu-1d84c613-2820-47eb-ba37-2742efbb3005-button" id="action-menu-1d84c613-2820-47eb-ba37-2742efbb3005-list" role="menu" data-view-component="true" class="ActionListWrap--inset ActionListWrap">
         <li data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <button value="&lt;script src=&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&quot;&gt;&lt;/script&gt;" tabindex="-1" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;EMBED&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="82b2d0661f3cbc730c9fc80912565123143e1d23c1ef34ef68b614a835fabbb6" id="item-f6cd04c8-9142-4574-9287-841b0a66e47c" type="button" role="menuitemradio" aria-checked="true" data-view-component="true" class="ActionListContent">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -535,11 +535,11 @@
            Embed
 </span>      <span data-view-component="true" class="ActionListItem-description">Embed this gist in your website.</span>
 </span></button>
-  
+
 </li>
         <li data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <button value="https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0" tabindex="-1" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;SHARE&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="081b313939df4de9d4a192973101f21c266f1031b3edabffe390f5ec3127829c" id="item-47870acd-adf6-488d-98c0-b55a0fb14ed0" type="button" role="menuitemradio" aria-checked="false" data-view-component="true" class="ActionListContent">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -551,11 +551,11 @@
            Share
 </span>      <span data-view-component="true" class="ActionListItem-description">Copy sharable link for this gist.</span>
 </span></button>
-  
+
 </li>
         <li data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <button value="https://gist.github.com/e75fc99fc13cdbe309b0.git" tabindex="-1" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;USE_HTTPS&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="0c3d759e83268643346bb46d21832ddf1b48c244240b6e6bb979883fa4bcb929" id="item-21843025-7a45-4612-86bd-b0880b9d972e" type="button" role="menuitemradio" aria-checked="false" data-view-component="true" class="ActionListContent">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -567,12 +567,12 @@
           Clone via HTTPS
 </span>      <span data-view-component="true" class="ActionListItem-description">Clone using the web URL.</span>
 </span></button>
-  
+
 </li>
         <li role="presentation" aria-hidden="true" data-view-component="true" class="ActionList-sectionDivider"></li>
         <li target="_blank" rel="noopener noreferrer" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <a tabindex="-1" id="item-fc59d966-9e82-4440-aab8-4edb3b77ca81" href="https://docs.github.com/articles/which-remote-url-should-i-use" role="menuitemradio" aria-checked="false" data-view-component="true" class="ActionListContent ActionListContent--visual16">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -584,27 +584,27 @@
     <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
 </svg>
         </span>
-      
+
         <span data-view-component="true" class="ActionListItem-label">
                 Learn more about clone URLs
 
-</span>      
+</span>
 </a>
-  
+
 </li>
-</ul>    
+</ul>
 </div></action-list>
 
 
 </div>
-      
+
 </div></anchored-position>  </focus-group>
 </action-menu>    <primer-text-field class="FormControl width-full FormControl--fullWidth">
       <label for="gist-share-url-sized-down" class="sr-only FormControl-label">
         Clone this repository at &amp;lt;script src=&amp;quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-</label>    
+</label>
   <div class="FormControl-input-wrap FormControl-input-wrap--small">
-    
+
       <input id="gist-share-url-sized-down" aria-label="Clone this repository at &amp;lt;script src=&amp;quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;" value="&lt;script src=&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&quot;&gt;&lt;/script&gt;" readonly="readonly" data-autoselect="true" data-target="primer-text-field.inputElement " aria-describedby="validation-4142c1ba-61c4-49b4-a182-9e3445f6a315" class="form-control FormControl-monospace FormControl-input FormControl-small rounded-left-0 rounded-right-0 border-right-0" type="text" name="gist-share-url-sized-down" />
 </div>
       <div class="FormControl-inlineValidation" id="validation-4142c1ba-61c4-49b4-a182-9e3445f6a315" hidden="hidden">
@@ -616,7 +616,7 @@
 </svg></span>
   <span></span>
 </div>
-    
+
 </primer-text-field>
   <span data-view-component="true">
   <clipboard-copy id="clipboard-button" aria-label="Copy" for="gist-share-url-sized-down" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;COPY_URL&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="684317a3d2c9c50a45aa8807273047aa731390bcca484620840b455581845086" type="button" data-view-component="true" class="rounded-left-0 Button--secondary Button--small Button">
@@ -680,7 +680,7 @@
   </div>
 
   <div class="d-md-flex d-none flex-items-center flex-md-order-2 flex-order-1" data-multiple>
-    
+
 <div data-view-component="true" class="flex-items-center d-inline-flex">
   <action-menu data-menu-input="gist-share-url-original" data-select-variant="single" data-dynamic-label="" data-view-component="true" class="flex-shrink-0">
   <focus-group direction="vertical" mnemonics retain>
@@ -697,13 +697,13 @@
 
 <anchored-position data-target="action-menu.overlay" id="action-menu-88d845dc-2b3e-4789-bb1c-0042223ee5e6-overlay" anchor="action-menu-88d845dc-2b3e-4789-bb1c-0042223ee5e6-button" align="start" side="outside-bottom" anchor-offset="normal" popover="auto" data-view-component="true">
   <div data-view-component="true" class="Overlay Overlay--size-auto">
-    
+
       <div data-view-component="true" class="Overlay-body Overlay-body--paddingNone">          <action-list>
   <div data-view-component="true">
     <ul aria-labelledby="action-menu-88d845dc-2b3e-4789-bb1c-0042223ee5e6-button" id="action-menu-88d845dc-2b3e-4789-bb1c-0042223ee5e6-list" role="menu" data-view-component="true" class="ActionListWrap--inset ActionListWrap">
         <li data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <button value="&lt;script src=&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&quot;&gt;&lt;/script&gt;" tabindex="-1" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;EMBED&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="82b2d0661f3cbc730c9fc80912565123143e1d23c1ef34ef68b614a835fabbb6" id="item-6c89af34-e235-4f51-a88c-026181c846af" type="button" role="menuitemradio" aria-checked="true" data-view-component="true" class="ActionListContent">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -715,11 +715,11 @@
            Embed
 </span>      <span data-view-component="true" class="ActionListItem-description">Embed this gist in your website.</span>
 </span></button>
-  
+
 </li>
         <li data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <button value="https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0" tabindex="-1" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;SHARE&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="081b313939df4de9d4a192973101f21c266f1031b3edabffe390f5ec3127829c" id="item-7d42de8c-fe6a-4ad9-bd07-cf2ba7842ade" type="button" role="menuitemradio" aria-checked="false" data-view-component="true" class="ActionListContent">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -731,11 +731,11 @@
            Share
 </span>      <span data-view-component="true" class="ActionListItem-description">Copy sharable link for this gist.</span>
 </span></button>
-  
+
 </li>
         <li data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <button value="https://gist.github.com/e75fc99fc13cdbe309b0.git" tabindex="-1" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;USE_HTTPS&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="0c3d759e83268643346bb46d21832ddf1b48c244240b6e6bb979883fa4bcb929" id="item-425eeced-210c-421e-b590-71289a078599" type="button" role="menuitemradio" aria-checked="false" data-view-component="true" class="ActionListContent">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -747,12 +747,12 @@
           Clone via HTTPS
 </span>      <span data-view-component="true" class="ActionListItem-description">Clone using the web URL.</span>
 </span></button>
-  
+
 </li>
         <li role="presentation" aria-hidden="true" data-view-component="true" class="ActionList-sectionDivider"></li>
         <li target="_blank" rel="noopener noreferrer" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
-    
-    
+
+
     <a tabindex="-1" id="item-ae4f92a8-7d8f-4b01-9a3d-72acf0c64b0e" href="https://docs.github.com/articles/which-remote-url-should-i-use" role="menuitemradio" aria-checked="false" data-view-component="true" class="ActionListContent ActionListContent--visual16">
         <span class="ActionListItem-visual ActionListItem-action--leading">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check ActionListItem-singleSelectCheckmark">
@@ -764,27 +764,27 @@
     <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
 </svg>
         </span>
-      
+
         <span data-view-component="true" class="ActionListItem-label">
                 Learn more about clone URLs
 
-</span>      
+</span>
 </a>
-  
+
 </li>
-</ul>    
+</ul>
 </div></action-list>
 
 
 </div>
-      
+
 </div></anchored-position>  </focus-group>
 </action-menu>    <primer-text-field class="FormControl width-full FormControl--fullWidth">
       <label for="gist-share-url-original" class="sr-only FormControl-label">
         Clone this repository at &amp;lt;script src=&amp;quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-</label>    
+</label>
   <div class="FormControl-input-wrap FormControl-input-wrap--small">
-    
+
       <input id="gist-share-url-original" aria-label="Clone this repository at &amp;lt;script src=&amp;quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;" value="&lt;script src=&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0.js&quot;&gt;&lt;/script&gt;" readonly="readonly" data-autoselect="true" data-target="primer-text-field.inputElement " aria-describedby="validation-9cb2ebd2-0049-4ff9-b03f-0001b3695c23" class="form-control FormControl-monospace FormControl-input FormControl-small rounded-left-0 rounded-right-0 border-right-0" type="text" name="gist-share-url-original" />
 </div>
       <div class="FormControl-inlineValidation" id="validation-9cb2ebd2-0049-4ff9-b03f-0001b3695c23" hidden="hidden">
@@ -796,7 +796,7 @@
 </svg></span>
   <span></span>
 </div>
-    
+
 </primer-text-field>
   <span data-view-component="true">
   <clipboard-copy id="clipboard-button" aria-label="Copy" for="gist-share-url-original" data-hydro-click="{&quot;event_type&quot;:&quot;clone_or_download.click&quot;,&quot;payload&quot;:{&quot;feature_clicked&quot;:&quot;COPY_URL&quot;,&quot;git_repository_type&quot;:&quot;GIST&quot;,&quot;gist_id&quot;:21900465,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="684317a3d2c9c50a45aa8807273047aa731390bcca484620840b455581845086" type="button" data-view-component="true" class="rounded-left-0 Button--secondary Button--small Button">
@@ -832,9 +832,9 @@
 
 <div class="container-lg px-3">
   <div class="repository-content gist-content" >
-    
+
   <div>
-    
+
         <div class="js-gist-file-update-container js-task-list-container">
   <div id="file-fb-ban-dsd-user-js" class="file my-2">
       <div class="file-header d-flex flex-md-items-center flex-items-start">
@@ -858,14 +858,14 @@
           </a>
         </div>
       </div>
-    
+
     <div itemprop="text"
       class="Box-body p-0 blob-wrapper data type-javascript  gist-border-0"
       style="overflow: auto" tabindex="0" role="region"
       aria-label="fb-ban-dsd.user.js content, created by tareq1988 on 04:36PM on April 29, 2015."
     >
 
-        
+
 <div class="js-check-hidden-unicode js-blob-code-container blob-code-content">
 
   <template class="js-file-alert-template">
@@ -1229,7 +1229,7 @@
           <div class="js-discussion "
           >
             <div class="ml-md-6 pl-md-3 ml-0 pl-0">
-              
+
 
 
 
@@ -1244,14 +1244,14 @@
 
             <div class="discussion-timeline-actions">
               <div data-view-component="true" class="flash flash-warn mt-3">
-  
+
     <a rel="nofollow" class="btn btn-primary" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;signed out comment&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="768b0cb586dc117f8349bbd7009c61f8ef28785986e8ebc264c2f4f90b5c3d7c" href="/join?source=comment-gist">Sign up for free</a>
     <strong>to join this conversation on GitHub</strong>.
     Already have an account?
     <a rel="nofollow" class="Link--inTextBlock" data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;:{&quot;location_in_page&quot;:&quot;signed out comment&quot;,&quot;repository_id&quot;:null,&quot;auth_type&quot;:&quot;LOG_IN&quot;,&quot;originating_url&quot;:&quot;https://gist.github.com/tareq1988/e75fc99fc13cdbe309b0&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="5473255ee9ae7a32244f637b5d46a5fa53d75d96b2f73c75f7491ad420b45c01" data-test-selector="comments-sign-in-link" href="/login?return_to=https%3A%2F%2Fgist.github.com%2Ftareq1988%2Fe75fc99fc13cdbe309b0">Sign in to comment</a>
 
 
-  
+
 </div>
             </div>
           </div>
@@ -1268,7 +1268,7 @@
           <footer class="footer pt-8 pb-6 f6 color-fg-muted p-responsive" role="contentinfo" >
   <h2 class='sr-only'>Footer</h2>
 
-  
+
 
 
   <div class="d-flex flex-justify-center flex-items-center flex-column-reverse flex-lg-row flex-wrap flex-lg-nowrap">
@@ -1417,4 +1417,3 @@
     <div id="js-global-screen-reader-notice-assertive" class="sr-only mt-n1" aria-live="assertive" aria-atomic="true"></div>
   </body>
 </html>
-

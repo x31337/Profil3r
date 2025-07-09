@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,7 @@ import co.aurasphere.botmill.fb.model.outcoming.quickreply.QuickReply;
 /**
  * Testing facility for FbBotMill framework. Since this object is intended only
  * for testing, it is NOT Thread safe.
- * 
+ *
  * @author Donato Rimenti
  */
 public class FbBotMillMockMediator {
@@ -113,7 +113,7 @@ public class FbBotMillMockMediator {
 
 	/**
 	 * Utility method that instantiates a {@link BotDefinition} class.
-	 * 
+	 *
 	 * @param klass
 	 *            the class to instantiate.
 	 * @return a {@link BotDefinition}.
@@ -134,7 +134,7 @@ public class FbBotMillMockMediator {
 	/**
 	 * Sends a text message to all the registered bots. Used to simulate a user
 	 * typing in chat with your bot.
-	 * 
+	 *
 	 * @param message
 	 *            the message to send.
 	 */
@@ -155,7 +155,7 @@ public class FbBotMillMockMediator {
 	/**
 	 * Sends a payload to all the registered bots. Used to simulate a user
 	 * interacting with buttons.
-	 * 
+	 *
 	 * @param payload
 	 *            the payload to send.
 	 */
@@ -176,7 +176,7 @@ public class FbBotMillMockMediator {
 	/**
 	 * Sends a quickreply to all the registered bots. Used to simulate a user
 	 * interacting with buttons.
-	 * 
+	 *
 	 * @param payload
 	 *            the payload to send.
 	 */
@@ -197,7 +197,7 @@ public class FbBotMillMockMediator {
 
 	/**
 	 * Forwards an envelope to the registered bots.
-	 * 
+	 *
 	 * @param envelope
 	 *            the envelope to forward.
 	 */
@@ -259,7 +259,7 @@ public class FbBotMillMockMediator {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -273,7 +273,7 @@ public class FbBotMillMockMediator {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -295,7 +295,7 @@ public class FbBotMillMockMediator {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

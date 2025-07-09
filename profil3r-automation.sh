@@ -31,7 +31,7 @@ log() {
     shift
     local message="$@"
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    
+
     case "$level" in
         "INFO") echo -e "${GREEN}[INFO]${NC} $message" | tee -a "$LOG_FILE" ;;
         "WARN") echo -e "${YELLOW}[WARN]${NC} $message" | tee -a "$LOG_FILE" ;;
@@ -71,7 +71,7 @@ COMMANDS:
     report          - Generate comprehensive reports
     control-panel   - Launch interactive control panel
     full-cycle      - Complete automation from setup to deployment
-    
+
 OPTIONS:
     -e, --env ENV      Environment (dev, staging, prod)
     -c, --config FILE  Custom configuration file
@@ -97,7 +97,7 @@ parse_args() {
     VERBOSE=false
     DRY_RUN=false
     LOG_LEVEL="INFO"
-    
+
     while [[ $# -gt 0 ]]; do
         case $1 in
             -e|--env)
@@ -135,7 +135,7 @@ parse_args() {
 # Load configuration
 load_config() {
     local config_file="${CONFIG_FILE:-$CONFIG_DIR/config.${ENVIRONMENT}.json}"
-    
+
     if [[ -f "$config_file" ]]; then
         log "INFO" "Loading configuration from $config_file"
         # Export configuration as environment variables
@@ -151,26 +151,26 @@ load_config() {
 # Environment setup
 setup_environment() {
     log "INFO" "Setting up environment: $ENVIRONMENT"
-    
+
     # Check system requirements
     check_system_requirements
-    
+
     # Install dependencies
     install_dependencies
-    
+
     # Setup services
     setup_services
-    
+
     # Configure environment
     configure_environment
-    
+
     log "SUCCESS" "Environment setup completed"
 }
 
 # Check system requirements
 check_system_requirements() {
     log "INFO" "Checking system requirements..."
-    
+
     local requirements=(
         "node:>=16"
         "npm:>=8"
@@ -179,11 +179,11 @@ check_system_requirements() {
         "pm2:>=5.0"
         "php:>=8.0"
     )
-    
+
     for req in "${requirements[@]}"; do
         local cmd="${req%%:*}"
         local version="${req##*:}"
-        
+
         if command -v "$cmd" &> /dev/null; then
             log "SUCCESS" "$cmd is installed"
         else
@@ -196,7 +196,7 @@ check_system_requirements() {
 # Install missing requirement
 install_requirement() {
     local requirement="$1"
-    
+
     case "$requirement" in
         "pm2")
             log "INFO" "Installing PM2..."
@@ -221,37 +221,37 @@ install_requirement() {
 # Install dependencies
 install_dependencies() {
     log "INFO" "Installing project dependencies..."
-    
+
     # Root dependencies
     npm install
-    
+
     # Python dependencies
     pip install -r requirements.txt
-    
+
     # Tool dependencies
     cd tools && npm install --legacy-peer-deps
     cd ..
-    
+
     # Integration test dependencies
     cd tests/integration/node && npm install
     cd ../../..
-    
+
     log "SUCCESS" "Dependencies installed"
 }
 
 # Setup services
 setup_services() {
     log "INFO" "Setting up services..."
-    
+
     # Create PM2 ecosystem file
     create_pm2_ecosystem
-    
+
     # Setup database if needed
     setup_database
-    
+
     # Configure logging
     setup_logging
-    
+
     log "SUCCESS" "Services configured"
 }
 
@@ -306,66 +306,66 @@ EOF
 # Build all components
 build_all() {
     log "INFO" "Building all components..."
-    
+
     # Python build
     build_python
-    
+
     # Node.js build
     build_nodejs
-    
+
     # PHP validation
     build_php
-    
+
     # Docker build
     build_docker
-    
+
     log "SUCCESS" "All components built"
 }
 
 # Build Python components
 build_python() {
     log "INFO" "Building Python components..."
-    
+
     # Install in development mode
     pip install -e .
-    
+
     # Compile Python files
     python -m compileall profil3r/
-    
+
     log "SUCCESS" "Python components built"
 }
 
 # Build Node.js components
 build_nodejs() {
     log "INFO" "Building Node.js components..."
-    
+
     # Build tools
     cd tools
     npm run build 2>/dev/null || log "WARN" "Build script not available"
     cd ..
-    
+
     # Build individual JS tools
     cd tools/js_tools
     npm run build 2>/dev/null || log "WARN" "Build script not available"
     cd ../..
-    
+
     log "SUCCESS" "Node.js components built"
 }
 
 # Build PHP components
 build_php() {
     log "INFO" "Validating PHP components..."
-    
+
     # Find and validate PHP files
     find . -name "*.php" -not -path "./node_modules/*" -exec php -l {} \; > /dev/null
-    
+
     log "SUCCESS" "PHP components validated"
 }
 
 # Build Docker images
 build_docker() {
     log "INFO" "Building Docker images..."
-    
+
     if [[ -f "docker-compose.yml" ]]; then
         docker-compose build
         log "SUCCESS" "Docker images built"
@@ -377,76 +377,76 @@ build_docker() {
 # Run comprehensive tests
 run_tests() {
     log "INFO" "Running comprehensive test suite..."
-    
+
     # Python tests
     run_python_tests
-    
-    # Node.js tests  
+
+    # Node.js tests
     run_nodejs_tests
-    
+
     # Integration tests
     run_integration_tests
-    
+
     # Security tests
     run_security_tests
-    
+
     log "SUCCESS" "All tests completed"
 }
 
 # Run Python tests
 run_python_tests() {
     log "INFO" "Running Python tests..."
-    
+
     python -m pytest tests/integration/python/ -v --cov=profil3r --cov-report=html --cov-report=term-missing
-    
+
     log "SUCCESS" "Python tests completed"
 }
 
 # Run Node.js tests
 run_nodejs_tests() {
     log "INFO" "Running Node.js tests..."
-    
+
     cd tests/integration/node
     npm test || log "WARN" "Some Node.js tests failed"
     cd ../../..
-    
+
     log "SUCCESS" "Node.js tests completed"
 }
 
 # Run integration tests
 run_integration_tests() {
     log "INFO" "Running integration tests..."
-    
+
     # Start services
     pm2 start ecosystem.config.js
-    
+
     # Wait for services to be ready
     sleep 10
-    
+
     # Run health checks
     curl -f http://localhost:8000/api/health || log "WARN" "OSINT service health check failed"
     curl -f http://localhost:3000/api/health || log "WARN" "JS tools service health check failed"
-    
+
     log "SUCCESS" "Integration tests completed"
 }
 
 # Run security tests
 run_security_tests() {
     log "INFO" "Running security tests..."
-    
+
     # npm audit
     npm audit --audit-level=high || log "WARN" "npm audit found issues"
-    
+
     # Python security check
     pip-audit 2>/dev/null || log "WARN" "pip-audit not available"
-    
+
     log "SUCCESS" "Security tests completed"
 }
 
 # Deploy to environment
 deploy_to_env() {
     log "INFO" "Deploying to $ENVIRONMENT environment..."
-    
+
     case "$ENVIRONMENT" in
         "dev")
             deploy_dev
@@ -462,107 +462,107 @@ deploy_to_env() {
             exit 1
             ;;
     esac
-    
+
     log "SUCCESS" "Deployment completed"
 }
 
 # Deploy to development
 deploy_dev() {
     log "INFO" "Deploying to development environment..."
-    
+
     # Start services with PM2
     pm2 start ecosystem.config.js --env development
-    
+
     # Setup development monitoring
     setup_monitoring
-    
+
     log "SUCCESS" "Development deployment completed"
 }
 
 # Deploy to staging
 deploy_staging() {
     log "INFO" "Deploying to staging environment..."
-    
+
     # Run additional validation
     validate_all
-    
+
     # Start services
     pm2 start ecosystem.config.js --env staging
-    
+
     log "SUCCESS" "Staging deployment completed"
 }
 
 # Deploy to production
 deploy_prod() {
     log "INFO" "Deploying to production environment..."
-    
+
     # Extra validation for production
     validate_all
     run_tests
-    
+
     # Backup current deployment
     backup_deployment
-    
+
     # Start services
     pm2 start ecosystem.config.js --env production
-    
+
     log "SUCCESS" "Production deployment completed"
 }
 
 # Validate all components
 validate_all() {
     log "INFO" "Validating all components..."
-    
+
     # Validate configuration
     validate_config
-    
+
     # Validate dependencies
     validate_dependencies
-    
+
     # Validate services
     validate_services
-    
+
     log "SUCCESS" "All validations passed"
 }
 
 # Validate configuration
 validate_config() {
     log "INFO" "Validating configuration..."
-    
+
     # Check required config files
     local required_configs=(
         "config.json"
         "package.json"
         "requirements.txt"
     )
-    
+
     for config in "${required_configs[@]}"; do
         if [[ ! -f "$config" ]]; then
             log "ERROR" "Required configuration file missing: $config"
             exit 1
         fi
     done
-    
+
     log "SUCCESS" "Configuration validation passed"
 }
 
 # Validate dependencies
 validate_dependencies() {
     log "INFO" "Validating dependencies..."
-    
+
     # Check Node.js dependencies
     npm audit --audit-level=high
-    
+
     # Check Python dependencies
     pip check
-    
+
     log "SUCCESS" "Dependencies validation passed"
 }
 
 # Validate services
 validate_services() {
     log "INFO" "Validating services..."
-    
+
     # Check if services are running
     if pm2 list | grep -q "online"; then
         log "SUCCESS" "Services are running"
@@ -574,15 +574,15 @@ validate_services() {
 # Setup monitoring
 setup_monitoring() {
     log "INFO" "Setting up monitoring..."
-    
+
     # Setup PM2 monitoring
     pm2 install pm2-logrotate
     pm2 set pm2-logrotate:max_size 10M
     pm2 set pm2-logrotate:retain 7
-    
+
     # Setup health check monitoring
     setup_health_monitoring
-    
+
     log "SUCCESS" "Monitoring setup completed"
 }
 
@@ -598,7 +598,7 @@ const services = [
 
 async function checkHealth() {
     console.log(`[${new Date().toISOString()}] Health Check Started`);
-    
+
     for (const service of services) {
         try {
             const response = await axios.get(service.url, { timeout: 5000 });
@@ -613,7 +613,7 @@ async function checkHealth() {
 setInterval(checkHealth, 30000);
 checkHealth();
 EOF
-    
+
     # Start health monitoring
     pm2 start automation/health-monitor.js --name "profil3r-health-monitor"
 }
@@ -621,19 +621,19 @@ EOF
 # Generate reports
 generate_reports() {
     log "INFO" "Generating reports..."
-    
+
     # Create reports directory
     mkdir -p reports
-    
+
     # Generate test report
     generate_test_report
-    
+
     # Generate deployment report
     generate_deployment_report
-    
+
     # Generate security report
     generate_security_report
-    
+
     log "SUCCESS" "Reports generated"
 }
 
@@ -685,37 +685,37 @@ EOF
 # Clean up
 clean_up() {
     log "INFO" "Cleaning up..."
-    
+
     # Clean build artifacts
     rm -rf build/ dist/ *.egg-info/
-    
+
     # Clean node modules cache
     npm cache clean --force
-    
+
     # Clean Python cache
     find . -type d -name "__pycache__" -delete
     find . -type f -name "*.pyc" -delete
-    
+
     # Clean logs (keep last 10)
     find logs/ -name "*.log" -mtime +10 -delete 2>/dev/null || true
-    
+
     log "SUCCESS" "Cleanup completed"
 }
 
 # Update components
 update_components() {
     log "INFO" "Updating components..."
-    
+
     # Update npm packages
     npm update
-    
+
     # Update Python packages
     pip install --upgrade -r requirements.txt
-    
+
     # Update tools
     cd tools && npm update
     cd ..
-    
+
     log "SUCCESS" "Components updated"
 }
 
@@ -741,7 +741,7 @@ launch_control_panel() {
         echo
         echo -e "${CYAN}═══════════════════════════════════════════════════════════════════════════════════════${NC}"
         read -p "Select option: " choice
-        
+
         case $choice in
             1) setup_environment ;;
             2) build_all ;;
@@ -755,7 +755,7 @@ launch_control_panel() {
             0) break ;;
             *) log "ERROR" "Invalid option" ;;
         esac
-        
+
         read -p "Press Enter to continue..."
     done
 }
@@ -763,27 +763,27 @@ launch_control_panel() {
 # Full automation cycle
 full_automation_cycle() {
     log "INFO" "Starting full automation cycle..."
-    
+
     setup_environment
     build_all
     run_tests
     deploy_to_env
     setup_monitoring
     generate_reports
-    
+
     log "SUCCESS" "Full automation cycle completed"
 }
 
 # Main function
 main() {
     show_banner
-    
+
     # Parse arguments
     parse_args "$@"
-    
+
     # Load configuration
     load_config
-    
+
     # Execute command
     case "${COMMAND:-}" in
         "setup") setup_environment ;;
@@ -798,7 +798,7 @@ main() {
         "control-panel") launch_control_panel ;;
         "full-cycle") full_automation_cycle ;;
         "") launch_control_panel ;;
-        *) 
+        *)
             log "ERROR" "Unknown command: ${COMMAND:-}"
             show_help
             exit 1

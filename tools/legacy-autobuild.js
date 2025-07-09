@@ -24,7 +24,11 @@ const {
   AutoFixEngine,
   DependencyManager
 } = require('./modules');
-const { generateHTMLReport, waitForService, findFiles } = require('./modules/utils');
+const {
+  generateHTMLReport,
+  waitForService,
+  findFiles
+} = require('./modules/utils');
 
 class AutoBuildSystem {
   constructor() {
@@ -562,7 +566,6 @@ class AutoBuildSystem {
     return await this.builder.buildPHPService(service, servicePath);
   }
 
-
   async runUnitTests() {
     // Proxy to tester
     return await this.tester.runUnitTests();
@@ -626,7 +629,6 @@ class AutoBuildSystem {
     return findFiles(directory, pattern);
   }
 
-
   // === REPORT GENERATION (KEPT HERE OR EXTRACT TO SEPARATE MODULE) ===
 
   async generateReports() {
@@ -653,7 +655,6 @@ class AutoBuildSystem {
 
     this.broadcast('reports-generated', { report });
   }
-
 
   // === LEGACY METHODS FOR BACKWARD COMPATIBILITY ===
 

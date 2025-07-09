@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.airline.FlightInfo;
  *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-checkin-template"
  *      > Facebook's Messenger Platform Airline Checkin Template
  *      Documentation</a>
- * 
+ *
  */
 public class AirlineCheckinTemplateBuilder extends FlightInfoBuilderDelegator {
 
@@ -82,7 +82,7 @@ public class AirlineCheckinTemplateBuilder extends FlightInfoBuilderDelegator {
 	 * Adds a {@link FlightInfo} object to this template. This object is
 	 * mandatory and can't be null for Airline templates. There can be multiple
 	 * flight info object but there must be at least one.
-	 * 
+	 *
 	 * @param flightNumber
 	 *            the flight number. It can't be empty.
 	 * @return a builder for the {@link FlightInfo} object.
@@ -99,7 +99,7 @@ public class AirlineCheckinTemplateBuilder extends FlightInfoBuilderDelegator {
 	 * flight info object but there must be at least one. Used only by delegated
 	 * classes. Should not be called directly. Use
 	 * {@link #addFlightInfo(String)} instead.
-	 * 
+	 *
 	 * @param flightInfo
 	 *            the flight info to add. It can't be null.
 	 */
@@ -111,11 +111,11 @@ public class AirlineCheckinTemplateBuilder extends FlightInfoBuilderDelegator {
 	/**
 	 * Sets the theme color for this template. This field is optional. If not
 	 * specified, the template will use Facebook's default theme (light blue).
-	 * 
+	 *
 	 * @param themeColor
 	 *            the color for this template. The Color must be a valid RGB
 	 *            color in the format #RRGGBB.
-	 * 
+	 *
 	 * @return this builder.
 	 */
 	public AirlineCheckinTemplateBuilder setThemeColor(String themeColor) {
@@ -161,7 +161,7 @@ public class AirlineCheckinTemplateBuilder extends FlightInfoBuilderDelegator {
 	 * Builds the {@link FbBotMillResponse} that the bot should return. The
 	 * template builders, like this, delegate an
 	 * {@link AttachmentMessageBuilder} to build the message.
-	 * 
+	 *
 	 * @param envelope
 	 *            a {@link MessageEnvelope} object representing the incoming
 	 *            message.
@@ -174,7 +174,7 @@ public class AirlineCheckinTemplateBuilder extends FlightInfoBuilderDelegator {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.factory.AirlineBaseTemplateBuilder
 	 * #toString()

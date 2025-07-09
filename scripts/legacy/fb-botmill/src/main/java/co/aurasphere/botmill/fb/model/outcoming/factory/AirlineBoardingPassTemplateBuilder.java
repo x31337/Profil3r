@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.airline.BoardingPass;
  *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-boardingpass-template"
  *      > Facebook's Messenger Platform Airline Boarding Pass Template
  *      Documentation</a>
- * 
+ *
  */
 public class AirlineBoardingPassTemplateBuilder extends
 		AirlineBaseTemplateBuilder {
@@ -52,7 +52,7 @@ public class AirlineBoardingPassTemplateBuilder extends
 	/**
 	 * Default constructor. Creates a builder for an Airline Boarding Pass
 	 * Template.
-	 * 
+	 *
 	 * @param introMessage
 	 *            the message to send before the template. Can't be empty.
 	 * @param locale
@@ -61,7 +61,7 @@ public class AirlineBoardingPassTemplateBuilder extends
 	 *            For more information see<a href=
 	 *            "https://developers.facebook.com/docs/internationalization#locales"
 	 *            > Facebook's locale support</a>.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-boardingpass-template"
 	 *      > Facebook's Messenger Platform Airline Boarding Pass Template
@@ -77,7 +77,7 @@ public class AirlineBoardingPassTemplateBuilder extends
 	/**
 	 * Adds a {@link BoardingPass} object to this template. This field is
 	 * mandatory for this template and should contain at least one element.
-	 * 
+	 *
 	 * @param passengerName
 	 *            the passenger name. It can't be empty.
 	 * @param pnrNumber
@@ -99,7 +99,7 @@ public class AirlineBoardingPassTemplateBuilder extends
 	/**
 	 * Adds a {@link BoardingPass} object to this template. This field is
 	 * mandatory for this template and should contain at least one element.
-	 * 
+	 *
 	 * @param boardingPass
 	 *            the boarding pass object to add. It can't be null.
 	 * @return this builder.
@@ -113,7 +113,7 @@ public class AirlineBoardingPassTemplateBuilder extends
 	/**
 	 * Sets the theme color for this template. This field is optional. If not
 	 * specified, the template will use Facebook's default theme (light blue).
-	 * 
+	 *
 	 * @param themeColor
 	 *            the color for this template. The Color must be a valid RGB
 	 *            color in the format #RRGGBB.
@@ -162,7 +162,7 @@ public class AirlineBoardingPassTemplateBuilder extends
 	 * Builds the {@link FbBotMillResponse} that the bot should return. The
 	 * template builders, like this, delegate an
 	 * {@link AttachmentMessageBuilder} to build the message.
-	 * 
+	 *
 	 * @param envelope
 	 *            a {@link MessageEnvelope} object representing the incoming
 	 *            message.
@@ -175,7 +175,7 @@ public class AirlineBoardingPassTemplateBuilder extends
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.factory.AirlineBaseTemplateBuilder
 	 * #toString()

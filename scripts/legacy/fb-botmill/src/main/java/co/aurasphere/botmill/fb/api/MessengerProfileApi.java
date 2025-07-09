@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -90,7 +90,7 @@ public class MessengerProfileApi {
 
 	/**
 	 * Removes the current Get Started Button.
-	 * 
+	 *
 	 * @see #setGetStartedButton(String)
 	 */
 	public static void deleteGetStartedButton() {
@@ -130,7 +130,7 @@ public class MessengerProfileApi {
 
 	/**
 	 * Removes the current Greeting Message.
-	 * 
+	 *
 	 * @see #setGreetingMessage(String)
 	 */
 	public static void deleteGreetingMessage() {
@@ -195,7 +195,7 @@ public class MessengerProfileApi {
 	 *
 	 * @param persistentMenu
 	 *            the new persistent menus
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/messenger-profile/persistent-menu">
 	 *      Facebook's Messenger Platform Persistent Menu Documentation</a>
@@ -208,7 +208,7 @@ public class MessengerProfileApi {
 
 	/**
 	 * Removes the Persistent Menus.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/messenger-profile/persistent-menu">
 	 *      Facebook's Messenger Platform Persistent Menu Documentation</a>
@@ -220,9 +220,9 @@ public class MessengerProfileApi {
 
 	/**
 	 * This sets the home url of the Bot
-	 * 
+	 *
 	 * @param homeUrl
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/messenger-profile/home-url/v2.9">
 	 *      Chat Extension Home URL</a>
@@ -236,7 +236,7 @@ public class MessengerProfileApi {
 
 	/**
 	 * Removes the home url.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/messenger-profile/home-url/v2.9">
 	 *      Chat Extension Home URL</a>
@@ -249,7 +249,7 @@ public class MessengerProfileApi {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

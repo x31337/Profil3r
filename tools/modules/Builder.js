@@ -182,7 +182,6 @@ class Builder {
     }
   }
 
-
   stopAllBuilds() {
     Object.values(this.buildProcesses).forEach(process => {
       if (process && !process.killed) {

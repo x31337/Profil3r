@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -60,7 +60,7 @@ import co.aurasphere.botmill.fb.support.FbBotMillMonitor;
 /**
  * Class that contains methods that allows FbBotMill to communicate through the
  * network.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
  */
@@ -81,7 +81,7 @@ public class FbBotMillNetworkController {
 	/**
 	 * Method used to retrieve a {@link FacebookUserProfile} from an ID using
 	 * the GET method.
-	 * 
+	 *
 	 * @param userId
 	 *            the ID of the user to retrieve.
 	 * @return the user profile info.
@@ -99,7 +99,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * GETs the daily unique active thread counts.
-	 * 
+	 *
 	 * @return the daily unique active thread counts.
 	 */
 	public static DailyUniqueActiveThreadCounts getDailyUniqueActiveThreadCounts() {
@@ -114,7 +114,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * GETs the daily unique conversation counts.
-	 * 
+	 *
 	 * @return the daily unique conversation counts.
 	 */
 	public static DailyUniqueConversationCounts getDailyUniqueConversationCounts() {
@@ -129,7 +129,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs a message as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 */
@@ -147,7 +147,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs a message as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 */
@@ -158,7 +158,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs a thread setting as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 */
@@ -196,7 +196,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs a thread setting as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 */
@@ -207,7 +207,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs a messenger profile as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 */
@@ -218,7 +218,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs an attachment as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 * @return the uploaded attachment ID.
@@ -242,7 +242,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs an attachment as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 * @return the uploaded attachment ID.
@@ -254,7 +254,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs a messenger code as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 * @return the requested messenger code.
@@ -278,7 +278,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * POSTs a messenger code as a JSON string to Facebook.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 * @return the uploaded attachment ID.
@@ -290,7 +290,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * Performs a POST and propagates it to the registered monitors.
-	 * 
+	 *
 	 * @param url
 	 *            the URL where to post.
 	 * @param input
@@ -346,7 +346,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * DELETEs a JSON string as a Facebook's Thread Setting.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 */
@@ -366,7 +366,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * DELETEs a JSON string as a Facebook's Thread Setting.
-	 * 
+	 *
 	 * @param input
 	 *            the data to send.
 	 */
@@ -377,7 +377,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * DELETEs a JSON string as a Facebook's Messenger Profile.
-	 * 
+	 *
 	 * @param input
 	 *            the JSON data to send.
 	 */
@@ -397,7 +397,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * DELETEs a JSON string as a Facebook's Messenger Profile.
-	 * 
+	 *
 	 * @param input
 	 *            the data to send.
 	 */
@@ -408,7 +408,7 @@ public class FbBotMillNetworkController {
 
 	/**
 	 * Validates a Facebook Page Token.
-	 * 
+	 *
 	 * @param pageToken
 	 *            the token to validate.
 	 * @return true if the token is not null or empty, false otherwise.
@@ -424,7 +424,7 @@ public class FbBotMillNetworkController {
 	/**
 	 * Utility method that converts an object to its StringEntity
 	 * representation.
-	 * 
+	 *
 	 * @param object
 	 *            the object to convert to a StringEntity.
 	 * @return a {@link StringEntity} object containing the object JSON.
@@ -530,7 +530,7 @@ public class FbBotMillNetworkController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
