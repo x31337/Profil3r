@@ -36,14 +36,14 @@ class ServiceManager {
           child = spawn('npm', ['start'], {
             cwd: servicePath,
             stdio: 'inherit',
-            detached: true
+            detached: true,
           });
           break;
         case 'python':
           child = spawn('python3', ['app.py'], {
             cwd: servicePath,
             stdio: 'inherit',
-            detached: true
+            detached: true,
           });
           break;
         case 'php':
@@ -53,7 +53,7 @@ class ServiceManager {
             {
               cwd: servicePath,
               stdio: 'inherit',
-              detached: true
+              detached: true,
             }
           );
           break;
@@ -65,7 +65,7 @@ class ServiceManager {
         process: child,
         service: service,
         status: 'starting',
-        startTime: new Date().toISOString()
+        startTime: new Date().toISOString(),
       };
 
       // Wait for service to be ready
@@ -78,7 +78,7 @@ class ServiceManager {
       this.eventBus.broadcast('service-started', {
         service: service.name,
         port: service.port,
-        status: 'running'
+        status: 'running',
       });
 
       console.log(`✅ Service ${service.name} started successfully`);
@@ -90,7 +90,7 @@ class ServiceManager {
 
       this.eventBus.broadcast('service-start-failed', {
         service: service.name,
-        error: error.message
+        error: error.message,
       });
 
       throw error;
@@ -114,7 +114,7 @@ class ServiceManager {
         serviceInfo.process.kill('SIGTERM');
 
         // Wait for graceful shutdown
-        await new Promise(resolve => {
+        await new Promise((resolve) => {
           const timeout = setTimeout(() => {
             if (!serviceInfo.process.killed) {
               serviceInfo.process.kill('SIGKILL');
@@ -133,7 +133,7 @@ class ServiceManager {
 
       this.eventBus.broadcast('service-stopped', {
         service: serviceName,
-        status: 'stopped'
+        status: 'stopped',
       });
 
       console.log(`✅ Service ${serviceName} stopped successfully`);
@@ -142,7 +142,7 @@ class ServiceManager {
 
       this.eventBus.broadcast('service-stop-failed', {
         service: serviceName,
-        error: error.message
+        error: error.message,
       });
 
       throw error;
@@ -162,7 +162,9 @@ class ServiceManager {
         await this.startService(serviceInfo.service);
       } else {
         // Find service in config and start it
-        const service = this.config.services.find(s => s.name === serviceName);
+        const service = this.config.services.find(
+          (s) => s.name === serviceName
+        );
         if (service) {
           await this.startService(service);
         } else {
@@ -172,7 +174,7 @@ class ServiceManager {
 
       this.eventBus.broadcast('service-restarted', {
         service: serviceName,
-        status: 'running'
+        status: 'running',
       });
 
       console.log(`✅ Service ${serviceName} restarted successfully`);
@@ -184,7 +186,7 @@ class ServiceManager {
 
       this.eventBus.broadcast('service-restart-failed', {
         service: serviceName,
-        error: error.message
+        error: error.message,
       });
 
       throw error;
@@ -194,7 +196,7 @@ class ServiceManager {
   async startAllServices() {
     console.log('🚀 Starting all services...');
 
-    const startPromises = this.config.services.map(async service => {
+    const startPromises = this.config.services.map(async (service) => {
       if (service.port) {
         try {
           await this.startService(service);
@@ -207,14 +209,14 @@ class ServiceManager {
     await Promise.all(startPromises);
 
     this.eventBus.broadcast('all-services-started', {
-      services: Object.keys(this.services)
+      services: Object.keys(this.services),
     });
   }
 
   async stopAllServices() {
     console.log('🛑 Stopping all services...');
 
-    const stopPromises = Object.keys(this.services).map(async serviceName => {
+    const stopPromises = Object.keys(this.services).map(async (serviceName) => {
       try {
         await this.stopService(serviceName);
       } catch (error) {
@@ -225,7 +227,7 @@ class ServiceManager {
     await Promise.all(stopPromises);
 
     this.eventBus.broadcast('all-services-stopped', {
-      services: []
+      services: [],
     });
   }
 
@@ -240,14 +242,14 @@ class ServiceManager {
         service: service.name,
         status: 'healthy',
         response: response.data,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     } catch (error) {
       return {
         service: service.name,
         status: 'unhealthy',
         error: error.message,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     }
   }
@@ -267,7 +269,7 @@ class ServiceManager {
     }
 
     this.eventBus.broadcast('health-checks-completed', {
-      healthChecks
+      healthChecks,
     });
 
     return healthChecks;
@@ -315,9 +317,9 @@ class ServiceManager {
   }
 
   getAllServiceStatuses() {
-    return Object.keys(this.services).map(name => ({
+    return Object.keys(this.services).map((name) => ({
       name,
-      ...this.services[name]
+      ...this.services[name],
     }));
   }
 

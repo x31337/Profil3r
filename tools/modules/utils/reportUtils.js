@@ -75,7 +75,7 @@ async function generateHTMLReport(report, outputPath) {
     <ul>
         ${report.errors
           .map(
-            error => `
+            (error) => `
             <li class="error">
                 <strong>${error.type}:</strong> ${error.message}
                 <em>(${error.timestamp})</em>
@@ -95,5 +95,5 @@ async function generateHTMLReport(report, outputPath) {
 }
 
 module.exports = {
-  generateHTMLReport
+  generateHTMLReport,
 };

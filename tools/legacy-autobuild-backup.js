@@ -28,33 +28,33 @@ class AutoBuildSystem {
           name: 'OSINT Framework',
           dir: 'OSINT-Framework',
           port: 8000,
-          type: 'node'
+          type: 'node',
         },
         {
           name: 'Facebook Mass Messenger',
           dir: 'js_tools/facebook_mass_messenger',
           port: 4444,
-          type: 'node'
+          type: 'node',
         },
         {
           name: 'Messenger Bot Framework',
           dir: 'js_tools/messenger_bot_framework/fbbot',
           port: 3000,
-          type: 'node'
+          type: 'node',
         },
         {
           name: 'Python Tools',
           dir: 'telegram-facebook-bot',
           port: null,
-          type: 'python'
+          type: 'python',
         },
-        { name: 'PHP Tools', dir: 'php_tools', port: null, type: 'php' }
+        { name: 'PHP Tools', dir: 'php_tools', port: null, type: 'php' },
       ],
       autoFix: true,
       autoPush: true,
       realTimeMonitoring: true,
       testCoverage: 100,
-      buildTimeout: 300000 // 5 minutes
+      buildTimeout: 300000, // 5 minutes
     };
 
     this.state = {
@@ -68,7 +68,7 @@ class AutoBuildSystem {
       lastBuild: null,
       buildCount: 0,
       testCount: 0,
-      deployCount: 0
+      deployCount: 0,
     };
 
     this.git = git();
@@ -107,7 +107,7 @@ class AutoBuildSystem {
 
   createDirectories() {
     const dirs = [this.config.buildDir, this.config.logDir];
-    dirs.forEach(dir => {
+    dirs.forEach((dir) => {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
@@ -124,7 +124,7 @@ class AutoBuildSystem {
       res.json({
         ...this.state,
         config: this.config,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     });
 
@@ -175,18 +175,18 @@ class AutoBuildSystem {
   async startWebSocketServer() {
     this.wss = new WebSocket.Server({ port: this.config.wsPort });
 
-    this.wss.on('connection', ws => {
+    this.wss.on('connection', (ws) => {
       console.log('📡 WebSocket client connected');
 
       // Send current state
       ws.send(
         JSON.stringify({
           type: 'state',
-          data: this.state
+          data: this.state,
         })
       );
 
-      ws.on('message', async message => {
+      ws.on('message', async (message) => {
         const { type } = JSON.parse(message);
 
         try {
@@ -231,7 +231,7 @@ class AutoBuildSystem {
 
   broadcast(type, data) {
     const message = JSON.stringify({ type, data });
-    this.wss.clients.forEach(client => {
+    this.wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
@@ -248,17 +248,17 @@ class AutoBuildSystem {
       '**/*.css',
       '**/*.md',
       '**/*.yml',
-      '**/*.yaml'
+      '**/*.yaml',
     ];
 
     const watcher = chokidar.watch(watchPatterns, {
       ignored: /(^|[/\\])\../, // ignore dotfiles
       persistent: true,
       ignoreInitial: true,
-      cwd: this.config.projectRoot
+      cwd: this.config.projectRoot,
     });
 
-    watcher.on('change', async filePath => {
+    watcher.on('change', async (filePath) => {
       console.log(`📝 File changed: ${filePath}`);
       this.broadcast('file-change', { path: filePath });
 
@@ -330,7 +330,7 @@ class AutoBuildSystem {
 
       this.broadcast('build-completed', {
         success: true,
-        buildCount: this.state.buildCount
+        buildCount: this.state.buildCount,
       });
 
       console.log('✅ Full build cycle completed successfully!');
@@ -339,12 +339,12 @@ class AutoBuildSystem {
       this.state.errors.push({
         type: 'build',
         message: error.message,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       this.broadcast('build-failed', {
         error: error.message,
-        buildCount: this.state.buildCount
+        buildCount: this.state.buildCount,
       });
 
       // Auto-fix on failure
@@ -395,7 +395,7 @@ class AutoBuildSystem {
         // Try with legacy peer deps
         execSync('npm install --legacy-peer-deps', {
           cwd: projectPath,
-          stdio: 'inherit'
+          stdio: 'inherit',
         });
         console.log(
           `Dependencies installed with --legacy-peer-deps for ${name}`
@@ -407,7 +407,7 @@ class AutoBuildSystem {
           // Try with force flag
           execSync('npm install --force', {
             cwd: projectPath,
-            stdio: 'inherit'
+            stdio: 'inherit',
           });
           console.log(`Dependencies installed with --force for ${name}`);
           return true;
@@ -425,19 +425,19 @@ class AutoBuildSystem {
       // Clean npm cache
       execSync('npm cache clean --force', {
         cwd: projectPath,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       // Remove node_modules and package-lock.json
       execSync('rm -rf node_modules package-lock.json', {
         cwd: projectPath,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       // Reinstall with legacy peer deps
       execSync('npm install --legacy-peer-deps', {
         cwd: projectPath,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       console.log(`Dependencies auto-fixed successfully for ${name}`);
@@ -455,13 +455,13 @@ class AutoBuildSystem {
       // ESLint with auto-fix
       execSync('npx eslint . --ext .js,.ts,.jsx,.tsx --fix', {
         cwd: this.config.projectRoot,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       // Prettier
       execSync('npx prettier --write .', {
         cwd: this.config.projectRoot,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       this.broadcast('linting-completed', { success: true });
@@ -474,18 +474,18 @@ class AutoBuildSystem {
   async buildAllComponents() {
     console.log('🏗️ Building all components...');
 
-    const buildPromises = this.config.services.map(async service => {
+    const buildPromises = this.config.services.map(async (service) => {
       try {
         await this.buildComponent(service);
         this.state.services[service.name] = {
           status: 'built',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
       } catch (error) {
         this.state.services[service.name] = {
           status: 'failed',
           error: error.message,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
         throw error;
       }
@@ -580,7 +580,7 @@ class AutoBuildSystem {
     const child = spawn('npm', ['start'], {
       cwd: servicePath,
       stdio: 'inherit',
-      detached: true
+      detached: true,
     });
 
     this.buildProcesses[service.name] = child;
@@ -595,7 +595,7 @@ class AutoBuildSystem {
     while (Date.now() - startTime < timeout) {
       try {
         const response = await axios.get(`http://localhost:${service.port}`, {
-          timeout: 1000
+          timeout: 1000,
         });
 
         if (response.status === 200) {
@@ -604,7 +604,7 @@ class AutoBuildSystem {
         }
       } catch (error) {
         // Service not ready yet
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
 
@@ -639,7 +639,7 @@ class AutoBuildSystem {
 
       this.broadcast('tests-completed', {
         success: true,
-        results: this.state.testResults
+        results: this.state.testResults,
       });
 
       console.log('✅ All tests completed successfully!');
@@ -648,12 +648,12 @@ class AutoBuildSystem {
       this.state.errors.push({
         type: 'test',
         message: error.message,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       this.broadcast('tests-failed', {
         error: error.message,
-        testCount: this.state.testCount
+        testCount: this.state.testCount,
       });
     } finally {
       this.state.testing = false;
@@ -666,7 +666,7 @@ class AutoBuildSystem {
     try {
       const result = execSync('npx cypress run --reporter json', {
         cwd: this.config.projectRoot,
-        encoding: 'utf8'
+        encoding: 'utf8',
       });
 
       const cypressResult = JSON.parse(result);
@@ -695,17 +695,17 @@ class AutoBuildSystem {
             try {
               const result = execSync('npm test', {
                 cwd: servicePath,
-                encoding: 'utf8'
+                encoding: 'utf8',
               });
 
               this.state.testResults[service.name] = {
                 status: 'passed',
-                output: result
+                output: result,
               };
             } catch (error) {
               this.state.testResults[service.name] = {
                 status: 'failed',
-                error: error.message
+                error: error.message,
               };
             }
           }
@@ -724,20 +724,20 @@ class AutoBuildSystem {
           const response = await axios.get(
             `http://localhost:${service.port}/health`,
             {
-              timeout: 5000
+              timeout: 5000,
             }
           );
 
           this.state.healthChecks[service.name] = {
             status: 'healthy',
             response: response.data,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
           };
         } catch (error) {
           this.state.healthChecks[service.name] = {
             status: 'unhealthy',
             error: error.message,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
           };
         }
       }
@@ -750,7 +750,7 @@ class AutoBuildSystem {
     try {
       const result = execSync('npx nyc report --reporter=json', {
         cwd: this.config.projectRoot,
-        encoding: 'utf8'
+        encoding: 'utf8',
       });
 
       const coverage = JSON.parse(result);
@@ -775,13 +775,13 @@ class AutoBuildSystem {
       // Auto-fix ESLint issues
       execSync('npx eslint . --ext .js,.ts,.jsx,.tsx --fix', {
         cwd: this.config.projectRoot,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       // Auto-format with Prettier
       execSync('npx prettier --write .', {
         cwd: this.config.projectRoot,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       // Auto-fix package.json issues
@@ -810,7 +810,7 @@ class AutoBuildSystem {
         'ws',
         'chokidar',
         'axios',
-        'simple-git'
+        'simple-git',
       ];
 
       if (!packageJson.devDependencies) {
@@ -849,13 +849,13 @@ class AutoBuildSystem {
         env: {
           node: true,
           es2021: true,
-          cypress: true
+          cypress: true,
         },
         parserOptions: {
           ecmaVersion: 12,
-          sourceType: 'module'
+          sourceType: 'module',
         },
-        rules: {}
+        rules: {},
       },
       '.gitignore': `node_modules/
 *.log
@@ -881,7 +881,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
-});`
+});`,
     };
 
     const configPath = path.join(this.config.projectRoot, filename);
@@ -925,7 +925,7 @@ module.exports = defineConfig({
 
       this.broadcast('deployment-completed', {
         success: true,
-        deployCount: this.state.deployCount
+        deployCount: this.state.deployCount,
       });
 
       console.log('✅ Changes deployed successfully!');
@@ -946,7 +946,7 @@ module.exports = defineConfig({
       services: this.state.services,
       testResults: this.state.testResults,
       healthChecks: this.state.healthChecks,
-      errors: this.state.errors
+      errors: this.state.errors,
     };
 
     // Save report
@@ -1028,7 +1028,7 @@ module.exports = defineConfig({
     <ul>
         ${report.errors
           .map(
-            error => `
+            (error) => `
             <li class="error">
                 <strong>${error.type}:</strong> ${error.message}
                 <em>(${error.timestamp})</em>
@@ -1056,27 +1056,27 @@ module.exports = defineConfig({
             const response = await axios.get(
               `http://localhost:${service.port}/health`,
               {
-                timeout: 2000
+                timeout: 2000,
               }
             );
 
             this.state.healthChecks[service.name] = {
               status: 'healthy',
               response: response.data,
-              timestamp: new Date().toISOString()
+              timestamp: new Date().toISOString(),
             };
           } catch (error) {
             this.state.healthChecks[service.name] = {
               status: 'unhealthy',
               error: error.message,
-              timestamp: new Date().toISOString()
+              timestamp: new Date().toISOString(),
             };
           }
         }
       }
 
       this.broadcast('health-update', {
-        healthChecks: this.state.healthChecks
+        healthChecks: this.state.healthChecks,
       });
     }, 30000); // Check every 30 seconds
   }
@@ -1108,12 +1108,12 @@ module.exports = defineConfig({
         try {
           execSync(`npx eslint "${filePath}" --fix`, {
             cwd: this.config.projectRoot,
-            stdio: 'inherit'
+            stdio: 'inherit',
           });
 
           execSync(`npx prettier --write "${filePath}"`, {
             cwd: this.config.projectRoot,
-            stdio: 'inherit'
+            stdio: 'inherit',
           });
         } catch (error) {
           console.warn(`⚠️ Could not auto-fix ${filePath}:`, error.message);
@@ -1153,7 +1153,7 @@ module.exports = defineConfig({
 
     this.broadcast('incremental-build-completed', {
       changedFiles,
-      affectedServices: Array.from(affectedServices).map(s => s.name)
+      affectedServices: Array.from(affectedServices).map((s) => s.name),
     });
   }
 
@@ -1164,7 +1164,7 @@ module.exports = defineConfig({
       if (service.port) {
         try {
           await axios.get(`http://localhost:${service.port}/health`, {
-            timeout: 1000
+            timeout: 1000,
           });
 
           console.log(`✅ ${service.name} quick test passed`);
@@ -1188,7 +1188,7 @@ module.exports = defineConfig({
         console.log('📦 Installing Cypress...');
         execSync('npm install --save-dev cypress cypress-image-snapshot', {
           cwd: this.config.projectRoot,
-          stdio: 'inherit'
+          stdio: 'inherit',
         });
       }
 
@@ -1199,14 +1199,14 @@ module.exports = defineConfig({
         'jest',
         'mocha',
         'chai',
-        'supertest'
+        'supertest',
       ];
       for (const dep of devDeps) {
         if (!this.checkPackageInstalled(dep)) {
           console.log(`📦 Installing ${dep}...`);
           execSync(`npm install --save-dev ${dep}`, {
             cwd: this.config.projectRoot,
-            stdio: 'inherit'
+            stdio: 'inherit',
           });
         }
       }
@@ -1308,7 +1308,7 @@ module.exports = defineConfig({
     try {
       execSync('npx cypress --version', {
         stdio: 'pipe',
-        cwd: this.config.projectRoot
+        cwd: this.config.projectRoot,
       });
       return true;
     } catch {
@@ -1337,17 +1337,17 @@ module.exports = defineConfig({
       env: {
         browser: true,
         es2021: true,
-        node: true
+        node: true,
       },
       extends: ['eslint:recommended'],
       parserOptions: {
         ecmaVersion: 12,
-        sourceType: 'module'
+        sourceType: 'module',
       },
       rules: {
         'no-console': 'warn',
-        'no-unused-vars': 'error'
-      }
+        'no-unused-vars': 'error',
+      },
     };
 
     const configPath = path.join(this.config.projectRoot, '.eslintrc.json');
@@ -1362,7 +1362,7 @@ module.exports = defineConfig({
       semi: true,
       singleQuote: true,
       tabWidth: 2,
-      trailingComma: 'es5'
+      trailingComma: 'es5',
     };
 
     const configPath = path.join(this.config.projectRoot, '.prettierrc.json');
@@ -1377,8 +1377,8 @@ module.exports = defineConfig({
       e2e: {
         baseUrl: 'http://localhost:3000',
         supportFile: 'cypress/support/e2e.js',
-        specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}'
-      }
+        specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
+      },
     };
 
     const configPath = path.join(this.config.projectRoot, 'cypress.config.js');
@@ -1394,7 +1394,7 @@ module.exports = defineConfig(${JSON.stringify(cypressConfig, null, 2)});
     // Create cypress directories
     const cypressDir = path.join(this.config.projectRoot, 'cypress');
     const dirs = ['e2e', 'fixtures', 'support'];
-    dirs.forEach(dir => {
+    dirs.forEach((dir) => {
       const dirPath = path.join(cypressDir, dir);
       if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
@@ -1421,7 +1421,7 @@ module.exports = defineConfig(${JSON.stringify(cypressConfig, null, 2)});
       testEnvironment: 'node',
       collectCoverage: true,
       coverageDirectory: 'coverage',
-      coverageReporters: ['text', 'lcov', 'html']
+      coverageReporters: ['text', 'lcov', 'html'],
     };
 
     const configPath = path.join(this.config.projectRoot, 'jest.config.js');
@@ -1481,10 +1481,10 @@ jobs:
       tests: 0,
       passes: 0,
       failures: 0,
-      duration: 0
+      duration: 0,
     };
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       if (line.includes('passing')) {
         const match = line.match(/(\d+) passing/);
         if (match) stats.passes = parseInt(match[1]);
@@ -1504,10 +1504,10 @@ jobs:
     console.log('🛑 Shutting down Auto Build System...');
 
     // Stop file watchers
-    this.watchers.forEach(watcher => watcher.close());
+    this.watchers.forEach((watcher) => watcher.close());
 
     // Stop build processes
-    Object.values(this.buildProcesses).forEach(process => {
+    Object.values(this.buildProcesses).forEach((process) => {
       if (process && !process.killed) {
         process.kill();
       }

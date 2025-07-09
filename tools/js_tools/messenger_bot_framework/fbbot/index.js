@@ -21,7 +21,7 @@ Fbbot.defaults = {
   bodyMaxLength: '1mb',
   bodyEncoding: 'utf8',
   timeout: 5000,
-  apiUrl: 'https://graph.facebook.com/v2.6/me/messages?access_token='
+  apiUrl: 'https://graph.facebook.com/v2.6/me/messages?access_token=',
 };
 
 // expose logger
@@ -46,11 +46,29 @@ Fbbot.prototype._run = middleware.run;
 Fbbot.prototype._verifyEndpoint = verify;
 
 /**
- * Fbbot instance constructor
+ * Fbbot instance constructor - Modular Facebook Messenger Bot Framework
+ *
+ * This constructor creates a new instance of the Fbbot class, which is part of the
+ * modular architecture for Facebook automation. It handles message processing,
+ * middleware management, and event-driven communication.
  *
  * @this Fbbot#
- * @param {object} options - list of customization parameters
+ * @param {object} options - Configuration options for the bot instance
+ * @param {string} options.pageAccessToken - Facebook Page Access Token
+ * @param {string} options.verifyToken - Facebook Webhook Verify Token
+ * @param {string} [options.name] - Bot instance name for logging
+ * @param {object} [options.logger] - Custom logger instance
+ * @param {string} [options.bodyMaxLength='1mb'] - Maximum body size for requests
+ * @param {string} [options.bodyEncoding='utf8'] - Request body encoding
+ * @param {number} [options.timeout=5000] - Request timeout in milliseconds
  * @constructor
+ * @throws {Error} When required tokens are missing
+ * @example
+ * const bot = new Fbbot({
+ *   pageAccessToken: 'YOUR_PAGE_ACCESS_TOKEN',
+ *   verifyToken: 'YOUR_VERIFY_TOKEN',
+ *   name: 'my-bot'
+ * });
  */
 function Fbbot(options) {
   if (!(this instanceof Fbbot)) return new Fbbot(options);
@@ -68,7 +86,7 @@ function Fbbot(options) {
   this.credentials = {
     // keep simple naming for internal reference
     token: this.options.pageAccessToken || this.options.token,
-    secret: this.options.verifyToken || this.options.secret
+    secret: this.options.verifyToken || this.options.secret,
   };
 
   if (!this.credentials.token || !this.credentials.secret) {
@@ -113,7 +131,7 @@ function Fbbot(options) {
     entry: middleware.entryPoint,
     middleware: inTraverse.middleware.bind(this),
     emitter: inTraverse.emitter.bind(this),
-    prefix: inTraverse.prefix
+    prefix: inTraverse.prefix,
   });
   // wrap linkParent method
   this._incoming.linkParent = inTraverse.linkParent.bind(
@@ -129,7 +147,7 @@ function Fbbot(options) {
   this._outgoing = new Traverse(outTraverse.steps, {
     middleware: outTraverse.middleware.bind(this),
     emitter: outTraverse.emitter.bind(this),
-    prefix: outTraverse.prefix
+    prefix: outTraverse.prefix,
   });
   // wrap linkParent method
   this._outgoing.linkParent = outTraverse.linkParent.bind(
@@ -139,12 +157,20 @@ function Fbbot(options) {
 }
 
 /**
- * HTTP requests handler, could be used as middleware
+ * HTTP requests handler for the modular Facebook Messenger Bot Framework
+ *
+ * This private method handles incoming HTTP requests from Facebook's webhook.
+ * It processes both GET requests (webhook verification) and POST requests
+ * (message processing) according to the modular architecture patterns.
  *
  * @private
  * @this Fbbot#
- * @param {EventEmitter} request - incoming http request object
- * @param {function} respond - http response function
+ * @param {EventEmitter} request - Incoming HTTP request object
+ * @param {function} respond - HTTP response function
+ * @fires Fbbot#end - Emitted when request processing is complete
+ * @example
+ * // This method is called automatically by the framework
+ * // when using with Express, Hapi, or other HTTP servers
  */
 Fbbot.prototype._handler = function (request, respond) {
   this.logger.info(request);

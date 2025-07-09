@@ -14,49 +14,74 @@ class AutoFixEngine {
       {
         pattern: /npm ERR! peer dep missing/,
         fix: 'npm install --legacy-peer-deps',
-        description: 'Install with legacy peer dependencies'
+        description: 'Install with legacy peer dependencies',
       },
       {
         pattern: /ENOENT: no such file or directory.*package\.json/,
         fix: 'npm init -y',
-        description: 'Initialize package.json'
+        description: 'Initialize package.json',
       },
       {
         pattern: /eslint.*parsing error/i,
         fix: 'npx eslint --fix',
-        description: 'Fix ESLint parsing errors'
+        description: 'Fix ESLint parsing errors',
       },
       {
         pattern: /prettier.*formatting/i,
         fix: 'npx prettier --write .',
-        description: 'Fix Prettier formatting'
+        description: 'Fix Prettier formatting',
       },
       {
         pattern: /cypress.*command not found/i,
         fix: 'npm install --save-dev cypress',
-        description: 'Install Cypress'
+        description: 'Install Cypress',
       },
       {
         pattern: /jest.*test.*failed/i,
         fix: 'npm test -- --updateSnapshot',
-        description: 'Update Jest snapshots'
+        description: 'Update Jest snapshots',
       },
       {
         pattern: /python.*syntaxerror/i,
         fix: 'python3 -m py_compile',
-        description: 'Compile Python syntax'
+        description: 'Compile Python syntax',
       },
       {
         pattern: /php.*parse error/i,
         fix: 'php -l',
-        description: 'Check PHP syntax'
+        description: 'Check PHP syntax',
       },
       {
         pattern: /EADDRINUSE.*port/i,
         fix: 'fuser -k {port}/tcp',
-        description: 'Kill process on port'
-      }
+        description: 'Kill process on port',
+      },
     ];
+  }
+
+  shouldSkipFile(filePath) {
+    const skipPatterns = [
+      /\.min\.js$/,          // Minified JavaScript files
+      /\.min\.css$/,         // Minified CSS files
+      /\.bundle\.js$/,       // Bundle files
+      /\.bundle\.css$/,      // Bundle CSS files
+      /\/vendor\//,          // Third-party vendor files
+      /\/node_modules\//,    // Node modules
+      /\/dist\//,            // Distribution files
+      /\/build\//,           // Build files
+      /\/coverage\//,        // Coverage reports
+      /\/\.git\//,           // Git files
+      /\/\.nyc_output\//,    // NYC coverage files
+      /\/temp\//,            // Temporary files
+      /\/tmp\//,             // Temporary files
+      /\.d3\.(min\.)?js$/,   // D3.js files (often minified)
+      /\.jquery\.(min\.)?js$/, // jQuery files (often minified)
+      /\.bootstrap\.(min\.)?js$/, // Bootstrap files (often minified)
+      /\.lock$/,             // Lock files
+      /\.log$/,              // Log files
+    ];
+
+    return skipPatterns.some(pattern => pattern.test(filePath));
   }
 
   async autoFixIssues() {
@@ -93,6 +118,12 @@ class AutoFixEngine {
   }
 
   async autoFixFile(filePath) {
+    // Skip files that should not be auto-fixed
+    if (this.shouldSkipFile(filePath)) {
+      console.log(`⏭️ Skipping auto-fix for ${filePath} (excluded pattern)`);
+      return;
+    }
+
     const ext = path.extname(filePath);
 
     this.eventBus.broadcast('file-auto-fix-started', { file: filePath });
@@ -135,7 +166,7 @@ class AutoFixEngine {
       console.warn(`⚠️ Could not auto-fix ${filePath}:`, error.message);
       this.eventBus.broadcast('file-auto-fix-failed', {
         file: filePath,
-        error: error.message
+        error: error.message,
       });
     }
   }
@@ -148,7 +179,7 @@ class AutoFixEngine {
         this.eventBus.broadcast('error-pattern-matched', {
           error: errorMessage,
           fix: pattern.fix,
-          description: pattern.description
+          description: pattern.description,
         });
 
         return pattern.fix;
@@ -164,7 +195,7 @@ class AutoFixEngine {
     try {
       execSync(command, {
         cwd: this.config.projectRoot,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       console.log(`✅ ${description} completed`);
@@ -189,7 +220,7 @@ class AutoFixEngine {
         'ws',
         'chokidar',
         'axios',
-        'simple-git'
+        'simple-git',
       ];
 
       if (!packageJson.devDependencies) {
@@ -234,13 +265,13 @@ class AutoFixEngine {
         env: {
           node: true,
           es2021: true,
-          cypress: true
+          cypress: true,
         },
         parserOptions: {
           ecmaVersion: 12,
-          sourceType: 'module'
+          sourceType: 'module',
         },
-        rules: {}
+        rules: {},
       },
       '.gitignore': `node_modules/
 *.log
@@ -266,7 +297,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
-});`
+});`,
     };
 
     const configPath = path.join(this.config.projectRoot, filename);
@@ -285,7 +316,7 @@ module.exports = defineConfig({
     try {
       execSync('npm audit fix', {
         cwd: this.config.projectRoot,
-        stdio: 'inherit'
+        stdio: 'inherit',
       });
 
       console.log('✅ npm audit fix completed');
@@ -296,7 +327,7 @@ module.exports = defineConfig({
       try {
         execSync('npm audit fix --force', {
           cwd: this.config.projectRoot,
-          stdio: 'inherit'
+          stdio: 'inherit',
         });
 
         console.log('✅ npm audit fix --force completed');
@@ -313,13 +344,13 @@ module.exports = defineConfig({
     this.errorPatterns.push({
       pattern: new RegExp(pattern),
       fix,
-      description
+      description,
     });
   }
 
   removeErrorPattern(pattern) {
     this.errorPatterns = this.errorPatterns.filter(
-      p => p.pattern.source !== pattern
+      (p) => p.pattern.source !== pattern
     );
   }
 

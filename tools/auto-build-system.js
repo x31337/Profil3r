@@ -42,30 +42,17 @@ class AutoBuildSystem {
       wsPort: 9001,
       services: [
         {
-          name: 'OSINT Framework',
-          dir: 'OSINT-Framework',
-          port: 8000,
-          type: 'node'
-        },
-        {
-          name: 'Facebook Mass Messenger',
-          dir: 'js_tools/facebook_mass_messenger',
-          port: 4444,
-          type: 'node'
-        },
-        {
-          name: 'Messenger Bot Framework',
-          dir: 'js_tools/messenger_bot_framework/fbbot',
-          port: 3000,
-          type: 'node'
-        },
-        {
-          name: 'Python Tools',
-          dir: 'telegram-facebook-bot',
+          name: 'Core Python Modules',
+          dir: 'modules',
           port: null,
           type: 'python'
         },
-        { name: 'PHP Tools', dir: 'php_tools', port: null, type: 'php' }
+        {
+          name: 'Auto Build System',
+          dir: 'tools',
+          port: 9000,
+          type: 'node'
+        }
       ],
       autoFix: true,
       autoPush: true,
@@ -114,14 +101,14 @@ class AutoBuildSystem {
     this.eventBus.subscribe('build-started', ({ buildId }) => {
       this.state.building = true;
       this.state.lastBuild = buildId;
-      this.broadcast('build-started', { buildId });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to build-completed event
     this.eventBus.subscribe('build-completed', ({ buildId, success }) => {
       this.state.building = false;
       this.state.buildCount += 1;
-      this.broadcast('build-completed', { buildId, success });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to build-failed event
@@ -132,7 +119,7 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('build-failed', { buildId, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-started event
@@ -142,7 +129,7 @@ class AutoBuildSystem {
         port: port,
         startTime: new Date().toISOString()
       };
-      this.broadcast('service-started', { service, port, status });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-stopped event
@@ -151,7 +138,7 @@ class AutoBuildSystem {
         this.state.services[service].status = status || 'stopped';
         this.state.services[service].stopTime = new Date().toISOString();
       }
-      this.broadcast('service-stopped', { service, status });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-starting event
@@ -159,7 +146,7 @@ class AutoBuildSystem {
       if (this.state.services[service]) {
         this.state.services[service].status = 'starting';
       }
-      this.broadcast('service-starting', { service });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-stopping event
@@ -167,7 +154,7 @@ class AutoBuildSystem {
       if (this.state.services[service]) {
         this.state.services[service].status = 'stopping';
       }
-      this.broadcast('service-stopping', { service });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-restarting event
@@ -175,7 +162,7 @@ class AutoBuildSystem {
       if (this.state.services[service]) {
         this.state.services[service].status = 'restarting';
       }
-      this.broadcast('service-restarting', { service });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-restarted event
@@ -183,23 +170,23 @@ class AutoBuildSystem {
       if (this.state.services[service]) {
         this.state.services[service].status = status || 'running';
       }
-      this.broadcast('service-restarted', { service, status });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to all-services-started event
     this.eventBus.subscribe('all-services-started', ({ services }) => {
-      this.broadcast('all-services-started', { services });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to all-services-stopped event
     this.eventBus.subscribe('all-services-stopped', ({ services }) => {
-      this.broadcast('all-services-stopped', { services });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to health-checks-completed event
     this.eventBus.subscribe('health-checks-completed', ({ healthChecks }) => {
       this.state.healthChecks = healthChecks;
-      this.broadcast('health-checks-completed', { healthChecks });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-start-failed event
@@ -210,7 +197,7 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('service-start-failed', { service, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-stop-failed event
@@ -221,7 +208,7 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('service-stop-failed', { service, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to service-restart-failed event
@@ -232,13 +219,13 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('service-restart-failed', { service, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to tests-started event
     this.eventBus.subscribe('tests-started', ({ testId }) => {
       this.state.testing = true;
-      this.broadcast('tests-started', { testId });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to tests-completed event
@@ -246,7 +233,7 @@ class AutoBuildSystem {
       this.state.testing = false;
       this.state.testResults = result;
       this.state.testCount += 1;
-      this.broadcast('tests-completed', result);
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to tests-failed event
@@ -258,12 +245,12 @@ class AutoBuildSystem {
         testId: testId,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('tests-failed', { testId, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to unit-test-completed event
     this.eventBus.subscribe('unit-test-completed', ({ service, status }) => {
-      this.broadcast('unit-test-completed', { service, status });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to unit-test-failed event
@@ -274,12 +261,12 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('unit-test-failed', { service, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to cypress-completed event
     this.eventBus.subscribe('cypress-completed', ({ result, status }) => {
-      this.broadcast('cypress-completed', { result, status });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to cypress-failed event
@@ -289,14 +276,14 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('cypress-failed', { error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to integration-tests-completed event
     this.eventBus.subscribe(
       'integration-tests-completed',
       ({ healthChecks }) => {
-        this.broadcast('integration-tests-completed', { healthChecks });
+        // Don't re-broadcast - event is already broadcasted by the source
       }
     );
 
@@ -304,11 +291,7 @@ class AutoBuildSystem {
     this.eventBus.subscribe(
       'coverage-calculated',
       ({ coverage, target, meets_target }) => {
-        this.broadcast('coverage-calculated', {
-          coverage,
-          target,
-          meets_target
-        });
+        // Don't re-broadcast - event is already broadcasted by the source
       }
     );
 
@@ -319,12 +302,12 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('coverage-failed', { error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to quick-test-passed event
     this.eventBus.subscribe('quick-test-passed', ({ service }) => {
-      this.broadcast('quick-test-passed', { service });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to quick-test-failed event
@@ -335,18 +318,18 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('quick-test-failed', { service, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to deployment-started event
     this.eventBus.subscribe('deployment-started', ({ deployId }) => {
-      this.broadcast('deployment-started', { deployId });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to deployment-completed event
     this.eventBus.subscribe('deployment-completed', ({ success, deployId }) => {
       this.state.deployCount += 1;
-      this.broadcast('deployment-completed', { success, deployId });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to deployment-failed event
@@ -357,12 +340,12 @@ class AutoBuildSystem {
         deployId: deployId,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('deployment-failed', { deployId, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to component-built event
     this.eventBus.subscribe('component-built', ({ service, status }) => {
-      this.broadcast('component-built', { service, status });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to component-build-failed event
@@ -373,17 +356,14 @@ class AutoBuildSystem {
         message: error,
         timestamp: new Date().toISOString()
       });
-      this.broadcast('component-build-failed', { service, error });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to incremental-build-completed event
     this.eventBus.subscribe(
       'incremental-build-completed',
       ({ changedFiles, affectedServices }) => {
-        this.broadcast('incremental-build-completed', {
-          changedFiles,
-          affectedServices
-        });
+        // Don't re-broadcast - event is already broadcasted by the source
       }
     );
 
@@ -397,25 +377,25 @@ class AutoBuildSystem {
           message: error,
           timestamp: new Date().toISOString()
         });
-        this.broadcast('incremental-build-failed', { service, error });
+        // Don't re-broadcast - event is already broadcasted by the source
       }
     );
 
     // Listen to auto-fix-started event
     this.eventBus.subscribe('auto-fix-started', ({ filePath }) => {
-      this.broadcast('auto-fix-started', { filePath });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to auto-fix-completed event
     this.eventBus.subscribe('auto-fix-completed', ({ filePath, fixes }) => {
-      this.broadcast('auto-fix-completed', { filePath, fixes });
+      // Don't re-broadcast - event is already broadcasted by the source
     });
 
     // Listen to dependency-install-started event
     this.eventBus.subscribe(
       'dependency-install-started',
       ({ packageManager }) => {
-        this.broadcast('dependency-install-started', { packageManager });
+        // Don't re-broadcast - event is already broadcasted by the source
       }
     );
 
@@ -423,10 +403,7 @@ class AutoBuildSystem {
     this.eventBus.subscribe(
       'dependency-install-completed',
       ({ packageManager, packages }) => {
-        this.broadcast('dependency-install-completed', {
-          packageManager,
-          packages
-        });
+        // Don't re-broadcast - event is already broadcasted by the source
       }
     );
 
@@ -483,7 +460,7 @@ class AutoBuildSystem {
     });
 
     // Build endpoint - delegates to Builder module
-    app.post('/api/build', async (req, res) => {
+    app.post('/api/build', async(req, res) => {
       try {
         const result = await this.fullBuildCycle();
         res.json({ success: true, result });
@@ -493,7 +470,7 @@ class AutoBuildSystem {
     });
 
     // Test endpoint - delegates to Tester module
-    app.post('/api/test', async (req, res) => {
+    app.post('/api/test', async(req, res) => {
       try {
         const result = await this.runAllTests();
         res.json({ success: true, result });
@@ -503,7 +480,7 @@ class AutoBuildSystem {
     });
 
     // Deploy endpoint - delegates to Deployer module
-    app.post('/api/deploy', async (req, res) => {
+    app.post('/api/deploy', async(req, res) => {
       try {
         const result = await this.deployChanges();
         res.json({ success: true, result });
@@ -513,7 +490,7 @@ class AutoBuildSystem {
     });
 
     // Fix endpoint - delegates to AutoFixEngine module
-    app.post('/api/fix', async (req, res) => {
+    app.post('/api/fix', async(req, res) => {
       try {
         const result = await this.autoFixIssues();
         res.json({ success: true, result });
@@ -523,7 +500,7 @@ class AutoBuildSystem {
     });
 
     // Cypress endpoint - delegates to Tester module
-    app.post('/api/cypress', async (req, res) => {
+    app.post('/api/cypress', async(req, res) => {
       try {
         const result = await this.runCypressTests();
         res.json({ success: true, result });
@@ -533,7 +510,7 @@ class AutoBuildSystem {
     });
 
     // Full cycle endpoint - high-level orchestration
-    app.post('/api/full-cycle', async (req, res) => {
+    app.post('/api/full-cycle', async(req, res) => {
       try {
         const result = await this.runFullAutoCycle();
         res.json({ success: true, result });
@@ -543,7 +520,7 @@ class AutoBuildSystem {
     });
 
     // Auto-install dependencies endpoint - delegates to DependencyManager
-    app.post('/api/auto-install', async (req, res) => {
+    app.post('/api/auto-install', async(req, res) => {
       try {
         const result = await this.autoInstallDependencies();
         res.json({ success: true, result });
@@ -553,7 +530,7 @@ class AutoBuildSystem {
     });
 
     // Auto-configure endpoint - delegates to DependencyManager
-    app.post('/api/auto-configure', async (req, res) => {
+    app.post('/api/auto-configure', async(req, res) => {
       try {
         const result = await this.autoConfigureProject();
         res.json({ success: true, result });
@@ -563,7 +540,7 @@ class AutoBuildSystem {
     });
 
     // Auto-push endpoint - delegates to Deployer module
-    app.post('/api/auto-push', async (req, res) => {
+    app.post('/api/auto-push', async(req, res) => {
       try {
         const result = await this.autoPushChanges();
         res.json({ success: true, result });
@@ -573,7 +550,7 @@ class AutoBuildSystem {
     });
 
     // Services management - delegates to ServiceManager
-    app.post('/api/services/start', async (req, res) => {
+    app.post('/api/services/start', async(req, res) => {
       try {
         const result = await this.serviceManager.startAllServices();
         res.json({ success: true, result });
@@ -582,7 +559,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/stop', async (req, res) => {
+    app.post('/api/services/stop', async(req, res) => {
       try {
         const result = await this.serviceManager.stopAllServices();
         res.json({ success: true, result });
@@ -591,7 +568,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/:service/start', async (req, res) => {
+    app.post('/api/services/:service/start', async(req, res) => {
       try {
         const { service } = req.params;
         const result = await this.serviceManager.startService(service);
@@ -601,7 +578,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/:service/stop', async (req, res) => {
+    app.post('/api/services/:service/stop', async(req, res) => {
       try {
         const { service } = req.params;
         const result = await this.serviceManager.stopService(service);
@@ -611,7 +588,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/:service/restart', async (req, res) => {
+    app.post('/api/services/:service/restart', async(req, res) => {
       try {
         const { service } = req.params;
         const result = await this.serviceManager.restartService(service);
@@ -658,58 +635,58 @@ class AutoBuildSystem {
         try {
           // All WebSocket commands delegate to high-level methods
           switch (type) {
-            case 'build':
-              await this.fullBuildCycle();
-              break;
-            case 'test':
-              await this.runAllTests();
-              break;
-            case 'deploy':
-              await this.deployChanges();
-              break;
-            case 'fix':
-              await this.autoFixIssues();
-              break;
-            case 'auto-install':
-              await this.autoInstallDependencies();
-              break;
-            case 'auto-configure':
-              await this.autoConfigureProject();
-              break;
-            case 'auto-push':
-              await this.autoPushChanges();
-              break;
-            case 'cypress':
-              await this.runCypressTests();
-              break;
-            case 'full-cycle':
-              await this.runFullAutoCycle();
-              break;
-            case 'start-service':
-              if (data && data.service) {
-                await this.serviceManager.startService(data.service);
-              } else {
-                await this.serviceManager.startAllServices();
-              }
-              break;
-            case 'stop-service':
-              if (data && data.service) {
-                await this.serviceManager.stopService(data.service);
-              } else {
-                await this.serviceManager.stopAllServices();
-              }
-              break;
-            case 'restart-service':
-              if (data && data.service) {
-                await this.serviceManager.restartService(data.service);
-              }
-              break;
-            default:
-              console.warn(`Unknown WebSocket command: ${type}`);
-              this.broadcast('command-failed', {
-                type,
-                error: 'Unknown command'
-              });
+          case 'build':
+            await this.fullBuildCycle();
+            break;
+          case 'test':
+            await this.runAllTests();
+            break;
+          case 'deploy':
+            await this.deployChanges();
+            break;
+          case 'fix':
+            await this.autoFixIssues();
+            break;
+          case 'auto-install':
+            await this.autoInstallDependencies();
+            break;
+          case 'auto-configure':
+            await this.autoConfigureProject();
+            break;
+          case 'auto-push':
+            await this.autoPushChanges();
+            break;
+          case 'cypress':
+            await this.runCypressTests();
+            break;
+          case 'full-cycle':
+            await this.runFullAutoCycle();
+            break;
+          case 'start-service':
+            if (data && data.service) {
+              await this.serviceManager.startService(data.service);
+            } else {
+              await this.serviceManager.startAllServices();
+            }
+            break;
+          case 'stop-service':
+            if (data && data.service) {
+              await this.serviceManager.stopService(data.service);
+            } else {
+              await this.serviceManager.stopAllServices();
+            }
+            break;
+          case 'restart-service':
+            if (data && data.service) {
+              await this.serviceManager.restartService(data.service);
+            }
+            break;
+          default:
+            console.warn(`Unknown WebSocket command: ${type}`);
+            this.broadcast('command-failed', {
+              type,
+              error: 'Unknown command'
+            });
           }
         } catch (error) {
           console.error(`WebSocket command failed: ${error.message}`);
@@ -774,7 +751,7 @@ class AutoBuildSystem {
       this.state.buildQueue.push(triggerFile);
 
       // Debounce builds
-      setTimeout(async () => {
+      setTimeout(async() => {
         if (this.state.buildQueue.length > 0) {
           const files = [...this.state.buildQueue];
           this.state.buildQueue = [];
@@ -910,14 +887,14 @@ class AutoBuildSystem {
 }
 
 // Handle graceful shutdown
-process.on('SIGINT', async () => {
+process.on('SIGINT', async() => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }
   process.exit(0);
 });
 
-process.on('SIGTERM', async () => {
+process.on('SIGTERM', async() => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }
