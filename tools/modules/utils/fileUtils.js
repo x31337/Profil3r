@@ -46,5 +46,5 @@ function findFiles(directory, pattern) {
 }
 
 module.exports = {
-  findFiles,
+  findFiles
 };

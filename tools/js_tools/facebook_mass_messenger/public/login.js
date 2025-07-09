@@ -1,7 +1,7 @@
 'use strict';
 
-$(function() {
-  $('#form').on('submit', function(event) {
+$(function () {
+  $('#form').on('submit', function (event) {
     event.preventDefault();
 
     $('#login').prop('disabled', true);
@@ -14,7 +14,7 @@ $(function() {
         password: $('#password').val(),
         code: code.val()
       },
-      function(result) {
+      function (result) {
         if (result.error) {
           $('#login').prop('disabled', false);
 

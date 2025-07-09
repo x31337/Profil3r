@@ -7,13 +7,13 @@ module.exports = {
     message: ['attachment', 'quick_replies'],
     attachment: 'payload',
     payload: ['buttons', 'elements'],
-    elements: 'buttons',
+    elements: 'buttons'
   },
 
   linkParent: linkParent,
   middleware: middleware,
   emitter: emitter,
-  prefix: 'send',
+  prefix: 'send'
 };
 
 /**
@@ -57,7 +57,7 @@ function middleware(branch, payload, callback) {
     message: 'Running middleware for outgoing payload',
     branch: branch,
     normalized: normalized,
-    payload: payload,
+    payload: payload
   });
 
   // add branch reference to the parent object

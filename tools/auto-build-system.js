@@ -460,7 +460,7 @@ class AutoBuildSystem {
     });
 
     // Build endpoint - delegates to Builder module
-    app.post('/api/build', async(req, res) => {
+    app.post('/api/build', async (req, res) => {
       try {
         const result = await this.fullBuildCycle();
         res.json({ success: true, result });
@@ -470,7 +470,7 @@ class AutoBuildSystem {
     });
 
     // Test endpoint - delegates to Tester module
-    app.post('/api/test', async(req, res) => {
+    app.post('/api/test', async (req, res) => {
       try {
         const result = await this.runAllTests();
         res.json({ success: true, result });
@@ -480,7 +480,7 @@ class AutoBuildSystem {
     });
 
     // Deploy endpoint - delegates to Deployer module
-    app.post('/api/deploy', async(req, res) => {
+    app.post('/api/deploy', async (req, res) => {
       try {
         const result = await this.deployChanges();
         res.json({ success: true, result });
@@ -490,7 +490,7 @@ class AutoBuildSystem {
     });
 
     // Fix endpoint - delegates to AutoFixEngine module
-    app.post('/api/fix', async(req, res) => {
+    app.post('/api/fix', async (req, res) => {
       try {
         const result = await this.autoFixIssues();
         res.json({ success: true, result });
@@ -500,7 +500,7 @@ class AutoBuildSystem {
     });
 
     // Cypress endpoint - delegates to Tester module
-    app.post('/api/cypress', async(req, res) => {
+    app.post('/api/cypress', async (req, res) => {
       try {
         const result = await this.runCypressTests();
         res.json({ success: true, result });
@@ -510,7 +510,7 @@ class AutoBuildSystem {
     });
 
     // Full cycle endpoint - high-level orchestration
-    app.post('/api/full-cycle', async(req, res) => {
+    app.post('/api/full-cycle', async (req, res) => {
       try {
         const result = await this.runFullAutoCycle();
         res.json({ success: true, result });
@@ -520,7 +520,7 @@ class AutoBuildSystem {
     });
 
     // Auto-install dependencies endpoint - delegates to DependencyManager
-    app.post('/api/auto-install', async(req, res) => {
+    app.post('/api/auto-install', async (req, res) => {
       try {
         const result = await this.autoInstallDependencies();
         res.json({ success: true, result });
@@ -530,7 +530,7 @@ class AutoBuildSystem {
     });
 
     // Auto-configure endpoint - delegates to DependencyManager
-    app.post('/api/auto-configure', async(req, res) => {
+    app.post('/api/auto-configure', async (req, res) => {
       try {
         const result = await this.autoConfigureProject();
         res.json({ success: true, result });
@@ -540,7 +540,7 @@ class AutoBuildSystem {
     });
 
     // Auto-push endpoint - delegates to Deployer module
-    app.post('/api/auto-push', async(req, res) => {
+    app.post('/api/auto-push', async (req, res) => {
       try {
         const result = await this.autoPushChanges();
         res.json({ success: true, result });
@@ -550,7 +550,7 @@ class AutoBuildSystem {
     });
 
     // Services management - delegates to ServiceManager
-    app.post('/api/services/start', async(req, res) => {
+    app.post('/api/services/start', async (req, res) => {
       try {
         const result = await this.serviceManager.startAllServices();
         res.json({ success: true, result });
@@ -559,7 +559,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/stop', async(req, res) => {
+    app.post('/api/services/stop', async (req, res) => {
       try {
         const result = await this.serviceManager.stopAllServices();
         res.json({ success: true, result });
@@ -568,7 +568,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/:service/start', async(req, res) => {
+    app.post('/api/services/:service/start', async (req, res) => {
       try {
         const { service } = req.params;
         const result = await this.serviceManager.startService(service);
@@ -578,7 +578,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/:service/stop', async(req, res) => {
+    app.post('/api/services/:service/stop', async (req, res) => {
       try {
         const { service } = req.params;
         const result = await this.serviceManager.stopService(service);
@@ -588,7 +588,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/services/:service/restart', async(req, res) => {
+    app.post('/api/services/:service/restart', async (req, res) => {
       try {
         const { service } = req.params;
         const result = await this.serviceManager.restartService(service);
@@ -635,58 +635,58 @@ class AutoBuildSystem {
         try {
           // All WebSocket commands delegate to high-level methods
           switch (type) {
-          case 'build':
-            await this.fullBuildCycle();
-            break;
-          case 'test':
-            await this.runAllTests();
-            break;
-          case 'deploy':
-            await this.deployChanges();
-            break;
-          case 'fix':
-            await this.autoFixIssues();
-            break;
-          case 'auto-install':
-            await this.autoInstallDependencies();
-            break;
-          case 'auto-configure':
-            await this.autoConfigureProject();
-            break;
-          case 'auto-push':
-            await this.autoPushChanges();
-            break;
-          case 'cypress':
-            await this.runCypressTests();
-            break;
-          case 'full-cycle':
-            await this.runFullAutoCycle();
-            break;
-          case 'start-service':
-            if (data && data.service) {
-              await this.serviceManager.startService(data.service);
-            } else {
-              await this.serviceManager.startAllServices();
-            }
-            break;
-          case 'stop-service':
-            if (data && data.service) {
-              await this.serviceManager.stopService(data.service);
-            } else {
-              await this.serviceManager.stopAllServices();
-            }
-            break;
-          case 'restart-service':
-            if (data && data.service) {
-              await this.serviceManager.restartService(data.service);
-            }
-            break;
-          default:
-            console.warn(`Unknown WebSocket command: ${type}`);
-            this.broadcast('command-failed', {
-              type,
-              error: 'Unknown command'
-            });
+            case 'build':
+              await this.fullBuildCycle();
+              break;
+            case 'test':
+              await this.runAllTests();
+              break;
+            case 'deploy':
+              await this.deployChanges();
+              break;
+            case 'fix':
+              await this.autoFixIssues();
+              break;
+            case 'auto-install':
+              await this.autoInstallDependencies();
+              break;
+            case 'auto-configure':
+              await this.autoConfigureProject();
+              break;
+            case 'auto-push':
+              await this.autoPushChanges();
+              break;
+            case 'cypress':
+              await this.runCypressTests();
+              break;
+            case 'full-cycle':
+              await this.runFullAutoCycle();
+              break;
+            case 'start-service':
+              if (data && data.service) {
+                await this.serviceManager.startService(data.service);
+              } else {
+                await this.serviceManager.startAllServices();
+              }
+              break;
+            case 'stop-service':
+              if (data && data.service) {
+                await this.serviceManager.stopService(data.service);
+              } else {
+                await this.serviceManager.stopAllServices();
+              }
+              break;
+            case 'restart-service':
+              if (data && data.service) {
+                await this.serviceManager.restartService(data.service);
+              }
+              break;
+            default:
+              console.warn(`Unknown WebSocket command: ${type}`);
+              this.broadcast('command-failed', {
+                type,
+                error: 'Unknown command'
+              });
           }
         } catch (error) {
           console.error(`WebSocket command failed: ${error.message}`);
@@ -751,7 +751,7 @@ class AutoBuildSystem {
       this.state.buildQueue.push(triggerFile);
 
       // Debounce builds
-      setTimeout(async() => {
+      setTimeout(async () => {
         if (this.state.buildQueue.length > 0) {
           const files = [...this.state.buildQueue];
           this.state.buildQueue = [];
@@ -887,14 +887,14 @@ class AutoBuildSystem {
 }
 
 // Handle graceful shutdown
-process.on('SIGINT', async() => {
+process.on('SIGINT', async () => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }
   process.exit(0);
 });
 
-process.on('SIGTERM', async() => {
+process.on('SIGTERM', async () => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }

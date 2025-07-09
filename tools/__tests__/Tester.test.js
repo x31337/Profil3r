@@ -27,7 +27,7 @@ describe('Tester', () => {
     tester = new Tester(mockConfig, eventBus);
   });
 
-  it('should run all tests and aggregate results', async() => {
+  it('should run all tests and aggregate results', async () => {
     jest.spyOn(tester, 'runUnitTests').mockResolvedValueOnce();
     jest.spyOn(tester, 'runCypressTests').mockResolvedValueOnce();
     jest.spyOn(tester, 'runIntegrationTests').mockResolvedValueOnce();

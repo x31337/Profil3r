@@ -35,7 +35,7 @@ class Builder {
       console.error('❌ Build failed:', error.message);
       this.eventBus.broadcast('build-failed', {
         buildId,
-        error: error.message,
+        error: error.message
       });
       throw error;
     } finally {
@@ -66,31 +66,31 @@ class Builder {
         );
         this.eventBus.broadcast('incremental-build-failed', {
           service: service.name,
-          error: error.message,
+          error: error.message
         });
       }
     }
 
     this.eventBus.broadcast('incremental-build-completed', {
       changedFiles,
-      affectedServices: Array.from(affectedServices).map((s) => s.name),
+      affectedServices: Array.from(affectedServices).map(s => s.name)
     });
   }
 
   async buildAllComponents() {
     console.log('🏗️ Building all components...');
 
-    const buildPromises = this.config.services.map(async (service) => {
+    const buildPromises = this.config.services.map(async service => {
       try {
         await this.buildComponent(service);
         this.eventBus.broadcast('component-built', {
           service: service.name,
-          status: 'success',
+          status: 'success'
         });
       } catch (error) {
         this.eventBus.broadcast('component-build-failed', {
           service: service.name,
-          error: error.message,
+          error: error.message
         });
         throw error;
       }
@@ -183,7 +183,7 @@ class Builder {
   }
 
   stopAllBuilds() {
-    Object.values(this.buildProcesses).forEach((process) => {
+    Object.values(this.buildProcesses).forEach(process => {
       if (process && !process.killed) {
         process.kill();
       }

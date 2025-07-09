@@ -73,54 +73,54 @@ class AutoBuildUI {
     const { type, data } = message;
 
     switch (type) {
-    case 'state':
-      this.updateState(data);
-      break;
-    case 'build-started':
-      this.handleBuildStarted(data);
-      break;
-    case 'build-completed':
-      this.handleBuildCompleted(data);
-      break;
-    case 'build-failed':
-      this.handleBuildFailed(data);
-      break;
-    case 'tests-started':
-      this.handleTestsStarted(data);
-      break;
-    case 'tests-completed':
-      this.handleTestsCompleted(data);
-      break;
-    case 'tests-failed':
-      this.handleTestsFailed(data);
-      break;
-    case 'deployment-completed':
-      this.handleDeploymentCompleted(data);
-      break;
-    case 'deployment-failed':
-      this.handleDeploymentFailed(data);
-      break;
-    case 'health-update':
-      this.updateHealthStatus(data);
-      break;
-    case 'file-change':
-      this.handleFileChange(data);
-      break;
-    case 'incremental-build-completed':
-      this.handleIncrementalBuild(data);
-      break;
-    case 'components-built':
-      this.updateServicesStatus(data);
-      break;
-    case 'cypress-completed':
-      this.updateCypressResults(data);
-      break;
-    case 'auto-fix-completed':
-      this.handleAutoFixCompleted(data);
-      break;
-    case 'auto-fix-failed':
-      this.handleAutoFixFailed(data);
-      break;
+      case 'state':
+        this.updateState(data);
+        break;
+      case 'build-started':
+        this.handleBuildStarted(data);
+        break;
+      case 'build-completed':
+        this.handleBuildCompleted(data);
+        break;
+      case 'build-failed':
+        this.handleBuildFailed(data);
+        break;
+      case 'tests-started':
+        this.handleTestsStarted(data);
+        break;
+      case 'tests-completed':
+        this.handleTestsCompleted(data);
+        break;
+      case 'tests-failed':
+        this.handleTestsFailed(data);
+        break;
+      case 'deployment-completed':
+        this.handleDeploymentCompleted(data);
+        break;
+      case 'deployment-failed':
+        this.handleDeploymentFailed(data);
+        break;
+      case 'health-update':
+        this.updateHealthStatus(data);
+        break;
+      case 'file-change':
+        this.handleFileChange(data);
+        break;
+      case 'incremental-build-completed':
+        this.handleIncrementalBuild(data);
+        break;
+      case 'components-built':
+        this.updateServicesStatus(data);
+        break;
+      case 'cypress-completed':
+        this.updateCypressResults(data);
+        break;
+      case 'auto-fix-completed':
+        this.handleAutoFixCompleted(data);
+        break;
+      case 'auto-fix-failed':
+        this.handleAutoFixFailed(data);
+        break;
     }
   }
 
@@ -150,24 +150,24 @@ class AutoBuildUI {
     const statusTime = card.querySelector('.status-time');
 
     switch (status) {
-    case 'building':
-      statusText.textContent = 'Building...';
-      statusTime.textContent = new Date().toLocaleTimeString();
-      card.className = 'status-card building';
-      break;
-    case 'success':
-      statusText.textContent = 'Build Success';
-      statusTime.textContent = new Date().toLocaleTimeString();
-      card.className = 'status-card success';
-      break;
-    case 'failed':
-      statusText.textContent = 'Build Failed';
-      statusTime.textContent = new Date().toLocaleTimeString();
-      card.className = 'status-card error';
-      break;
-    default:
-      statusText.textContent = 'Ready';
-      card.className = 'status-card';
+      case 'building':
+        statusText.textContent = 'Building...';
+        statusTime.textContent = new Date().toLocaleTimeString();
+        card.className = 'status-card building';
+        break;
+      case 'success':
+        statusText.textContent = 'Build Success';
+        statusTime.textContent = new Date().toLocaleTimeString();
+        card.className = 'status-card success';
+        break;
+      case 'failed':
+        statusText.textContent = 'Build Failed';
+        statusTime.textContent = new Date().toLocaleTimeString();
+        card.className = 'status-card error';
+        break;
+      default:
+        statusText.textContent = 'Ready';
+        card.className = 'status-card';
     }
   }
 
@@ -177,24 +177,24 @@ class AutoBuildUI {
     const statusTime = card.querySelector('.status-time');
 
     switch (status) {
-    case 'testing':
-      statusText.textContent = 'Testing...';
-      statusTime.textContent = new Date().toLocaleTimeString();
-      card.className = 'status-card testing';
-      break;
-    case 'success':
-      statusText.textContent = 'Tests Passed';
-      statusTime.textContent = new Date().toLocaleTimeString();
-      card.className = 'status-card success';
-      break;
-    case 'failed':
-      statusText.textContent = 'Tests Failed';
-      statusTime.textContent = new Date().toLocaleTimeString();
-      card.className = 'status-card error';
-      break;
-    default:
-      statusText.textContent = 'Ready';
-      card.className = 'status-card';
+      case 'testing':
+        statusText.textContent = 'Testing...';
+        statusTime.textContent = new Date().toLocaleTimeString();
+        card.className = 'status-card testing';
+        break;
+      case 'success':
+        statusText.textContent = 'Tests Passed';
+        statusTime.textContent = new Date().toLocaleTimeString();
+        card.className = 'status-card success';
+        break;
+      case 'failed':
+        statusText.textContent = 'Tests Failed';
+        statusTime.textContent = new Date().toLocaleTimeString();
+        card.className = 'status-card error';
+        break;
+      default:
+        statusText.textContent = 'Ready';
+        card.className = 'status-card';
     }
   }
 

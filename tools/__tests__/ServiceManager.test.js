@@ -33,13 +33,13 @@ describe('ServiceManager', () => {
     serviceManager = new ServiceManager(mockConfig, eventBus);
   });
 
-  it('should start a service', async() => {
+  it('should start a service', async () => {
     await serviceManager.startService(mockConfig.services[0]);
     expect(eventBus.getSubscribers('service-started').size).toBeGreaterThan(0);
     expect(eventBus.getSubscribers('service-start-failed').size).toBe(0);
   });
 
-  it('should stop a running service', async() => {
+  it('should stop a running service', async () => {
     await serviceManager.startService(mockConfig.services[0]);
     await serviceManager.stopService('testService');
     expect(eventBus.getSubscribers('service-stopped').size).toBeGreaterThan(0);

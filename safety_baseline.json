@@ -1,0 +1,60 @@
+Safety 3.6.0 scanning /Users/x/x/Profil3r
+2025-07-09 21:02:47 UTC
+
+Account: jose guzman, ipartner@gmail.com
+ Git branch: main
+ Environment: Stage.development
+ Scan policy: None, using Safety CLI default policies
+
+Python detected. Found 8 Python requirements files, 2 Python pyproject.toml files and 1 Python environment
+
+✅ requirements.txt: No issues found.
+
+✅ scripts/legacy/E4GL30S1NT/requirements.txt: No issues found.
+
+Dependency vulnerabilities detected:
+
+📝 tools/telegram-facebook-bot/requirements.txt:
+
+ selenium==4.15.0 [1 vulnerability found]
+  -> Vuln ID 63073: CVE-2023-5590, CVSS Severity HIGH
+     Selenium 4.15.1 (Python bindings) include a fix for CVE-2023-5590: NULL Pointer Dereference.
+     https://github.c...
+ Update selenium==4.15.0 to selenium==4.15.1 to fix 1 vulnerability
+ Versions of selenium with no known vulnerabilities: 4.34.2, 4.34.1, 4.34.0, 4.33.0, 4.32.0, 4.31.0, 4.30.0, 4.29.0, 4.28.1, 4.28.0, 4.27.1, 4.27.0, 4.26.1, 4.26.0, 4.25.0, 4.24.0, 4.23.1, 4.23.0, 4.22.0, 4.21.0, 4.20.0, 4.19.0,
+ 4.18.1, 4.18.0, 4.17.2, 4.17.1, 4.17.0, 4.16.0, 4.15.2
+ Learn more: https://data.safetycli.com/p/pypi/selenium/eda/?from=4.15.0&to=4.15.1
+
+ requests==2.31.0 [2 vulnerabilities found]
+  -> Vuln ID 71064: CVE-2024-35195, CVSS Severity MEDIUM
+     Affected versions of Requests, when making requests through a Requests `Session`, if the first request is made...
+  -> Vuln ID 77680:
+     Requests is an HTTP library. Due to a URL parsing issue, Requests releases prior to 2.32.4 may leak .netrc cre...
+ Update requests==2.31.0 to requests==2.32.4 to fix 2 vulnerabilities
+ Learn more: https://data.safetycli.com/p/pypi/requests/eda/?from=2.31.0&to=2.32.4
+
+✅ scripts/legacy/FReport/requirements.txt: No issues found.
+
+✅ modules/requirements.txt: No issues found.
+
+✅ tests/integration/python/requirements.txt: No issues found.
+
+✅ scripts/requirements.txt: No issues found.
+
+📝 tools/js_tools/messenger_bot_framework/fbbot/requirements.txt:
+
+ Flask==2.3.3 [1 vulnerability found]
+  -> Vuln ID 77323:
+     Affected versions of Flask (≤ 3.1.0) are vulnerable to incorrect fallback key configuration in session signing...
+ Update Flask==2.3.3 to Flask==3.1.1 to fix 1 vulnerability
+ Learn more: https://data.safetycli.com/p/pypi/flask/eda/?from=2.3.3&to=3.1.1
+
+✅ node_modules/npm/node_modules/node-gyp/gyp/pyproject.toml: No issues found.
+
+✅ pyproject.toml: No issues found.
+
+✅ .venv/pyvenv.cfg: No issues found.
+
+Tested 199 dependencies for security issues using default Safety CLI policies
+20 vulnerabilities found, 16 ignored due to policy.
+3 fixes suggested, resolving 4 vulnerabilities.

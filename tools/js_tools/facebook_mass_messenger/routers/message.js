@@ -52,7 +52,7 @@ module.exports = (app, users) => {
           req.session.messages[req.messageID],
           util.getFriendVariables(req, users),
           seedrandom.alea(req.query.seed)
-        ),
+        )
       });
     else res.send({ message: req.session.messages[req.messageID] });
   });
@@ -116,7 +116,7 @@ module.exports = (app, users) => {
                 req.session.messages[req.messageID],
                 util.getFriendVariables(req, users),
                 rng
-              ),
+              )
             },
             friend
           );

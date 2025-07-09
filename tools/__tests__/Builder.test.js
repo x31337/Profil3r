@@ -26,13 +26,13 @@ describe('Builder', () => {
     builder = new Builder(mockConfig, eventBus);
   });
 
-  it('should perform a full build', async() => {
+  it('should perform a full build', async () => {
     await builder.fullBuild();
     expect(eventBus.getSubscribers('build-completed').size).toBeGreaterThan(0);
     expect(eventBus.getSubscribers('build-failed').size).toBe(0);
   });
 
-  it('should perform an incremental build', async() => {
+  it('should perform an incremental build', async () => {
     const changedFiles = ['testDir/file.js'];
     await builder.incrementalBuild(changedFiles);
     expect(

@@ -22,12 +22,12 @@ const {
   Deployer,
   Tester,
   AutoFixEngine,
-  DependencyManager,
+  DependencyManager
 } = require('./modules');
 const {
   generateHTMLReport,
   waitForService,
-  findFiles,
+  findFiles
 } = require('./modules/utils');
 
 class AutoBuildSystem {
@@ -43,33 +43,33 @@ class AutoBuildSystem {
           name: 'OSINT Framework',
           dir: 'OSINT-Framework',
           port: 8000,
-          type: 'node',
+          type: 'node'
         },
         {
           name: 'Facebook Mass Messenger',
           dir: 'js_tools/facebook_mass_messenger',
           port: 4444,
-          type: 'node',
+          type: 'node'
         },
         {
           name: 'Messenger Bot Framework',
           dir: 'js_tools/messenger_bot_framework/fbbot',
           port: 3000,
-          type: 'node',
+          type: 'node'
         },
         {
           name: 'Python Tools',
           dir: 'telegram-facebook-bot',
           port: null,
-          type: 'python',
+          type: 'python'
         },
-        { name: 'PHP Tools', dir: 'php_tools', port: null, type: 'php' },
+        { name: 'PHP Tools', dir: 'php_tools', port: null, type: 'php' }
       ],
       autoFix: true,
       autoPush: true,
       realTimeMonitoring: true,
       testCoverage: 100,
-      buildTimeout: 300000, // 5 minutes
+      buildTimeout: 300000 // 5 minutes
     };
 
     this.state = {
@@ -83,7 +83,7 @@ class AutoBuildSystem {
       lastBuild: null,
       buildCount: 0,
       testCount: 0,
-      deployCount: 0,
+      deployCount: 0
     };
 
     this.git = git();
@@ -108,81 +108,81 @@ class AutoBuildSystem {
 
   setupEventListeners() {
     // Update legacy state from new module events
-    this.eventBus.on('build-started', (data) => {
+    this.eventBus.on('build-started', data => {
       this.state.building = true;
       this.state.buildCount++;
       this.state.lastBuild = new Date().toISOString();
       this.broadcast('build-started', data);
     });
 
-    this.eventBus.on('build-completed', (data) => {
+    this.eventBus.on('build-completed', data => {
       this.state.building = false;
       this.broadcast('build-completed', data);
     });
 
-    this.eventBus.on('build-failed', (data) => {
+    this.eventBus.on('build-failed', data => {
       this.state.building = false;
       this.state.errors.push({
         type: 'build',
         message: data.error,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       });
       this.broadcast('build-failed', data);
     });
 
-    this.eventBus.on('tests-started', (data) => {
+    this.eventBus.on('tests-started', data => {
       this.state.testing = true;
       this.state.testCount++;
       this.broadcast('tests-started', data);
     });
 
-    this.eventBus.on('tests-completed', (data) => {
+    this.eventBus.on('tests-completed', data => {
       this.state.testing = false;
       this.state.testResults = data.results;
       this.broadcast('tests-completed', data);
     });
 
-    this.eventBus.on('tests-failed', (data) => {
+    this.eventBus.on('tests-failed', data => {
       this.state.testing = false;
       this.state.errors.push({
         type: 'test',
         message: data.error,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       });
       this.broadcast('tests-failed', data);
     });
 
-    this.eventBus.on('deployment-completed', (data) => {
+    this.eventBus.on('deployment-completed', data => {
       this.state.deployCount++;
       this.broadcast('deployment-completed', data);
     });
 
-    this.eventBus.on('deployment-failed', (data) => {
+    this.eventBus.on('deployment-failed', data => {
       this.state.errors.push({
         type: 'deployment',
         message: data.error,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       });
       this.broadcast('deployment-failed', data);
     });
 
-    this.eventBus.on('health-checks-completed', (data) => {
+    this.eventBus.on('health-checks-completed', data => {
       this.state.healthChecks = data.healthChecks;
       this.broadcast('health-update', data);
     });
 
-    this.eventBus.on('component-built', (data) => {
+    this.eventBus.on('component-built', data => {
       this.state.services[data.service] = {
         status: 'built',
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
     });
 
-    this.eventBus.on('component-build-failed', (data) => {
+    this.eventBus.on('component-build-failed', data => {
       this.state.services[data.service] = {
         status: 'failed',
         error: data.error,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
     });
   }
@@ -215,7 +215,7 @@ class AutoBuildSystem {
 
   createDirectories() {
     const dirs = [this.config.buildDir, this.config.logDir];
-    dirs.forEach((dir) => {
+    dirs.forEach(dir => {
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
@@ -240,50 +240,50 @@ class AutoBuildSystem {
         handler: () => ({
           ...this.state,
           config: this.config,
-          timestamp: new Date().toISOString(),
-        }),
+          timestamp: new Date().toISOString()
+        })
       },
       {
         method: 'post',
         path: '/api/build',
-        handler: () => this.fullBuildCycle(),
+        handler: () => this.fullBuildCycle()
       },
       { method: 'post', path: '/api/test', handler: () => this.runAllTests() },
       {
         method: 'post',
         path: '/api/deploy',
-        handler: () => this.deployChanges(),
+        handler: () => this.deployChanges()
       },
       { method: 'post', path: '/api/fix', handler: () => this.autoFixIssues() },
       {
         method: 'post',
         path: '/api/cypress',
-        handler: () => this.runCypressTests(),
+        handler: () => this.runCypressTests()
       },
       {
         method: 'post',
         path: '/api/full-cycle',
-        handler: () => this.runFullAutoCycle(),
+        handler: () => this.runFullAutoCycle()
       },
       {
         method: 'post',
         path: '/api/auto-install',
-        handler: () => this.autoInstallDependencies(),
+        handler: () => this.autoInstallDependencies()
       },
       {
         method: 'post',
         path: '/api/auto-configure',
-        handler: () => this.autoConfigureProject(),
+        handler: () => this.autoConfigureProject()
       },
       {
         method: 'post',
         path: '/api/auto-push',
-        handler: () => this.autoPushChanges(),
-      },
+        handler: () => this.autoPushChanges()
+      }
     ];
 
     // Register routes with delegation
-    apiRoutes.forEach((route) => {
+    apiRoutes.forEach(route => {
       app[route.method](route.path, async (req, res) => {
         try {
           const result = await route.handler();
@@ -318,18 +318,18 @@ class AutoBuildSystem {
 
     this.wss = new WebSocket.Server({ port: this.config.wsPort });
 
-    this.wss.on('connection', (ws) => {
+    this.wss.on('connection', ws => {
       console.log('📡 WebSocket client connected');
 
       // Send current state
       ws.send(
         JSON.stringify({
           type: 'state',
-          data: this.state,
+          data: this.state
         })
       );
 
-      ws.on('message', async (message) => {
+      ws.on('message', async message => {
         const { type, data } = JSON.parse(message);
 
         try {
@@ -343,7 +343,7 @@ class AutoBuildSystem {
             'auto-configure': () => this.autoConfigureProject(),
             'auto-push': () => this.autoPushChanges(),
             cypress: () => this.runCypressTests(),
-            'full-cycle': () => this.runFullAutoCycle(),
+            'full-cycle': () => this.runFullAutoCycle()
           };
 
           const handler = commandMap[type];
@@ -353,7 +353,7 @@ class AutoBuildSystem {
             console.warn(`Unknown WebSocket command: ${type}`);
             this.broadcast('command-failed', {
               type,
-              error: 'Unknown command',
+              error: 'Unknown command'
             });
           }
         } catch (error) {
@@ -381,17 +381,17 @@ class AutoBuildSystem {
       '**/*.css',
       '**/*.md',
       '**/*.yml',
-      '**/*.yaml',
+      '**/*.yaml'
     ];
 
     const watcher = chokidar.watch(watchPatterns, {
       ignored: /(^|[/\\])\../, // ignore dotfiles
       persistent: true,
       ignoreInitial: true,
-      cwd: this.config.projectRoot,
+      cwd: this.config.projectRoot
     });
 
-    watcher.on('change', async (filePath) => {
+    watcher.on('change', async filePath => {
       console.log(`📝 File changed: ${filePath}`);
       this.broadcast('file-change', { path: filePath });
 
@@ -642,7 +642,7 @@ class AutoBuildSystem {
       services: this.state.services,
       testResults: this.state.testResults,
       healthChecks: this.state.healthChecks,
-      errors: this.state.errors,
+      errors: this.state.errors
     };
 
     // Save report
@@ -686,7 +686,7 @@ class AutoBuildSystem {
       'mocha',
       'chai',
       'supertest',
-      'cypress',
+      'cypress'
     ];
 
     for (const dep of devDeps) {
@@ -695,7 +695,7 @@ class AutoBuildSystem {
         try {
           execSync(`npm install --save-dev ${dep}`, {
             cwd: this.config.projectRoot,
-            stdio: 'inherit',
+            stdio: 'inherit'
           });
         } catch (error) {
           console.warn(`⚠️ Failed to install ${dep}:`, error.message);
@@ -788,7 +788,7 @@ class AutoBuildSystem {
     try {
       execSync('npx cypress --version', {
         stdio: 'pipe',
-        cwd: this.config.projectRoot,
+        cwd: this.config.projectRoot
       });
       return true;
     } catch {
@@ -805,7 +805,7 @@ class AutoBuildSystem {
     console.log('🛑 Shutting down Auto Build System...');
 
     // Stop file watchers
-    this.watchers.forEach((watcher) => watcher.close());
+    this.watchers.forEach(watcher => watcher.close());
 
     // Stop services
     await this.stopAllServices();

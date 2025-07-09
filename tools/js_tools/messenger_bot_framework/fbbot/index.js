@@ -21,7 +21,7 @@ Fbbot.defaults = {
   bodyMaxLength: '1mb',
   bodyEncoding: 'utf8',
   timeout: 5000,
-  apiUrl: 'https://graph.facebook.com/v2.6/me/messages?access_token=',
+  apiUrl: 'https://graph.facebook.com/v2.6/me/messages?access_token='
 };
 
 // expose logger
@@ -86,7 +86,7 @@ function Fbbot(options) {
   this.credentials = {
     // keep simple naming for internal reference
     token: this.options.pageAccessToken || this.options.token,
-    secret: this.options.verifyToken || this.options.secret,
+    secret: this.options.verifyToken || this.options.secret
   };
 
   if (!this.credentials.token || !this.credentials.secret) {
@@ -131,7 +131,7 @@ function Fbbot(options) {
     entry: middleware.entryPoint,
     middleware: inTraverse.middleware.bind(this),
     emitter: inTraverse.emitter.bind(this),
-    prefix: inTraverse.prefix,
+    prefix: inTraverse.prefix
   });
   // wrap linkParent method
   this._incoming.linkParent = inTraverse.linkParent.bind(
@@ -147,7 +147,7 @@ function Fbbot(options) {
   this._outgoing = new Traverse(outTraverse.steps, {
     middleware: outTraverse.middleware.bind(this),
     emitter: outTraverse.emitter.bind(this),
-    prefix: outTraverse.prefix,
+    prefix: outTraverse.prefix
   });
   // wrap linkParent method
   this._outgoing.linkParent = outTraverse.linkParent.bind(

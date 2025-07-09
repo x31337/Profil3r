@@ -17,7 +17,7 @@ const types = [
   'attachments',
   'postback',
   'quick_reply',
-  'text',
+  'text'
 ];
 
 /**

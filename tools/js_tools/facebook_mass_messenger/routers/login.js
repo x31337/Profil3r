@@ -34,7 +34,7 @@ module.exports = (app, users) => {
     } else res.render('login');
   });
 
-  app.post('/login', async(req, res) => {
+  app.post('/login', async (req, res) => {
     let api;
     try {
       api = await login(
