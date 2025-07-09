@@ -11,7 +11,7 @@ We actively maintain and provide security updates for the following versions:
 
 ## Security Vulnerability Remediation Summary
 
-### Recent Security Assessment (January 2025)
+### Recent Security Assessment (July 9, 2025)
 
 We have conducted a comprehensive security audit of the Profil3r project and addressed all
 identified vulnerabilities:
