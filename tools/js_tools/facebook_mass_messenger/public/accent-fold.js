@@ -1,5 +1,5 @@
 // Taken from http://alistapart.com/article/accent-folding-for-auto-complete/
-var accent_map = {
+const accent_map = {
   ẚ: 'a',
   Á: 'a',
   á: 'a',
@@ -723,8 +723,8 @@ function accent_fold(s) {
   if (!s) {
     return '';
   }
-  var ret = '';
-  for (var i = 0; i < s.length; i++) {
+  let ret = '';
+  for (let i = 0; i < s.length; i++) {
     ret += accent_map[s.charAt(i)] || s.charAt(i);
   }
   return ret;

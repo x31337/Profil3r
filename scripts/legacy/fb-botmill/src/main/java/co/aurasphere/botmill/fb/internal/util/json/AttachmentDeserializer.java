@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -52,7 +52,7 @@ import com.google.gson.JsonParseException;
 /**
  * Custom deserializer for an {@link Attachment}. Instantiates the correct
  * payload according to the current object.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
  */
@@ -74,7 +74,7 @@ public class AttachmentDeserializer implements JsonDeserializer<Attachment> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.google.gson.JsonDeserializer#deserialize(com.google.gson.JsonElement,
 	 * java.lang.reflect.Type, com.google.gson.JsonDeserializationContext)
@@ -86,7 +86,7 @@ public class AttachmentDeserializer implements JsonDeserializer<Attachment> {
 		AttachmentType type = attachment.getType();
 		Class<? extends Payload> payloadClass = null;
 		JsonElement payloadJson = json.getAsJsonObject().get("payload");
-		
+
 		switch (type) {
 		case AUDIO:
 		case FILE:
@@ -143,7 +143,7 @@ public class AttachmentDeserializer implements JsonDeserializer<Attachment> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

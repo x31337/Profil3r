@@ -2,9 +2,9 @@ name: Cypress Cross-Browser Testing
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 jobs:
   cypress-run:
@@ -13,180 +13,188 @@ jobs:
       matrix:
         browser: [chrome, firefox, edge]
         viewport: [desktop, mobile-iphone6, mobile-ipad2]
-    
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: tools/package-lock.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: tools/package-lock.json
 
-    - name: Install dependencies
-      run: |
-        cd tools
-        npm install
+      - name: Install dependencies
+        run: |
+          cd tools
+          npm install
 
-    - name: Download browsers
-      uses: browser-actions/setup-chrome@latest
-      if: matrix.browser == 'chrome'
-      
-    - name: Download Firefox
-      uses: browser-actions/setup-firefox@latest
-      if: matrix.browser == 'firefox'
-      
-    - name: Download Edge
-      uses: browser-actions/setup-edge@latest
-      if: matrix.browser == 'edge'
+      - name: Download browsers
+        uses: browser-actions/setup-chrome@latest
+        if: matrix.browser == 'chrome'
 
-    - name: Start services
-      run: |
-        cd tools
-        npm run start-services &
-        sleep 30 # Wait for services to start
-        
-    - name: Wait for services
-      run: |
-        cd tools
-        npm run health-check
+      - name: Download Firefox
+        uses: browser-actions/setup-firefox@latest
+        if: matrix.browser == 'firefox'
 
-    - name: Run Cypress tests - Desktop
-      if: matrix.viewport == 'desktop'
-      run: |
-        cd tools
-        npm run test-e2e-${{ matrix.browser }}
+      - name: Download Edge
+        uses: browser-actions/setup-edge@latest
+        if: matrix.browser == 'edge'
 
-    - name: Run Cypress tests - iPhone 6
-      if: matrix.viewport == 'mobile-iphone6'
-      run: |
-        cd tools
-        npm run test-e2e-mobile
-      env:
-        CYPRESS_BROWSER: ${{ matrix.browser }}
+      - name: Start services
+        run: |
+          cd tools
+          npm run start-services &
+          sleep 30 # Wait for services to start
 
-    - name: Run Cypress tests - iPad 2
-      if: matrix.viewport == 'mobile-ipad2'
-      run: |
-        cd tools
-        npm run test-e2e-tablet
-      env:
-        CYPRESS_BROWSER: ${{ matrix.browser }}
+      - name: Wait for services
+        run: |
+          cd tools
+          npm run health-check
 
-    - name: Upload screenshots
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: cypress-screenshots-${{ matrix.browser }}-${{ matrix.viewport }}
-        path: tools/cypress/screenshots
+      - name: Run Cypress tests - Desktop
+        if: matrix.viewport == 'desktop'
+        run: |
+          cd tools
+          npm run test-e2e-${{ matrix.browser }}
 
-    - name: Upload videos
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: cypress-videos-${{ matrix.browser }}-${{ matrix.viewport }}
-        path: tools/cypress/videos
+      - name: Run Cypress tests - iPhone 6
+        if: matrix.viewport == 'mobile-iphone6'
+        run: |
+          cd tools
+          npm run test-e2e-mobile
+        env:
+          CYPRESS_BROWSER: ${{ matrix.browser }}
 
-    - name: Upload visual snapshots
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: cypress-snapshots-${{ matrix.browser }}-${{ matrix.viewport }}
-        path: tools/cypress/snapshots
+      - name: Run Cypress tests - iPad 2
+        if: matrix.viewport == 'mobile-ipad2'
+        run: |
+          cd tools
+          npm run test-e2e-tablet
+        env:
+          CYPRESS_BROWSER: ${{ matrix.browser }}
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.browser }}-${{ matrix.viewport }}
+          path: tools/cypress/screenshots
+
+      - name: Upload videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos-${{ matrix.browser }}-${{ matrix.viewport }}
+          path: tools/cypress/videos
+
+      - name: Upload visual snapshots
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-snapshots-${{ matrix.browser }}-${{ matrix.viewport }}
+          path: tools/cypress/snapshots
 
   parallel-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        spec-group: [health-checks, osint, messenger, integration, visual-regression, mobile]
-    
+        spec-group:
+          [
+            health-checks,
+            osint,
+            messenger,
+            integration,
+            visual-regression,
+            mobile
+          ]
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: tools/package-lock.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: tools/package-lock.json
 
-    - name: Install dependencies
-      run: |
-        cd tools
-        npm install
+      - name: Install dependencies
+        run: |
+          cd tools
+          npm install
 
-    - name: Start services
-      run: |
-        cd tools
-        npm run start-services &
-        sleep 30
-        
-    - name: Wait for services
-      run: |
-        cd tools
-        npm run health-check
+      - name: Start services
+        run: |
+          cd tools
+          npm run start-services &
+          sleep 30
 
-    - name: Run Cypress tests - ${{ matrix.spec-group }}
-      run: |
-        cd tools
-        npx cypress run --spec "cypress/e2e/${{ matrix.spec-group }}/**/*.cy.js"
+      - name: Wait for services
+        run: |
+          cd tools
+          npm run health-check
 
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: cypress-results-${{ matrix.spec-group }}
-        path: |
-          tools/cypress/screenshots
-          tools/cypress/videos
-          tools/cypress/snapshots
+      - name: Run Cypress tests - ${{ matrix.spec-group }}
+        run: |
+          cd tools
+          npx cypress run --spec "cypress/e2e/${{ matrix.spec-group }}/**/*.cy.js"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-results-${{ matrix.spec-group }}
+          path: |
+            tools/cypress/screenshots
+            tools/cypress/videos
+            tools/cypress/snapshots
 
   visual-regression:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: tools/package-lock.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: tools/package-lock.json
 
-    - name: Install dependencies
-      run: |
-        cd tools
-        npm install
+      - name: Install dependencies
+        run: |
+          cd tools
+          npm install
 
-    - name: Start services
-      run: |
-        cd tools
-        npm run start-services &
-        sleep 30
-        
-    - name: Wait for services
-      run: |
-        cd tools
-        npm run health-check
+      - name: Start services
+        run: |
+          cd tools
+          npm run start-services &
+          sleep 30
 
-    - name: Run visual regression tests
-      run: |
-        cd tools
-        npx cypress run --spec "cypress/e2e/visual-regression/**/*.cy.js"
-      env:
-        CYPRESS_updateSnapshots: false
-        CYPRESS_failOnSnapshotDiff: true
+      - name: Wait for services
+        run: |
+          cd tools
+          npm run health-check
 
-    - name: Upload visual regression results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: visual-regression-results
-        path: |
-          tools/cypress/snapshots
-          tools/cypress/screenshots
-          tools/cypress/videos
+      - name: Run visual regression tests
+        run: |
+          cd tools
+          npx cypress run --spec "cypress/e2e/visual-regression/**/*.cy.js"
+        env:
+          CYPRESS_updateSnapshots: false
+          CYPRESS_failOnSnapshotDiff: true
+
+      - name: Upload visual regression results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-regression-results
+          path: |
+            tools/cypress/snapshots
+            tools/cypress/screenshots
+            tools/cypress/videos

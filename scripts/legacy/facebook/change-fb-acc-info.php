@@ -45,7 +45,7 @@ class ChangeInfo {
                 "ref" => "nux_android"
            ]
         ];
-   
+
         $education = [
             [
                 "id"=> $array_educations[array_rand($array_educations)],
@@ -56,7 +56,7 @@ class ChangeInfo {
                 "type" => "College"
             ]
         ];
-   
+
         $location = [
                 "id"=> $array_locations[array_rand($array_locations)],
                 "privacy" => [
@@ -64,7 +64,7 @@ class ChangeInfo {
                 ],
                 "ref" => "nux_android"
         ];
-   
+
         $hometown = [
                 "id"=> $array_hometowns[array_rand($array_hometowns)],
                 "privacy" => [

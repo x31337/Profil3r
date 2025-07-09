@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,9 +33,9 @@ import co.aurasphere.botmill.fb.model.outcoming.template.airline.TravelClass;
 
 /**
  * Builder for a {@link BoardingPass} object.
- * 
+ *
  * @author Donato Rimenti
- * 
+ *
  */
 public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 
@@ -78,7 +78,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	/**
 	 * Sets the {@link TravelClass} for the current {@link BoardingPass} object.
 	 * This field is optional.
-	 * 
+	 *
 	 * @param travelClass
 	 *            the travel class to set.
 	 * @return this builder.
@@ -91,7 +91,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	/**
 	 * Sets the seat for the current {@link BoardingPass} object. This field is
 	 * optional.
-	 * 
+	 *
 	 * @param seat
 	 *            the seat to set.
 	 * @return this builder.
@@ -105,7 +105,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	 * Adds an auxiliary field for the current {@link BoardingPass} object. This
 	 * field is optional. There can be at most 5 auxiliary fields per boarding
 	 * pass.
-	 * 
+	 *
 	 * @param label
 	 *            the label for the additional field. It can't be empty.
 	 * @param value
@@ -122,7 +122,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	 * Adds an auxiliary field for the current {@link BoardingPass} object. This
 	 * field is optional. There can be at most 5 auxiliary fields per boarding
 	 * pass.
-	 * 
+	 *
 	 * @param auxiliaryField
 	 *            the field to add. It can't be null.
 	 * @return this builder.
@@ -136,7 +136,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	 * Adds a secondary field for the current {@link BoardingPass} object. This
 	 * field is optional. There can be at most 5 secondary fields per boarding
 	 * pass.
-	 * 
+	 *
 	 * @param label
 	 *            the label for the additional field. It can't be empty.
 	 * @param value
@@ -153,7 +153,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	 * Adds a secondary field for the current {@link BoardingPass} object. This
 	 * field is optional. There can be at most 5 secondary fields per boarding
 	 * pass.
-	 * 
+	 *
 	 * @param secondaryField
 	 *            the field to add. It can't be null.
 	 * @return this builder.
@@ -222,7 +222,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	/**
 	 * Adds a {@link FlightInfo} object to this {@link BoardingPass}. This
 	 * object is mandatory and can't be null for Airline templates.
-	 * 
+	 *
 	 * @param flightNumber
 	 *            the flight number. It can't be empty.
 	 * @return a builder for the {@link FlightInfo} object.
@@ -237,7 +237,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	 * object is mandatory and can't be null for Airline templates. Used only by
 	 * delegated classes. Should not be called directly. Use
 	 * {@link #addFlightInfo(String)} instead.
-	 * 
+	 *
 	 * @param flightInfo
 	 *            the flight info to add. It can't be null.
 	 */
@@ -249,7 +249,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 	/**
 	 * Builds the current object, adds it to the parent builder and returns the
 	 * parent builder.
-	 * 
+	 *
 	 * @return the parent builder of this builder.
 	 */
 	public AirlineBoardingPassTemplateBuilder endBoardingPass() {
@@ -269,7 +269,7 @@ public class BoardingPassBuilder extends FlightInfoBuilderDelegator {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.factory.AirlineBaseTemplateBuilder
 	 * #toString()

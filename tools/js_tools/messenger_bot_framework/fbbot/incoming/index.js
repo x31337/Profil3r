@@ -1,6 +1,6 @@
-var attach = require('../lib/attach.js');
+const attach = require('../lib/attach.js');
 
-var filters = {
+const filters = {
   messaging: [require('./user_init.js')],
 
   postback: [require('./postback.js')],

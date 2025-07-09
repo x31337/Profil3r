@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -83,9 +83,9 @@ public class AnnotatedTemplatedBehaviourTest extends FbBot {
 				botMillSession().buildSession(envelope.getRecipient().getId());
 				return ReplyFactory.addTextMessageOnly("Hi!").build(envelope);
 			}
-		});		
+		});
 	}
-	
+
 	@FbBotMillController(eventType = FbBotMillEventType.IMAGE)
 	public void getImage(MessageEnvelope envelope) {
 		reply(new MessageAutoReply("image received"));
@@ -112,7 +112,7 @@ public class AnnotatedTemplatedBehaviourTest extends FbBot {
 	 */
 	@FbBotMillController(eventType = FbBotMillEventType.MESSAGE, text = "Hi!", caseSensitive = true)
 	public void catchTextAndReply(MessageEnvelope envelope) {
-			
+
 		reply(new AutoReply() {
 			@Override
 			public FbBotMillResponse createResponse(MessageEnvelope envelope) {
@@ -120,19 +120,19 @@ public class AnnotatedTemplatedBehaviourTest extends FbBot {
 				return ReplyFactory.addTextMessageOnly(greetingMessage).build(envelope);
 			}
 		});
-	
+
 	}
-	
+
 	@FbBotMillController(eventType = FbBotMillEventType.MESSAGE, text = "Hi with Image!", caseSensitive = true)
 	public void catchTextAndReplyWithImage(MessageEnvelope envelope) {
-		
-//		
+
+//
 		UploadAttachmentResponse response = UploadApi
 				.uploadAttachment(
 						AttachmentType.IMAGE,
 						"http://vignette2.wikia.nocookie.net/nickelodeon/images/2/27/Spongebob_PNG.png/revision/latest?cb=20120702055752");
 		String attachmentId = response.getAttachmentId();
-		
+
 		reply(new AutoReply() {
 			@Override
 			public FbBotMillResponse createResponse(MessageEnvelope envelope) {
@@ -140,7 +140,7 @@ public class AnnotatedTemplatedBehaviourTest extends FbBot {
 				return ReplyFactory.addTextMessageOnly(greetingMessage).build(envelope);
 			}
 		});
-	
+
 	}
 
 	@FbBotMillController(eventType = FbBotMillEventType.MESSAGE, text = "reuse image", caseSensitive = true)
@@ -151,14 +151,14 @@ public class AnnotatedTemplatedBehaviourTest extends FbBot {
 						"http://vignette2.wikia.nocookie.net/nickelodeon/images/2/27/Spongebob_PNG.png/revision/latest?cb=20120702055752");
 		final String attachmentId = response.getAttachmentId();
 		reply(new AutoReply() {
-			
+
 			@Override
 			public FbBotMillResponse createResponse(MessageEnvelope envelope) {
 				return ReplyFactory.getReusableImageAttachment(attachmentId).build(envelope);
 			}
 		});
 	}
-	
+
 	@FbBotMillController(eventType = FbBotMillEventType.MESSAGE, text = "reuse video", caseSensitive = true)
 	public void replyWithVideoAttachment(MessageEnvelope envelope) {
 		UploadAttachmentResponse response = UploadApi
@@ -167,14 +167,14 @@ public class AnnotatedTemplatedBehaviourTest extends FbBot {
 						"http://www.engr.colostate.edu/me/facil/dynamics/files/drop.avi");
 		final String attachmentId = response.getAttachmentId();
 		reply(new AutoReply() {
-			
+
 			@Override
 			public FbBotMillResponse createResponse(MessageEnvelope envelope) {
 				return ReplyFactory.getReusableVideoAttachment(attachmentId).build(envelope);
 			}
 		});
 	}
-	
+
 	/**
 	 * Reply text.
 	 */

@@ -1,15 +1,15 @@
-var restify = require('restify'),
+const restify = require('restify'),
   tape = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
 tape('restify', function (test) {
   common.iterateRequests(function (request, handle, callback) {
-    var payloadType = handle.split('-')[0];
+    const payloadType = handle.split('-')[0];
 
     test.test('with ' + handle, function (t) {
       t.plan(request.expected.plan);
 
-      var server = restify.createServer(),
+      const server = restify.createServer(),
         fbbot = new Fbbot(common.fbbot);
       // setup tests per instance
       common.setupTests(fbbot, payloadType, request, t, callback);
@@ -40,7 +40,7 @@ tape('restify', function (test) {
 tape('restify - handshake - success', function (t) {
   t.plan(4);
 
-  var server = restify.createServer(),
+  const server = restify.createServer(),
     fbbot = new Fbbot(common.fbbot);
   // plug-in fbbot
   server.get(common.server.endpoint, fbbot.requestHandler);
@@ -67,7 +67,7 @@ tape('restify - handshake - success', function (t) {
 tape('restify - handshake - failed', function (t) {
   t.plan(4);
 
-  var server = restify.createServer(),
+  const server = restify.createServer(),
     fbbot = new Fbbot(common.fbbot);
   // plug-in fbbot
   server.get(common.server.endpoint, fbbot.requestHandler);

@@ -9,7 +9,12 @@
     "format": "prettier --write .",
     "pre-commit": "lint-staged",
     "commitlint": "commitlint --edit",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "test": "python3 -m pytest tests/integration/python/ -v",
+    "test-python": "python3 -m pytest tests/integration/python/ -v",
+    "test-node": "cd tests/integration/node && npm test",
+    "test-coverage": "python3 -m pytest tests/integration/python/ --cov=profil3r --cov-report=html --cov-report=term",
+    "test-all": "npm run test-python && npm run test-node"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [

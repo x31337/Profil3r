@@ -10,7 +10,12 @@
     "test:report": "mocha test_api.js --reporter json --timeout 30000 > test-results.json",
     "test:html": "mocha test_api.js --reporter html --timeout 30000 > test-results.html"
   },
-  "keywords": ["integration", "tests", "profil3r", "nodejs"],
+  "keywords": [
+    "integration",
+    "tests",
+    "profil3r",
+    "nodejs"
+  ],
   "author": "Profil3r Team",
   "license": "MIT",
   "dependencies": {
@@ -27,8 +32,15 @@
     "chai-http": "^4.4.0"
   },
   "nyc": {
-    "reporter": ["html", "text", "lcov"],
-    "exclude": ["node_modules/**", "test/**"],
+    "reporter": [
+      "html",
+      "text",
+      "lcov"
+    ],
+    "exclude": [
+      "node_modules/**",
+      "test/**"
+    ],
     "check-coverage": true,
     "lines": 80,
     "functions": 80,

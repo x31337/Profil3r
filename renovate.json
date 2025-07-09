@@ -7,9 +7,7 @@
     ":ignoreModulesAndTests"
   ],
   "timezone": "UTC",
-  "schedule": [
-    "before 6am on monday"
-  ],
+  "schedule": ["before 6am on monday"],
   "prConcurrentLimit": 20,
   "prHourlyLimit": 4,
   "rebaseWhen": "conflicted",
@@ -47,20 +45,14 @@
     },
     {
       "description": "Ignore deprecated packages",
-      "matchPackageNames": [
-        "request",
-        "har-validator",
-        "uuid"
-      ],
+      "matchPackageNames": ["request", "har-validator", "uuid"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },
     {
       "description": "Pin specific Python packages",
       "matchManagers": ["pip_requirements"],
-      "matchPackageNames": [
-        "prompt_toolkit"
-      ],
+      "matchPackageNames": ["prompt_toolkit"],
       "rangeStrategy": "pin"
     },
     {

@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -35,7 +35,7 @@ import co.aurasphere.botmill.fb.internal.util.validation.FbBotMillValidationCons
 
 /**
  * Greeting object used by the {@link SetGreetingTextRequest}.
- * 
+ *
  * @author Donato Rimenti
  */
 public class Greeting implements Serializable {
@@ -44,7 +44,7 @@ public class Greeting implements Serializable {
 	 * The serial version UID.
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Placeholder for the user first name. This placeholder will be dinamically
 	 * changed with the current user first name.
@@ -69,7 +69,7 @@ public class Greeting implements Serializable {
 	 * text for the default locale. This is the text we will fall back to if we
 	 * don't find another matching the user's locale. See the list of supported
 	 * locales.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/messenger-profile/supported-locales"
 	 *      >List of Facebook's supported locales</a>
@@ -168,7 +168,7 @@ public class Greeting implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -182,7 +182,7 @@ public class Greeting implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -209,7 +209,7 @@ public class Greeting implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

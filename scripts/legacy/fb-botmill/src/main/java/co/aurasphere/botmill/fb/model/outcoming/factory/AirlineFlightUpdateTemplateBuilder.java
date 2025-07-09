@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.airline.UpdateType;
  *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-itinerary-template"
  *      > Facebook's Messenger Platform Airline Itinerary Template
  *      Documentation</a>
- * 
+ *
  */
 public class AirlineFlightUpdateTemplateBuilder extends
 		FlightInfoBuilderDelegator {
@@ -53,7 +53,7 @@ public class AirlineFlightUpdateTemplateBuilder extends
 	/**
 	 * Default constructor. Creates a builder for an Airline Flight Update
 	 * Template.
-	 * 
+	 *
 	 * @param introMessage
 	 *            the message to send before the template. Can't be empty.
 	 * @param locale
@@ -68,7 +68,7 @@ public class AirlineFlightUpdateTemplateBuilder extends
 	 * @param updateType
 	 *            an {@link UpdateType} object that represents the kind of
 	 *            status update of the flight. Can't be null.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/airline-update-template"
 	 *      > Facebook's Messenger Platform Airline Flight Update Template
@@ -85,7 +85,7 @@ public class AirlineFlightUpdateTemplateBuilder extends
 	/**
 	 * Adds a {@link FlightInfo} object to this template. This object is
 	 * mandatory and can't be null for Airline templates.
-	 * 
+	 *
 	 * @param flightNumber
 	 *            the flight number.
 	 * @return a builder for the {@link FlightInfo} object.
@@ -101,7 +101,7 @@ public class AirlineFlightUpdateTemplateBuilder extends
 	 * mandatory and can't be null for Airline templates. Used only by delegated
 	 * classes. Should not be called directly. Use
 	 * {@link #addFlightInfo(String)} instead.
-	 * 
+	 *
 	 * @param flightInfo
 	 *            the {@link FlightInfo} object to add.
 	 */
@@ -113,11 +113,11 @@ public class AirlineFlightUpdateTemplateBuilder extends
 	/**
 	 * Sets the theme color for this template. This field is optional. If not
 	 * specified, the template will use Facebook's default theme (light blue).
-	 * 
+	 *
 	 * @param themeColor
 	 *            the color for this template. The Color must be a valid RGB
 	 *            color in the format #RRGGBB.
-	 * 
+	 *
 	 * @return this builder.
 	 */
 	public AirlineFlightUpdateTemplateBuilder setThemeColor(String themeColor) {
@@ -163,7 +163,7 @@ public class AirlineFlightUpdateTemplateBuilder extends
 	 * Builds the {@link FbBotMillResponse} that the bot should return. The
 	 * template builders, like this, delegate an
 	 * {@link AttachmentMessageBuilder} to build the message.
-	 * 
+	 *
 	 * @param envelope
 	 *            a {@link MessageEnvelope} object representing the incoming
 	 *            message.
@@ -176,7 +176,7 @@ public class AirlineFlightUpdateTemplateBuilder extends
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.factory.AirlineBaseTemplateBuilder
 	 * #toString()

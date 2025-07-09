@@ -18,7 +18,7 @@ log() {
     shift
     local message="$*"
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    
+
     case $level in
         "INFO")
             echo -e "${GREEN}[INFO]${NC} ${message}"
@@ -50,7 +50,7 @@ log "INFO" "Starting setup script..."
 # Detect OS
 detect_os() {
     log "INFO" "Detecting operating system..."
-    
+
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         if command -v apt-get &> /dev/null; then
             OS="ubuntu"
@@ -75,14 +75,14 @@ detect_os() {
         OS="unknown"
         PACKAGE_MANAGER="unknown"
     fi
-    
+
     log "INFO" "Detected OS: $OS with package manager: $PACKAGE_MANAGER"
 }
 
 # Install system dependencies based on OS
 install_system_deps() {
     log "INFO" "Installing system dependencies..."
-    
+
     case $OS in
         "ubuntu")
             log "INFO" "Installing dependencies for Ubuntu/Debian..."
@@ -137,7 +137,7 @@ install_system_deps() {
 # Install Python
 install_python() {
     log "INFO" "Installing Python..."
-    
+
     if command -v python3 &> /dev/null; then
         PYTHON_VERSION=$(python3 --version 2>&1 | cut -d' ' -f2)
         log "INFO" "Python3 already installed: $PYTHON_VERSION"
@@ -167,7 +167,7 @@ install_python() {
 # Install Node.js
 install_nodejs() {
     log "INFO" "Installing Node.js..."
-    
+
     if command -v node &> /dev/null; then
         NODE_VERSION=$(node --version)
         log "INFO" "Node.js already installed: $NODE_VERSION"
@@ -199,7 +199,7 @@ install_nodejs() {
 # Install PHP
 install_php() {
     log "INFO" "Installing PHP..."
-    
+
     if command -v php &> /dev/null; then
         PHP_VERSION=$(php --version | head -n1 | cut -d' ' -f2)
         log "INFO" "PHP already installed: $PHP_VERSION"
@@ -224,7 +224,7 @@ install_php() {
         esac
         log "INFO" "PHP installed successfully"
     fi
-    
+
     # Install Composer
     if ! command -v composer &> /dev/null; then
         log "INFO" "Installing Composer..."
@@ -240,7 +240,7 @@ install_php() {
 # Install Ruby
 install_ruby() {
     log "INFO" "Installing Ruby..."
-    
+
     if command -v ruby &> /dev/null; then
         RUBY_VERSION=$(ruby --version | cut -d' ' -f2)
         log "INFO" "Ruby already installed: $RUBY_VERSION"
@@ -265,7 +265,7 @@ install_ruby() {
         esac
         log "INFO" "Ruby installed successfully"
     fi
-    
+
     # Install Bundler
     if ! command -v bundle &> /dev/null; then
         log "INFO" "Installing Bundler..."
@@ -279,7 +279,7 @@ install_ruby() {
 # Install Java
 install_java() {
     log "INFO" "Installing Java..."
-    
+
     if command -v java &> /dev/null; then
         JAVA_VERSION=$(java -version 2>&1 | head -n1 | cut -d'"' -f2)
         log "INFO" "Java already installed: $JAVA_VERSION"
@@ -309,14 +309,14 @@ install_java() {
 # Install project dependencies
 install_project_deps() {
     log "INFO" "Installing project dependencies..."
-    
+
     # Python dependencies
     if [[ -f "modules/requirements.txt" ]]; then
         log "INFO" "Installing Python dependencies from modules/requirements.txt..."
         pip3 install -r modules/requirements.txt 2>&1 | tee -a ./build_logs/pip_install.log
         log "INFO" "Python dependencies installed successfully"
     fi
-    
+
     # Node.js dependencies
     if [[ -f "js_tools/messenger_bot_framework/fbbot/package.json" ]]; then
         log "INFO" "Installing Node.js dependencies for fbbot..."
@@ -325,7 +325,7 @@ install_project_deps() {
         cd ../../../
         log "INFO" "Node.js dependencies for fbbot installed successfully"
     fi
-    
+
     if [[ -f "js_tools/facebook_mass_messenger/package.json" ]]; then
         log "INFO" "Installing Node.js dependencies for facebook_mass_messenger..."
         cd js_tools/facebook_mass_messenger
@@ -333,7 +333,7 @@ install_project_deps() {
         cd ../../
         log "INFO" "Node.js dependencies for facebook_mass_messenger installed successfully"
     fi
-    
+
     if [[ -f "OSINT-Framework/package.json" ]]; then
         log "INFO" "Installing Node.js dependencies for OSINT-Framework..."
         cd OSINT-Framework
@@ -341,21 +341,21 @@ install_project_deps() {
         cd ../
         log "INFO" "Node.js dependencies for OSINT-Framework installed successfully"
     fi
-    
+
     # PHP dependencies (if composer.json exists)
     if [[ -f "composer.json" ]]; then
         log "INFO" "Installing PHP dependencies..."
         composer install 2>&1 | tee -a ./build_logs/composer_install.log
         log "INFO" "PHP dependencies installed successfully"
     fi
-    
+
     # Ruby dependencies (if Gemfile exists)
     if [[ -f "Gemfile" ]]; then
         log "INFO" "Installing Ruby dependencies..."
         bundle install 2>&1 | tee -a ./build_logs/bundle_install.log
         log "INFO" "Ruby dependencies installed successfully"
     fi
-    
+
     # Java dependencies
     if [[ -f "scripts/legacy/fb-botmill/pom.xml" ]]; then
         log "INFO" "Building Java project fb-botmill..."
@@ -369,59 +369,59 @@ install_project_deps() {
 # Verify installations
 verify_installations() {
     log "INFO" "Verifying installations..."
-    
+
     # Check Python
     if command -v python3 &> /dev/null; then
         log "INFO" "✓ Python3: $(python3 --version)"
     else
         log "ERROR" "✗ Python3 not found"
     fi
-    
+
     # Check Node.js
     if command -v node &> /dev/null; then
         log "INFO" "✓ Node.js: $(node --version)"
     else
         log "ERROR" "✗ Node.js not found"
     fi
-    
+
     # Check PHP
     if command -v php &> /dev/null; then
         log "INFO" "✓ PHP: $(php --version | head -n1)"
     else
         log "ERROR" "✗ PHP not found"
     fi
-    
+
     # Check Ruby
     if command -v ruby &> /dev/null; then
         log "INFO" "✓ Ruby: $(ruby --version)"
     else
         log "ERROR" "✗ Ruby not found"
     fi
-    
+
     # Check Java
     if command -v java &> /dev/null; then
         log "INFO" "✓ Java: $(java -version 2>&1 | head -n1)"
     else
         log "ERROR" "✗ Java not found"
     fi
-    
+
     # Check package managers
     if command -v pip3 &> /dev/null; then
         log "INFO" "✓ pip3: $(pip3 --version)"
     fi
-    
+
     if command -v npm &> /dev/null; then
         log "INFO" "✓ npm: $(npm --version)"
     fi
-    
+
     if command -v composer &> /dev/null; then
         log "INFO" "✓ Composer: $(composer --version)"
     fi
-    
+
     if command -v bundle &> /dev/null; then
         log "INFO" "✓ Bundler: $(bundle --version)"
     fi
-    
+
     if command -v mvn &> /dev/null; then
         log "INFO" "✓ Maven: $(mvn --version | head -n1)"
     fi
@@ -430,7 +430,7 @@ verify_installations() {
 # Main execution
 main() {
     log "INFO" "=== Starting Profil3r Setup ==="
-    
+
     detect_os
     install_system_deps
     install_python
@@ -440,10 +440,10 @@ main() {
     install_java
     install_project_deps
     verify_installations
-    
+
     log "INFO" "=== Setup completed successfully! ==="
     log "INFO" "Build logs can be found in ./build_logs/"
-    
+
     echo ""
     echo -e "${GREEN}✓ Setup completed successfully!${NC}"
     echo -e "${BLUE}Build logs can be found in ./build_logs/${NC}"

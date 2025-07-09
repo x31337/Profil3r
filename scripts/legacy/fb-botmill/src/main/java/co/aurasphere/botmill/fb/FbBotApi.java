@@ -7,10 +7,10 @@ import co.aurasphere.botmill.fb.autoreply.AutoReply;
  * The Class FbBotApi.
  */
 public class FbBotApi {
-	
+
 	/** The bot definition. */
 	private static BotDefinition botDefinition;
-	
+
 	/**
 	 * Sets the fb bot.
 	 *
@@ -19,7 +19,7 @@ public class FbBotApi {
 	public static void setFbBot(BotDefinition botDefinition) {
 		FbBotApi.botDefinition = botDefinition;
 	}
-	
+
 	/**
 	 * Reply.
 	 *

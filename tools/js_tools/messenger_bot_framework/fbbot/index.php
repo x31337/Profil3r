@@ -21,7 +21,7 @@ switch ($path) {
             'version' => '1.0.0'
         ]);
         break;
-    
+
     case '/health':
         echo json_encode([
             'status' => 'ok',
@@ -29,7 +29,7 @@ switch ($path) {
             'timestamp' => date('c')
         ]);
         break;
-    
+
     case '/info':
         echo json_encode([
             'php_version' => phpversion(),
@@ -37,7 +37,7 @@ switch ($path) {
             'environment' => $_ENV['PHP_ENV'] ?? 'development'
         ]);
         break;
-    
+
     default:
         http_response_code(404);
         echo json_encode([

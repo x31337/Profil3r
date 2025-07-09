@@ -1,4 +1,4 @@
-var find = require('array-find'),
+const find = require('array-find'),
   normalize = require('../lib/normalize.js');
 module.exports = typeCast;
 
@@ -6,7 +6,7 @@ module.exports = typeCast;
 // some messages contain `text` and other fields, and shouldn't be treated as separate type
 // examples: attachments#fallback (with url), quick_reply (with payload), sticker_id+attachments#image (sticker)
 // TODO: Clean it up
-var types = [
+const types = [
   // meta
   'delivery',
   'echo',
@@ -17,7 +17,7 @@ var types = [
   'attachments',
   'postback',
   'quick_reply',
-  'text'
+  'text',
 ];
 
 /**
@@ -28,7 +28,7 @@ var types = [
  * @param {function} callback - invoked after type casting is done
  */
 function typeCast(payload, callback) {
-  var type = find(types, function (t) {
+  const type = find(types, function (t) {
     return t in payload;
   });
 
