@@ -26,10 +26,12 @@ const {
 } = require('./modules');
 
 class AutoBuildSystem {
-constructor() {
+  constructor() {
     // Check for legacy usage and warn
     if (process.argv.includes('--legacy')) {
-      console.warn('⚠️  You are using the legacy interface which is deprecated and will be removed in future versions. Consider moving to the updated API.');
+      console.warn(
+        '⚠️  You are using the legacy interface which is deprecated and will be removed in future versions. Consider moving to the updated API.'
+      );
     }
     // Configuration setup (reused from legacy implementation)
     this.config = {

@@ -24,6 +24,7 @@ const {
   AutoFixEngine,
   DependencyManager
 } = require('./modules');
+const { generateHTMLReport, waitForService, findFiles } = require('./modules/utils');
 
 class AutoBuildSystem {
   constructor() {
@@ -561,10 +562,6 @@ class AutoBuildSystem {
     return await this.builder.buildPHPService(service, servicePath);
   }
 
-  async waitForService(service, timeout = 30000) {
-    // Proxy to serviceManager
-    return await this.serviceManager.waitForService(service, timeout);
-  }
 
   async runUnitTests() {
     // Proxy to tester
@@ -619,10 +616,16 @@ class AutoBuildSystem {
     return await this.tester.runQuickTests(affectedServices);
   }
 
-  findFiles(directory, pattern) {
-    // Proxy to builder
-    return this.builder.findFiles(directory, pattern);
+  async waitForService(service, timeout = 30000) {
+    // Proxy to utility function
+    return await waitForService(service, timeout);
   }
+
+  findFiles(directory, pattern) {
+    // Proxy to utility function
+    return findFiles(directory, pattern);
+  }
+
 
   // === REPORT GENERATION (KEPT HERE OR EXTRACT TO SEPARATE MODULE) ===
 
@@ -641,103 +644,16 @@ class AutoBuildSystem {
     };
 
     // Save report
-    const reportPath = path.join(this.config.buildDir, 'build-report.json');
-    fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+    const reportJsonPath = path.join(this.config.buildDir, 'build-report.json');
+    fs.writeFileSync(reportJsonPath, JSON.stringify(report, null, 2));
 
     // Generate HTML report
-    await this.generateHTMLReport(report);
+    const reportHtmlPath = path.join(this.config.buildDir, 'build-report.html');
+    await generateHTMLReport(report, reportHtmlPath);
 
     this.broadcast('reports-generated', { report });
   }
 
-  async generateHTMLReport(report) {
-    const htmlContent = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Profil3r Build Report</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
-        .success { background-color: #d4edda; color: #155724; }
-        .error { background-color: #f8d7da; color: #721c24; }
-        .warning { background-color: #fff3cd; color: #856404; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-    </style>
-</head>
-<body>
-    <h1>🚀 Profil3r Build Report</h1>
-    <p><strong>Generated:</strong> ${report.timestamp}</p>
-
-    <div class="status success">
-        <h2>✅ Build Statistics</h2>
-        <ul>
-            <li>Build Count: ${report.buildCount}</li>
-            <li>Test Count: ${report.testCount}</li>
-            <li>Deploy Count: ${report.deployCount}</li>
-        </ul>
-    </div>
-
-    <h2>🏗️ Service Status</h2>
-    <table>
-        <tr><th>Service</th><th>Status</th><th>Timestamp</th></tr>
-        ${Object.entries(report.services)
-          .map(
-            ([name, status]) => `
-            <tr>
-                <td>${name}</td>
-                <td class="${status.status === 'built' ? 'success' : 'error'}">${status.status}</td>
-                <td>${status.timestamp}</td>
-            </tr>
-        `
-          )
-          .join('')}
-    </table>
-
-    <h2>🔍 Health Checks</h2>
-    <table>
-        <tr><th>Service</th><th>Status</th><th>Timestamp</th></tr>
-        ${Object.entries(report.healthChecks)
-          .map(
-            ([name, health]) => `
-            <tr>
-                <td>${name}</td>
-                <td class="${health.status === 'healthy' ? 'success' : 'error'}">${health.status}</td>
-                <td>${health.timestamp}</td>
-            </tr>
-        `
-          )
-          .join('')}
-    </table>
-
-    ${
-      report.errors.length > 0
-        ? `
-    <h2>❌ Errors</h2>
-    <ul>
-        ${report.errors
-          .map(
-            error => `
-            <li class="error">
-                <strong>${error.type}:</strong> ${error.message}
-                <em>(${error.timestamp})</em>
-            </li>
-        `
-          )
-          .join('')}
-    </ul>
-    `
-        : ''
-    }
-
-</body>
-</html>`;
-
-    const reportPath = path.join(this.config.buildDir, 'build-report.html');
-    fs.writeFileSync(reportPath, htmlContent);
-  }
 
   // === LEGACY METHODS FOR BACKWARD COMPATIBILITY ===
 

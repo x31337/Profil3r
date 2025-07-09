@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync, spawn } = require('child_process');
 const axios = require('axios');
+const { findFiles } = require('./utils');
 
 class Builder {
   constructor(config, eventBus) {
@@ -137,7 +138,7 @@ class Builder {
   async buildPythonService(service, servicePath) {
     console.log(`🐍 Building ${service.name}...`);
 
-    const pyFiles = this.findFiles(servicePath, '*.py');
+    const pyFiles = findFiles(servicePath, '*.py');
     for (const file of pyFiles) {
       try {
         execSync(`python3 -m py_compile "${file}"`, { stdio: 'inherit' });
@@ -155,7 +156,7 @@ class Builder {
   async buildPHPService(service, servicePath) {
     console.log(`🐘 Building ${service.name}...`);
 
-    const phpFiles = this.findFiles(servicePath, '*.php');
+    const phpFiles = findFiles(servicePath, '*.php');
     for (const file of phpFiles) {
       try {
         execSync(`php -l "${file}"`, { stdio: 'inherit' });
@@ -181,23 +182,6 @@ class Builder {
     }
   }
 
-  findFiles(directory, pattern) {
-    const files = [];
-    const items = fs.readdirSync(directory);
-
-    for (const item of items) {
-      const fullPath = path.join(directory, item);
-      const stat = fs.statSync(fullPath);
-
-      if (stat.isDirectory()) {
-        files.push(...this.findFiles(fullPath, pattern));
-      } else if (item.match(pattern.replace('*', '.*'))) {
-        files.push(fullPath);
-      }
-    }
-
-    return files;
-  }
 
   stopAllBuilds() {
     Object.values(this.buildProcesses).forEach(process => {

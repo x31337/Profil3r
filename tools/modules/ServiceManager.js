@@ -2,6 +2,7 @@ const { spawn } = require('child_process');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const { waitForService } = require('./utils');
 
 class ServiceManager {
   constructor(config, eventBus) {
@@ -69,7 +70,7 @@ class ServiceManager {
 
       // Wait for service to be ready
       if (service.port) {
-        await this.waitForService(service);
+        await waitForService(service);
       }
 
       this.services[service.name].status = 'running';
@@ -228,27 +229,6 @@ class ServiceManager {
     });
   }
 
-  async waitForService(service, timeout = 30000) {
-    const startTime = Date.now();
-
-    while (Date.now() - startTime < timeout) {
-      try {
-        const response = await axios.get(`http://localhost:${service.port}`, {
-          timeout: 1000
-        });
-
-        if (response.status === 200) {
-          console.log(`✅ ${service.name} is ready on port ${service.port}`);
-          return;
-        }
-      } catch (error) {
-        // Service not ready yet, wait and retry
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-    }
-
-    throw new Error(`Service ${service.name} failed to start within timeout`);
-  }
 
   async performHealthCheck(service) {
     try {
