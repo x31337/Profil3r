@@ -22,7 +22,7 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "copyfiles": "^1.0.0",
+    "copyfiles": "^2.4.1",
     "d3": "^7.9.0"
   }
 }
