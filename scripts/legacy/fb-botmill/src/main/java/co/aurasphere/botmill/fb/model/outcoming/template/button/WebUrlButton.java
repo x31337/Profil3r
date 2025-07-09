@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,7 +36,7 @@ import com.google.gson.annotations.SerializedName;
  * The WebUrlButton Class/Object.
  *
  * @author Alvin Reyes
- * 
+ *
  */
 public class WebUrlButton extends Button {
 
@@ -71,7 +71,7 @@ public class WebUrlButton extends Button {
 	 * {@link ButtonFactory}. It checks that the title is not null, not empty
 	 * and shorter than 20 characters and that the URL is not empty. The button
 	 * type is set to {@link ButtonType#WEB_URL}.
-	 * 
+	 *
 	 * @param title
 	 *            the button title. It can't be null or empty and has to be
 	 *            shorter than 20 characters.
@@ -142,7 +142,7 @@ public class WebUrlButton extends Button {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.template.button.Button#hashCode
 	 * ()
@@ -165,7 +165,7 @@ public class WebUrlButton extends Button {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.template.button.Button#equals
 	 * (java.lang.Object)
@@ -203,7 +203,7 @@ public class WebUrlButton extends Button {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.template.button.Button#toString
 	 * ()

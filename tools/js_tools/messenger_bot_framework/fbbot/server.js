@@ -12,7 +12,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({
     message: 'Hello from Node.js Express!',
-    service: 'profil3r-node', 
+    service: 'profil3r-node',
     version: '1.0.0'
   });
 });

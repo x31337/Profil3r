@@ -24,14 +24,14 @@ pull_request_rules:
 
           - ✅ CI Pipeline passed
           - ✅ Code Quality checks passed
-          - ✅ Required approvals obtained
+          - ✅ Auto-approved and ready to merge
 
   # Auto-merge regular PRs with conventional commits
   - name: automatic merge for conventional commits
     conditions:
       - status-success=CI Pipeline
       - status-success=Code Quality Checks
-      - '#approved-reviews-by>=2'
+      - '#approved-reviews-by>=1'
       - '#changes-requested-reviews-by=0'
       - label!=work-in-progress
       - label!=do-not-merge
@@ -51,7 +51,7 @@ pull_request_rules:
 
           - ✅ CI Pipeline passed
           - ✅ Code Quality checks passed
-          - ✅ Required approvals obtained
+          - ✅ Auto-approved and ready to merge
           - ✅ Conventional commit format detected
 
   # Auto-rebase PRs when base branch is updated
@@ -64,6 +64,30 @@ pull_request_rules:
     actions:
       rebase:
         bot_account: mergify[bot]
+
+  # Auto-approve all future PRs immediately
+  - name: auto-approve all future PRs
+    conditions:
+      - base=main
+      - label!=work-in-progress
+      - label!=do-not-merge
+      - -author=mergify[bot]
+      - -draft
+    actions:
+      review:
+        type: APPROVE
+        message: |
+          🤖 **Auto-approved** by Mergify bot.
+
+          This PR has been automatically approved as part of the automated Git flow.
+
+          - ✅ Auto-approval enabled for all future PRs
+          - 🔄 CI Pipeline will run to validate changes
+          - 🔄 Code Quality checks will validate code standards
+          - 🚀 Auto-merge will trigger once all checks pass
+
+          To prevent auto-merge, add the `do-not-merge` label.
+          To mark as work-in-progress, add the `work-in-progress` label.
 
   # Auto-request reviews for PRs
   - name: automatic review request

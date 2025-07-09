@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,45 +34,45 @@ import co.aurasphere.botmill.fb.model.outcoming.template.button.Button;
 
 /**
  * The Class PersistentMenu.
- * 
+ *
  * The persistent menu object holds all the objects necessary to create
  * a persistent menu. This includes Call To Action buttons and the ability
  * to disable the composer input.
  */
 public class PersistentMenu implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The locale. */
 	private String locale;
-	
+
 	/** The composer input disabled. */
 	@SerializedName("composer_input_disabled")
 	private boolean composerInputDisabled;
-	
+
 	/** The call to actions. */
 	@SerializedName("call_to_actions")
 	private List<Button> callToActions;
-	
+
 	/** The type. */
 	private String type;
-	
+
 	/** The title. */
 	private String title;
-	
+
 	/** The url. */
 	private String url;
-	
+
 	/** The web view height ratio. */
 	@SerializedName("webview_height_ratio")
 	private String webViewHeightRatio;
-	
+
 	/**
 	 * Instantiates a new persistent menu.
 	 */
 	public PersistentMenu() {}
-	
+
 	/**
 	 * Instantiates a new persistent menu.
 	 *
@@ -84,7 +84,7 @@ public class PersistentMenu implements Serializable {
 		this.composerInputDisabled = composerInputDisabled;
 		this.callToActions = new ArrayList<Button>();
 	}
-	
+
 	/**
 	 * Instantiates a new persistent menu.
 	 *
@@ -95,7 +95,7 @@ public class PersistentMenu implements Serializable {
 		this.locale = locale;
 		this.callToActions = callToActions;
 	}
-	
+
 	/**
 	 * Instantiates a new persistent menu.
 	 *
@@ -108,8 +108,8 @@ public class PersistentMenu implements Serializable {
 		this.locale = locale;
 		this.callToActions = callToActions;
 	}
-	
-	
+
+
 	/**
 	 * Gets the locale.
 	 *
@@ -118,7 +118,7 @@ public class PersistentMenu implements Serializable {
 	public String getLocale() {
 		return locale;
 	}
-	
+
 	/**
 	 * Sets the locale.
 	 *
@@ -127,7 +127,7 @@ public class PersistentMenu implements Serializable {
 	public void setLocale(String locale) {
 		this.locale = locale;
 	}
-	
+
 	/**
 	 * Gets the composer input disabled.
 	 *
@@ -136,7 +136,7 @@ public class PersistentMenu implements Serializable {
 	public boolean getComposerInputDisabled() {
 		return composerInputDisabled;
 	}
-	
+
 	/**
 	 * Sets the composer input disabled.
 	 *
@@ -145,7 +145,7 @@ public class PersistentMenu implements Serializable {
 	public void setComposerInputDisabled(boolean composerInputDisabled) {
 		this.composerInputDisabled = composerInputDisabled;
 	}
-	
+
 	/**
 	 * Gets the call to actions.
 	 *
@@ -154,7 +154,7 @@ public class PersistentMenu implements Serializable {
 	public List<Button> getCallToActions() {
 		return callToActions;
 	}
-	
+
 	/**
 	 * Sets the call to actions.
 	 *
@@ -163,7 +163,7 @@ public class PersistentMenu implements Serializable {
 	public void setCallToActions(List<Button> callToActions) {
 		this.callToActions = callToActions;
 	}
-	
+
 	/**
 	 * Adds the call to action.
 	 *
@@ -172,7 +172,7 @@ public class PersistentMenu implements Serializable {
 	public void addCallToAction(Button callToAction) {
 		this.callToActions.add(callToAction);
 	}
-	
+
 	/**
 	 * Gets the type.
 	 *
@@ -181,7 +181,7 @@ public class PersistentMenu implements Serializable {
 	public String getType() {
 		return type;
 	}
-	
+
 	/**
 	 * Sets the type.
 	 *
@@ -190,7 +190,7 @@ public class PersistentMenu implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	/**
 	 * Gets the title.
 	 *
@@ -199,7 +199,7 @@ public class PersistentMenu implements Serializable {
 	public String getTitle() {
 		return title;
 	}
-	
+
 	/**
 	 * Sets the title.
 	 *
@@ -208,7 +208,7 @@ public class PersistentMenu implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	/**
 	 * Gets the url.
 	 *
@@ -217,7 +217,7 @@ public class PersistentMenu implements Serializable {
 	public String getUrl() {
 		return url;
 	}
-	
+
 	/**
 	 * Sets the url.
 	 *
@@ -226,7 +226,7 @@ public class PersistentMenu implements Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	/**
 	 * Gets the web view height ratio.
 	 *
@@ -235,7 +235,7 @@ public class PersistentMenu implements Serializable {
 	public String getWebViewHeightRatio() {
 		return webViewHeightRatio;
 	}
-	
+
 	/**
 	 * Sets the web view height ratio.
 	 *
@@ -244,7 +244,7 @@ public class PersistentMenu implements Serializable {
 	public void setWebViewHeightRatio(String webViewHeightRatio) {
 		this.webViewHeightRatio = webViewHeightRatio;
 	}
-	
-	
-	
+
+
+
 }

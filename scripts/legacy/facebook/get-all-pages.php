@@ -61,7 +61,7 @@ $postFields = [
 	curl_setopt ($ch, CURLOPT_URL, "https://graph.facebook.com/graphql");
 	$response = curl_exec($ch);
 	if(false === $response)
-	{ 
+	{
 		if(curl_errno($ch))
 	{
 		echo 'Curl error: ' . curl_error($ch);

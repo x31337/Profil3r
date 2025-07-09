@@ -220,17 +220,13 @@ The suite generates comprehensive reports in multiple formats:
 
 ### Allowed Uses
 
-✅ Testing your own accounts  
-✅ Authorized security research  
-✅ Educational purposes  
-✅ Compliance testing with permission
+✅ Testing your own accounts ✅ Authorized security research ✅ Educational purposes ✅ Compliance
+testing with permission
 
 ### Prohibited Uses
 
-❌ Unauthorized access to accounts  
-❌ Harassment or abuse  
-❌ Violating platform Terms of Service  
-❌ Any illegal activities
+❌ Unauthorized access to accounts ❌ Harassment or abuse ❌ Violating platform Terms of Service ❌
+Any illegal activities
 
 Users are responsible for:
 

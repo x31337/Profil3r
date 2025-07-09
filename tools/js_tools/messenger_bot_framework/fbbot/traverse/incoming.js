@@ -1,4 +1,4 @@
-var messaging = require('../lib/messaging.js'),
+const messaging = require('../lib/messaging.js'),
   normalize = require('../lib/normalize.js');
 module.exports = {
   // list of receive steps
@@ -26,9 +26,9 @@ module.exports = {
  */
 function linkParent(original, branch, parentPayload, nextPayload) {
   // get proper name
-  var normalized = normalize(branch);
+  const normalized = normalize(branch);
 
-  var result = original(branch, parentPayload, nextPayload);
+  const result = original(branch, parentPayload, nextPayload);
 
   // add normalized handle reference
   // skip if it's empty string
@@ -54,7 +54,7 @@ function linkParent(original, branch, parentPayload, nextPayload) {
  */
 function middleware(branch, payload, callback) {
   // get proper name
-  var normalized = normalize(branch);
+  const normalized = normalize(branch);
 
   this.logger.debug({
     message: 'Running middleware for incoming payload',
@@ -69,8 +69,8 @@ function middleware(branch, payload, callback) {
   this._run(
     normalized,
     payload,
-    function (error, resolvedPayload) {
-      var normalizeType;
+    function(error, resolvedPayload) {
+      let normalizeType;
 
       if (payload.type) {
         normalizeType = normalize(payload.type);
@@ -97,7 +97,7 @@ function middleware(branch, payload, callback) {
  */
 function emitter(event, payload) {
   // get proper name
-  var normalizeType,
+  let normalizeType,
     normalized = normalize(event);
 
   // notify listeners

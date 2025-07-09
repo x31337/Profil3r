@@ -40,4 +40,3 @@ ENTRYPOINT ["python", "main.py"]
 LABEL Description="Telegram-Facebook-Bot that scrapes content from Facebook and posts to Telegram" \
       Version="1.0" \
       Maintainer="Your Name <youremail@example.com>"
-

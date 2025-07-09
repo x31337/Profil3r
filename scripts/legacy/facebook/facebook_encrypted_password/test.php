@@ -54,12 +54,12 @@ function encrypt($password, $publicKey, $keyId)
 		$iv = random_bytes(12);
 		$tag= '';
 		$rsa = new RSA();
-		
-		$rsa->loadKey($publicKey); 
+
+		$rsa->loadKey($publicKey);
 		$rsa->setSignatureMode(RSA::SIGNATURE_PKCS1);
 		$enc_session_key = $rsa->encrypt($session_key);
         $encrypted = openssl_encrypt( $password,'aes-256-gcm',$session_key,OPENSSL_RAW_DATA,$iv,$tag,intVal($time));
-		
+
 		return "#PWD_FB4A:2:".$time.":".base64_encode(("\x01" . pack('n', intval($keyId)) .$iv. pack('n',strlen($enc_session_key) ) . $enc_session_key . $tag . $encrypted));
 }
 

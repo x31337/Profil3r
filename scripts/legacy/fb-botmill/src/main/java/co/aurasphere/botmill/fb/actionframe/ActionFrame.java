@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,10 +33,10 @@ import co.aurasphere.botmill.fb.model.incoming.MessageEnvelope;
 /**
  * Class that represents a {@link FbBotMillEvent} and the {@link AutoReply} to
  * it.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
- * 
+ *
  */
 public class ActionFrame {
 
@@ -157,7 +157,7 @@ public class ActionFrame {
 
 	/**
 	 * Executes multiple replies when multiple autoreply is set.
-	 * 
+	 *
 	 * @param envelope
 	 *            the incoming message.
 	 * @return true, if the event has been triggered.
@@ -185,7 +185,7 @@ public class ActionFrame {
 	 * Convenience method executed before the reply is sent to the user. Default
 	 * implementation does nothing, but you can override it with your desired
 	 * behavior.
-	 * 
+	 *
 	 * @param envelope
 	 *            the incoming message.
 	 */
@@ -196,7 +196,7 @@ public class ActionFrame {
 	 * Convenience method executed after the reply is sent to the user. Default
 	 * implementation does nothing, but you can override it with your desired
 	 * behavior.
-	 * 
+	 *
 	 * @param envelope
 	 *            the incoming message.
 	 */
@@ -205,7 +205,7 @@ public class ActionFrame {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -219,7 +219,7 @@ public class ActionFrame {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -246,7 +246,7 @@ public class ActionFrame {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

@@ -1,4 +1,4 @@
-var util = require('util'),
+const util = require('util'),
   events = require('events'),
   typeOf = require('precise-typeof'),
   find = require('array-find'),
@@ -47,7 +47,7 @@ function Traverse(steps, options) {
  * @param {object} payload - branch's data object
  * @param {function} callback - invoked after middleware is done
  */
-Traverse.prototype.middlewarePassthru = function (branch, payload, callback) {
+Traverse.prototype.middlewarePassthru = function(branch, payload, callback) {
   callback(null, payload);
 };
 
@@ -58,7 +58,7 @@ Traverse.prototype.middlewarePassthru = function (branch, payload, callback) {
  * @param {object|array} payload - initial payload object
  * @param {function} callback - invoked upon error or when all entries were processed
  */
-Traverse.prototype.traverse = function (branch, payload, callback) {
+Traverse.prototype.traverse = function(branch, payload, callback) {
   // check for optional argument
   if (typeOf(branch) == 'object') {
     callback = payload;
@@ -94,8 +94,8 @@ Traverse.prototype.traverse = function (branch, payload, callback) {
   this.middleware(
     this.prefixedBranch(branch),
     payload,
-    function (error, resolvedPayload) {
-      var nextStep = this.steps[branch],
+    function(error, resolvedPayload) {
+      let nextStep = this.steps[branch],
         nextStepPayload;
 
       if (error) {
@@ -152,7 +152,7 @@ Traverse.prototype.traverse = function (branch, payload, callback) {
 
       // pick first matching, out of multi-value
       if (typeOf(nextStep) == 'array') {
-        nextStep = find(nextStep, function (key) {
+        nextStep = find(nextStep, function(key) {
           return key in resolvedPayload;
         });
       }
@@ -181,7 +181,7 @@ Traverse.prototype.traverse = function (branch, payload, callback) {
         this,
         nextStep,
         nextStepPayload,
-        function (err, nextStepResolvedPayload) {
+        function(err, nextStepResolvedPayload) {
           if (err) {
             callback(err, nextStepResolvedPayload);
             return;
@@ -204,8 +204,8 @@ Traverse.prototype.traverse = function (branch, payload, callback) {
  * @param   {mixed} nextPayload - next step payload object
  * @returns {mixed} - augmented next step payload object
  */
-Traverse.prototype.linkParent = function (branch, parentPayload, nextPayload) {
-  var parent = { parent: parentPayload };
+Traverse.prototype.linkParent = function(branch, parentPayload, nextPayload) {
+  const parent = { parent: parentPayload };
 
   // keep "friendly" reference to the parent object
   parent[branch] = parentPayload;
@@ -223,6 +223,6 @@ Traverse.prototype.linkParent = function (branch, parentPayload, nextPayload) {
  * @param   {string} branch - handle of the branch
  * @returns {string} - reslved branch name
  */
-Traverse.prototype.prefixedBranch = function (branch) {
+Traverse.prototype.prefixedBranch = function(branch) {
   return [this.prefix, branch].join('.').replace(/^\.+|\.+$/g, '');
 };

@@ -19,7 +19,7 @@ public class ReferralEvent extends FbBotMillBean implements FbBotMillEvent {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see co.aurasphere.botmill.fb.bean.FbBotMillBean#toString()
 	 */
 	@Override
