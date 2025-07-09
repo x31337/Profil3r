@@ -1,0 +1,11 @@
+# Security-related dependencies
+python-dotenv>=0.19.0
+
+# Security scanning tools
+pip-audit>=2.6.0
+bandit[toml]>=1.7.5
+safety>=3.0.0
+
+# Additional security tools
+semgrep>=1.45.0
+cyclonedx-bom>=4.0.0

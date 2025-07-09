@@ -20,8 +20,49 @@ updates:
       - 'python'
     target-branch: 'main'
     rebase-strategy: 'auto'
-    # Group minor and patch updates together
+    # Security updates get priority
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
+      minor-and-patch:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+
+  # Enable version updates for npm (root directory)
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+    open-pull-requests-limit: 10
+    reviewers:
+      - 'profil3r-maintainers'
+    assignees:
+      - 'profil3r-maintainers'
+    commit-message:
+      prefix: 'deps'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'javascript'
+      - 'root'
+    target-branch: 'main'
+    rebase-strategy: 'auto'
+    groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
           - '*'
@@ -56,6 +97,12 @@ updates:
       - dependency-name: 'cypress'
         update-types: ['version-update:semver-major']
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
           - '*'
@@ -85,6 +132,12 @@ updates:
     target-branch: 'main'
     rebase-strategy: 'auto'
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
           - '*'
@@ -114,6 +167,12 @@ updates:
     target-branch: 'main'
     rebase-strategy: 'auto'
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
           - '*'
@@ -143,6 +202,12 @@ updates:
     target-branch: 'main'
     rebase-strategy: 'auto'
     groups:
+      security-updates:
+        patterns:
+          - '*'
+        update-types:
+          - 'security'
+        priority: 10
       minor-and-patch:
         patterns:
           - '*'
