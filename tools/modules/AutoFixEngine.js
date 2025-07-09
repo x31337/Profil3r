@@ -61,27 +61,27 @@ class AutoFixEngine {
 
   shouldSkipFile(filePath) {
     const skipPatterns = [
-      /\.min\.js$/,          // Minified JavaScript files
-      /\.min\.css$/,         // Minified CSS files
-      /\.bundle\.js$/,       // Bundle files
-      /\.bundle\.css$/,      // Bundle CSS files
-      /\/vendor\//,          // Third-party vendor files
-      /\/node_modules\//,    // Node modules
-      /\/dist\//,            // Distribution files
-      /\/build\//,           // Build files
-      /\/coverage\//,        // Coverage reports
-      /\/\.git\//,           // Git files
-      /\/\.nyc_output\//,    // NYC coverage files
-      /\/temp\//,            // Temporary files
-      /\/tmp\//,             // Temporary files
-      /\.d3\.(min\.)?js$/,   // D3.js files (often minified)
+      /\.min\.js$/, // Minified JavaScript files
+      /\.min\.css$/, // Minified CSS files
+      /\.bundle\.js$/, // Bundle files
+      /\.bundle\.css$/, // Bundle CSS files
+      /\/vendor\//, // Third-party vendor files
+      /\/node_modules\//, // Node modules
+      /\/dist\//, // Distribution files
+      /\/build\//, // Build files
+      /\/coverage\//, // Coverage reports
+      /\/\.git\//, // Git files
+      /\/\.nyc_output\//, // NYC coverage files
+      /\/temp\//, // Temporary files
+      /\/tmp\//, // Temporary files
+      /\.d3\.(min\.)?js$/, // D3.js files (often minified)
       /\.jquery\.(min\.)?js$/, // jQuery files (often minified)
       /\.bootstrap\.(min\.)?js$/, // Bootstrap files (often minified)
-      /\.lock$/,             // Lock files
-      /\.log$/,              // Log files
+      /\.lock$/, // Lock files
+      /\.log$/, // Log files
     ];
 
-    return skipPatterns.some(pattern => pattern.test(filePath));
+    return skipPatterns.some((pattern) => pattern.test(filePath));
   }
 
   async autoFixIssues() {

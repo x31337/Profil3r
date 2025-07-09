@@ -106,7 +106,7 @@ class EventBus extends EventEmitter {
   broadcastToWebSocket(wss, eventType, data) {
     if (wss && wss.clients) {
       const message = JSON.stringify({ type: eventType, data });
-      wss.clients.forEach((client) => {
+      wss.clients.forEach(client => {
         if (client.readyState === client.OPEN) {
           client.send(message);
         }

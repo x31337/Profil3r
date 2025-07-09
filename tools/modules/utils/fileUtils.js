@@ -16,8 +16,28 @@ function findFiles(directory, pattern) {
     const stat = fs.statSync(fullPath);
 
     if (stat.isDirectory()) {
+      // Skip cache directories and other unwanted directories
+      if (
+        item === '__pycache__' ||
+        item === '.git' ||
+        item === 'node_modules' ||
+        item === '.pytest_cache'
+      ) {
+        continue;
+      }
       files.push(...findFiles(fullPath, pattern));
     } else if (item.match(pattern.replace('*', '.*'))) {
+      // Skip cache files and other unwanted files
+      if (
+        item.endsWith('.pyc') ||
+        item.endsWith('.pyo') ||
+        item.endsWith('.pyd') ||
+        item.includes('.cpython-') ||
+        item.startsWith('.') ||
+        item.endsWith('.log')
+      ) {
+        continue;
+      }
       files.push(fullPath);
     }
   }
@@ -26,5 +46,5 @@ function findFiles(directory, pattern) {
 }
 
 module.exports = {
-  findFiles
+  findFiles,
 };
