@@ -22,4 +22,3 @@ test: ## Run tests for all components
 deploy: ## Deploy application
 	@echo "Deploying applications..."
 	@# Add deploy commands here
-

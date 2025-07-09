@@ -10,6 +10,7 @@ from typing import Any, AsyncGenerator, Dict
 
 import httpx
 import pytest
+import pytest_asyncio
 
 import docker
 
@@ -62,7 +63,7 @@ def docker_client():
     return docker.from_env()
 
 
-@pytest.fixture(scope="session")
+@pytest_asyncio.fixture(scope="session")
 async def docker_compose_services(docker_client):
     """
     Start docker-compose services and wait for them to be healthy.
@@ -126,7 +127,7 @@ async def check_service_health(service_config: Dict[str, Any]) -> bool:
         return False
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def http_client() -> AsyncGenerator[httpx.AsyncClient, None]:
     """HTTP client for making requests to services."""
     async with httpx.AsyncClient(timeout=TEST_CONFIG["timeouts"]["request"]) as client:

@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.list.TopElementStyle;
  * @see <a href=
  *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template"
  *      > Facebook's Messenger Platform List Template Documentation</a>
- * 
+ *
  */
 public class ListTemplateBuilder extends TemplateBaseBuilder {
 
@@ -51,11 +51,11 @@ public class ListTemplateBuilder extends TemplateBaseBuilder {
 
 	/**
 	 * Default constructor. Creates a builder for a List Template.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/list-template"
 	 *      > Facebook's Messenger Platform List Template Documentation</a>
-	 * 
+	 *
 	 */
 	ListTemplateBuilder() {
 		this.payload = new ListTemplatePayload();
@@ -65,7 +65,7 @@ public class ListTemplateBuilder extends TemplateBaseBuilder {
 
 	/**
 	 * Sets/Adds a {@link TopElementStyle} to the list template payload.
-	 * 
+	 *
 	 * @param topElementStyle
 	 *            the top element style
 	 * @return this builder
@@ -78,7 +78,7 @@ public class ListTemplateBuilder extends TemplateBaseBuilder {
 
 	/**
 	 * Adds a {@link ListTemplateElement} to this template.
-	 * 
+	 *
 	 * @param title
 	 *            the title of the element to add.
 	 * @return a builder for the element.
@@ -89,7 +89,7 @@ public class ListTemplateBuilder extends TemplateBaseBuilder {
 
 	/**
 	 * Adds a {@link ListTemplateElement} to this template.
-	 * 
+	 *
 	 * @param element
 	 *            the element to add.
 	 * @return this builder.
@@ -153,7 +153,7 @@ public class ListTemplateBuilder extends TemplateBaseBuilder {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.model.outcoming.factory.TemplateBaseBuilder#
 	 * toString()

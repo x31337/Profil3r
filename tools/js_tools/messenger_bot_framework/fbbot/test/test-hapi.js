@@ -21,12 +21,12 @@ tape('hapi', function (test) {
       server.route({
         method: 'GET',
         path: common.server.endpoint,
-        handler: fbbot.requestHandler
+        handler: fbbot.requestHandler,
       });
       server.route({
         method: 'POST',
         path: common.server.endpoint,
-        handler: fbbot.requestHandler
+        handler: fbbot.requestHandler,
       });
 
       // start the server
@@ -56,12 +56,12 @@ tape('hapi - handshake - success', function (t) {
   server.route({
     method: 'GET',
     path: common.server.endpoint,
-    handler: fbbot.requestHandler
+    handler: fbbot.requestHandler,
   });
   server.route({
     method: 'POST',
     path: common.server.endpoint,
-    handler: fbbot.requestHandler
+    handler: fbbot.requestHandler,
   });
 
   // start the server
@@ -94,12 +94,12 @@ tape('hapi - handshake - failed', function (t) {
   server.route({
     method: 'GET',
     path: common.server.endpoint,
-    handler: fbbot.requestHandler
+    handler: fbbot.requestHandler,
   });
   server.route({
     method: 'POST',
     path: common.server.endpoint,
-    handler: fbbot.requestHandler
+    handler: fbbot.requestHandler,
   });
 
   // start the server

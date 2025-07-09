@@ -40,4 +40,9 @@ def info():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # Get configuration from environment variables
+    debug_mode = os.environ.get("FLASK_DEBUG", "false").lower() == "true"
+    host = os.environ.get("FLASK_HOST", "127.0.0.1")  # Default to localhost for security
+    port = int(os.environ.get("FLASK_PORT", "5000"))
+    
+    app.run(host=host, port=port, debug=debug_mode)

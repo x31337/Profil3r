@@ -2,17 +2,17 @@
 BaseFbBotMillNetworkTest * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,7 +36,7 @@ import co.aurasphere.botmill.fb.support.FbBotMillMockMediator;
 /**
  * Base class for testing every FbBotMill component that requires Facebook
  * communication.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
  */
@@ -131,14 +131,14 @@ public abstract class BaseFbBotMillNetworkTest extends FbBot {
 			monitor = new FbBotMillTestMonitor();
 			FbBotMillContext.getInstance().registerMonitor(monitor);
 		}
-		
+
 	}
 
 	/**
 	 * Main test method. It checks whether the tests are being globally or
 	 * locally skipped and if not it then delegates the current class
 	 * implementation of the method {@link #testImplementation()}.
-	 * 
+	 *
 	 * @throws Exception
 	 *             a generic exception.
 	 */
@@ -151,14 +151,14 @@ public abstract class BaseFbBotMillNetworkTest extends FbBot {
 
 	/**
 	 * Method which defines if this test should be skipped.
-	 * 
+	 *
 	 * @return true if this test should be skipped, false otherwise.
 	 */
 	protected abstract boolean skipTest();
 
 	/**
 	 * Method which defines the test logic.
-	 * 
+	 *
 	 * @throws Exception
 	 *             a generic exception.
 	 */
@@ -166,7 +166,7 @@ public abstract class BaseFbBotMillNetworkTest extends FbBot {
 
 	/**
 	 * Utility method used to check if a String is null or empty.
-	 * 
+	 *
 	 * @param string
 	 *            the String to check.
 	 * @return true if the String is null or empty, false otherwise.
@@ -177,7 +177,7 @@ public abstract class BaseFbBotMillNetworkTest extends FbBot {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see co.aurasphere.botmill.fb.AbstractFbBot#toString()
 	 */
 	@Override
