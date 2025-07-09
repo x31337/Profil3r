@@ -13,8 +13,8 @@ services:
       - .:/app
       - python_cache:/app/__pycache__
     ports:
-      - "5001:5000"
-    command: ["python", "-m", "flask", "run", "--host=0.0.0.0", "--debug"]
+      - '5001:5000'
+    command: ['python', '-m', 'flask', 'run', '--host=0.0.0.0', '--debug']
 
   profil3r-node:
     build:
@@ -27,8 +27,8 @@ services:
       - .:/app
       - node_modules:/app/node_modules
     ports:
-      - "3001:3000"
-    command: ["npm", "run", "dev"]
+      - '3001:3000'
+    command: ['npm', 'run', 'dev']
 
   profil3r-php:
     build:
@@ -40,7 +40,7 @@ services:
     volumes:
       - .:/var/www/html
     ports:
-      - "80:80"
+      - '80:80'
 
   profil3r-ruby:
     build:
@@ -53,8 +53,8 @@ services:
       - .:/app
       - ruby_gems:/app/vendor
     ports:
-      - "4567:4567"
-    command: ["ruby", "app.rb", "-o", "0.0.0.0"]
+      - '4567:4567'
+    command: ['ruby', 'app.rb', '-o', '0.0.0.0']
 
   profil3r-core:
     build:
@@ -66,7 +66,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8001:8000"
+      - '8001:8000'
 
 volumes:
   python_cache:

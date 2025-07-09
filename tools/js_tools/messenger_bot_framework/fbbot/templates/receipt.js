@@ -1,4 +1,4 @@
-var merge = require('deeply');
+const merge = require('deeply');
 
 module.exports = renderReceipt;
 
@@ -11,7 +11,7 @@ module.exports = renderReceipt;
  * @returns {object} - receipt template message payload
  */
 function renderReceipt(receipt) {
-  var message,
+  let message,
     limit = 100;
 
   if (receipt.elements.length > limit) {

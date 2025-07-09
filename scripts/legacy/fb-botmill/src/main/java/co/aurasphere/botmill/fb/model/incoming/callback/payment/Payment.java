@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,9 +41,9 @@ import com.google.gson.annotations.SerializedName;
  * <br>
  * You must subscribe to this callback by selecting the messaging_payments field
  * when setting up your webhook.
- * 
+ *
  * <h1>Stripe/Paypal</h1>
- * 
+ *
  * After user click on pay, user will be charged directly and the payment will
  * be send to your Stripe/Paypal account. This webhook event will be called once
  * the process succeed. All the requested user information that user entered in
@@ -57,9 +57,9 @@ import com.google.gson.annotations.SerializedName;
  * to <a href=
  * "https://developers.facebook.com/docs/messenger-platform/complete-guide/payments#test_payments"
  * >How to Test Payment</a> for details. <br>
- * 
+ *
  * <h1>Tokenized Payment</h1>
- * 
+ *
  * If you are using tokenized payment, when user click on pay, we will send you
  * a single-use Discover virtual card provisioned by PayPal. The card credential
  * will be encrypted by the public key you provided in previous steps. You can
@@ -83,7 +83,7 @@ import com.google.gson.annotations.SerializedName;
  * @see <a href=
  *      "https://developers.facebook.com/docs/messenger-platform/send-api-reference/buy-button"
  *      >Facebook's Messenger Platform Buy Button Documentation</a>
- * 
+ *
  */
 public class Payment implements Serializable {
 
@@ -118,7 +118,7 @@ public class Payment implements Serializable {
 	 * The option_id of the selected shipping option sent via the <a href=
 	 * "https://developers.facebook.com/docs/messenger-platform/webhook-reference/checkout-update"
 	 * >checkout update callback</a>. Only applicable for flexible payments.
-	 * 
+	 *
 	 * @see <a href=
 	 *      "https://developers.facebook.com/docs/messenger-platform/webhook-reference/checkout-update"
 	 *      >Facebook's Messenger Platform Checkout Update Callback
@@ -224,7 +224,7 @@ public class Payment implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -249,7 +249,7 @@ public class Payment implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -288,7 +288,7 @@ public class Payment implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

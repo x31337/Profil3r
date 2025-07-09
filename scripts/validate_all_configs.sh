@@ -62,7 +62,7 @@ echo -e "${YELLOW}🔧 Validating configurations...${NC}"
 VALIDATION_FAILED=false
 for config_file in "${VALID_FILES[@]}"; do
     echo -e "${YELLOW}Validating $config_file...${NC}"
-    
+
     if python3 scripts/validate_config.py "$config_file" --quiet; then
         echo -e "${GREEN}✅ $config_file is valid${NC}"
     else

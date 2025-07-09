@@ -1,4 +1,4 @@
-var payloads = {};
+const payloads = {};
 
 module.exports = {
   perRequest: perRequest,
@@ -18,7 +18,7 @@ function perRequest(fbbot, payloadType, request, t, callback) {
   payloads[payloadType] = {};
 
   // use middleware
-  fbbot.use(function (payload, cb) {
+  fbbot.use(function(payload, cb) {
     t.deepEquals(
       payload,
       request.body,
@@ -28,8 +28,8 @@ function perRequest(fbbot, payloadType, request, t, callback) {
   });
 
   // [payloadType] middleware
-  fbbot.use(payloadType, function (payload, cb) {
-    var expected = payloads[payloadType]['middleware'].shift();
+  fbbot.use(payloadType, function(payload, cb) {
+    const expected = payloads[payloadType]['middleware'].shift();
 
     t.deepEquals(
       payload,
@@ -51,8 +51,8 @@ function perRequest(fbbot, payloadType, request, t, callback) {
   });
 
   // [payloadType] event
-  fbbot.on(payloadType, function (payload, send) {
-    var expected = payloads[payloadType]['event'].shift();
+  fbbot.on(payloadType, function(payload, send) {
+    const expected = payloads[payloadType]['event'].shift();
 
     t.equal(
       typeof send,
@@ -101,11 +101,11 @@ function perRequest(fbbot, payloadType, request, t, callback) {
     }
   });
 
-  fbbot.on(payloadType + '.non-existent-type', function () {
+  fbbot.on(payloadType + '.non-existent-type', function() {
     t.fail('should not receive anything for non existent type');
   });
 
-  fbbot.on('end', function (error) {
+  fbbot.on('end', function(error) {
     t.error(error, 'should finish without errors');
     callback(null);
   });
@@ -131,8 +131,8 @@ function perMessage(fbbot, payloadType, envelop, t) {
     if (!payloads[payloadType][envelop.message.type]) {
       payloads[payloadType][envelop.message.type] = [];
 
-      fbbot.on('message.' + envelop.message.type, function (message) {
-        var expected = payloads[payloadType][message.type].shift();
+      fbbot.on('message.' + envelop.message.type, function(message) {
+        const expected = payloads[payloadType][message.type].shift();
 
         t.deepEquals(
           message,

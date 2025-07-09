@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,7 +37,7 @@ import co.aurasphere.botmill.fb.model.outcoming.template.airline.FlightSchedule;
  * @param <T>
  *            the class of the parent builder. Used for casting before returning
  *            it.
- * 
+ *
  */
 public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 
@@ -54,7 +54,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 
 	/**
 	 * Default constructor. Creates a builder for a {@link FlightInfo} object.
-	 * 
+	 *
 	 * @param parentBuilder
 	 *            the parent builder of this one. It can't be null.
 	 * @param flightNumber
@@ -68,7 +68,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the departure {@link Airport} for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param airportCode
 	 *            the airport code. It can't be empty.
 	 * @param city
@@ -91,7 +91,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the departure {@link Airport} for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param airportCode
 	 *            the airport code. It can't be empty.
 	 * @param city
@@ -109,7 +109,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the departure {@link Airport} for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param airport
 	 *            the departure airport. It can't be null.
 	 * @return this builder.
@@ -122,7 +122,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the arrival {@link Airport} for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param airportCode
 	 *            the airport code. It can't be empty.
 	 * @param city
@@ -144,7 +144,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the arrival {@link Airport} for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param airportCode
 	 *            the airport code. It can't be empty.
 	 * @param city
@@ -162,7 +162,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the arrival {@link Airport} for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param airport
 	 *            the arrival airport. It can't be null.
 	 * @return this builder.
@@ -175,7 +175,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the {@link FlightSchedule} object for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param departureTime
 	 *            the departure time. It can't be null.
 	 * @param arrivalTime
@@ -193,7 +193,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the {@link FlightSchedule} object for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param departureTime
 	 *            the departure time. It can't be null.
 	 * @param arrivalTime
@@ -213,7 +213,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Sets the {@link FlightSchedule} object for the current {@link FlightInfo}
 	 * object. This field is mandatory for this object and can't be null.
-	 * 
+	 *
 	 * @param flightSchedule
 	 *            the flight schedule to set. It can't be null.
 	 * @return this builder.
@@ -226,7 +226,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 	/**
 	 * Builds the current object, adds it to the parent builder and returns the
 	 * parent builder.
-	 * 
+	 *
 	 * @return the parent builder of this builder.
 	 */
 	public T endFlightInfo() {
@@ -236,7 +236,7 @@ public class FlightInfoBuilder<T extends FlightInfoBuilderDelegator> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

@@ -31,15 +31,24 @@
     "validate-python": "command -v python3 >/dev/null 2>&1 && find telegram-facebook-bot -name '*.py' -exec python3 -m py_compile {} \\; || echo 'Python3 not found, skipping Python validation'",
     "validate-all": "npm run validate-php && npm run validate-python && npm run lint",
     "serve-test-env": "concurrently \"npm run start-services\" \"sleep 10 && npm run test-e2e\"",
-    "health-check": "node scripts/health-check.js"
+    "health-check": "node scripts/health-check.js",
+    "auto-build": "node auto-build-system.js",
+    "auto-build-daemon": "pm2 start auto-build-system.js --name profil3r-auto-build",
+    "auto-build-stop": "pm2 stop profil3r-auto-build",
+    "auto-build-logs": "pm2 logs profil3r-auto-build"
   },
   "devDependencies": {
-    "cypress": "^13.6.0",
-    "cypress-image-snapshot": "^4.0.1",
+    "axios": "^1.6.2",
+    "chokidar": "^3.5.3",
     "concurrently": "^8.2.2",
+    "cypress": "^13.6.0",
+    "cypress-image-diff-js": "^2.4.0",
     "eslint": "^8.55.0",
+    "nyc": "^15.1.0",
+    "pm2": "^6.0.8",
+    "simple-git": "^3.20.0",
     "wait-on": "^7.2.0",
-    "axios": "^1.6.2"
+    "ws": "^8.14.2"
   },
   "dependencies": {
     "express": "^4.18.2"

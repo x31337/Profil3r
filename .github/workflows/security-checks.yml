@@ -1,0 +1,323 @@
+name: Security Checks
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  PYTHON_VERSION: '3.9'
+  NODE_VERSION: '18'
+
+jobs:
+  # Python security checks
+  python-security:
+    runs-on: ubuntu-latest
+    name: Python Security Scan
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for trufflehog
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit bandit[toml]
+          # Install project dependencies for audit
+          pip install -r requirements.txt
+
+      - name: Run pip-audit (vulnerability scanning)
+        run: |
+          echo "Running pip-audit to scan for known vulnerabilities..."
+          pip-audit --format=json --output=pip-audit-results.json
+          pip-audit --format=text
+
+      - name: Run bandit (security linting)
+        run: |
+          echo "Running bandit to scan for security issues..."
+          bandit -r . -f json -o bandit-results.json
+          bandit -r . -f txt
+
+      - name: Upload pip-audit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pip-audit-results
+          path: pip-audit-results.json
+
+      - name: Upload bandit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-results
+          path: bandit-results.json
+
+  # Node.js security checks
+  nodejs-security:
+    runs-on: ubuntu-latest
+    name: Node.js Security Scan
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for trufflehog
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies and run npm audit (main package.json)
+        run: |
+          echo "Running npm audit for main package.json..."
+          npm install
+          npm audit --audit-level=moderate --json > npm-audit-main.json || true
+          npm audit --audit-level=moderate
+
+      - name: Run npm audit for tools directory
+        run: |
+          echo "Running npm audit for tools directory..."
+          cd tools
+          if [ -f package.json ]; then
+            npm install
+            npm audit --audit-level=moderate --json > ../npm-audit-tools.json || true
+            npm audit --audit-level=moderate
+          fi
+
+      - name: Run npm audit for OSINT-Framework
+        run: |
+          echo "Running npm audit for OSINT-Framework..."
+          cd tools/OSINT-Framework
+          if [ -f package.json ]; then
+            npm install
+            npm audit --audit-level=moderate --json > ../../npm-audit-osint.json || true
+            npm audit --audit-level=moderate
+          fi
+
+      - name: Run npm audit for facebook_mass_messenger
+        run: |
+          echo "Running npm audit for facebook_mass_messenger..."
+          cd tools/js_tools/facebook_mass_messenger
+          if [ -f package.json ]; then
+            npm install
+            npm audit --audit-level=moderate --json > ../../../npm-audit-facebook-messenger.json || true
+            npm audit --audit-level=moderate
+          fi
+
+      - name: Run npm audit for messenger_bot_framework
+        run: |
+          echo "Running npm audit for messenger_bot_framework..."
+          cd tools/js_tools/messenger_bot_framework/fbbot
+          if [ -f package.json ]; then
+            npm install
+            npm audit --audit-level=moderate --json > ../../../../npm-audit-messenger-bot.json || true
+            npm audit --audit-level=moderate
+          fi
+
+      - name: Run npm audit for integration tests
+        run: |
+          echo "Running npm audit for integration tests..."
+          cd tests/integration/node
+          if [ -f package.json ]; then
+            npm install
+            npm audit --audit-level=moderate --json > ../../../npm-audit-integration.json || true
+            npm audit --audit-level=moderate
+          fi
+
+      - name: Upload npm audit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-results
+          path: |
+            npm-audit-*.json
+
+  # Secret scanning with TruffleHog
+  secret-scanning:
+    runs-on: ubuntu-latest
+    name: Secret Scanning
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for trufflehog
+
+      - name: Run TruffleHog OSS
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+          extra_args: --debug --only-verified
+
+      - name: Run TruffleHog with JSON output
+        run: |
+          echo "Running TruffleHog with JSON output..."
+          docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem /pwd --json > trufflehog-results.json || true
+          
+          # Check if any secrets were found
+          if [ -s trufflehog-results.json ]; then
+            echo "⚠️  Secrets detected by TruffleHog:"
+            cat trufflehog-results.json
+            echo "❌ TruffleHog found potential secrets!"
+            exit 1
+          else
+            echo "✅ No secrets detected by TruffleHog"
+          fi
+
+      - name: Upload TruffleHog results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trufflehog-results
+          path: trufflehog-results.json
+
+  # Combined security report
+  security-report:
+    runs-on: ubuntu-latest
+    name: Security Report
+    needs: [python-security, nodejs-security, secret-scanning]
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: security-results
+
+      - name: Generate security summary
+        run: |
+          echo "# Security Scan Results" > security-summary.md
+          echo "" >> security-summary.md
+          echo "## Summary" >> security-summary.md
+          echo "" >> security-summary.md
+          
+          # Check pip-audit results
+          if [ -f security-results/pip-audit-results/pip-audit-results.json ]; then
+            echo "### Python Dependencies (pip-audit)" >> security-summary.md
+            python3 -c "
+          import json
+          import sys
+          try:
+              with open('security-results/pip-audit-results/pip-audit-results.json', 'r') as f:
+                  data = json.load(f)
+                  if 'vulnerabilities' in data and data['vulnerabilities']:
+                      print('❌ Found {} vulnerabilities in Python dependencies'.format(len(data['vulnerabilities'])))
+                      sys.exit(1)
+                  else:
+                      print('✅ No vulnerabilities found in Python dependencies')
+          except Exception as e:
+              print('⚠️  Error reading pip-audit results:', e)
+              sys.exit(1)
+          " >> security-summary.md
+          fi
+          
+          # Check bandit results
+          if [ -f security-results/bandit-results/bandit-results.json ]; then
+            echo "### Python Code Security (bandit)" >> security-summary.md
+            python3 -c "
+          import json
+          import sys
+          try:
+              with open('security-results/bandit-results/bandit-results.json', 'r') as f:
+                  data = json.load(f)
+                  if 'results' in data and data['results']:
+                      high_issues = [r for r in data['results'] if r['issue_severity'] == 'HIGH']
+                      medium_issues = [r for r in data['results'] if r['issue_severity'] == 'MEDIUM']
+                      if high_issues:
+                          print('❌ Found {} HIGH severity security issues'.format(len(high_issues)))
+                          sys.exit(1)
+                      elif medium_issues:
+                          print('⚠️  Found {} MEDIUM severity security issues'.format(len(medium_issues)))
+                      else:
+                          print('✅ No high/medium severity security issues found')
+                  else:
+                      print('✅ No security issues found in Python code')
+          except Exception as e:
+              print('⚠️  Error reading bandit results:', e)
+              sys.exit(1)
+          " >> security-summary.md
+          fi
+          
+          # Check npm audit results
+          echo "### Node.js Dependencies (npm audit)" >> security-summary.md
+          AUDIT_FAILED=false
+          for audit_file in security-results/npm-audit-results/npm-audit-*.json; do
+            if [ -f "$audit_file" ]; then
+              python3 -c "
+          import json
+          import sys
+          try:
+              with open('$audit_file', 'r') as f:
+                  data = json.load(f)
+                  if 'vulnerabilities' in data and data['vulnerabilities']:
+                      vulns = data['vulnerabilities']
+                      high_vulns = sum(1 for v in vulns.values() if v.get('severity') == 'high')
+                      critical_vulns = sum(1 for v in vulns.values() if v.get('severity') == 'critical')
+                      if critical_vulns > 0 or high_vulns > 0:
+                          print('❌ Found {} critical and {} high vulnerabilities in $(basename $audit_file)'.format(critical_vulns, high_vulns))
+                          sys.exit(1)
+                      else:
+                          print('✅ No critical/high vulnerabilities in $(basename $audit_file)')
+                  else:
+                      print('✅ No vulnerabilities found in $(basename $audit_file)')
+          except Exception as e:
+              print('⚠️  Error reading npm audit results from $(basename $audit_file):', e)
+          " >> security-summary.md || AUDIT_FAILED=true
+            fi
+          done
+          
+          # Check TruffleHog results
+          if [ -f security-results/trufflehog-results/trufflehog-results.json ]; then
+            echo "### Secret Scanning (TruffleHog)" >> security-summary.md
+            if [ -s security-results/trufflehog-results/trufflehog-results.json ]; then
+              echo "❌ Secrets detected in repository" >> security-summary.md
+              AUDIT_FAILED=true
+            else
+              echo "✅ No secrets detected" >> security-summary.md
+            fi
+          fi
+          
+          echo "" >> security-summary.md
+          echo "Generated at: $(date)" >> security-summary.md
+          
+          cat security-summary.md
+          
+          if [ "$AUDIT_FAILED" = true ]; then
+            echo "❌ Security scan failed - vulnerabilities found!"
+            exit 1
+          else
+            echo "✅ All security checks passed!"
+          fi
+
+      - name: Upload security summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-summary
+          path: security-summary.md
+
+      - name: Comment PR with security results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('security-summary.md')) {
+              const summary = fs.readFileSync('security-summary.md', 'utf8');
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `## 🔒 Security Scan Results\n\n${summary}`
+              });
+            }

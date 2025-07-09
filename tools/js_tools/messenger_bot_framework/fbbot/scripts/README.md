@@ -34,13 +34,13 @@ The `bootstrap.sh` script sets up your complete local development environment wi
 
 The script starts the following services:
 
-| Service | Port | URL | Description |
-|---------|------|-----|-------------|
+| Service      | Port | URL                   | Description          |
+| ------------ | ---- | --------------------- | -------------------- |
 | Python Flask | 5000 | http://localhost:5000 | Python/Flask backend |
-| Node.js | 3000 | http://localhost:3000 | Node.js application |
-| PHP | 80 | http://localhost:80 | PHP application |
-| Ruby | 4567 | http://localhost:4567 | Ruby application |
-| Core | 8000 | http://localhost:8000 | Core service |
+| Node.js      | 3000 | http://localhost:3000 | Node.js application  |
+| PHP          | 80   | http://localhost:80   | PHP application      |
+| Ruby         | 4567 | http://localhost:4567 | Ruby application     |
+| Core         | 8000 | http://localhost:8000 | Core service         |
 
 ### File Watching
 
@@ -52,6 +52,7 @@ docker compose -f docker-compose.dev.yml -f docker-compose.watch.yml watch
 ```
 
 File watching features:
+
 - **Python**: Uses `watchdog` and `watchmedo` for Python file changes
 - **Node.js**: Uses `nodemon` for JavaScript file changes
 - **Ruby**: Uses `rerun` for Ruby file changes

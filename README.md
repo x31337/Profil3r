@@ -22,14 +22,15 @@ organized and modernized structure.
 
 ## Overview
 
-The primary goal of this refactoring is to:
+The new architecture of this project is modular, allowing for easy extension and maintenance. The
+primary goals of this refactoring include:
 
-- **Consolidate Duplicate Logic:** Merge similar functionalities from scattered scripts into unified
-  Python modules.
-- **Modernize Code:** Update older code to use current best practices, libraries, and error
-  handling.
-- **Organize by Functionality:** Group tools and scripts based on their purpose (e.g., Facebook
-  automation, OSINT, network utilities, JavaScript tools).
+- **Modular Architecture:** Design the project in modules to enhance scalability and
+  maintainability.
+- **Consolidate Duplicate Logic:** Merge similar functionalities into unified modules.
+- **Modernize Code:** Update older code using current best practices and libraries.
+- **Functional Organization:** Group tools and scripts by purpose, such as Facebook automation,
+  OSINT, and networking.
 
 ## Quick Start
 
@@ -163,37 +164,33 @@ Update `config.json` with your settings:
 
 ## Core Modules
 
-The toolkit is organized into several core modules:
+The project is structured into various core modules, designed to isolate functionality and promote a
+clean architecture:
 
-### Facebook Automation (`modules/facebook_automation.py`)
+### Facebook Automation
 
-- **Selenium-based UI automation** for login, posting, messaging, friending
-- **Facebook Graph API integration** for user info and friends lists
-- **Session management** with cookie saving/loading
-- **Activity simulation** for human-like behavior
-- **Brute-force login capabilities** (Selenium and requests-based)
+- **UI Automation:** Leverages Selenium for Facebook interactions such as login, posting, and
+  messaging.
+- **API Integration:** Utilizes the Facebook Graph API for data retrieval.
+- **Session Management:** Handles cookies for maintaining sessions.
+- **Human-like Activity Simulation:** Simulates user interactions to avoid detection.
 
-### OSINT Utilities (`modules/osint_utils.py`)
+### OSINT Utilities
 
-- **Username reconnaissance** across multiple platforms
-- **Email validation** with API-based verification
-- **GitHub user information** lookup
-- **Temporary email** generation and checking
-- **Social media profile discovery**
+- **Username Reconnaissance:** Searches for usernames across different platforms.
+- **Email Validation:** Checks email validity using external APIs.
+- **Social Media Analysis:** Investigates social media profiles and generates reports.
 
-### Network Utilities (`modules/network_utils.py`)
+### Network Utilities
 
-- **IP geolocation** and analysis
-- **Domain information** via HackerTarget (DNS, WHOIS)
-- **Phone number validation** via VeriPhone
-- **Google Dorking** capabilities
-- **URL bypass** tools (Bitly, etc.)
+- **IP and Domain Analysis:** Provides IP geolocation and domain information.
+- **Phone Number Check:** Verifies phone numbers using the VeriPhone API.
+- **Advanced Search Tools:** Features Google Dorking and URL bypass technologies.
 
-### Unified CLI (`modules/main.py`)
+### Unified CLI
 
-- **Interactive command-line interface** for all modules
-- **Configuration management** from `config.json`
-- **Integrated workflows** combining multiple tools
+- **Command-line Interface:** Offers a unified CLI for executing tasks easily.
+- **Workflow Integration:** Combines several tools to streamline operations.
 
 ## Tools
 
@@ -255,7 +252,12 @@ For comprehensive examples and tutorials, see
 # OSINT operations
 from modules.osint_utils import OsintUtilities
 osint = OsintUtilities()
+
+# Username reconnaissance
 results = osint.username_reconnaissance("john_doe")
+
+# Email validation
+email_status = osint.email_validation("john@example.com")
 
 # Facebook automation
 from modules.facebook_automation import FacebookAutomation
@@ -267,6 +269,7 @@ fb.post_to_timeline("Hello from automation!")
 from modules.network_utils import NetworkUtilities
 net = NetworkUtilities()
 location = net.ip_geolocation("8.8.8.8")
+domain_info = net.domain_info("example.com")
 ```
 
 ### CLI Usage
@@ -277,6 +280,32 @@ python -m modules.main
 
 # Direct execution
 python -m modules.main --osint --username "john_doe"
+
+# OSINT with email validation
+python -m modules.main --osint --email "john@example.com"
+
+# Network analysis
+python -m modules.main --network --ip "8.8.8.8"
+```
+
+### Event System
+
+The system now provides an event-driven architecture. Events are triggered at various stages:
+
+- **Authentication Events:** `auth_success`, `auth_failure`, `session_expired`
+- **OSINT Events:** `osint_search_complete`, `profile_found`, `data_validated`
+- **Network Events:** `network_scan_complete`, `ip_resolved`, `domain_analyzed`
+- **Error Events:** `error_occurred`, `rate_limit_exceeded`, `api_error`
+
+```python
+# Event listener example
+from modules.event_manager import EventManager
+
+def on_profile_found(event_data):
+    print(f"Profile found: {event_data['profile_url']}")
+
+event_manager = EventManager()
+event_manager.subscribe('profile_found', on_profile_found)
 ```
 
 ## Troubleshooting
@@ -299,26 +328,39 @@ docker-compose logs -f
 
 ## Contributing
 
-Contributions are welcome! Please:
+Contributions are highly appreciated! The project follows a modular structure, making it easier to
+add and maintain new features. Please:
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+1. **Fork the Repository:** Create your copy of the repository.
+2. **Feature Branch:** Create a branch for your new module or feature.
+3. **Implement Your Module:** Ensure it adheres to the project's modular architecture.
+4. **Testing:** Develop tests to ensure functionality and integration.
+5. **Pull Request:** Submit your changes for review.
 
 ### Development Setup
 
-```bash
-# Install development dependencies
-pip install -r requirements.txt
+- **Dependency Installation:**
+  ```bash
+  pip install -r requirements.txt
+  ```
+- **Running Tests:**
+  ```bash
+  python -m pytest
+  ```
+- **Code Formatting:**
+  ```bash
+  black modules/
+  ```
 
-# Run tests
-python -m pytest
+### Adding New Modules
 
-# Format code
-black modules/
-```
+To add a new module, follow these guidelines:
+
+- **Directory Structure:** Place your module in the appropriate directory within `modules/`.
+- **Documentation:** Provide clear documentation within your module.
+- **Modular Design:** Incorporate functionality cohesively, ensuring easy interaction with existing
+  modules.
+- **Tests:** Integrate tests for your module in the `tests/` directory.
 
 ## Disclaimer
 

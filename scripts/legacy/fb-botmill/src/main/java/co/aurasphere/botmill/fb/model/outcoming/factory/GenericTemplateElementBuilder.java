@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,9 +30,9 @@ import co.aurasphere.botmill.fb.model.outcoming.template.generic.GenericTemplate
 
 /**
  * Builder for a {@link GenericTemplateElement}.
- * 
+ *
  * @author Donato Rimenti
- * 
+ *
  */
 public class GenericTemplateElementBuilder {
 
@@ -49,7 +49,7 @@ public class GenericTemplateElementBuilder {
 	/**
 	 * Default constructor. Creates a builder for a
 	 * {@link GenericTemplateElement}.
-	 * 
+	 *
 	 * @param title
 	 *            the title of the element.
 	 * @param parentBuilder
@@ -63,7 +63,7 @@ public class GenericTemplateElementBuilder {
 
 	/**
 	 * Sets a subtitle for the current {@link GenericTemplateElement}.
-	 * 
+	 *
 	 * @param subtitle
 	 *            the subtitle to set.
 	 * @return this builder.
@@ -102,7 +102,7 @@ public class GenericTemplateElementBuilder {
 	 * Adds a button which redirects to an URL when clicked to the current
 	 * {@link GenericTemplateElement}. There can be at most 3 buttons per
 	 * element.
-	 * 
+	 *
 	 * @param title
 	 *            the button label.
 	 * @param url
@@ -119,7 +119,7 @@ public class GenericTemplateElementBuilder {
 	 * Adds a button which redirects to an URL when clicked to the current
 	 * {@link GenericTemplateElement}. There can be at most 3 buttons per
 	 * element.
-	 * 
+	 *
 	 * @param title
 	 *            the button label.
 	 * @param url
@@ -139,7 +139,7 @@ public class GenericTemplateElementBuilder {
 	 * Adds a button with a phone number to the current
 	 * {@link GenericTemplateElement}. There can be at most 3 buttons per
 	 * element.
-	 * 
+	 *
 	 * @param title
 	 *            the button label.
 	 * @param phoneNumber
@@ -159,7 +159,7 @@ public class GenericTemplateElementBuilder {
 	 * Adds a button which sends a payload back when clicked to the current
 	 * {@link GenericTemplateElement}. There can be at most 3 buttons per
 	 * element.
-	 * 
+	 *
 	 * @param title
 	 *            the button label.
 	 * @param payload
@@ -176,7 +176,7 @@ public class GenericTemplateElementBuilder {
 	/**
 	 * Adds a button to the current {@link GenericTemplateElement}. There can be
 	 * at most 3 buttons per element.
-	 * 
+	 *
 	 * @param button
 	 *            the button to add.
 	 * @return this builder.
@@ -223,7 +223,7 @@ public class GenericTemplateElementBuilder {
 
 	/**
 	 * Adds a buy button on a generic template.
-	 * 
+	 *
 	 * @param payload
 	 *            the payload
 	 * @param paymentSummary
@@ -240,7 +240,7 @@ public class GenericTemplateElementBuilder {
 	/**
 	 * Builds the current object, adds it to the parent builder and returns the
 	 * parent builder.
-	 * 
+	 *
 	 * @return the parent builder of this builder.
 	 */
 	public GenericTemplateBuilder endElement() {
@@ -250,7 +250,7 @@ public class GenericTemplateElementBuilder {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

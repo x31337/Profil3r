@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,9 +30,9 @@ import co.aurasphere.botmill.fb.model.outcoming.template.airline.ProductInfo;
 
 /**
  * Builder for a {@link PassengerSegmentInfo} object.
- * 
+ *
  * @author Donato Rimenti
- * 
+ *
  */
 public class PassengerSegmentInfoBuilder {
 
@@ -50,7 +50,7 @@ public class PassengerSegmentInfoBuilder {
 	/**
 	 * Default constructor. Creates a builder for a {@link PassengerInfo}
 	 * object.
-	 * 
+	 *
 	 * @param parentBuilder
 	 *            the parent builder of this one. It can't be null.
 	 * @param segmentId
@@ -76,7 +76,7 @@ public class PassengerSegmentInfoBuilder {
 	 * Adds a {@link ProductInfo} object to the list of products the passenger
 	 * purchased in the current {@link PassengerSegmentInfo}. This field is
 	 * mandatory and there must be at least one element.
-	 * 
+	 *
 	 * @param title
 	 *            the product title. It can't be empty.
 	 * @param value
@@ -92,7 +92,7 @@ public class PassengerSegmentInfoBuilder {
 	/**
 	 * Builds the current object, adds it to the parent builder and returns the
 	 * parent builder.
-	 * 
+	 *
 	 * @return the parent builder of this builder.
 	 */
 	public AirlineItineraryTemplateBuilder endPassengerSegmentInfo() {
@@ -102,7 +102,7 @@ public class PassengerSegmentInfoBuilder {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

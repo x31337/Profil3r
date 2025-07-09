@@ -2,17 +2,17 @@
  * MIT License
  *
  * Copyright (c) 2016 BotMill.io
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,7 @@ import co.aurasphere.botmill.fb.support.FbBotMillMonitor;
 /**
  * A custom monitor implementation used to check if any error happens during
  * tests.
- * 
+ *
  * @author Donato Rimenti
  * @author Alvin Reyes
  */
@@ -74,7 +74,7 @@ public class FbBotMillTestMonitor implements FbBotMillMonitor {
 	 * Gets the result of the computation. The main purpose of this method is to
 	 * synchronize the underlying asynchronous processor. This is done using a
 	 * {@link CountDownLatch}.
-	 * 
+	 *
 	 * @return the result of the computation.
 	 * @throws Exception
 	 *             a generic exception.
@@ -88,7 +88,7 @@ public class FbBotMillTestMonitor implements FbBotMillMonitor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.support.FbBotMillNetworkMonitor#onResponse(co
 	 * .aurasphere.botmill.fb.model.incoming.MessengerCallback)
@@ -101,7 +101,7 @@ public class FbBotMillTestMonitor implements FbBotMillMonitor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see co.aurasphere.botmill.fb.support.FbBotMillNetworkMonitor#onError(co.
 	 * aurasphere.botmill.fb.model.incoming.FacebookErrorMessage)
 	 */
@@ -112,7 +112,7 @@ public class FbBotMillTestMonitor implements FbBotMillMonitor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.support.FbBotMillNetworkMonitor#onPostReceived
 	 * (javax.servlet.http.HttpServletRequest,
@@ -124,7 +124,7 @@ public class FbBotMillTestMonitor implements FbBotMillMonitor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.support.FbBotMillNetworkMonitor#onGetReceived
 	 * (javax.servlet.http.HttpServletRequest)
@@ -134,7 +134,7 @@ public class FbBotMillTestMonitor implements FbBotMillMonitor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * co.aurasphere.botmill.fb.support.FbBotMillMonitor#onValidationError(co
 	 * .aurasphere.botmill.fb.model.outcoming.FbBotMillResponse, java.util.Set)
@@ -147,7 +147,7 @@ public class FbBotMillTestMonitor implements FbBotMillMonitor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
