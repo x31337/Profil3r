@@ -17,6 +17,7 @@ The Profil3r Auto Build System is a comprehensive automated solution that provid
 ### Features
 
 #### 🔧 **Core Automation**
+
 - **File Watching**: Real-time monitoring of code changes
 - **Incremental Builds**: Only rebuilds affected components
 - **Dependency Management**: Automatic installation and updates
@@ -24,6 +25,7 @@ The Profil3r Auto Build System is a comprehensive automated solution that provid
 - **Error Recovery**: Automatic retry and recovery mechanisms
 
 #### 🌐 **Web Dashboard**
+
 - **Real-Time Status**: Live build, test, and deployment status
 - **Service Monitoring**: Health checks for all services
 - **Interactive Controls**: Trigger builds, tests, and deployments
@@ -32,6 +34,7 @@ The Profil3r Auto Build System is a comprehensive automated solution that provid
 - **Notifications**: Toast notifications for important events
 
 #### 🧪 **Testing Integration**
+
 - **Cypress E2E Tests**: Full end-to-end test automation
 - **Unit Testing**: Service-specific unit test execution
 - **Coverage Reports**: Code coverage analysis and reporting
@@ -40,6 +43,7 @@ The Profil3r Auto Build System is a comprehensive automated solution that provid
 - **Mobile Testing**: Responsive design validation
 
 #### 🔄 **CI/CD Integration**
+
 - **Git Integration**: Automatic commit and push
 - **Conventional Commits**: Enforced commit message format
 - **Semantic Versioning**: Automatic version bumping
@@ -49,17 +53,20 @@ The Profil3r Auto Build System is a comprehensive automated solution that provid
 ### Quick Start
 
 #### 1. **Installation**
+
 ```bash
 cd /Users/x/x/Profil3r/tools
 ./start-auto-build.sh
 ```
 
 #### 2. **Access Dashboard**
+
 - **Web Dashboard**: http://localhost:9000
 - **WebSocket**: ws://localhost:9001
-- **API Endpoints**: http://localhost:9000/api/*
+- **API Endpoints**: http://localhost:9000/api/\*
 
 #### 3. **Basic Usage**
+
 ```bash
 # Start auto-build system
 npm run auto-build
@@ -115,31 +122,35 @@ const config = {
 
 The system monitors and builds these services:
 
-| Service | Type | Port | Description |
-|---------|------|------|-------------|
-| OSINT Framework | Node.js | 8000 | OSINT data analysis |
-| Facebook Mass Messenger | Node.js | 4444 | Mass messaging tool |
-| Messenger Bot Framework | Node.js | 3000 | Bot framework |
-| Python Tools | Python | N/A | Telegram/Facebook bots |
-| PHP Tools | PHP | N/A | Web utilities |
+| Service                 | Type    | Port | Description            |
+| ----------------------- | ------- | ---- | ---------------------- |
+| OSINT Framework         | Node.js | 8000 | OSINT data analysis    |
+| Facebook Mass Messenger | Node.js | 4444 | Mass messaging tool    |
+| Messenger Bot Framework | Node.js | 3000 | Bot framework          |
+| Python Tools            | Python  | N/A  | Telegram/Facebook bots |
+| PHP Tools               | PHP     | N/A  | Web utilities          |
 
 ### API Endpoints
 
 #### **Status**
+
 - `GET /api/status` - Get system status
 - `GET /api/logs/:type` - Get logs (build/test/deploy/system)
 
 #### **Actions**
+
 - `POST /api/build` - Trigger build
 - `POST /api/test` - Trigger tests
 - `POST /api/deploy` - Trigger deployment
 
 #### **Health**
+
 - `GET /api/health` - System health check
 
 ### WebSocket Events
 
 #### **Incoming Messages**
+
 ```javascript
 {
   type: 'build|test|deploy|fix',
@@ -148,6 +159,7 @@ The system monitors and builds these services:
 ```
 
 #### **Outgoing Messages**
+
 ```javascript
 {
   type: 'build-started|build-completed|build-failed|...',
@@ -158,12 +170,14 @@ The system monitors and builds these services:
 ### Testing
 
 #### **Cypress Tests**
+
 - **Auto-build system tests**: `cypress/e2e/auto-build-system.cy.js`
 - **Service health checks**: Automated health monitoring
 - **Visual regression**: Screenshot comparison
 - **Performance tests**: Load time and response validation
 
 #### **Test Commands**
+
 ```bash
 # Run all tests
 npm run test
@@ -184,12 +198,14 @@ npm run test-e2e-mobile
 ### Monitoring
 
 #### **Real-Time Dashboard**
+
 - **Build Status**: Current build state and history
 - **Test Results**: Pass/fail rates and coverage
 - **Service Health**: Live service monitoring
 - **Deployment Status**: Deployment history and status
 
 #### **Logging**
+
 - **Build Logs**: Compilation and build output
 - **Test Logs**: Test execution results
 - **Deploy Logs**: Deployment process logs
@@ -200,15 +216,17 @@ npm run test-e2e-mobile
 #### **Common Issues**
 
 1. **Port Already in Use**
+
    ```bash
    # Check ports
    lsof -i :9000 -i :9001
-   
+
    # Kill processes
    kill -9 <PID>
    ```
 
 2. **Dependencies Missing**
+
    ```bash
    # Reinstall dependencies
    npm install
@@ -216,24 +234,27 @@ npm run test-e2e-mobile
    ```
 
 3. **Service Won't Start**
+
    ```bash
    # Check logs
    npm run auto-build-logs
-   
+
    # Manual start
    node auto-build-system.js
    ```
 
 4. **Tests Failing**
+
    ```bash
    # Run health check
    npm run health-check
-   
+
    # Check service status
    curl http://localhost:9000/api/status
    ```
 
 #### **Debug Mode**
+
 ```bash
 # Enable debug logging
 DEBUG=* node auto-build-system.js
@@ -242,12 +263,14 @@ DEBUG=* node auto-build-system.js
 ### Performance Optimization
 
 #### **Build Performance**
+
 - **Incremental builds**: Only rebuild changed components
 - **Parallel processing**: Multiple build processes
 - **Caching**: Dependency and build result caching
 - **Optimization**: Minification and compression
 
 #### **Test Performance**
+
 - **Parallel testing**: Multiple test runners
 - **Test sharding**: Split tests across processes
 - **Smart retries**: Automatic retry on transient failures
@@ -256,11 +279,13 @@ DEBUG=* node auto-build-system.js
 ### Security
 
 #### **Authentication**
+
 - **Local access**: Dashboard restricted to localhost
 - **API security**: Rate limiting and validation
 - **Git security**: SSH key authentication
 
 #### **Data Protection**
+
 - **Log sanitization**: Remove sensitive information
 - **Secure storage**: Encrypted configuration
 - **Access control**: Role-based permissions
@@ -268,12 +293,14 @@ DEBUG=* node auto-build-system.js
 ### Advanced Features
 
 #### **Custom Integrations**
+
 - **Webhook support**: External service notifications
 - **Plugin system**: Custom build steps
 - **API extensions**: Custom endpoints
 - **Theme customization**: Dashboard appearance
 
 #### **Scalability**
+
 - **Horizontal scaling**: Multiple build agents
 - **Load balancing**: Distribute build load
 - **Database integration**: Persistent storage
@@ -282,12 +309,14 @@ DEBUG=* node auto-build-system.js
 ### Maintenance
 
 #### **Regular Tasks**
+
 - **Log rotation**: Automatic log cleanup
 - **Dependency updates**: Automated security updates
 - **Health monitoring**: Proactive issue detection
 - **Performance monitoring**: Resource usage tracking
 
 #### **Backup and Recovery**
+
 - **Configuration backup**: Automated config snapshots
 - **Build artifact backup**: Result preservation
 - **Disaster recovery**: System restoration procedures
@@ -295,12 +324,14 @@ DEBUG=* node auto-build-system.js
 ### Support
 
 #### **Documentation**
+
 - **API Reference**: Complete API documentation
 - **Integration Guide**: Third-party integration
 - **Best Practices**: Recommended usage patterns
 - **Examples**: Real-world implementation examples
 
 #### **Community**
+
 - **Issue Tracking**: GitHub issues
 - **Feature Requests**: Enhancement proposals
 - **Contributing**: Development guidelines
@@ -309,6 +340,7 @@ DEBUG=* node auto-build-system.js
 ### Changelog
 
 #### **Version 1.0.0**
+
 - ✅ Initial release
 - ✅ Complete build automation
 - ✅ Real-time web dashboard

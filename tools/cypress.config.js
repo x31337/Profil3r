@@ -33,7 +33,7 @@ module.exports = defineConfig({
           }
           return config;
         },
-        
+
         // Auto-build system integration tasks
         autoBuildNotify({ type, data }) {
           // Send notifications to auto-build system
@@ -41,10 +41,12 @@ module.exports = defineConfig({
           try {
             const ws = new WebSocket('ws://localhost:9001');
             ws.on('open', () => {
-              ws.send(JSON.stringify({
-                type: 'cypress-event',
-                data: { type, data }
-              }));
+              ws.send(
+                JSON.stringify({
+                  type: 'cypress-event',
+                  data: { type, data }
+                })
+              );
               ws.close();
             });
           } catch (error) {
@@ -52,14 +54,19 @@ module.exports = defineConfig({
           }
           return null;
         },
-        
+
         // Health check task
         healthCheck(url) {
-          return new Promise((resolve) => {
+          return new Promise(resolve => {
             const axios = require('axios');
-            axios.get(url, { timeout: 5000 })
-              .then(response => resolve({ status: 'healthy', code: response.status }))
-              .catch(error => resolve({ status: 'unhealthy', error: error.message }));
+            axios
+              .get(url, { timeout: 5000 })
+              .then(response =>
+                resolve({ status: 'healthy', code: response.status })
+              )
+              .catch(error =>
+                resolve({ status: 'unhealthy', error: error.message })
+              );
           });
         }
       });

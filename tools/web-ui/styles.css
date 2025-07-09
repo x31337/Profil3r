@@ -13,7 +13,7 @@ body {
 }
 
 .header {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: #fff;
   padding: 20px 0;
   text-align: center;
@@ -66,7 +66,7 @@ body {
 
 .status-card .status-icon {
   font-size: 40px;
-  color: #4CAF50;
+  color: #4caf50;
   margin-bottom: 10px;
 }
 
@@ -166,7 +166,7 @@ body {
 }
 
 .tab-btn.active {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: #fff;
 }
 
@@ -256,7 +256,7 @@ body {
 
 .progress {
   height: 100%;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   transition: width 0.3s ease;
 }
 

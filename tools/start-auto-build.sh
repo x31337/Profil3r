@@ -37,7 +37,7 @@ check_nodejs() {
         print_error "Node.js is not installed. Please install Node.js first."
         exit 1
     fi
-    
+
     NODE_VERSION=$(node --version)
     print_status "Node.js version: $NODE_VERSION"
 }
@@ -48,7 +48,7 @@ check_npm() {
         print_error "npm is not installed. Please install npm first."
         exit 1
     fi
-    
+
     NPM_VERSION=$(npm --version)
     print_status "npm version: $NPM_VERSION"
 }
@@ -56,39 +56,39 @@ check_npm() {
 # Install dependencies
 install_dependencies() {
     print_header "📦 Installing dependencies..."
-    
+
     # Install root dependencies
     print_status "Installing root dependencies..."
     npm install
-    
+
     # Install auto-build system dependencies
     print_status "Installing auto-build system dependencies..."
     npm install express ws chokidar axios simple-git pm2 nyc
-    
+
     # Install Cypress and related dependencies
     print_status "Installing Cypress and testing dependencies..."
     npm install cypress cypress-image-snapshot concurrently eslint wait-on
-    
+
     print_status "Dependencies installed successfully!"
 }
 
 # Create necessary directories
 create_directories() {
     print_header "📁 Creating directories..."
-    
+
     mkdir -p build
     mkdir -p logs
     mkdir -p cypress/videos
     mkdir -p cypress/screenshots
     mkdir -p cypress/support
-    
+
     print_status "Directories created successfully!"
 }
 
 # Setup Cypress support files
 setup_cypress_support() {
     print_header "🔧 Setting up Cypress support files..."
-    
+
     # Create cypress support files if they don't exist
     if [ ! -f "cypress/support/e2e.js" ]; then
         cat > cypress/support/e2e.js << 'EOF'
@@ -115,7 +115,7 @@ addMatchImageSnapshotCommand();
 EOF
         print_status "Created cypress/support/e2e.js"
     fi
-    
+
     if [ ! -f "cypress/support/commands.js" ]; then
         cat > cypress/support/commands.js << 'EOF'
 // Custom commands for auto-build system testing
@@ -165,11 +165,11 @@ EOF
 # Fix file permissions
 fix_permissions() {
     print_header "🔒 Setting file permissions..."
-    
+
     # Make scripts executable
     chmod +x auto-build-system.js
     chmod +x start-auto-build.sh
-    
+
     print_status "File permissions set successfully!"
 }
 
@@ -193,7 +193,7 @@ check_running() {
 # Start the auto-build system
 start_auto_build() {
     print_header "🚀 Starting Auto Build System..."
-    
+
     # Start in background with PM2 if available
     if command -v pm2 &> /dev/null; then
         print_status "Starting with PM2..."
@@ -209,10 +209,10 @@ start_auto_build() {
         print_status "Auto-build system started in background"
         print_status "PID: $(cat logs/auto-build.pid)"
     fi
-    
+
     # Wait for services to start
     sleep 5
-    
+
     # Check if services are running
     if curl -s "http://localhost:9000/api/status" > /dev/null; then
         print_status "✅ Auto-build system is running!"
@@ -227,18 +227,18 @@ start_auto_build() {
 # Run health check
 run_health_check() {
     print_header "🏥 Running health check..."
-    
+
     # Check auto-build system API
     if curl -s "http://localhost:9000/api/status" > /dev/null; then
         print_status "✅ Auto-build system API is healthy"
     else
         print_warning "⚠️  Auto-build system API is not responding"
     fi
-    
+
     # Check services
     SERVICES=("http://localhost:8000" "http://localhost:3000" "http://localhost:4444")
     SERVICE_NAMES=("OSINT Framework" "Messenger Bot" "Mass Messenger")
-    
+
     for i in "${!SERVICES[@]}"; do
         if curl -s "${SERVICES[$i]}" > /dev/null; then
             print_status "✅ ${SERVICE_NAMES[$i]} is healthy"
@@ -251,24 +251,24 @@ run_health_check() {
 # Main execution
 main() {
     print_header "🔧 Profil3r Auto Build System Setup"
-    
+
     # Pre-flight checks
     check_nodejs
     check_npm
     check_running
-    
+
     # Setup
     install_dependencies
     create_directories
     setup_cypress_support
     fix_permissions
-    
+
     # Start system
     start_auto_build
-    
+
     # Post-start checks
     run_health_check
-    
+
     print_header "🎉 Setup completed successfully!"
     echo
     print_status "Next steps:"
