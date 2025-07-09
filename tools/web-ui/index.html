@@ -1,205 +1,231 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profil3r Auto Build System</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <header class="header">
-        <div class="container">
-            <h1><i class="fas fa-rocket"></i> Profil3r Auto Build System</h1>
-            <div class="header-stats">
-                <div class="stat">
-                    <span class="label">Build Count</span>
-                    <span class="value" id="build-count">0</span>
-                </div>
-                <div class="stat">
-                    <span class="label">Test Count</span>
-                    <span class="value" id="test-count">0</span>
-                </div>
-                <div class="stat">
-                    <span class="label">Deploy Count</span>
-                    <span class="value" id="deploy-count">0</span>
-                </div>
-            </div>
+      <div class="container">
+        <h1><i class="fas fa-rocket"></i> Profil3r Auto Build System</h1>
+        <div class="header-stats">
+          <div class="stat">
+            <span class="label">Build Count</span>
+            <span class="value" id="build-count">0</span>
+          </div>
+          <div class="stat">
+            <span class="label">Test Count</span>
+            <span class="value" id="test-count">0</span>
+          </div>
+          <div class="stat">
+            <span class="label">Deploy Count</span>
+            <span class="value" id="deploy-count">0</span>
+          </div>
         </div>
+      </div>
     </header>
 
     <main class="main">
-        <div class="container">
-            <!-- Status Overview -->
-            <section class="status-section">
-                <h2><i class="fas fa-tachometer-alt"></i> System Status</h2>
-                <div class="status-grid">
-                    <div class="status-card" id="build-status">
-                        <div class="status-icon">
-                            <i class="fas fa-hammer"></i>
-                        </div>
-                        <div class="status-content">
-                            <h3>Build Status</h3>
-                            <p class="status-text">Ready</p>
-                            <p class="status-time">-</p>
-                        </div>
-                    </div>
-                    <div class="status-card" id="test-status">
-                        <div class="status-icon">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <div class="status-content">
-                            <h3>Test Status</h3>
-                            <p class="status-text">Ready</p>
-                            <p class="status-time">-</p>
-                        </div>
-                    </div>
-                    <div class="status-card" id="deploy-status">
-                        <div class="status-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <div class="status-content">
-                            <h3>Deploy Status</h3>
-                            <p class="status-text">Ready</p>
-                            <p class="status-time">-</p>
-                        </div>
-                    </div>
-                    <div class="status-card" id="health-status">
-                        <div class="status-icon">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
-                        <div class="status-content">
-                            <h3>Health Status</h3>
-                            <p class="status-text">Monitoring</p>
-                            <p class="status-time">-</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <div class="container">
+        <!-- Status Overview -->
+        <section class="status-section">
+          <h2><i class="fas fa-tachometer-alt"></i> System Status</h2>
+          <div class="status-grid">
+            <div class="status-card" id="build-status">
+              <div class="status-icon">
+                <i class="fas fa-hammer"></i>
+              </div>
+              <div class="status-content">
+                <h3>Build Status</h3>
+                <p class="status-text">Ready</p>
+                <p class="status-time">-</p>
+              </div>
+            </div>
+            <div class="status-card" id="test-status">
+              <div class="status-icon">
+                <i class="fas fa-flask"></i>
+              </div>
+              <div class="status-content">
+                <h3>Test Status</h3>
+                <p class="status-text">Ready</p>
+                <p class="status-time">-</p>
+              </div>
+            </div>
+            <div class="status-card" id="deploy-status">
+              <div class="status-icon">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <div class="status-content">
+                <h3>Deploy Status</h3>
+                <p class="status-text">Ready</p>
+                <p class="status-time">-</p>
+              </div>
+            </div>
+            <div class="status-card" id="health-status">
+              <div class="status-icon">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <div class="status-content">
+                <h3>Health Status</h3>
+                <p class="status-text">Monitoring</p>
+                <p class="status-time">-</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            <!-- Control Panel -->
-            <section class="control-section">
-                <h2><i class="fas fa-controls"></i> Control Panel</h2>
-                <div class="control-buttons">
-                    <button class="btn btn-primary" onclick="triggerBuild()">
-                        <i class="fas fa-hammer"></i> Build
-                    </button>
-                    <button class="btn btn-secondary" onclick="triggerTest()">
-                        <i class="fas fa-flask"></i> Test
-                    </button>
-                    <button class="btn btn-success" onclick="triggerDeploy()">
-                        <i class="fas fa-rocket"></i> Deploy
-                    </button>
-                    <button class="btn btn-warning" onclick="triggerFix()">
-                        <i class="fas fa-wrench"></i> Auto Fix
-                    </button>
-                </div>
-            </section>
+        <!-- Control Panel -->
+        <section class="control-section">
+          <h2><i class="fas fa-controls"></i> Control Panel</h2>
+          <div class="control-buttons">
+            <button class="btn btn-primary" onclick="triggerBuild()">
+              <i class="fas fa-hammer"></i> Build
+            </button>
+            <button class="btn btn-secondary" onclick="triggerTest()">
+              <i class="fas fa-flask"></i> Test
+            </button>
+            <button class="btn btn-success" onclick="triggerDeploy()">
+              <i class="fas fa-rocket"></i> Deploy
+            </button>
+            <button class="btn btn-warning" onclick="triggerFix()">
+              <i class="fas fa-wrench"></i> Auto Fix
+            </button>
+          </div>
+          <div class="control-buttons advanced-controls">
+            <button class="btn btn-info" onclick="triggerAutoInstall()">
+              <i class="fas fa-download"></i> Auto Install
+            </button>
+            <button class="btn btn-info" onclick="triggerAutoConfig()">
+              <i class="fas fa-cog"></i> Auto Config
+            </button>
+            <button class="btn btn-info" onclick="triggerAutoPush()">
+              <i class="fas fa-code-branch"></i> Auto Push
+            </button>
+            <button class="btn btn-purple" onclick="triggerCypress()">
+              <i class="fas fa-robot"></i> Cypress
+            </button>
+            <button class="btn btn-full-cycle" onclick="triggerFullCycle()">
+              <i class="fas fa-sync-alt"></i> Full Cycle
+            </button>
+          </div>
+        </section>
 
-            <!-- Services Overview -->
-            <section class="services-section">
-                <h2><i class="fas fa-server"></i> Services</h2>
-                <div class="services-grid" id="services-grid">
-                    <!-- Services will be populated dynamically -->
-                </div>
-            </section>
+        <!-- Services Overview -->
+        <section class="services-section">
+          <h2><i class="fas fa-server"></i> Services</h2>
+          <div class="services-grid" id="services-grid">
+            <!-- Services will be populated dynamically -->
+          </div>
+        </section>
 
-            <!-- Real-time Logs -->
-            <section class="logs-section">
-                <h2><i class="fas fa-terminal"></i> Real-time Logs</h2>
-                <div class="logs-container">
-                    <div class="log-tabs">
-                        <button class="tab-btn active" onclick="showLogs('build')">Build</button>
-                        <button class="tab-btn" onclick="showLogs('test')">Test</button>
-                        <button class="tab-btn" onclick="showLogs('deploy')">Deploy</button>
-                        <button class="tab-btn" onclick="showLogs('system')">System</button>
-                    </div>
-                    <div class="log-content" id="log-content">
-                        <div class="log-entry">
-                            <span class="log-time">--:--:--</span>
-                            <span class="log-message">System ready for operation</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <!-- Real-time Logs -->
+        <section class="logs-section">
+          <h2><i class="fas fa-terminal"></i> Real-time Logs</h2>
+          <div class="logs-container">
+            <div class="log-tabs">
+              <button class="tab-btn active" onclick="showLogs('build')">
+                Build
+              </button>
+              <button class="tab-btn" onclick="showLogs('test')">Test</button>
+              <button class="tab-btn" onclick="showLogs('deploy')">
+                Deploy
+              </button>
+              <button class="tab-btn" onclick="showLogs('system')">
+                System
+              </button>
+            </div>
+            <div class="log-content" id="log-content">
+              <div class="log-entry">
+                <span class="log-time">--:--:--</span>
+                <span class="log-message">System ready for operation</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            <!-- Test Results -->
-            <section class="results-section">
-                <h2><i class="fas fa-chart-bar"></i> Test Results</h2>
-                <div class="results-grid">
-                    <div class="result-card">
-                        <h3>Cypress Tests</h3>
-                        <div class="result-stats">
-                            <div class="stat">
-                                <span class="label">Total</span>
-                                <span class="value" id="cypress-total">0</span>
-                            </div>
-                            <div class="stat">
-                                <span class="label">Passed</span>
-                                <span class="value success" id="cypress-passed">0</span>
-                            </div>
-                            <div class="stat">
-                                <span class="label">Failed</span>
-                                <span class="value error" id="cypress-failed">0</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress" id="cypress-progress"></div>
-                        </div>
-                    </div>
-                    <div class="result-card">
-                        <h3>Unit Tests</h3>
-                        <div class="result-stats">
-                            <div class="stat">
-                                <span class="label">Services</span>
-                                <span class="value" id="unit-services">0</span>
-                            </div>
-                            <div class="stat">
-                                <span class="label">Passed</span>
-                                <span class="value success" id="unit-passed">0</span>
-                            </div>
-                            <div class="stat">
-                                <span class="label">Failed</span>
-                                <span class="value error" id="unit-failed">0</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress" id="unit-progress"></div>
-                        </div>
-                    </div>
-                    <div class="result-card">
-                        <h3>Coverage</h3>
-                        <div class="result-stats">
-                            <div class="stat">
-                                <span class="label">Lines</span>
-                                <span class="value" id="coverage-lines">0%</span>
-                            </div>
-                            <div class="stat">
-                                <span class="label">Functions</span>
-                                <span class="value" id="coverage-functions">0%</span>
-                            </div>
-                            <div class="stat">
-                                <span class="label">Branches</span>
-                                <span class="value" id="coverage-branches">0%</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress" id="coverage-progress"></div>
-                        </div>
-                    </div>
+        <!-- Test Results -->
+        <section class="results-section">
+          <h2><i class="fas fa-chart-bar"></i> Test Results</h2>
+          <div class="results-grid">
+            <div class="result-card">
+              <h3>Cypress Tests</h3>
+              <div class="result-stats">
+                <div class="stat">
+                  <span class="label">Total</span>
+                  <span class="value" id="cypress-total">0</span>
                 </div>
-            </section>
-        </div>
+                <div class="stat">
+                  <span class="label">Passed</span>
+                  <span class="value success" id="cypress-passed">0</span>
+                </div>
+                <div class="stat">
+                  <span class="label">Failed</span>
+                  <span class="value error" id="cypress-failed">0</span>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" id="cypress-progress"></div>
+              </div>
+            </div>
+            <div class="result-card">
+              <h3>Unit Tests</h3>
+              <div class="result-stats">
+                <div class="stat">
+                  <span class="label">Services</span>
+                  <span class="value" id="unit-services">0</span>
+                </div>
+                <div class="stat">
+                  <span class="label">Passed</span>
+                  <span class="value success" id="unit-passed">0</span>
+                </div>
+                <div class="stat">
+                  <span class="label">Failed</span>
+                  <span class="value error" id="unit-failed">0</span>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" id="unit-progress"></div>
+              </div>
+            </div>
+            <div class="result-card">
+              <h3>Coverage</h3>
+              <div class="result-stats">
+                <div class="stat">
+                  <span class="label">Lines</span>
+                  <span class="value" id="coverage-lines">0%</span>
+                </div>
+                <div class="stat">
+                  <span class="label">Functions</span>
+                  <span class="value" id="coverage-functions">0%</span>
+                </div>
+                <div class="stat">
+                  <span class="label">Branches</span>
+                  <span class="value" id="coverage-branches">0%</span>
+                </div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" id="coverage-progress"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <!-- WebSocket Connection Status -->
     <div class="connection-status" id="connection-status">
-        <i class="fas fa-wifi"></i> Connected
+      <i class="fas fa-wifi"></i> Connected
     </div>
 
     <!-- Notification System -->
     <div class="notifications" id="notifications"></div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

@@ -1,0 +1,65 @@
+{
+  "environment": "production",
+  "services": {
+    "osint-framework": {
+      "port": 8000,
+      "enabled": true,
+      "health_endpoint": "/api/health",
+      "base_url": "https://profil3r.app:8000"
+    },
+    "js-tools": {
+      "port": 3000,
+      "enabled": true,
+      "health_endpoint": "/api/health",
+      "base_url": "https://profil3r.app:3000"
+    },
+    "facebook-messenger": {
+      "port": 4444,
+      "enabled": true,
+      "health_endpoint": "/api/health",
+      "base_url": "https://profil3r.app:4444"
+    }
+  },
+  "database": {
+    "type": "postgresql",
+    "host": "localhost",
+    "port": 5432,
+    "database": "profil3r_prod",
+    "enabled": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "logs/profil3r_prod.log",
+    "max_size": "50MB",
+    "retention": 30
+  },
+  "monitoring": {
+    "enabled": true,
+    "interval": 15,
+    "health_checks": true,
+    "alerts": true,
+    "alert_webhook": "https://hooks.slack.com/services/..."
+  },
+  "testing": {
+    "run_integration_tests": true,
+    "run_security_tests": true,
+    "coverage_threshold": 90
+  },
+  "build": {
+    "python_compile": true,
+    "minify_js": true,
+    "optimize_images": true
+  },
+  "deployment": {
+    "strategy": "blue-green",
+    "backup": true,
+    "rollback_enabled": true,
+    "health_check_timeout": 300
+  },
+  "security": {
+    "ssl_enabled": true,
+    "api_rate_limit": 100,
+    "cors_enabled": true,
+    "security_headers": true
+  }
+}

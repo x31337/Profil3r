@@ -12,7 +12,7 @@ class AutoBuildUI {
       system: []
     };
     this.currentLogType = 'build';
-    
+
     this.init();
   }
 
@@ -25,7 +25,7 @@ class AutoBuildUI {
   connectWebSocket() {
     try {
       this.ws = new WebSocket('ws://localhost:9001');
-      
+
       this.ws.onopen = () => {
         console.log('WebSocket connected');
         this.reconnectAttempts = 0;
@@ -33,7 +33,7 @@ class AutoBuildUI {
         this.showNotification('Connected to build system', 'success');
       };
 
-      this.ws.onmessage = (event) => {
+      this.ws.onmessage = event => {
         const message = JSON.parse(event.data);
         this.handleWebSocketMessage(message);
       };
@@ -44,7 +44,7 @@ class AutoBuildUI {
         this.attemptReconnect();
       };
 
-      this.ws.onerror = (error) => {
+      this.ws.onerror = error => {
         console.error('WebSocket error:', error);
         this.updateConnectionStatus(false);
       };
@@ -59,7 +59,9 @@ class AutoBuildUI {
     if (this.reconnectAttempts < this.maxReconnectAttempts) {
       this.reconnectAttempts++;
       setTimeout(() => {
-        console.log(`Attempting to reconnect... (${this.reconnectAttempts}/${this.maxReconnectAttempts})`);
+        console.log(
+          `Attempting to reconnect... (${this.reconnectAttempts}/${this.maxReconnectAttempts})`
+        );
         this.connectWebSocket();
       }, this.reconnectInterval);
     } else {
@@ -69,56 +71,56 @@ class AutoBuildUI {
 
   handleWebSocketMessage(message) {
     const { type, data } = message;
-    
+
     switch (type) {
-      case 'state':
-        this.updateState(data);
-        break;
-      case 'build-started':
-        this.handleBuildStarted(data);
-        break;
-      case 'build-completed':
-        this.handleBuildCompleted(data);
-        break;
-      case 'build-failed':
-        this.handleBuildFailed(data);
-        break;
-      case 'tests-started':
-        this.handleTestsStarted(data);
-        break;
-      case 'tests-completed':
-        this.handleTestsCompleted(data);
-        break;
-      case 'tests-failed':
-        this.handleTestsFailed(data);
-        break;
-      case 'deployment-completed':
-        this.handleDeploymentCompleted(data);
-        break;
-      case 'deployment-failed':
-        this.handleDeploymentFailed(data);
-        break;
-      case 'health-update':
-        this.updateHealthStatus(data);
-        break;
-      case 'file-change':
-        this.handleFileChange(data);
-        break;
-      case 'incremental-build-completed':
-        this.handleIncrementalBuild(data);
-        break;
-      case 'components-built':
-        this.updateServicesStatus(data);
-        break;
-      case 'cypress-completed':
-        this.updateCypressResults(data);
-        break;
-      case 'auto-fix-completed':
-        this.handleAutoFixCompleted(data);
-        break;
-      case 'auto-fix-failed':
-        this.handleAutoFixFailed(data);
-        break;
+    case 'state':
+      this.updateState(data);
+      break;
+    case 'build-started':
+      this.handleBuildStarted(data);
+      break;
+    case 'build-completed':
+      this.handleBuildCompleted(data);
+      break;
+    case 'build-failed':
+      this.handleBuildFailed(data);
+      break;
+    case 'tests-started':
+      this.handleTestsStarted(data);
+      break;
+    case 'tests-completed':
+      this.handleTestsCompleted(data);
+      break;
+    case 'tests-failed':
+      this.handleTestsFailed(data);
+      break;
+    case 'deployment-completed':
+      this.handleDeploymentCompleted(data);
+      break;
+    case 'deployment-failed':
+      this.handleDeploymentFailed(data);
+      break;
+    case 'health-update':
+      this.updateHealthStatus(data);
+      break;
+    case 'file-change':
+      this.handleFileChange(data);
+      break;
+    case 'incremental-build-completed':
+      this.handleIncrementalBuild(data);
+      break;
+    case 'components-built':
+      this.updateServicesStatus(data);
+      break;
+    case 'cypress-completed':
+      this.updateCypressResults(data);
+      break;
+    case 'auto-fix-completed':
+      this.handleAutoFixCompleted(data);
+      break;
+    case 'auto-fix-failed':
+      this.handleAutoFixFailed(data);
+      break;
     }
   }
 
@@ -126,15 +128,16 @@ class AutoBuildUI {
     // Update header stats
     document.getElementById('build-count').textContent = state.buildCount || 0;
     document.getElementById('test-count').textContent = state.testCount || 0;
-    document.getElementById('deploy-count').textContent = state.deployCount || 0;
-    
+    document.getElementById('deploy-count').textContent =
+      state.deployCount || 0;
+
     // Update status cards
     this.updateBuildStatus(state.building ? 'building' : 'ready');
     this.updateTestStatus(state.testing ? 'testing' : 'ready');
-    
+
     // Update services
     this.updateServicesStatus({ services: state.services || {} });
-    
+
     // Update test results
     if (state.testResults) {
       this.updateTestResults(state.testResults);
@@ -145,26 +148,26 @@ class AutoBuildUI {
     const card = document.getElementById('build-status');
     const statusText = card.querySelector('.status-text');
     const statusTime = card.querySelector('.status-time');
-    
+
     switch (status) {
-      case 'building':
-        statusText.textContent = 'Building...';
-        statusTime.textContent = new Date().toLocaleTimeString();
-        card.className = 'status-card building';
-        break;
-      case 'success':
-        statusText.textContent = 'Build Success';
-        statusTime.textContent = new Date().toLocaleTimeString();
-        card.className = 'status-card success';
-        break;
-      case 'failed':
-        statusText.textContent = 'Build Failed';
-        statusTime.textContent = new Date().toLocaleTimeString();
-        card.className = 'status-card error';
-        break;
-      default:
-        statusText.textContent = 'Ready';
-        card.className = 'status-card';
+    case 'building':
+      statusText.textContent = 'Building...';
+      statusTime.textContent = new Date().toLocaleTimeString();
+      card.className = 'status-card building';
+      break;
+    case 'success':
+      statusText.textContent = 'Build Success';
+      statusTime.textContent = new Date().toLocaleTimeString();
+      card.className = 'status-card success';
+      break;
+    case 'failed':
+      statusText.textContent = 'Build Failed';
+      statusTime.textContent = new Date().toLocaleTimeString();
+      card.className = 'status-card error';
+      break;
+    default:
+      statusText.textContent = 'Ready';
+      card.className = 'status-card';
     }
   }
 
@@ -172,33 +175,33 @@ class AutoBuildUI {
     const card = document.getElementById('test-status');
     const statusText = card.querySelector('.status-text');
     const statusTime = card.querySelector('.status-time');
-    
+
     switch (status) {
-      case 'testing':
-        statusText.textContent = 'Testing...';
-        statusTime.textContent = new Date().toLocaleTimeString();
-        card.className = 'status-card testing';
-        break;
-      case 'success':
-        statusText.textContent = 'Tests Passed';
-        statusTime.textContent = new Date().toLocaleTimeString();
-        card.className = 'status-card success';
-        break;
-      case 'failed':
-        statusText.textContent = 'Tests Failed';
-        statusTime.textContent = new Date().toLocaleTimeString();
-        card.className = 'status-card error';
-        break;
-      default:
-        statusText.textContent = 'Ready';
-        card.className = 'status-card';
+    case 'testing':
+      statusText.textContent = 'Testing...';
+      statusTime.textContent = new Date().toLocaleTimeString();
+      card.className = 'status-card testing';
+      break;
+    case 'success':
+      statusText.textContent = 'Tests Passed';
+      statusTime.textContent = new Date().toLocaleTimeString();
+      card.className = 'status-card success';
+      break;
+    case 'failed':
+      statusText.textContent = 'Tests Failed';
+      statusTime.textContent = new Date().toLocaleTimeString();
+      card.className = 'status-card error';
+      break;
+    default:
+      statusText.textContent = 'Ready';
+      card.className = 'status-card';
     }
   }
 
   updateServicesStatus(data) {
     const servicesGrid = document.getElementById('services-grid');
     servicesGrid.innerHTML = '';
-    
+
     Object.entries(data.services || {}).forEach(([name, service]) => {
       const serviceCard = document.createElement('div');
       serviceCard.className = `service-card ${service.status}`;
@@ -229,15 +232,17 @@ class AutoBuildUI {
 
   updateHealthStatus(data) {
     const healthCount = Object.keys(data.healthChecks || {}).length;
-    const healthyCount = Object.values(data.healthChecks || {}).filter(h => h.status === 'healthy').length;
-    
+    const healthyCount = Object.values(data.healthChecks || {}).filter(
+      h => h.status === 'healthy'
+    ).length;
+
     const card = document.getElementById('health-status');
     const statusText = card.querySelector('.status-text');
     const statusTime = card.querySelector('.status-time');
-    
+
     statusText.textContent = `${healthyCount}/${healthCount} Healthy`;
     statusTime.textContent = new Date().toLocaleTimeString();
-    
+
     if (healthyCount === healthCount) {
       card.className = 'status-card success';
     } else {
@@ -250,32 +255,42 @@ class AutoBuildUI {
     if (results.cypress) {
       const { stats } = results.cypress;
       document.getElementById('cypress-total').textContent = stats?.tests || 0;
-      document.getElementById('cypress-passed').textContent = stats?.passes || 0;
-      document.getElementById('cypress-failed').textContent = stats?.failures || 0;
-      
-      const passRate = stats?.tests ? ((stats.passes / stats.tests) * 100).toFixed(1) : 0;
+      document.getElementById('cypress-passed').textContent =
+        stats?.passes || 0;
+      document.getElementById('cypress-failed').textContent =
+        stats?.failures || 0;
+
+      const passRate = stats?.tests
+        ? ((stats.passes / stats.tests) * 100).toFixed(1)
+        : 0;
       document.getElementById('cypress-progress').style.width = `${passRate}%`;
     }
-    
+
     // Update unit test results
     const unitResults = Object.values(results).filter(r => r.status);
     const unitPassed = unitResults.filter(r => r.status === 'passed').length;
     const unitFailed = unitResults.filter(r => r.status === 'failed').length;
-    
+
     document.getElementById('unit-services').textContent = unitResults.length;
     document.getElementById('unit-passed').textContent = unitPassed;
     document.getElementById('unit-failed').textContent = unitFailed;
-    
-    const unitPassRate = unitResults.length ? ((unitPassed / unitResults.length) * 100).toFixed(1) : 0;
+
+    const unitPassRate = unitResults.length
+      ? ((unitPassed / unitResults.length) * 100).toFixed(1)
+      : 0;
     document.getElementById('unit-progress').style.width = `${unitPassRate}%`;
-    
+
     // Update coverage
     if (results.coverage) {
       const { total } = results.coverage;
-      document.getElementById('coverage-lines').textContent = `${total?.lines?.pct || 0}%`;
-      document.getElementById('coverage-functions').textContent = `${total?.functions?.pct || 0}%`;
-      document.getElementById('coverage-branches').textContent = `${total?.branches?.pct || 0}%`;
-      document.getElementById('coverage-progress').style.width = `${total?.lines?.pct || 0}%`;
+      document.getElementById('coverage-lines').textContent =
+        `${total?.lines?.pct || 0}%`;
+      document.getElementById('coverage-functions').textContent =
+        `${total?.functions?.pct || 0}%`;
+      document.getElementById('coverage-branches').textContent =
+        `${total?.branches?.pct || 0}%`;
+      document.getElementById('coverage-progress').style.width =
+        `${total?.lines?.pct || 0}%`;
     }
   }
 
@@ -335,7 +350,11 @@ class AutoBuildUI {
   }
 
   handleIncrementalBuild(data) {
-    this.addLog('build', `Incremental build completed for ${data.changedFiles.length} files`, 'info');
+    this.addLog(
+      'build',
+      `Incremental build completed for ${data.changedFiles.length} files`,
+      'info'
+    );
     this.showNotification('Incremental build completed', 'info');
   }
 
@@ -352,14 +371,14 @@ class AutoBuildUI {
   addLog(type, message, level = 'info') {
     const timestamp = new Date().toLocaleTimeString();
     const logEntry = { timestamp, message, level };
-    
+
     this.logs[type].push(logEntry);
-    
+
     // Keep only last 100 entries
     if (this.logs[type].length > 100) {
       this.logs[type] = this.logs[type].slice(-100);
     }
-    
+
     // Update UI if current log type
     if (this.currentLogType === type) {
       this.updateLogDisplay();
@@ -369,7 +388,7 @@ class AutoBuildUI {
   updateLogDisplay() {
     const logContent = document.getElementById('log-content');
     logContent.innerHTML = '';
-    
+
     this.logs[this.currentLogType].forEach(log => {
       const logEntry = document.createElement('div');
       logEntry.className = `log-entry ${log.level}`;
@@ -379,7 +398,7 @@ class AutoBuildUI {
       `;
       logContent.appendChild(logEntry);
     });
-    
+
     // Scroll to bottom
     logContent.scrollTop = logContent.scrollHeight;
   }
@@ -389,9 +408,9 @@ class AutoBuildUI {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.innerHTML = `<span>${message}</span>`;
-    
+
     notifications.appendChild(notification);
-    
+
     // Auto-remove after 5 seconds
     setTimeout(() => {
       notification.remove();
@@ -412,7 +431,7 @@ class AutoBuildUI {
   setupEventListeners() {
     // Log tab switching
     document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         const type = e.target.textContent.toLowerCase();
         this.showLogs(type);
       });
@@ -459,14 +478,39 @@ function triggerFix() {
   ui.showNotification('Auto-fix triggered', 'info');
 }
 
+function triggerAutoInstall() {
+  ui.sendWebSocketMessage('auto-install');
+  ui.showNotification('Auto-install triggered', 'info');
+}
+
+function triggerAutoConfig() {
+  ui.sendWebSocketMessage('auto-configure');
+  ui.showNotification('Auto-configure triggered', 'info');
+}
+
+function triggerAutoPush() {
+  ui.sendWebSocketMessage('auto-push');
+  ui.showNotification('Auto-push triggered', 'info');
+}
+
+function triggerCypress() {
+  ui.sendWebSocketMessage('cypress');
+  ui.showNotification('Cypress tests triggered', 'info');
+}
+
+function triggerFullCycle() {
+  ui.sendWebSocketMessage('full-cycle');
+  ui.showNotification('Full build cycle triggered', 'info');
+}
+
 function showLogs(type) {
   // Update tab buttons
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  
+
   event.target.classList.add('active');
-  
+
   // Update current log type and display
   ui.currentLogType = type;
   ui.updateLogDisplay();
@@ -562,24 +606,65 @@ const additionalStyles = `
   border-color: #17a2b8;
 }
 
+.btn.btn-purple {
+  background-color: #6f42c1;
+  border-color: #6f42c1;
+  color: white;
+}
+
+.btn.btn-purple:hover {
+  background-color: #5a2d91;
+  border-color: #5a2d91;
+}
+
+.btn.btn-full-cycle {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+  color: white;
+}
+
+.btn.btn-full-cycle:hover {
+  background-color: #e8630d;
+  border-color: #e8630d;
+}
+
+.advanced-controls {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.control-buttons .btn {
+  flex: 1;
+  min-width: 120px;
+  max-width: 180px;
+}
+
 @media (max-width: 768px) {
   .status-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .services-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .results-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .control-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .header-stats {
     flex-direction: column;
     gap: 10px;
