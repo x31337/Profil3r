@@ -31,14 +31,24 @@ class DependencyManager {
       execSync('npm install', { cwd: projectPath, stdio: 'inherit' });
       console.log(`Dependencies installed successfully for ${name}`);
     } catch (error) {
-      console.log(`Standard install failed for ${name}, trying --legacy-peer-deps...`);
+      console.log(
+        `Standard install failed for ${name}, trying --legacy-peer-deps...`
+      );
       try {
-        execSync('npm install --legacy-peer-deps', { cwd: projectPath, stdio: 'inherit' });
-        console.log(`Dependencies installed with --legacy-peer-deps for ${name}`);
+        execSync('npm install --legacy-peer-deps', {
+          cwd: projectPath,
+          stdio: 'inherit'
+        });
+        console.log(
+          `Dependencies installed with --legacy-peer-deps for ${name}`
+        );
       } catch (error2) {
         console.log(`Legacy peer deps failed for ${name}, trying --force...`);
         try {
-          execSync('npm install --force', { cwd: projectPath, stdio: 'inherit' });
+          execSync('npm install --force', {
+            cwd: projectPath,
+            stdio: 'inherit'
+          });
           console.log(`Dependencies installed with --force for ${name}`);
         } catch (error3) {
           return await this.autoFixDependencies(projectPath, name);
@@ -50,9 +60,18 @@ class DependencyManager {
   async autoFixDependencies(projectPath, name) {
     console.log(`Auto-fixing dependencies for ${name}...`);
     try {
-      execSync('npm cache clean --force', { cwd: projectPath, stdio: 'inherit' });
-      execSync('rm -rf node_modules package-lock.json', { cwd: projectPath, stdio: 'inherit' });
-      execSync('npm install --legacy-peer-deps', { cwd: projectPath, stdio: 'inherit' });
+      execSync('npm cache clean --force', {
+        cwd: projectPath,
+        stdio: 'inherit'
+      });
+      execSync('rm -rf node_modules package-lock.json', {
+        cwd: projectPath,
+        stdio: 'inherit'
+      });
+      execSync('npm install --legacy-peer-deps', {
+        cwd: projectPath,
+        stdio: 'inherit'
+      });
       console.log(`Dependencies auto-fixed successfully for ${name}`);
     } catch (error) {
       console.log(`Auto-fix failed for ${name}: ${error.message}`);
@@ -62,4 +81,3 @@ class DependencyManager {
 }
 
 module.exports = DependencyManager;
-

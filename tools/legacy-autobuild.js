@@ -103,19 +103,19 @@ class AutoBuildSystem {
 
   setupEventListeners() {
     // Update legacy state from new module events
-    this.eventBus.on('build-started', (data) => {
+    this.eventBus.on('build-started', data => {
       this.state.building = true;
       this.state.buildCount++;
       this.state.lastBuild = new Date().toISOString();
       this.broadcast('build-started', data);
     });
 
-    this.eventBus.on('build-completed', (data) => {
+    this.eventBus.on('build-completed', data => {
       this.state.building = false;
       this.broadcast('build-completed', data);
     });
 
-    this.eventBus.on('build-failed', (data) => {
+    this.eventBus.on('build-failed', data => {
       this.state.building = false;
       this.state.errors.push({
         type: 'build',
@@ -125,19 +125,19 @@ class AutoBuildSystem {
       this.broadcast('build-failed', data);
     });
 
-    this.eventBus.on('tests-started', (data) => {
+    this.eventBus.on('tests-started', data => {
       this.state.testing = true;
       this.state.testCount++;
       this.broadcast('tests-started', data);
     });
 
-    this.eventBus.on('tests-completed', (data) => {
+    this.eventBus.on('tests-completed', data => {
       this.state.testing = false;
       this.state.testResults = data.results;
       this.broadcast('tests-completed', data);
     });
 
-    this.eventBus.on('tests-failed', (data) => {
+    this.eventBus.on('tests-failed', data => {
       this.state.testing = false;
       this.state.errors.push({
         type: 'test',
@@ -147,12 +147,12 @@ class AutoBuildSystem {
       this.broadcast('tests-failed', data);
     });
 
-    this.eventBus.on('deployment-completed', (data) => {
+    this.eventBus.on('deployment-completed', data => {
       this.state.deployCount++;
       this.broadcast('deployment-completed', data);
     });
 
-    this.eventBus.on('deployment-failed', (data) => {
+    this.eventBus.on('deployment-failed', data => {
       this.state.errors.push({
         type: 'deployment',
         message: data.error,
@@ -161,19 +161,19 @@ class AutoBuildSystem {
       this.broadcast('deployment-failed', data);
     });
 
-    this.eventBus.on('health-checks-completed', (data) => {
+    this.eventBus.on('health-checks-completed', data => {
       this.state.healthChecks = data.healthChecks;
       this.broadcast('health-update', data);
     });
 
-    this.eventBus.on('component-built', (data) => {
+    this.eventBus.on('component-built', data => {
       this.state.services[data.service] = {
         status: 'built',
         timestamp: new Date().toISOString()
       };
     });
 
-    this.eventBus.on('component-build-failed', (data) => {
+    this.eventBus.on('component-build-failed', data => {
       this.state.services[data.service] = {
         status: 'failed',
         error: data.error,
@@ -219,24 +219,62 @@ class AutoBuildSystem {
 
   async startWebServer() {
     // Legacy wrapper - delegate to main auto-build-system
-    console.log('⚠️  Legacy WebServer wrapper - consider migrating to auto-build-system.js');
-    
+    console.log(
+      '⚠️  Legacy WebServer wrapper - consider migrating to auto-build-system.js'
+    );
+
     const app = express();
     app.use(express.static(path.join(__dirname, 'web-ui')));
     app.use(express.json());
 
     // Simple proxy to delegate all API calls to high-level methods
     const apiRoutes = [
-      { method: 'get', path: '/api/status', handler: () => ({ ...this.state, config: this.config, timestamp: new Date().toISOString() }) },
-      { method: 'post', path: '/api/build', handler: () => this.fullBuildCycle() },
+      {
+        method: 'get',
+        path: '/api/status',
+        handler: () => ({
+          ...this.state,
+          config: this.config,
+          timestamp: new Date().toISOString()
+        })
+      },
+      {
+        method: 'post',
+        path: '/api/build',
+        handler: () => this.fullBuildCycle()
+      },
       { method: 'post', path: '/api/test', handler: () => this.runAllTests() },
-      { method: 'post', path: '/api/deploy', handler: () => this.deployChanges() },
+      {
+        method: 'post',
+        path: '/api/deploy',
+        handler: () => this.deployChanges()
+      },
       { method: 'post', path: '/api/fix', handler: () => this.autoFixIssues() },
-      { method: 'post', path: '/api/cypress', handler: () => this.runCypressTests() },
-      { method: 'post', path: '/api/full-cycle', handler: () => this.runFullAutoCycle() },
-      { method: 'post', path: '/api/auto-install', handler: () => this.autoInstallDependencies() },
-      { method: 'post', path: '/api/auto-configure', handler: () => this.autoConfigureProject() },
-      { method: 'post', path: '/api/auto-push', handler: () => this.autoPushChanges() },
+      {
+        method: 'post',
+        path: '/api/cypress',
+        handler: () => this.runCypressTests()
+      },
+      {
+        method: 'post',
+        path: '/api/full-cycle',
+        handler: () => this.runFullAutoCycle()
+      },
+      {
+        method: 'post',
+        path: '/api/auto-install',
+        handler: () => this.autoInstallDependencies()
+      },
+      {
+        method: 'post',
+        path: '/api/auto-configure',
+        handler: () => this.autoConfigureProject()
+      },
+      {
+        method: 'post',
+        path: '/api/auto-push',
+        handler: () => this.autoPushChanges()
+      }
     ];
 
     // Register routes with delegation
@@ -269,8 +307,10 @@ class AutoBuildSystem {
   }
 
   async startWebSocketServer() {
-    console.log('⚠️  Legacy WebSocket wrapper - consider migrating to auto-build-system.js');
-    
+    console.log(
+      '⚠️  Legacy WebSocket wrapper - consider migrating to auto-build-system.js'
+    );
+
     this.wss = new WebSocket.Server({ port: this.config.wsPort });
 
     this.wss.on('connection', ws => {
@@ -290,14 +330,14 @@ class AutoBuildSystem {
         try {
           // All commands delegate to high-level methods
           const commandMap = {
-            'build': () => this.fullBuildCycle(),
-            'test': () => this.runAllTests(),
-            'deploy': () => this.deployChanges(),
-            'fix': () => this.autoFixIssues(),
+            build: () => this.fullBuildCycle(),
+            test: () => this.runAllTests(),
+            deploy: () => this.deployChanges(),
+            fix: () => this.autoFixIssues(),
             'auto-install': () => this.autoInstallDependencies(),
             'auto-configure': () => this.autoConfigureProject(),
             'auto-push': () => this.autoPushChanges(),
-            'cypress': () => this.runCypressTests(),
+            cypress: () => this.runCypressTests(),
             'full-cycle': () => this.runFullAutoCycle()
           };
 
@@ -306,7 +346,10 @@ class AutoBuildSystem {
             await handler();
           } else {
             console.warn(`Unknown WebSocket command: ${type}`);
-            this.broadcast('command-failed', { type, error: 'Unknown command' });
+            this.broadcast('command-failed', {
+              type,
+              error: 'Unknown command'
+            });
           }
         } catch (error) {
           console.error(`WebSocket command failed: ${error.message}`);
@@ -398,12 +441,12 @@ class AutoBuildSystem {
       console.log('✅ Full build cycle completed successfully!');
     } catch (error) {
       console.error('❌ Build cycle failed:', error.message);
-      
+
       // Auto-fix on failure
       if (this.config.autoFix) {
         await this.autoFixIssues();
       }
-      
+
       throw error;
     }
   }
@@ -540,7 +583,10 @@ class AutoBuildSystem {
 
   async installDependenciesForPath(projectPath, name) {
     // Proxy to dependencyManager
-    return await this.dependencyManager.installDependenciesForPath(projectPath, name);
+    return await this.dependencyManager.installDependenciesForPath(
+      projectPath,
+      name
+    );
   }
 
   async autoFixDependencies(projectPath, name) {
@@ -807,7 +853,10 @@ class AutoBuildSystem {
 
   checkPackageInstalled(packageName) {
     try {
-      const packageJsonPath = path.join(this.config.projectRoot, 'package.json');
+      const packageJsonPath = path.join(
+        this.config.projectRoot,
+        'package.json'
+      );
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
       return (
         packageJson.dependencies?.[packageName] ||

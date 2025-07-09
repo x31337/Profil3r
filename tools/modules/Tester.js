@@ -20,32 +20,31 @@ class Tester {
 
     this.testing = true;
     const testId = Date.now();
-    
+
     this.eventBus.broadcast('tests-started', { testId });
 
     try {
       console.log('🧪 Running all tests...');
-      
+
       // Run unit tests (Jest/Mocha)
       await this.runUnitTests();
-      
+
       // Run Cypress tests
       await this.runCypressTests();
-      
+
       // Run integration tests
       await this.runIntegrationTests();
-      
+
       // Calculate coverage
       await this.calculateCoverage();
-      
+
       this.eventBus.broadcast('tests-completed', {
         testId,
         success: true,
         results: this.testResults
       });
-      
+
       console.log('✅ All tests completed successfully!');
-      
     } catch (error) {
       console.error('❌ Tests failed:', error.message);
       this.eventBus.broadcast('tests-failed', {
@@ -60,7 +59,7 @@ class Tester {
 
   async runUnitTests() {
     console.log('🔬 Running unit tests...');
-    
+
     for (const service of this.config.services) {
       if (service.type === 'node') {
         const servicePath = path.join(this.config.projectRoot, service.dir);
@@ -89,7 +88,6 @@ class Tester {
                 service: service.name,
                 status: 'passed'
               });
-              
             } catch (error) {
               this.testResults[service.name] = {
                 type: 'unit',
@@ -111,7 +109,7 @@ class Tester {
 
   async runCypressTests() {
     console.log('🌐 Running Cypress tests...');
-    
+
     try {
       const result = execSync('npx cypress run --reporter json', {
         cwd: this.config.projectRoot,
@@ -126,11 +124,10 @@ class Tester {
         timestamp: new Date().toISOString()
       };
 
-      this.eventBus.broadcast('cypress-completed', { 
+      this.eventBus.broadcast('cypress-completed', {
         result: cypressResult,
         status: 'passed'
       });
-      
     } catch (error) {
       this.testResults.cypress = {
         type: 'e2e',
@@ -139,19 +136,19 @@ class Tester {
         timestamp: new Date().toISOString()
       };
 
-      this.eventBus.broadcast('cypress-failed', { 
-        error: error.message 
+      this.eventBus.broadcast('cypress-failed', {
+        error: error.message
       });
-      
+
       throw new Error(`Cypress tests failed: ${error.message}`);
     }
   }
 
   async runIntegrationTests() {
     console.log('🔗 Running integration tests...');
-    
+
     const healthChecks = {};
-    
+
     for (const service of this.config.services) {
       if (service.port) {
         try {
@@ -165,7 +162,6 @@ class Tester {
             response: response.data,
             timestamp: new Date().toISOString()
           };
-          
         } catch (error) {
           healthChecks[service.name] = {
             status: 'unhealthy',
@@ -189,7 +185,7 @@ class Tester {
 
   async calculateCoverage() {
     console.log('📊 Calculating test coverage...');
-    
+
     try {
       // Run nyc for coverage
       const nycResult = execSync('npx nyc report --reporter=json', {
@@ -205,7 +201,7 @@ class Tester {
       };
 
       const totalCoverage = coverage.total?.lines?.pct || 0;
-      
+
       this.eventBus.broadcast('coverage-calculated', {
         coverage: totalCoverage,
         target: this.config.testCoverage,
@@ -217,7 +213,6 @@ class Tester {
           `Coverage ${totalCoverage}% below target ${this.config.testCoverage}%`
         );
       }
-      
     } catch (error) {
       console.warn('⚠️ Coverage calculation failed:', error.message);
       this.eventBus.broadcast('coverage-failed', {
@@ -228,19 +223,18 @@ class Tester {
 
   async runQuickTests(affectedServices) {
     console.log('⚡ Running quick tests...');
-    
+
     for (const service of affectedServices) {
       if (service.port) {
         try {
           await axios.get(`http://localhost:${service.port}/health`, {
             timeout: 1000
           });
-          
+
           console.log(`✅ ${service.name} quick test passed`);
           this.eventBus.broadcast('quick-test-passed', {
             service: service.name
           });
-          
         } catch (error) {
           console.error(`❌ ${service.name} quick test failed`);
           this.eventBus.broadcast('quick-test-failed', {

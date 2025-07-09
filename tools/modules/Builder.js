@@ -20,20 +20,22 @@ class Builder {
 
     this.building = true;
     const buildId = Date.now();
-    
+
     this.eventBus.broadcast('build-started', { buildId });
 
     try {
       console.log('🔨 Starting full build...');
-      
+
       await this.buildAllComponents();
-      
+
       this.eventBus.broadcast('build-completed', { buildId, success: true });
       console.log('✅ Full build completed successfully!');
-      
     } catch (error) {
       console.error('❌ Build failed:', error.message);
-      this.eventBus.broadcast('build-failed', { buildId, error: error.message });
+      this.eventBus.broadcast('build-failed', {
+        buildId,
+        error: error.message
+      });
       throw error;
     } finally {
       this.building = false;
@@ -42,9 +44,9 @@ class Builder {
 
   async incrementalBuild(changedFiles) {
     console.log(`🔄 Incremental build for ${changedFiles.length} files...`);
-    
+
     const affectedServices = new Set();
-    
+
     for (const file of changedFiles) {
       for (const service of this.config.services) {
         if (file.startsWith(service.dir)) {
@@ -57,10 +59,13 @@ class Builder {
       try {
         await this.buildComponent(service);
       } catch (error) {
-        console.error(`❌ Incremental build failed for ${service.name}:`, error.message);
-        this.eventBus.broadcast('incremental-build-failed', { 
-          service: service.name, 
-          error: error.message 
+        console.error(
+          `❌ Incremental build failed for ${service.name}:`,
+          error.message
+        );
+        this.eventBus.broadcast('incremental-build-failed', {
+          service: service.name,
+          error: error.message
         });
       }
     }
@@ -73,18 +78,18 @@ class Builder {
 
   async buildAllComponents() {
     console.log('🏗️ Building all components...');
-    
+
     const buildPromises = this.config.services.map(async service => {
       try {
         await this.buildComponent(service);
-        this.eventBus.broadcast('component-built', { 
-          service: service.name, 
-          status: 'success' 
+        this.eventBus.broadcast('component-built', {
+          service: service.name,
+          status: 'success'
         });
       } catch (error) {
-        this.eventBus.broadcast('component-build-failed', { 
-          service: service.name, 
-          error: error.message 
+        this.eventBus.broadcast('component-build-failed', {
+          service: service.name,
+          error: error.message
         });
         throw error;
       }
@@ -163,7 +168,7 @@ class Builder {
   queueBuild(triggerFile) {
     if (this.buildQueue.length === 0) {
       this.buildQueue.push(triggerFile);
-      
+
       setTimeout(async () => {
         if (this.buildQueue.length > 0) {
           const files = [...this.buildQueue];

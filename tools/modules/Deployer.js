@@ -47,7 +47,10 @@ class Deployer {
       console.log('✅ Changes deployed successfully!');
     } catch (error) {
       console.error('❌ Deployment failed:', error.message);
-      this.eventBus.broadcast('deployment-failed', { deployId, error: error.message });
+      this.eventBus.broadcast('deployment-failed', {
+        deployId,
+        error: error.message
+      });
       throw error;
     } finally {
       this.deploying = false;

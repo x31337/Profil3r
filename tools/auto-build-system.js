@@ -15,10 +15,22 @@ const chokidar = require('chokidar');
 const axios = require('axios');
 const git = require('simple-git');
 
-const { ServiceManager, EventBus, Builder, Deployer, Tester, AutoFixEngine, DependencyManager } = require('./modules');
+const {
+  ServiceManager,
+  EventBus,
+  Builder,
+  Deployer,
+  Tester,
+  AutoFixEngine,
+  DependencyManager
+} = require('./modules');
 
 class AutoBuildSystem {
-  constructor() {
+constructor() {
+    // Check for legacy usage and warn
+    if (process.argv.includes('--legacy')) {
+      console.warn('⚠️  You are using the legacy interface which is deprecated and will be removed in future versions. Consider moving to the updated API.');
+    }
     // Configuration setup (reused from legacy implementation)
     this.config = {
       projectRoot: process.cwd(),
@@ -228,7 +240,7 @@ class AutoBuildSystem {
     });
 
     // Listen to tests-completed event
-    this.eventBus.subscribe('tests-completed', (result) => {
+    this.eventBus.subscribe('tests-completed', result => {
       this.state.testing = false;
       this.state.testResults = result;
       this.state.testCount += 1;
@@ -279,14 +291,24 @@ class AutoBuildSystem {
     });
 
     // Listen to integration-tests-completed event
-    this.eventBus.subscribe('integration-tests-completed', ({ healthChecks }) => {
-      this.broadcast('integration-tests-completed', { healthChecks });
-    });
+    this.eventBus.subscribe(
+      'integration-tests-completed',
+      ({ healthChecks }) => {
+        this.broadcast('integration-tests-completed', { healthChecks });
+      }
+    );
 
     // Listen to coverage-calculated event
-    this.eventBus.subscribe('coverage-calculated', ({ coverage, target, meets_target }) => {
-      this.broadcast('coverage-calculated', { coverage, target, meets_target });
-    });
+    this.eventBus.subscribe(
+      'coverage-calculated',
+      ({ coverage, target, meets_target }) => {
+        this.broadcast('coverage-calculated', {
+          coverage,
+          target,
+          meets_target
+        });
+      }
+    );
 
     // Listen to coverage-failed event
     this.eventBus.subscribe('coverage-failed', ({ error }) => {
@@ -353,20 +375,29 @@ class AutoBuildSystem {
     });
 
     // Listen to incremental-build-completed event
-    this.eventBus.subscribe('incremental-build-completed', ({ changedFiles, affectedServices }) => {
-      this.broadcast('incremental-build-completed', { changedFiles, affectedServices });
-    });
+    this.eventBus.subscribe(
+      'incremental-build-completed',
+      ({ changedFiles, affectedServices }) => {
+        this.broadcast('incremental-build-completed', {
+          changedFiles,
+          affectedServices
+        });
+      }
+    );
 
     // Listen to incremental-build-failed event
-    this.eventBus.subscribe('incremental-build-failed', ({ service, error }) => {
-      this.state.errors.push({
-        type: 'incremental-build',
-        service: service,
-        message: error,
-        timestamp: new Date().toISOString()
-      });
-      this.broadcast('incremental-build-failed', { service, error });
-    });
+    this.eventBus.subscribe(
+      'incremental-build-failed',
+      ({ service, error }) => {
+        this.state.errors.push({
+          type: 'incremental-build',
+          service: service,
+          message: error,
+          timestamp: new Date().toISOString()
+        });
+        this.broadcast('incremental-build-failed', { service, error });
+      }
+    );
 
     // Listen to auto-fix-started event
     this.eventBus.subscribe('auto-fix-started', ({ filePath }) => {
@@ -379,14 +410,23 @@ class AutoBuildSystem {
     });
 
     // Listen to dependency-install-started event
-    this.eventBus.subscribe('dependency-install-started', ({ packageManager }) => {
-      this.broadcast('dependency-install-started', { packageManager });
-    });
+    this.eventBus.subscribe(
+      'dependency-install-started',
+      ({ packageManager }) => {
+        this.broadcast('dependency-install-started', { packageManager });
+      }
+    );
 
     // Listen to dependency-install-completed event
-    this.eventBus.subscribe('dependency-install-completed', ({ packageManager, packages }) => {
-      this.broadcast('dependency-install-completed', { packageManager, packages });
-    });
+    this.eventBus.subscribe(
+      'dependency-install-completed',
+      ({ packageManager, packages }) => {
+        this.broadcast('dependency-install-completed', {
+          packageManager,
+          packages
+        });
+      }
+    );
 
     console.log('📡 EventBus subscriptions configured successfully');
   }
@@ -664,7 +704,10 @@ class AutoBuildSystem {
               break;
             default:
               console.warn(`Unknown WebSocket command: ${type}`);
-              this.broadcast('command-failed', { type, error: 'Unknown command' });
+              this.broadcast('command-failed', {
+                type,
+                error: 'Unknown command'
+              });
           }
         } catch (error) {
           console.error(`WebSocket command failed: ${error.message}`);

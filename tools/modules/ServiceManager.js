@@ -18,18 +18,18 @@ class ServiceManager {
     }
 
     console.log(`🚀 Starting service: ${service.name}`);
-    
+
     this.eventBus.broadcast('service-starting', { service: service.name });
 
     try {
       const servicePath = path.join(this.config.projectRoot, service.dir);
-      
+
       if (!fs.existsSync(servicePath)) {
         throw new Error(`Service directory not found: ${servicePath}`);
       }
 
       let child;
-      
+
       switch (service.type) {
         case 'node':
           child = spawn('npm', ['start'], {
@@ -46,11 +46,15 @@ class ServiceManager {
           });
           break;
         case 'php':
-          child = spawn('php', ['-S', `localhost:${service.port}`, 'index.php'], {
-            cwd: servicePath,
-            stdio: 'inherit',
-            detached: true
-          });
+          child = spawn(
+            'php',
+            ['-S', `localhost:${service.port}`, 'index.php'],
+            {
+              cwd: servicePath,
+              stdio: 'inherit',
+              detached: true
+            }
+          );
           break;
         default:
           throw new Error(`Unsupported service type: ${service.type}`);
@@ -69,23 +73,25 @@ class ServiceManager {
       }
 
       this.services[service.name].status = 'running';
-      
-      this.eventBus.broadcast('service-started', { 
+
+      this.eventBus.broadcast('service-started', {
         service: service.name,
         port: service.port,
         status: 'running'
       });
 
       console.log(`✅ Service ${service.name} started successfully`);
-      
     } catch (error) {
-      console.error(`❌ Failed to start service ${service.name}:`, error.message);
-      
-      this.eventBus.broadcast('service-start-failed', { 
+      console.error(
+        `❌ Failed to start service ${service.name}:`,
+        error.message
+      );
+
+      this.eventBus.broadcast('service-start-failed', {
         service: service.name,
-        error: error.message 
+        error: error.message
       });
-      
+
       throw error;
     }
   }
@@ -97,24 +103,24 @@ class ServiceManager {
     }
 
     console.log(`🛑 Stopping service: ${serviceName}`);
-    
+
     this.eventBus.broadcast('service-stopping', { service: serviceName });
 
     try {
       const serviceInfo = this.services[serviceName];
-      
+
       if (serviceInfo.process && !serviceInfo.process.killed) {
         serviceInfo.process.kill('SIGTERM');
-        
+
         // Wait for graceful shutdown
-        await new Promise((resolve) => {
+        await new Promise(resolve => {
           const timeout = setTimeout(() => {
             if (!serviceInfo.process.killed) {
               serviceInfo.process.kill('SIGKILL');
             }
             resolve();
           }, 5000);
-          
+
           serviceInfo.process.on('exit', () => {
             clearTimeout(timeout);
             resolve();
@@ -123,34 +129,33 @@ class ServiceManager {
       }
 
       delete this.services[serviceName];
-      
-      this.eventBus.broadcast('service-stopped', { 
+
+      this.eventBus.broadcast('service-stopped', {
         service: serviceName,
         status: 'stopped'
       });
 
       console.log(`✅ Service ${serviceName} stopped successfully`);
-      
     } catch (error) {
       console.error(`❌ Failed to stop service ${serviceName}:`, error.message);
-      
-      this.eventBus.broadcast('service-stop-failed', { 
+
+      this.eventBus.broadcast('service-stop-failed', {
         service: serviceName,
-        error: error.message 
+        error: error.message
       });
-      
+
       throw error;
     }
   }
 
   async restartService(serviceName) {
     console.log(`🔄 Restarting service: ${serviceName}`);
-    
+
     this.eventBus.broadcast('service-restarting', { service: serviceName });
 
     try {
       const serviceInfo = this.services[serviceName];
-      
+
       if (serviceInfo) {
         await this.stopService(serviceName);
         await this.startService(serviceInfo.service);
@@ -164,29 +169,31 @@ class ServiceManager {
         }
       }
 
-      this.eventBus.broadcast('service-restarted', { 
+      this.eventBus.broadcast('service-restarted', {
         service: serviceName,
         status: 'running'
       });
 
       console.log(`✅ Service ${serviceName} restarted successfully`);
-      
     } catch (error) {
-      console.error(`❌ Failed to restart service ${serviceName}:`, error.message);
-      
-      this.eventBus.broadcast('service-restart-failed', { 
+      console.error(
+        `❌ Failed to restart service ${serviceName}:`,
+        error.message
+      );
+
+      this.eventBus.broadcast('service-restart-failed', {
         service: serviceName,
-        error: error.message 
+        error: error.message
       });
-      
+
       throw error;
     }
   }
 
   async startAllServices() {
     console.log('🚀 Starting all services...');
-    
-    const startPromises = this.config.services.map(async (service) => {
+
+    const startPromises = this.config.services.map(async service => {
       if (service.port) {
         try {
           await this.startService(service);
@@ -197,16 +204,16 @@ class ServiceManager {
     });
 
     await Promise.all(startPromises);
-    
-    this.eventBus.broadcast('all-services-started', { 
+
+    this.eventBus.broadcast('all-services-started', {
       services: Object.keys(this.services)
     });
   }
 
   async stopAllServices() {
     console.log('🛑 Stopping all services...');
-    
-    const stopPromises = Object.keys(this.services).map(async (serviceName) => {
+
+    const stopPromises = Object.keys(this.services).map(async serviceName => {
       try {
         await this.stopService(serviceName);
       } catch (error) {
@@ -215,8 +222,8 @@ class ServiceManager {
     });
 
     await Promise.all(stopPromises);
-    
-    this.eventBus.broadcast('all-services-stopped', { 
+
+    this.eventBus.broadcast('all-services-stopped', {
       services: []
     });
   }
@@ -256,7 +263,6 @@ class ServiceManager {
         response: response.data,
         timestamp: new Date().toISOString()
       };
-      
     } catch (error) {
       return {
         service: service.name,
@@ -269,20 +275,20 @@ class ServiceManager {
 
   async performAllHealthChecks() {
     console.log('🔍 Performing health checks...');
-    
+
     const healthChecks = {};
-    
+
     for (const serviceName of Object.keys(this.services)) {
       const serviceInfo = this.services[serviceName];
-      
+
       if (serviceInfo.service.port) {
         const healthCheck = await this.performHealthCheck(serviceInfo.service);
         healthChecks[serviceName] = healthCheck;
       }
     }
 
-    this.eventBus.broadcast('health-checks-completed', { 
-      healthChecks 
+    this.eventBus.broadcast('health-checks-completed', {
+      healthChecks
     });
 
     return healthChecks;
@@ -295,15 +301,20 @@ class ServiceManager {
 
     this.healthCheckInterval = setInterval(async () => {
       const healthChecks = await this.performAllHealthChecks();
-      
+
       // Check for unhealthy services and attempt restart
       for (const [serviceName, health] of Object.entries(healthChecks)) {
         if (health.status === 'unhealthy') {
-          console.log(`⚠️ Service ${serviceName} is unhealthy, attempting restart...`);
+          console.log(
+            `⚠️ Service ${serviceName} is unhealthy, attempting restart...`
+          );
           try {
             await this.restartService(serviceName);
           } catch (error) {
-            console.error(`Failed to restart unhealthy service ${serviceName}:`, error.message);
+            console.error(
+              `Failed to restart unhealthy service ${serviceName}:`,
+              error.message
+            );
           }
         }
       }
@@ -332,7 +343,10 @@ class ServiceManager {
   }
 
   isServiceRunning(serviceName) {
-    return this.services[serviceName] && this.services[serviceName].status === 'running';
+    return (
+      this.services[serviceName] &&
+      this.services[serviceName].status === 'running'
+    );
   }
 }
 

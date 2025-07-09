@@ -61,28 +61,30 @@ class AutoFixEngine {
 
   async autoFixIssues() {
     console.log('🔧 Auto-fixing issues...');
-    
+
     this.eventBus.broadcast('auto-fix-started', {});
 
     try {
       // Auto-fix ESLint issues
-      await this.runFix('npx eslint . --ext .js,.ts,.jsx,.tsx --fix', 'ESLint fixes');
-      
+      await this.runFix(
+        'npx eslint . --ext .js,.ts,.jsx,.tsx --fix',
+        'ESLint fixes'
+      );
+
       // Auto-format with Prettier
       await this.runFix('npx prettier --write .', 'Prettier formatting');
-      
+
       // Auto-fix package.json issues
       await this.fixPackageJsonIssues();
-      
+
       // Auto-fix common configuration issues
       await this.fixConfigurationIssues();
-      
+
       // Run npm audit fix
       await this.runAuditFix();
-      
+
       this.eventBus.broadcast('auto-fix-completed', { success: true });
       console.log('✅ Auto-fix completed successfully!');
-      
     } catch (error) {
       console.error('❌ Auto-fix failed:', error.message);
       this.eventBus.broadcast('auto-fix-failed', { error: error.message });
@@ -92,34 +94,48 @@ class AutoFixEngine {
 
   async autoFixFile(filePath) {
     const ext = path.extname(filePath);
-    
+
     this.eventBus.broadcast('file-auto-fix-started', { file: filePath });
 
     try {
       switch (ext) {
         case '.js':
         case '.ts':
-          await this.runFix(`npx eslint "${filePath}" --fix`, `ESLint fix for ${filePath}`);
-          await this.runFix(`npx prettier --write "${filePath}"`, `Prettier format for ${filePath}`);
+          await this.runFix(
+            `npx eslint "${filePath}" --fix`,
+            `ESLint fix for ${filePath}`
+          );
+          await this.runFix(
+            `npx prettier --write "${filePath}"`,
+            `Prettier format for ${filePath}`
+          );
           break;
         case '.json':
-          await this.runFix(`npx prettier --write "${filePath}"`, `Prettier format for ${filePath}`);
+          await this.runFix(
+            `npx prettier --write "${filePath}"`,
+            `Prettier format for ${filePath}`
+          );
           break;
         case '.py':
-          await this.runFix(`python3 -m py_compile "${filePath}"`, `Python compile for ${filePath}`);
+          await this.runFix(
+            `python3 -m py_compile "${filePath}"`,
+            `Python compile for ${filePath}`
+          );
           break;
         case '.php':
-          await this.runFix(`php -l "${filePath}"`, `PHP syntax check for ${filePath}`);
+          await this.runFix(
+            `php -l "${filePath}"`,
+            `PHP syntax check for ${filePath}`
+          );
           break;
       }
-      
+
       this.eventBus.broadcast('file-auto-fix-completed', { file: filePath });
-      
     } catch (error) {
       console.warn(`⚠️ Could not auto-fix ${filePath}:`, error.message);
-      this.eventBus.broadcast('file-auto-fix-failed', { 
-        file: filePath, 
-        error: error.message 
+      this.eventBus.broadcast('file-auto-fix-failed', {
+        file: filePath,
+        error: error.message
       });
     }
   }
@@ -128,31 +144,30 @@ class AutoFixEngine {
     for (const pattern of this.errorPatterns) {
       if (pattern.pattern.test(errorMessage)) {
         console.log(`🔍 Found error pattern: ${pattern.description}`);
-        
+
         this.eventBus.broadcast('error-pattern-matched', {
           error: errorMessage,
           fix: pattern.fix,
           description: pattern.description
         });
-        
+
         return pattern.fix;
       }
     }
-    
+
     return null;
   }
 
   async runFix(command, description) {
     console.log(`🔧 Running fix: ${description}`);
-    
+
     try {
       execSync(command, {
         cwd: this.config.projectRoot,
         stdio: 'inherit'
       });
-      
+
       console.log(`✅ ${description} completed`);
-      
     } catch (error) {
       console.warn(`⚠️ ${description} failed:`, error.message);
       throw error;
@@ -161,7 +176,7 @@ class AutoFixEngine {
 
   async fixPackageJsonIssues() {
     console.log('📦 Fixing package.json issues...');
-    
+
     const packageJsonPath = path.join(this.config.projectRoot, 'package.json');
 
     if (fs.existsSync(packageJsonPath)) {
@@ -183,7 +198,10 @@ class AutoFixEngine {
 
       let modified = false;
       for (const dep of requiredDeps) {
-        if (!packageJson.dependencies?.[dep] && !packageJson.devDependencies[dep]) {
+        if (
+          !packageJson.dependencies?.[dep] &&
+          !packageJson.devDependencies[dep]
+        ) {
           packageJson.devDependencies[dep] = 'latest';
           modified = true;
         }
@@ -198,7 +216,7 @@ class AutoFixEngine {
 
   async fixConfigurationIssues() {
     console.log('⚙️ Fixing configuration issues...');
-    
+
     const configFiles = ['.eslintrc.json', '.gitignore', 'cypress.config.js'];
 
     for (const configFile of configFiles) {
@@ -252,9 +270,10 @@ module.exports = defineConfig({
     };
 
     const configPath = path.join(this.config.projectRoot, filename);
-    const content = typeof templates[filename] === 'object'
-      ? JSON.stringify(templates[filename], null, 2)
-      : templates[filename];
+    const content =
+      typeof templates[filename] === 'object'
+        ? JSON.stringify(templates[filename], null, 2)
+        : templates[filename];
 
     fs.writeFileSync(configPath, content);
     console.log(`📄 Created default ${filename}`);
@@ -262,29 +281,30 @@ module.exports = defineConfig({
 
   async runAuditFix() {
     console.log('🔍 Running npm audit fix...');
-    
+
     try {
       execSync('npm audit fix', {
         cwd: this.config.projectRoot,
         stdio: 'inherit'
       });
-      
+
       console.log('✅ npm audit fix completed');
-      
     } catch (error) {
       console.warn('⚠️ npm audit fix failed:', error.message);
-      
+
       // Try with --force if normal audit fix fails
       try {
         execSync('npm audit fix --force', {
           cwd: this.config.projectRoot,
           stdio: 'inherit'
         });
-        
+
         console.log('✅ npm audit fix --force completed');
-        
       } catch (forceError) {
-        console.warn('⚠️ npm audit fix --force also failed:', forceError.message);
+        console.warn(
+          '⚠️ npm audit fix --force also failed:',
+          forceError.message
+        );
       }
     }
   }
@@ -298,7 +318,9 @@ module.exports = defineConfig({
   }
 
   removeErrorPattern(pattern) {
-    this.errorPatterns = this.errorPatterns.filter(p => p.pattern.source !== pattern);
+    this.errorPatterns = this.errorPatterns.filter(
+      p => p.pattern.source !== pattern
+    );
   }
 
   getErrorPatterns() {

@@ -1,11 +1,13 @@
 # EventBus Event Subscriptions Implementation
 
 ## Overview
+
 This implementation successfully wires event propagation and state synchronization in the AutoBuildSystem by subscribing to key EventBus events and updating the legacy `this.state` structure accordingly.
 
 ## Key Features
 
 ### 1. Event Subscription System
+
 - Added `subscribeToEvents()` method to AutoBuildSystem constructor
 - All cross-module communication occurs via the shared EventBus (avoiding tight coupling)
 - Each event subscription updates the legacy `this.state` structure and broadcasts via WebSocket
@@ -13,6 +15,7 @@ This implementation successfully wires event propagation and state synchronizati
 ### 2. Subscribed Events
 
 #### Build Events
+
 - `build-started`: Sets `state.building = true`, updates `state.lastBuild`
 - `build-completed`: Sets `state.building = false`, increments `state.buildCount`
 - `build-failed`: Sets `state.building = false`, adds error to `state.errors`
@@ -22,6 +25,7 @@ This implementation successfully wires event propagation and state synchronizati
 - `incremental-build-failed`: Adds error to `state.errors`
 
 #### Service Events
+
 - `service-started`: Updates `state.services[service]` with status, port, startTime
 - `service-stopped`: Updates service status, adds stopTime
 - `service-starting`: Updates service status to 'starting'
@@ -35,6 +39,7 @@ This implementation successfully wires event propagation and state synchronizati
 - `all-services-stopped`: Relays event to WebSocket clients
 
 #### Testing Events
+
 - `tests-started`: Sets `state.testing = true`
 - `tests-completed`: Sets `state.testing = false`, updates `state.testResults`, increments `state.testCount`
 - `tests-failed`: Sets `state.testing = false`, adds error to `state.errors`
@@ -49,23 +54,29 @@ This implementation successfully wires event propagation and state synchronizati
 - `quick-test-failed`: Adds error to `state.errors`
 
 #### Deployment Events
+
 - `deployment-started`: Relays event to WebSocket clients
 - `deployment-completed`: Increments `state.deployCount`
 - `deployment-failed`: Adds error to `state.errors`
 
 #### Health & Monitoring Events
+
 - `health-checks-completed`: Updates `state.healthChecks`
 
 #### Auto-Fix Events
+
 - `auto-fix-started`: Relays event to WebSocket clients
 - `auto-fix-completed`: Relays event to WebSocket clients
 
 #### Dependency Events
+
 - `dependency-install-started`: Relays event to WebSocket clients
 - `dependency-install-completed`: Relays event to WebSocket clients
 
 ### 3. State Structure Updates
+
 The implementation maintains the legacy `this.state` structure:
+
 ```javascript
 {
   building: false,
@@ -83,11 +94,13 @@ The implementation maintains the legacy `this.state` structure:
 ```
 
 ### 4. WebSocket Broadcasting
+
 - Each event handler calls `this.broadcast()` which uses the existing `broadcast()` helper
-- The `broadcast()` method internally calls `this.eventBus.broadcastToWebSocket()` 
+- The `broadcast()` method internally calls `this.eventBus.broadcastToWebSocket()`
 - All WebSocket clients receive real-time updates of system state changes
 
 ### 5. Error Handling
+
 - Comprehensive error tracking in `state.errors` array
 - Each error includes:
   - `type`: Category of error (build, test, service, deployment, etc.)
@@ -98,17 +111,20 @@ The implementation maintains the legacy `this.state` structure:
 ## Implementation Details
 
 ### Module Integration
+
 - EventBus is initialized before other modules in the constructor
 - All modules (Builder, Tester, Deployer, ServiceManager, etc.) receive the same EventBus instance
 - Events are emitted by modules using `this.eventBus.broadcast(eventType, data)`
 
 ### Loose Coupling
+
 - AutoBuildSystem doesn't directly call module methods for state updates
 - All communication flows through EventBus events
 - Modules can emit events without knowing about subscribers
 - Easy to add new event types and subscribers
 
 ### Backwards Compatibility
+
 - Legacy `this.state` structure is preserved
 - Existing API endpoints continue to work
 - WebSocket clients receive the same data format
@@ -116,6 +132,7 @@ The implementation maintains the legacy `this.state` structure:
 ## Usage Example
 
 When a build starts in the Builder module:
+
 1. Builder emits: `this.eventBus.broadcast('build-started', { buildId: 12345 })`
 2. AutoBuildSystem subscription receives the event
 3. Updates: `this.state.building = true`, `this.state.lastBuild = 12345`
