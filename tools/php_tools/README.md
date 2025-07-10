@@ -88,40 +88,50 @@ Tools related to managing Facebook user accounts.
 
 **Original Script Description:**
 
-This PHP script is designed to change Facebook account information using the Facebook Graph API.
+This PHP script is designed to change Facebook account information using the Facebook Graph API. Here's a breakdown of what it does:
+
 ### Key Features:
 1. **Account Information Modification**:
    - Changes work history (randomly selects from a predefined list of company IDs)
    - Updates education information (randomly selects from a predefined list of school IDs)
    - Modifies current location and hometown (randomly selects from predefined location IDs)
+
 2. **Profile Photo Management**:
    - Updates profile picture (`avatar`)
    - Updates cover photo (`cover`)
+
 3. **Technical Implementation**:
    - Uses cURL for API requests
    - Requires PHP 7.4 or higher
    - Includes error handling and debug mode
+
 ### Security Concerns:
 1. **Access Token Exposure**:
    - The script requires a Facebook access token which is hardcoded as `$token = "here is your fb access token";`
    - Storing access tokens in plain text is a security risk
+
 2. **Privacy Settings**:
    - All changes are set to `"EVERYONE"` visibility, making information public
+
 3. **Randomized Data**:
    - The script uses randomly selected IDs from predefined lists for work, education, and location
+
 ### Usage Notes:
 - The script appears to be part of a larger toolset (`facebook_scripts`)
 - It's designed to automate profile changes rather than make specific edits
 - The predefined lists contain hundreds of company/school/location IDs
+
 ### Recommendations:
 1. **Security Improvements**:
    - Remove hardcoded access token
    - Implement proper token storage/retrieval
    - Add rate limiting to avoid API abuse flags
+
 2. **Functionality Improvements**:
    - Allow custom inputs rather than random selection
    - Make privacy settings configurable
    - Add validation for photo URLs
+
 3. **Legal Considerations**:
    - Automated profile modification may violate Facebook's Terms of Service
    - Bulk changes could trigger account security checks
@@ -170,28 +180,34 @@ For more details, see the full documentation page: [Change Facebook Account Info
 
 **Original Script Description:**
 
-This PHP script checks whether a Facebook account is active ("live") or disabled ("died") by querying the Facebook Graph API for the account's profile picture.
+This PHP script checks whether a Facebook account is active ("live") or disabled ("died") by querying the Facebook Graph API for the account's profile picture. Here's a breakdown of how it works:
+
 1. **Setup**:
    - The script defines a Facebook user ID (`$uid`) that needs to be checked
    - Constructs a URL to query the Graph API for that user's profile picture
+
 2. **API Request**:
    - Uses cURL to make a request to `https://graph2.facebook.com/v3.3/{user_id}/picture?redirect=0`
    - The `redirect=0` parameter tells the API to return JSON data rather than redirect to the image
+
 3. **Response Handling**:
    - Checks if the HTTP response code is 200 (success)
    - If successful, decodes the JSON response
    - The script then checks two conditions to determine if the account is active:
      a) If the response contains valid `data` and `url` fields
      b) If the URL is not pointing to Facebook's default placeholder image
+
 4. **Output**:
    - If both conditions are met: "ID is: {uid} live."
    - If not: "ID is: {uid} died."
    - If the HTTP request fails: "Error {uid}."
+
 **Important Notes**:
 1. This script uses an older version of the Graph API (v3.3) which may be deprecated
 2. The default placeholder image URL might change over time
 3. Facebook's API policies may require authentication tokens for such requests
 4. The script would be more useful if it accepted the UID as a parameter rather than having it hardcoded
+
 To improve this script, you might want to:
 1. Add error handling for the JSON decoding
 2. Make the UID a command-line or GET parameter
@@ -233,9 +249,262 @@ For more details, see the full documentation page: [Check Facebook Account Statu
 <details>
 <summary><strong>Register Facebook Account</strong> (Script: <code>reg-fb-acc.php</code>)</summary>
 
-This tool is presumably for registering new Facebook accounts. (Further details would typically be here if the script description and docs were provided).
+**Original Script Description:**
 
-Documentation for this tool is pending.
+# Refactored Facebook Account Registration Script
+
+I'll refactor this to work with a local Docker-based API service instead of the external `api.tuberboy.com`. This approach gives you more control and security over the registration process.
+
+## Dockerized API Solution
+
+### 1. First, create a `docker-compose.yml` file:
+
+```yaml
+version: '3.8'
+
+services:
+  fb-reg-api:
+    image: node:16
+    container_name: fb-reg-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api:/app
+    working_dir: /app
+    command: sh -c "npm install && node server.js"
+    environment:
+      - NODE_ENV=development
+```
+
+### 2. Create an API server (`api/server.js`):
+
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Mock database
+const accounts = [];
+
+app.post('/fb/reg', (req, res) => {
+    const { name, email, password, gender, proxy } = req.body;
+
+    // Basic validation
+    if (!name || !email || !password || !gender) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Create account object
+    const newAccount = {
+        id: accounts.length + 1,
+        name,
+        email,
+        password, // Note: In production, you would hash this
+        gender: gender === 1 ? 'female' : 'male',
+        proxy,
+        created_at: new Date().toISOString(),
+        status: 'pending_verification'
+    };
+
+    accounts.push(newAccount);
+
+    res.json({
+        success: true,
+        account_id: newAccount.id,
+        message: 'Account created successfully. Verification required.'
+    });
+});
+
+app.get('/fb/accounts', (req, res) => {
+    res.json(accounts);
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`FB Registration API running on port ${PORT}`);
+});
+```
+
+### 3. Create a `package.json` for the API:
+
+```json
+{
+  "name": "fb-reg-api",
+  "version": "1.0.0",
+  "description": "Local Facebook Registration API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0"
+  }
+}
+```
+
+### 4. Refactored PHP Client (`reg-fb-acc.php`):
+
+```php
+<?php
+set_time_limit(0);
+
+class FacebookAccountRegistrar {
+    private $apiUrl;
+    private $useProxy;
+    private $proxy;
+
+    public function __construct($useProxy = false, $proxy = '') {
+        $this->apiUrl = 'http://fb-reg-api:3000/fb/reg'; // Using Docker service name
+        $this->useProxy = $useProxy;
+        $this->proxy = $proxy;
+    }
+
+    public function generateRandomName() {
+        $firstNames = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Emma', 'Olivia', 'Ava', 'Sophia'];
+        $lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis', 'Garcia', 'Rodriguez'];
+        return $firstNames[array_rand($firstNames)] . ' ' . $lastNames[array_rand($lastNames)];
+    }
+
+    public function generateRandomEmail($name) {
+        $domains = ['outlook.com', 'gmail.com', 'yahoo.com', 'protonmail.com'];
+        $cleanName = strtolower(str_replace(' ', '', $name));
+        return $cleanName . rand(100, 999) . '@' . $domains[array_rand($domains)];
+    }
+
+    public function generateRandomPassword() {
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+        return substr(str_shuffle($chars), 0, 12);
+    }
+
+    public function registerAccount() {
+        $name = $this->generateRandomName();
+        $data = [
+            'name' => $name,
+            'email' => $this->generateRandomEmail($name),
+            'password' => $this->generateRandomPassword(),
+            'gender' => rand(1, 2), // 1 for female, 2 for male
+        ];
+
+        if ($this->useProxy) {
+            $data['proxy'] = $this->proxy;
+        }
+
+        $ch = curl_init($this->apiUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/x-www-form-urlencoded'
+        ]);
+
+        if ($this->useProxy && !empty($this->proxy)) {
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxy);
+        }
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            return ['error' => 'cURL error: ' . curl_error($ch)];
+        }
+
+        curl_close($ch);
+        return json_decode($response, true);
+    }
+}
+
+// Usage example
+$useProxy = false; // Set to true if you need proxy
+$proxy = 'http://username:password@host:port'; // Your proxy details if needed
+
+$registrar = new FacebookAccountRegistrar($useProxy, $proxy);
+$result = $registrar->registerAccount();
+
+echo "<pre>";
+print_r($result);
+echo "</pre>";
+?>
+```
+
+## How to Use This Solution
+
+1. **Set up the Docker environment**:
+   - Create the files as shown above
+   - Run `docker-compose up` in your project directory
+   - The API will be available at `http://localhost:3000`
+
+2. **Run the PHP script**:
+   - Place the PHP script where it can be executed
+   - Access it through a web browser or command line
+
+3. **API Endpoints**:
+   - POST `/fb/reg` - Register new account
+   - GET `/fb/accounts` - List all registered accounts (for debugging)
+
+## Key Improvements
+
+1. **Local Control**: All processing happens within your Docker environment
+2. **Better Structure**: OOP approach with proper separation of concerns
+3. **Security**: Removes dependency on external, potentially untrustworthy API
+4. **Extensibility**: Easy to add more features like verification, rate limiting, etc.
+5. **Transparency**: You control all aspects of the registration process
+
+## Important Notes
+
+- This is still a mock implementation - you'll need to add actual Facebook integration if needed
+- Consider adding proper validation, error handling, and logging
+- For production use, implement proper security measures (HTTPS, authentication, etc.)
+
+### How to Use via Web UI
+
+*(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary. Automating account registration is complex and often subject to CAPTCHAs and other anti-bot measures by Facebook.)*
+
+1.  **Navigate to the Tool:**
+    *   On the main page of the PHP Facebook Tools Web App, find and select the "Register Facebook Account" tool (or a similar name).
+
+2.  **Enter Registration Details:**
+    *   The UI will likely present a form with fields for necessary registration information, such as:
+        *   First Name
+        *   Last Name
+        *   Email Address or Phone Number (for verification)
+        *   Password
+        *   Date of Birth
+        *   Gender
+    *   Fill in all required details for the new account.
+
+3.  **Handle Verification (Potentially):**
+    *   The script might require a step to handle email or phone verification. The UI may prompt for a verification code sent to the provided email/phone.
+    *   It might also involve CAPTCHA solving, which could be manual or require a third-party service integration.
+
+4.  **Submit:**
+    *   Click the "Register", "Create Account", or a similarly labeled button.
+
+### Inputs Required
+
+*   **Registration Information:** All details required by Facebook for account creation (name, email/phone, password, DOB, gender).
+*   **Verification Codes (if applicable):** Codes sent to email or phone.
+*   **CAPTCHA solutions (if applicable).**
+
+### Expected Output
+
+*   **Success:** A confirmation message indicating that the account has been successfully registered. It might provide some details of the new account.
+*   **Failure:** An error message detailing why the registration failed. Common reasons include:
+    *   Information already in use (email, phone).
+    *   Weak password.
+    *   Facebook's anti-fraud systems blocking the registration.
+    *   CAPTCHA failure.
+    *   Incomplete or invalid information.
+    *   Changes in Facebook's registration process not reflected in the script.
+
+### Notes & Considerations
+
+*   **Facebook's Terms of Service:** Automating account creation is often against Facebook's Terms of Service. Accounts created this way may be quickly flagged or disabled. Use with extreme caution and responsibility.
+*   **Reliability:** This is a very sensitive script. Facebook actively works to prevent automated registrations, so the script's success rate can be very low and it may require frequent updates.
+*   **Data Privacy:** Be mindful of the personal information used for registration.
+*   The `reg-fb-acc.php` script's capabilities and requirements will dictate the exact UI flow.
 
 For more details, see the full documentation page: [Register Facebook Account](./docs/AccountManagement/RegisterFacebookAccount.md)
 </details>
@@ -248,33 +517,42 @@ Tools related to managing Facebook pages.
 
 **Original Script Description:**
 
-This PHP script appears to be designed to create a Facebook Page programmatically using Facebook's Graph API.
+This PHP script appears to be designed to create a Facebook Page programmatically using Facebook's Graph API. Here's an analysis of what it does:
+
 ### Key Components:
 1. **Access Token Requirement**:
    - Requires a Facebook access token (`$token`) from a main profile
    - Requires a full name for the new page (`$full_name`)
+
 2. **API Request**:
    - Makes a POST request to Facebook's GraphQL endpoint (`graph.facebook.com/graphql`)
    - Uses a specific GraphQL mutation for page creation
    - Includes extensive headers to mimic a mobile app request
+
 3. **Parameters**:
    - Sets the page category to ID "2214" (which is typically "Local Business")
    - Specifies creation source as "android" to mimic mobile creation
    - Includes various Facebook-specific parameters and tracking IDs
+
 4. **Response Handling**:
    - Checks for success or rate-limiting error ("You have created too many Pages...")
    - Outputs success/failure message
+
 ### Potential Issues:
 1. **Security Risks**:
    - SSL verification is disabled (`VERIFYPEER` and `VERIFYHOST` set to FALSE)
    - The access token would need proper permissions
+
 2. **Rate Limiting**:
    - Facebook has strict limits on page creation frequency
    - The script checks for this but doesn't handle retries
+
 3. **Hardcoded Values**:
    - Many parameters are hardcoded to specific values that might change
+
 4. **Facebook Policy**:
    - Automated page creation may violate Facebook's Terms of Service
+
 ### Suggested Improvements:
 1. Add error handling for other types of failures
 2. Implement rate limiting and retries
@@ -324,7 +602,8 @@ For more details, see the full documentation page: [Create Facebook Page](./docs
 
 **Original Script Description:**
 
-This PHP script appears to be designed to fetch Facebook pages associated with a user account using the Facebook Graph API.
+This PHP script appears to be designed to fetch Facebook pages associated with a user account using the Facebook Graph API. Here's a breakdown of what it does:
+
 1. It sets up a GraphQL request to Facebook's API endpoint (`graph.facebook.com/graphql`)
 2. The request includes various parameters and headers that mimic a request from the Facebook mobile app
 3. It requires a valid access token (currently empty in the script)
@@ -334,7 +613,9 @@ This PHP script appears to be designed to fetch Facebook pages associated with a
    - Page IDs
    - Page names
    - Profile picture URIs
+
 Important notes about this script:
+
 1. **Security Concern**: The script is currently missing the required access token (`$token = ""`). To work, you would need a valid Facebook access token with the appropriate permissions.
 2. **Facebook API Usage**: This appears to be using Facebook's internal/non-public API endpoints (notice the GraphQL query with specific client doc ID and other internal parameters).
 3. **Potential Issues**:
@@ -387,26 +668,32 @@ For more details, see the full documentation page: [Get All Pages](./docs/PageMa
 
 **Original Script Description:**
 
-This PHP script is designed to like and follow a Facebook page using Facebook's Graph API.
+This PHP script is designed to like and follow a Facebook page using Facebook's Graph API. Here's a breakdown of what it does:
+
 ### Key Components:
 1. **Variables Setup**:
    - `$pageid`: The ID of the Facebook page you want to like/follow.
    - `$actorid`: The ID of the Facebook profile that will perform the like/follow action.
    - `$token`: The Facebook access token with permissions to like/follow pages.
+
 2. **POST Request Setup**:
    - The script constructs a GraphQL mutation request (`PageLike`) to like/follow the page.
    - The request includes various Facebook-specific headers and parameters to mimic a legitimate API call.
+
 3. **cURL Configuration**:
    - The script uses cURL to send the request to Facebook's GraphQL endpoint (`https://graph.facebook.com/graphql`).
    - It includes headers that simulate a request from the Facebook mobile app (e.g., `user-agent` mimics the Facebook Android app).
    - The `authorization` header includes the access token for authentication.
+
 4. **Response Handling**:
    - After sending the request, the script checks the response to see if the like/follow was successful.
    - If `does_viewer_like` is `true` in the response, it confirms success. Otherwise, it reports failure.
+
 ### Security and Ethical Considerations:
 - **Access Token Security**: The script requires a valid Facebook access token, which should be kept private. Hardcoding tokens in scripts is unsafe (they could be exposed in logs or version control).
 - **Rate Limits**: Facebook imposes rate limits on API calls. Excessive automated likes/follows could trigger restrictions.
 - **Terms of Service**: Automated liking/following may violate Facebook's policies unless explicitly allowed (e.g., for testing with explicit permission).
+
 ### Improvements:
 1. **Environment Variables**: Store sensitive data (like `$token`) in environment variables instead of hardcoding.
 2. **Error Handling**: Add more detailed error handling (e.g., invalid token, rate limits).
@@ -461,10 +748,12 @@ Tools for working with access tokens and Facebook IDs.
 
 **Original Script Description:**
 
-This PHP script checks whether Facebook access tokens stored in a file are still valid or need to be removed.
+This PHP script checks whether Facebook access tokens stored in a file are still valid or need to be removed. Here's a breakdown of what it does:
+
 1. **Initial Setup**:
    - Sets no time limit (`set_time_limit(0)`)
    - Turns off error reporting (`error_reporting(0)`)
+
 2. **Token Processing**:
    - Reads tokens from `access_token.txt` (expected format: token|value1|value2 per line)
    - For each token:
@@ -472,19 +761,23 @@ This PHP script checks whether Facebook access tokens stored in a file are still
      - Calls the `check()` function with the token
      - Checks if the response indicates the token is blocked/invalid
      - If invalid, removes the entire line from the file
+
 3. **check() Function**:
    - Makes a cURL request to Facebook's Graph API (`/me` endpoint)
    - Configures cURL with various options (SSL verification off, follow redirects, etc.)
    - Returns the API response
+
 4. **remove() Function**:
    - Finds and removes lines containing a specific pattern (the invalid token line)
    - Handles file permissions (setting to 0777 before and after modification)
+
 **Key Observations**:
 - The script specifically looks for tokens that return an OAuthException with the message "The user is enrolled in a blocking, logged-in checkpoint"
 - Only completely removes tokens that meet this specific error condition
 - Doesn't handle other potential error cases or successful responses
 - Has very permissive file permissions (0777) which could be a security concern
 - Lacks proper error handling for file operations
+
 **Potential Improvements**:
 1. Add more comprehensive error checking for the file operations
 2. Consider more granular file permissions
@@ -532,7 +825,8 @@ For more details, see the full documentation page: [Check Token Liveliness](./do
 
 **Original Script Description:**
 
-This PHP script is designed to extract a Facebook access token from a user's cookies.
+This PHP script is designed to extract a Facebook access token from a user's cookies. Here's a breakdown of what it does:
+
 1. **Purpose**: The script attempts to get a Facebook access token by making an authenticated request to Facebook's mobile composer endpoint using provided cookies.
 2. **Main Flow**:
    - Checks if a cookie is set
@@ -595,10 +889,12 @@ For more details, see the full documentation page: [Get Access Token from Cookie
 
 **Original Script Description:**
 
-This PHP script is designed to retrieve a Facebook profile or page ID from a given Facebook URL.
+This PHP script is designed to retrieve a Facebook profile or page ID from a given Facebook URL. Here's a breakdown of how it works:
+
 1. **Function `getFBID($url)`**:
    - Takes a Facebook URL as input (e.g., 'https://www.facebook.com/tuberboy')
    - Extracts the username/page name portion from the URL (everything after the last '/')
+
 2. **cURL Setup**:
    - Configures a cURL request to fetch the mobile version of the Facebook profile/page
    - Sets various options including:
@@ -607,19 +903,24 @@ This PHP script is designed to retrieve a Facebook profile or page ID from a giv
      - No timeout limits
      - Custom headers to mimic a Chrome browser on Windows
      - Targets the mobile Facebook URL (m.facebook.com)
+
 3. **ID Extraction**:
    - Attempts to find the ID using two different patterns in the response:
      1. Looks for `entity_id:XXXXX}` pattern in the HTML
      2. Looks for `<meta property="al:android:url" content="fb://profile/XXXXX"` pattern
+
 4. **Return**:
    - Returns the found ID (or empty string if not found)
+
 **Potential Issues**:
 1. **Security**: Disabling SSL verification (`VERIFYPEER` and `VERIFYHOST`) makes the request vulnerable to MITM attacks
 2. **Reliability**: Facebook frequently changes its HTML structure, so these regex patterns may break
 3. **Rate Limiting**: Facebook may block repeated requests from the same IP
 4. **Mobile Site**: The script relies on m.facebook.com which might not always be available
+
 **Usage Example**:
 The script is called at the end with `echo getFBID('https://www.facebook.com/tuberboy');` to demonstrate its use.
+
 For production use, you might want to:
 1. Add error handling
 2. Implement proper SSL verification
