@@ -1,6 +1,7 @@
 # Profil3r Modules
 
-This directory contains all the modular components of the Profil3r system, designed with a clean architecture that promotes scalability and maintainability.
+This directory contains all the modular components of the Profil3r system, designed with a clean
+architecture that promotes scalability and maintainability.
 
 ## Architecture Overview
 

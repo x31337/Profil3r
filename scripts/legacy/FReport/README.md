@@ -8,9 +8,7 @@ This tool can report facebook account using id from user profile.
 
 ## For termux user
 
-`yes | pkg install x11-repo -y`
-`yes | pkg install tur-repo -y`
-`yes | pkg install chromium -y`
+`yes | pkg install x11-repo -y` `yes | pkg install tur-repo -y` `yes | pkg install chromium -y`
 
 ### Run
 
@@ -20,8 +18,7 @@ This tool can report facebook account using id from user profile.
 
 ## Default Language en_EN
 
-you can change the language with
-`cmd_> set_lang id_ID`
+you can change the language with `cmd_> set_lang id_ID`
 
 ## TO-DO
 

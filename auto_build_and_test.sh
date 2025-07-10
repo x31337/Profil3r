@@ -52,4 +52,4 @@ global_progress "Tailing backend logs in background for error detection..."
 docker compose -f tools/web-ui/docker-compose.yml logs backend | tail -n 50 &
 
 # Final status
-global_progress "Automation complete. All steps executed in a single background console." 
+global_progress "Automation complete. All steps executed in a single background console."

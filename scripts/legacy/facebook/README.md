@@ -2,7 +2,8 @@
 
 ## Disclaimer
 
-This project is developed **solely for educational purposes** to demonstrate how one might interact with Facebook programmatically. **It is NOT intended for unethical, illegal, or unauthorized use.**
+This project is developed **solely for educational purposes** to demonstrate how one might interact
+with Facebook programmatically. **It is NOT intended for unethical, illegal, or unauthorized use.**
 
 - **Do not use this project to violate Facebook's Terms of Service.**
 - **Do not use this project to access private data or perform unauthorized actions.**
@@ -10,7 +11,8 @@ This project is developed **solely for educational purposes** to demonstrate how
 
 ## About
 
-This repository provides a PHP-based API for various Facebook interactions. The functionalities include:
+This repository provides a PHP-based API for various Facebook interactions. The functionalities
+include:
 
 - Creation of accounts
 - Liking pages or posts
@@ -20,10 +22,13 @@ This repository provides a PHP-based API for various Facebook interactions. The 
 
 ## Features
 
-- **Account Management**: Scripts like `auto-reg-fb.php` and `change-fb-acc-info.php` facilitate account creation and modification.
+- **Account Management**: Scripts like `auto-reg-fb.php` and `change-fb-acc-info.php` facilitate
+  account creation and modification.
 - **Engagement**: Use `like-follow-page.php` to likes and follows.
-- **Content Interaction**: Scripts such as `create-fb-page.php` and `get-all-pages.php` allow for page creation and retrieval.
-- **Token and Session Management**: Tools like `fb-cookies-to-get-access-token.php` and `check-token-live.php` assist in managing access tokens and session validation.
+- **Content Interaction**: Scripts such as `create-fb-page.php` and `get-all-pages.php` allow for
+  page creation and retrieval.
+- **Token and Session Management**: Tools like `fb-cookies-to-get-access-token.php` and
+  `check-token-live.php` assist in managing access tokens and session validation.
 - **And more:** etc etc...
 
 ## Installation
@@ -40,13 +45,17 @@ This repository provides a PHP-based API for various Facebook interactions. The 
 
 ## Legal Compliance
 
-- **Adhere to Facebook's Policies:** Ensure all actions comply with [Facebook's Terms of Service](https://www.facebook.com/legal/terms) and [Community Standards](https://www.facebook.com/communitystandards/).
-- **Ethical Use:** This tool is for learning purposes. Unauthorized use against Facebook's policies can lead to account suspension or legal action.
+- **Adhere to Facebook's Policies:** Ensure all actions comply with
+  [Facebook's Terms of Service](https://www.facebook.com/legal/terms) and
+  [Community Standards](https://www.facebook.com/communitystandards/).
+- **Ethical Use:** This tool is for learning purposes. Unauthorized use against Facebook's policies
+  can lead to account suspension or legal action.
 - **Data Privacy:** Handle all data responsibly and obtain necessary consents when required.
 
 ## Contribution
 
-- Contributions aimed at enhancing the educational value of this project are welcome. Please fork the repository and submit a pull request with your improvements.
+- Contributions aimed at enhancing the educational value of this project are welcome. Please fork
+  the repository and submit a pull request with your improvements.
 
 ## License
 

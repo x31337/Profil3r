@@ -2,7 +2,8 @@
 
 ## Overview
 
-The JavaScript tools provide web-based interfaces and Node.js applications for Facebook automation and messaging. All tools are located in the `tools/js_tools/` directory.
+The JavaScript tools provide web-based interfaces and Node.js applications for Facebook automation
+and messaging. All tools are located in the `tools/js_tools/` directory.
 
 ## Facebook Mass Messenger
 
@@ -12,7 +13,8 @@ The JavaScript tools provide web-based interfaces and Node.js applications for F
 
 ### Description
 
-A Node.js web application for sending mass messages through Facebook Messenger with a user-friendly interface.
+A Node.js web application for sending mass messages through Facebook Messenger with a user-friendly
+interface.
 
 ### Features
 

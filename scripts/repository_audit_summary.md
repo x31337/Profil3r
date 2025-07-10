@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document summarizes the repository structure audit and cleanup performed on the Profil3r project.
+This document summarizes the repository structure audit and cleanup performed on the Profil3r
+project.
 
 ## Initial State
 

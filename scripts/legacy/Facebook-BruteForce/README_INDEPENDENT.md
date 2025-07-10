@@ -2,7 +2,8 @@
 
 ⚠️ **EDUCATIONAL PURPOSE ONLY** ⚠️
 
-This module is for educational and authorized penetration testing only. Unauthorized access to accounts is illegal.
+This module is for educational and authorized penetration testing only. Unauthorized access to
+accounts is illegal.
 
 ## Installation
 

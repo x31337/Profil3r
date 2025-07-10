@@ -2,7 +2,8 @@
 
 ## Overview
 
-The core Python modules provide the main functionality for Facebook automation, OSINT operations, and network utilities. All modules are located in the `modules/` directory.
+The core Python modules provide the main functionality for Facebook automation, OSINT operations,
+and network utilities. All modules are located in the `modules/` directory.
 
 ## Facebook Automation Module
 

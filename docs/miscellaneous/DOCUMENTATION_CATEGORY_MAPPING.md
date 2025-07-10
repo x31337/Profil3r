@@ -2,9 +2,8 @@
 
 ## Analysis Summary
 
-**Total root-level .md files found:** 13 files (excluding README.md as requested)
-**Files categorized:** 12 files
-**Files excluded:** 1 file (README.md)
+**Total root-level .md files found:** 13 files (excluding README.md as requested) **Files
+categorized:** 12 files **Files excluded:** 1 file (README.md)
 
 ## Category Mapping
 
@@ -51,7 +50,8 @@
 
 ## Next Steps
 
-This mapping provides the foundation for subsequent documentation reorganization tasks. The categories align with the logical structure requested:
+This mapping provides the foundation for subsequent documentation reorganization tasks. The
+categories align with the logical structure requested:
 
 - Contributing/Development: 1 file
 - Security: 3 files

@@ -165,7 +165,9 @@ class UnifiedCliApp:
                     count = 1
                 fb.like_posts(max_likes=count)
 
-            elif action == "comment":  # Simplified: comments on current page or needs target
+            elif (
+                action == "comment"
+            ):  # Simplified: comments on current page or needs target
                 target = self._get_input(
                     "Post URL/Element context (optional, for specific post):"
                 )

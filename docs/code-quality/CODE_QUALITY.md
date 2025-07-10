@@ -249,9 +249,11 @@ Add patterns to the respective ignore files or tool configurations.
 
 ## Technical Debt: Python Lint Exclusion
 
-The file `modules/facebook_automation.py` is currently excluded from flake8 linting in `.pre-commit-config.yaml` due to:
+The file `modules/facebook_automation.py` is currently excluded from flake8 linting in
+`.pre-commit-config.yaml` due to:
 
 - Numerous lines exceeding 88 characters (E501)
 - f-string formatting issues (F541)
 
-This exclusion is a temporary measure to unblock CI and pre-commit workflows. **This file should be refactored in the future** to restore full linting coverage and maintain code quality standards.
+This exclusion is a temporary measure to unblock CI and pre-commit workflows. **This file should be
+refactored in the future** to restore full linting coverage and maintain code quality standards.

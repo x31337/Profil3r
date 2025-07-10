@@ -4,9 +4,9 @@ kind: Service
 metadata:
   name: {{ include "profil3r.fullname" . }}-core
   labels:
-    {{- with (merge (dict "app.kubernetes.io/component" "core") (include "profil3r.labels" . | fromYaml)) }}
-      {{ toYaml . | nindent 4 }}
-    {{- end }}
+{{- with (merge (dict "app.kubernetes.io/component" "core") (include "profil3r.labels" . | fromYaml)) }}
+{{ toYaml . | nindent 4 }}
+{{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -15,6 +15,6 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- with (merge (dict "app.kubernetes.io/component" "core") (include "profil3r.selectorLabels" . | fromYaml)) }}
-      {{ toYaml . | nindent 4 }}
-    {{- end }}
+{{- with (merge (dict "app.kubernetes.io/component" "core") (include "profil3r.selectorLabels" . | fromYaml)) }}
+{{ toYaml . | nindent 4 }}
+{{- end }}

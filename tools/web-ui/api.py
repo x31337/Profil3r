@@ -1,19 +1,24 @@
 import sys
+
 if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "purge-secrets":
-    import os
     import json
+    import os
+
     from flask import Flask
     from flask_sqlalchemy import SQLAlchemy
+
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "DATABASE_URL", "sqlite:///fb_reports.db"
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db = SQLAlchemy(app)
+
     class Secret(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         name = db.Column(db.String(64), unique=True, nullable=False)
         value = db.Column(db.LargeBinary, nullable=False)
+
     with app.app_context():
         db.create_all()
         db.session.query(Secret).delete()
@@ -25,16 +30,18 @@ if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "purge-secret
 import json
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../modules')))
+
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../modules"))
+)
 from datetime import datetime
 
 from cryptography.fernet import Fernet
+from facebook_automation import FacebookAutomation
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-
-from facebook_automation import FacebookAutomation
 
 app = Flask(__name__)
 CORS(app)
@@ -109,14 +116,21 @@ def get_secret(name):
 
 class BuildState(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    state_type = db.Column(db.String(32), nullable=False)  # e.g., 'build', 'test', 'deploy'
-    status = db.Column(db.String(32), nullable=False)  # e.g., 'success', 'failed', 'in_progress'
+    state_type = db.Column(
+        db.String(32), nullable=False
+    )  # e.g., 'build', 'test', 'deploy'
+    status = db.Column(
+        db.String(32), nullable=False
+    )  # e.g., 'success', 'failed', 'in_progress'
     data = db.Column(db.Text, nullable=True)  # JSON-encoded state
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+
 class TestResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    test_type = db.Column(db.String(32), nullable=False)  # e.g., 'cypress', 'unit', 'integration'
+    test_type = db.Column(
+        db.String(32), nullable=False
+    )  # e.g., 'cypress', 'unit', 'integration'
     status = db.Column(db.String(32), nullable=False)
     result = db.Column(db.Text, nullable=True)  # JSON-encoded result
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -125,6 +139,7 @@ class TestResult(db.Model):
 def create_tables():
     with app.app_context():
         db.create_all()
+
 
 # --- AUTO-FIX: Ensure FLASK_SECRET_KEY is always loaded from DB or generated, and set in app.config at startup ---
 def ensure_flask_secret_key():
@@ -151,6 +166,7 @@ def ensure_flask_secret_key():
             with open(env_path, "w") as f:
                 f.write(f"FLASK_SECRET_KEY={key}\n")
     app.config["SECRET_KEY"] = key
+
 
 # Call create_tables() once at startup
 with app.app_context():
@@ -296,19 +312,27 @@ def save_state():
     db.session.commit()
     return jsonify({"status": "state saved", "id": build_state.id})
 
+
 @app.route("/api/get-latest-state", methods=["GET"])
 def get_latest_state():
     state_type = request.args.get("state_type")
-    state = BuildState.query.filter_by(state_type=state_type).order_by(BuildState.created_at.desc()).first()
+    state = (
+        BuildState.query.filter_by(state_type=state_type)
+        .order_by(BuildState.created_at.desc())
+        .first()
+    )
     if not state:
         return jsonify({"error": "No state found"}), 404
-    return jsonify({
-        "id": state.id,
-        "state_type": state.state_type,
-        "status": state.status,
-        "data": json.loads(state.data) if state.data else {},
-        "created_at": state.created_at.isoformat(),
-    })
+    return jsonify(
+        {
+            "id": state.id,
+            "state_type": state.state_type,
+            "status": state.status,
+            "data": json.loads(state.data) if state.data else {},
+            "created_at": state.created_at.isoformat(),
+        }
+    )
+
 
 @app.route("/api/save-test-result", methods=["POST"])
 def save_test_result():
@@ -321,19 +345,27 @@ def save_test_result():
     db.session.commit()
     return jsonify({"status": "test result saved", "id": test_result.id})
 
+
 @app.route("/api/get-latest-test-result", methods=["GET"])
 def get_latest_test_result():
     test_type = request.args.get("test_type")
-    result = TestResult.query.filter_by(test_type=test_type).order_by(TestResult.created_at.desc()).first()
+    result = (
+        TestResult.query.filter_by(test_type=test_type)
+        .order_by(TestResult.created_at.desc())
+        .first()
+    )
     if not result:
         return jsonify({"error": "No test result found"}), 404
-    return jsonify({
-        "id": result.id,
-        "test_type": result.test_type,
-        "status": result.status,
-        "result": json.loads(result.result) if result.result else {},
-        "created_at": result.created_at.isoformat(),
-    })
+    return jsonify(
+        {
+            "id": result.id,
+            "test_type": result.test_type,
+            "status": result.status,
+            "result": json.loads(result.result) if result.result else {},
+            "created_at": result.created_at.isoformat(),
+        }
+    )
+
 
 # --- AUTO-FIX: Add endpoint to rotate FLASK_SECRET_KEY, update DB and .env, and reload Flask config ---
 @app.route("/api/rotate-flask-secret", methods=["POST"])
@@ -359,14 +391,19 @@ def rotate_flask_secret():
         with open(env_path, "w") as f:
             f.write(f"FLASK_SECRET_KEY={new_key}\n")
     app.config["SECRET_KEY"] = new_key
-    return jsonify({"status": "FLASK_SECRET_KEY rotated, updated in DB and .env, and Flask config reloaded"})
+    return jsonify(
+        {
+            "status": "FLASK_SECRET_KEY rotated, updated in DB and .env, and Flask config reloaded"
+        }
+    )
 
 
-@app.route('/')
+@app.route("/")
 def root():
-    return send_from_directory(os.path.dirname(__file__), 'index.html')
+    return send_from_directory(os.path.dirname(__file__), "index.html")
 
-@app.route('/<path:path>')
+
+@app.route("/<path:path>")
 def static_proxy(path):
     return send_from_directory(os.path.dirname(__file__), path)
 

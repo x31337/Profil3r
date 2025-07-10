@@ -2,7 +2,9 @@
 
 ## Overview
 
-FB-botmill is a fully independent module providing automation functionalities for interacting with Facebook using the BotMill framework. This module is no longer integrated with the main suite but functions autonomously to provide specific tooling around Facebook interactions.
+FB-botmill is a fully independent module providing automation functionalities for interacting with
+Facebook using the BotMill framework. This module is no longer integrated with the main suite but
+functions autonomously to provide specific tooling around Facebook interactions.
 
 ## Features
 
@@ -20,8 +22,7 @@ FB-botmill is a fully independent module providing automation functionalities fo
    cd fb-botmill
    ```
 
-2. **Install Dependencies**:
-   Make sure you have Java and Maven installed:
+2. **Install Dependencies**: Make sure you have Java and Maven installed:
 
    ```bash
    brew install maven
@@ -40,7 +41,8 @@ FB-botmill is a fully independent module providing automation functionalities fo
    ```
 
 5. **Configuration**:
-   - Update `src/main/resources/config.properties` with your Facebook API keys and other necessary configurations.
+   - Update `src/main/resources/config.properties` with your Facebook API keys and other necessary
+     configurations.
 
 6. **Usage**:
    - Run with Maven:

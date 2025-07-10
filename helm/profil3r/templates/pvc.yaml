@@ -5,22 +5,22 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "profil3r.fullname" . }}-logs
   labels:
-    {{- with (include "profil3r.labels" . | fromYaml) }}
-      {{ toYaml . | nindent 4 }}
-    {{- end }}
-  {{- with .Values.persistence.annotations }}
+{{- with (include "profil3r.labels" . | fromYaml) }}
+{{ toYaml . | nindent 4 }}
+{{- end }}
+{{- with .Values.persistence.annotations }}
   annotations:
-    {{ toYaml . | nindent 4 }}
-  {{- end }}
+{{ toYaml . | nindent 4 }}
+{{- end }}
 spec:
   accessModes:
     - {{ .Values.volumes.logs.accessMode }}
   resources:
     requests:
       storage: {{ .Values.volumes.logs.size }}
-  {{- if .Values.volumes.logs.storageClass }}
+{{- if .Values.volumes.logs.storageClass }}
   storageClassName: {{ .Values.volumes.logs.storageClass }}
-  {{- end }}
+{{- end }}
 {{- end }}
 
 {{- if .Values.volumes.results.enabled }}
@@ -30,22 +30,22 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "profil3r.fullname" . }}-results
   labels:
-    {{- with (include "profil3r.labels" . | fromYaml) }}
-      {{ toYaml . | nindent 4 }}
-    {{- end }}
-  {{- with .Values.persistence.annotations }}
+{{- with (include "profil3r.labels" . | fromYaml) }}
+{{ toYaml . | nindent 4 }}
+{{- end }}
+{{- with .Values.persistence.annotations }}
   annotations:
-    {{ toYaml . | nindent 4 }}
-  {{- end }}
+{{ toYaml . | nindent 4 }}
+{{- end }}
 spec:
   accessModes:
     - {{ .Values.volumes.results.accessMode }}
   resources:
     requests:
       storage: {{ .Values.volumes.results.size }}
-  {{- if .Values.volumes.results.storageClass }}
+{{- if .Values.volumes.results.storageClass }}
   storageClassName: {{ .Values.volumes.results.storageClass }}
-  {{- end }}
+{{- end }}
 {{- end }}
 
 {{- if .Values.volumes.config.enabled }}
@@ -55,20 +55,20 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ include "profil3r.fullname" . }}-config
   labels:
-    {{- with (include "profil3r.labels" . | fromYaml) }}
-      {{ toYaml . | nindent 4 }}
-    {{- end }}
-  {{- with .Values.persistence.annotations }}
+{{- with (include "profil3r.labels" . | fromYaml) }}
+{{ toYaml . | nindent 4 }}
+{{- end }}
+{{- with .Values.persistence.annotations }}
   annotations:
-    {{ toYaml . | nindent 4 }}
-  {{- end }}
+{{ toYaml . | nindent 4 }}
+{{- end }}
 spec:
   accessModes:
     - {{ .Values.volumes.config.accessMode }}
   resources:
     requests:
       storage: {{ .Values.volumes.config.size }}
-  {{- if .Values.volumes.config.storageClass }}
+{{- if .Values.volumes.config.storageClass }}
   storageClassName: {{ .Values.volumes.config.storageClass }}
-  {{- end }}
+{{- end }}
 {{- end }}
