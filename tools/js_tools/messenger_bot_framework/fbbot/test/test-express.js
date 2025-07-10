@@ -1,3 +1,5 @@
+/* eslint-env mocha, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect */
 const express = require('express'),
   test = require('tape'),
   common = require('./common.js'),

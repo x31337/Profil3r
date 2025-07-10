@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('API Health Checks', () => {
   before(() => {
     // Wait for all services to be ready before running tests

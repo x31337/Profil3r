@@ -1,3 +1,5 @@
+/* eslint-env mocha, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect */
 const Hapi = require('hapi'),
   tape = require('tape'),
   common = require('./common.js'),

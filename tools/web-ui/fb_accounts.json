@@ -1,0 +1,4 @@
+[
+  { "email": "fb_account1@example.com", "password": "changeme" },
+  { "email": "fb_account2@example.com", "password": "changeme" }
+]

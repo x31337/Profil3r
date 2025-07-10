@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Service Integration Tests', () => {
   before(() => {
     cy.waitForService(Cypress.env('osint_url'));

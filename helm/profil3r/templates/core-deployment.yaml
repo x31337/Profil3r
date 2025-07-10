@@ -1,39 +1,43 @@
 {{- if .Values.components.core.enabled }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "profil3r.fullname" . }}-core
   labels:
-    {{- include "profil3r.labels" . | nindent 4 }}
-    app.kubernetes.io/component: core
+    {{- with (merge (dict "app.kubernetes.io/component" "core") (include "profil3r.labels" . | fromYaml)) }}
+      {{ toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "profil3r.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: core
+      {{- with (merge (dict "app.kubernetes.io/component" "core") (include "profil3r.selectorLabels" . | fromYaml)) }}
+        {{ toYaml . | nindent 6 }}
+      {{- end }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
-        {{- toYaml . | nindent 8 }}
+          {{ toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "profil3r.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: core
+        {{- with (merge (dict "app.kubernetes.io/component" "core") (include "profil3r.selectorLabels" . | fromYaml)) }}
+          {{ toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        {{ toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "profil3r.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{ toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: core
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{ toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.components.core.image.repository }}:{{ .Values.components.core.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -47,12 +51,12 @@ spec:
               value: {{ .Values.components.core.config.configFile }}
           {{- if .Values.healthChecks.enabled }}
           livenessProbe:
-            {{- toYaml .Values.healthChecks.livenessProbe | nindent 12 }}
+            {{ toYaml .Values.healthChecks.livenessProbe | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.healthChecks.readinessProbe | nindent 12 }}
+            {{ toYaml .Values.healthChecks.readinessProbe | nindent 12 }}
           {{- end }}
           resources:
-            {{- toYaml .Values.components.core.resources | nindent 12 }}
+            {{ toYaml .Values.components.core.resources | nindent 12 }}
           volumeMounts:
             - name: logs
               mountPath: /app/logs
@@ -94,14 +98,14 @@ spec:
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
+        {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
+        {{ toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
+        {{ toYaml . | nindent 8 }}
       {{- end }}
 {{- end }}

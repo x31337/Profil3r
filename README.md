@@ -1,6 +1,8 @@
 # Comprehensive Facebook & OSINT Automation Toolkit
 
-This repository is a consolidated collection of tools for Facebook automation, OSINT gathering, and network utilities. It merges functionalities from various scripts and projects into a modern, modular architecture designed for scalability and maintainability.
+This repository is a consolidated collection of tools for Facebook automation, OSINT gathering, and
+network utilities. It merges functionalities from various scripts and projects into a modern,
+modular architecture designed for scalability and maintainability.
 
 ## Overview
 
@@ -49,22 +51,26 @@ python -m modules.main
 ## Core Modules
 
 ### Facebook Automation
+
 - **UI Automation:** Selenium-based Facebook interactions (login, posting, messaging)
 - **API Integration:** Facebook Graph API for data retrieval
 - **Session Management:** Cookie handling for persistent sessions
 - **Human-like Activity:** Simulated user interactions to avoid detection
 
 ### OSINT Utilities
+
 - **Username Reconnaissance:** Cross-platform username searches
 - **Email Validation:** External API-based email verification
 - **Social Media Analysis:** Profile investigation and reporting
 
 ### Network Utilities
+
 - **IP/Domain Analysis:** Geolocation and domain information
 - **Phone Number Check:** VeriPhone API integration
 - **Advanced Search:** Google Dorking and URL bypass tools
 
 ### Unified CLI
+
 - **Command-line Interface:** Unified CLI for all operations
 - **Workflow Integration:** Streamlined multi-tool operations
 
@@ -82,7 +88,8 @@ python -m modules.main
 <summary>🔧 Configuration & Dependencies</summary>
 
 - [Configuration System](docs/configuration/CONFIG_SYSTEM.md) - System configuration documentation
-- [Dependency Management](docs/configuration/DEPENDENCY_MANAGEMENT.md) - Dependency management procedures
+- [Dependency Management](docs/configuration/DEPENDENCY_MANAGEMENT.md) - Dependency management
+  procedures
 
 </details>
 
@@ -151,7 +158,8 @@ python -m modules.main
 <details>
 <summary>📁 Miscellaneous</summary>
 
-- [Documentation Category Mapping](docs/miscellaneous/DOCUMENTATION_CATEGORY_MAPPING.md) - Documentation structure mapping
+- [Documentation Category Mapping](docs/miscellaneous/DOCUMENTATION_CATEGORY_MAPPING.md) -
+  Documentation structure mapping
 - [README v2](docs/miscellaneous/README_v2.md) - Alternative README file
 
 </details>
@@ -159,7 +167,7 @@ python -m modules.main
 ## Service Endpoints
 
 | Service            | Port | Health Check  | Description                         |
-|-------------------|------|---------------|-------------------------------------|
+| ------------------ | ---- | ------------- | ----------------------------------- |
 | OSINT Framework    | 8000 | `/api/health` | OSINT operations and reconnaissance |
 | JS Tools           | 3000 | `/api/health` | JavaScript tools and bot framework  |
 | Facebook Messenger | 4444 | `/api/health` | Mass messaging and automation       |
@@ -280,7 +288,10 @@ black modules/
 
 ## Disclaimer
 
-These tools are provided for educational and analytical purposes. Interacting with platforms like Facebook programmatically may violate their Terms of Service. Users are responsible for ensuring their use of these tools is compliant with all applicable laws and platform policies. The developers assume no liability for misuse.
+These tools are provided for educational and analytical purposes. Interacting with platforms like
+Facebook programmatically may violate their Terms of Service. Users are responsible for ensuring
+their use of these tools is compliant with all applicable laws and platform policies. The developers
+assume no liability for misuse.
 
 ## License
 
@@ -297,4 +308,5 @@ For questions, issues, or contributions:
 
 ---
 
-**Note**: This toolkit consolidates multiple OSINT and automation tools into a unified, modern platform. All tools are designed for ethical use and educational purposes only.
+**Note**: This toolkit consolidates multiple OSINT and automation tools into a unified, modern
+platform. All tools are designed for ethical use and educational purposes only.

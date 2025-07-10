@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Auto Build System Tests', () => {
   beforeEach(() => {
     // Notify auto-build system about test start

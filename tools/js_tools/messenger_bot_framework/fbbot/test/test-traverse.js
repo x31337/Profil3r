@@ -1,3 +1,5 @@
+/* eslint-env mocha, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect */
 const tape = require('tape'),
   Traverse = require('../traverse/index.js'),
   steps = { '': 'a', a: 'b', b: 'c' };

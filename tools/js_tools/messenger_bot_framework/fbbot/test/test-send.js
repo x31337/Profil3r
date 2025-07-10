@@ -1,3 +1,5 @@
+/* eslint-env mocha, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect */
 const test = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');

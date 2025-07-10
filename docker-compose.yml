@@ -5,7 +5,7 @@ services:
     image: node:16
     container_name: fb-reg-api
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - ./api:/app
     working_dir: /app

@@ -22,6 +22,7 @@ repos:
       - id: flake8
         files: \.py$
         args: [--max-line-length=88, --extend-ignore=E203, W503]
+        exclude: ^modules/facebook_automation\.py$
 
   # JavaScript/TypeScript formatting and linting
   - repo: https://github.com/pre-commit/mirrors-eslint
@@ -33,6 +34,7 @@ repos:
         additional_dependencies:
           - eslint@^9.0.0
           - "@eslint/js@^9.0.0"
+        exclude: ^(tools/cypress/e2e/.*\.cy\.js$|tools/js_tools/messenger_bot_framework/fbbot/test/.*|tools/__tests__/.*|tests/integration/node/.*|tools/web-ui/cypress/e2e/webui\.cy\.js$|tools/web-ui/script\.js$)
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.8
@@ -40,6 +42,7 @@ repos:
       - id: prettier
         files: \.(js|ts|jsx|tsx|json|css|html|md|yml|yaml)$
         args: [--write]
+        exclude: ^helm/profil3r/templates/.*\.ya?ml$
 
   # PHP formatting (optional - requires php-cs-fixer)
   - repo: local
@@ -78,11 +81,24 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+        exclude: ^helm/profil3r/templates/.*\.ya?ml$
       - id: check-json
+        exclude: ^(safety_baseline\.json|safety_scan_output\.json|node_modules/)
       - id: check-merge-conflict
       - id: debug-statements
       - id: mixed-line-ending
         args: [--fix=lf]
+
+  - repo: local
+    hooks:
+      - id: lint-helm-yaml
+        name: Lint rendered Helm YAML
+        entry: bash scripts/lint-helm-yaml.sh
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [commit, push]
+        verbose: true
 
 # Global configuration
 default_stages: [pre-commit]

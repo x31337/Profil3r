@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Basic Test', () => {
   it('should load the homepage', () => {
     cy.visit('/');

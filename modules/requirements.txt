@@ -1,12 +1,21 @@
+Flask
+selenium
 # Core dependencies for the refactored Python modules
 
 requests>=2.25.0
-selenium>=4.0.0
 beautifulsoup4>=4.9.0
 lxml>=4.6.0
 webdriver-manager>=3.5.0 # For easier Selenium driver management
 googlesearch-python>=1.0.1 # For Google dorking in NetworkUtilities
 tabulate>=0.8.9 # For potentially formatting output in CLI
+
+werkzeug
+Flask-Cors
+
+SQLAlchemy
+psycopg2-binary
+
+gunicorn
 
 # Note: Specific versions are examples. Adjust as needed for compatibility.
 # Some OSINT/Network utilities might require additional libraries if their

@@ -9,39 +9,39 @@ app.use(bodyParser.json());
 const accounts = [];
 
 app.post('/fb/reg', (req, res) => {
-    const { name, email, password, gender, proxy } = req.body;
+  const { name, email, password, gender, proxy } = req.body;
 
-    // Basic validation
-    if (!name || !email || !password || !gender) {
-        return res.status(400).json({ error: 'Missing required fields' });
-    }
+  // Basic validation
+  if (!name || !email || !password || !gender) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
 
-    // Create account object
-    const newAccount = {
-        id: accounts.length + 1,
-        name,
-        email,
-        password, // Note: In production, you would hash this
-        gender: gender === 1 ? 'female' : 'male',
-        proxy,
-        created_at: new Date().toISOString(),
-        status: 'pending_verification'
-    };
+  // Create account object
+  const newAccount = {
+    id: accounts.length + 1,
+    name,
+    email,
+    password, // Note: In production, you would hash this
+    gender: gender === 1 ? 'female' : 'male',
+    proxy,
+    created_at: new Date().toISOString(),
+    status: 'pending_verification'
+  };
 
-    accounts.push(newAccount);
+  accounts.push(newAccount);
 
-    res.json({
-        success: true,
-        account_id: newAccount.id,
-        message: 'Account created successfully. Verification required.'
-    });
+  res.json({
+    success: true,
+    account_id: newAccount.id,
+    message: 'Account created successfully. Verification required.'
+  });
 });
 
 app.get('/fb/accounts', (req, res) => {
-    res.json(accounts);
+  res.json(accounts);
 });
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`FB Registration API running on port ${PORT}`);
+  console.log(`FB Registration API running on port ${PORT}`);
 });

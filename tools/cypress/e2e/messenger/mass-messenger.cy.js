@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Facebook Mass Messenger Tests', () => {
   before(() => {
     cy.waitForService(Cypress.env('mass_messenger_url'));

@@ -676,3 +676,40 @@ const additionalStyles = `
 const styleSheet = document.createElement('style');
 styleSheet.textContent = additionalStyles;
 document.head.appendChild(styleSheet);
+
+// Fetch and display report history
+async function fetchReportHistory() {
+  const res = await fetch('/api/reports');
+  const reports = await res.json();
+  const historyDiv = document.getElementById('report-history');
+  if (!historyDiv) return;
+  historyDiv.innerHTML = '<h3>Report History</h3>';
+  if (reports.length === 0) {
+    historyDiv.innerHTML += '<p>No reports submitted yet.</p>';
+    return;
+  }
+  const table = document.createElement('table');
+  table.innerHTML =
+    '<tr><th>ID</th><th>URL</th><th>Status</th><th>Justification</th><th>Evidence</th><th>Created</th></tr>';
+  for (const r of reports) {
+    const evidenceLinks = r.evidence
+      .map(
+        f =>
+          `<a href="/api/evidence/${encodeURIComponent(f)}" target="_blank">${f}</a>`
+      )
+      .join(', ');
+    table.innerHTML += `<tr><td>${r.id}</td><td><a href="${r.target_url}" target="_blank">link</a></td><td>${r.status}</td><td>${r.justification}</td><td>${evidenceLinks}</td><td>${r.created_at}</td></tr>`;
+  }
+  historyDiv.appendChild(table);
+}
+
+// Call fetchReportHistory on page load
+window.addEventListener('DOMContentLoaded', fetchReportHistory);
+
+// After submitting a report, refresh history
+const reportForm = document.getElementById('report-form');
+if (reportForm) {
+  reportForm.addEventListener('submit', function (e) {
+    setTimeout(fetchReportHistory, 2000); // Give backend a moment to process
+  });
+}

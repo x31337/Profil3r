@@ -1,3 +1,5 @@
+/* eslint-env mocha, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect */
 const http = require('http'),
   tape = require('tape'),
   common = require('./common.js'),
@@ -9,13 +11,12 @@ tape('http', function (test) {
     test.test('with ' + handle, function (t) {
       t.plan(request.expected.plan);
 
-      let server,
-        fbbot = new Fbbot(common.fbbot);
+      const fbbot = new Fbbot(common.fbbot);
       // setup tests per instance
       common.setupTests(fbbot, payloadType, request, t, callback);
 
       // create server plug-in fbbot
-      server = http.createServer(fbbot.requestHandler);
+      const server = http.createServer(fbbot.requestHandler);
 
       // start the server
       server.listen(common.server.port, function () {
@@ -39,10 +40,9 @@ tape('http', function (test) {
 tape('http - handshake - success', function (t) {
   t.plan(4);
 
-  let server,
-    fbbot = new Fbbot(common.fbbot);
+  const fbbot = new Fbbot(common.fbbot);
   // create server plug-in fbbot
-  server = http.createServer(fbbot.requestHandler);
+  const server = http.createServer(fbbot.requestHandler);
 
   // start the server
   server.listen(common.server.port, function () {
@@ -65,10 +65,9 @@ tape('http - handshake - success', function (t) {
 tape('http - handshake - failed', function (t) {
   t.plan(4);
 
-  let server,
-    fbbot = new Fbbot(common.fbbot);
+  const fbbot = new Fbbot(common.fbbot);
   // create server plug-in fbbot
-  server = http.createServer(fbbot.requestHandler);
+  const server = http.createServer(fbbot.requestHandler);
 
   // start the server
   server.listen(common.server.port, function () {

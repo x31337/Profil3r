@@ -1,13 +1,16 @@
 {{- if .Values.volumes.logs.enabled }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ include "profil3r.fullname" . }}-logs
   labels:
-    {{- include "profil3r.labels" . | nindent 4 }}
+    {{- with (include "profil3r.labels" . | fromYaml) }}
+      {{ toYaml . | nindent 4 }}
+    {{- end }}
   {{- with .Values.persistence.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+    {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
   accessModes:
@@ -18,18 +21,21 @@ spec:
   {{- if .Values.volumes.logs.storageClass }}
   storageClassName: {{ .Values.volumes.logs.storageClass }}
   {{- end }}
----
 {{- end }}
+
 {{- if .Values.volumes.results.enabled }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ include "profil3r.fullname" . }}-results
   labels:
-    {{- include "profil3r.labels" . | nindent 4 }}
+    {{- with (include "profil3r.labels" . | fromYaml) }}
+      {{ toYaml . | nindent 4 }}
+    {{- end }}
   {{- with .Values.persistence.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+    {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
   accessModes:
@@ -40,18 +46,21 @@ spec:
   {{- if .Values.volumes.results.storageClass }}
   storageClassName: {{ .Values.volumes.results.storageClass }}
   {{- end }}
----
 {{- end }}
+
 {{- if .Values.volumes.config.enabled }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ include "profil3r.fullname" . }}-config
   labels:
-    {{- include "profil3r.labels" . | nindent 4 }}
+    {{- with (include "profil3r.labels" . | fromYaml) }}
+      {{ toYaml . | nindent 4 }}
+    {{- end }}
   {{- with .Values.persistence.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+    {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
   accessModes:

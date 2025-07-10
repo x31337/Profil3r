@@ -16,14 +16,12 @@ import requests
 from selenium import webdriver
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
-    NoSuchElementException,
     TimeoutException,
 )
 
 # Import options for Chrome and Firefox
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -678,6 +676,115 @@ class FacebookAutomation:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.cleanup()
+
+    def report_content(
+        self, target_url, justification_text, evidence_paths=None, report_count=1
+    ):
+        """
+        Automate reporting of a Facebook post, page, or profile for privacy violation with custom justification and optional evidence.
+        Args:
+            target_url (str): The Facebook URL to report (post, page, or profile).
+            justification_text (str): The custom justification to submit.
+            evidence_paths (list[str], optional): List of file paths to screenshots/evidence. Default: None.
+            report_count (int): Number of times to submit the report (rotate accounts externally if needed).
+        Returns:
+            bool: True if at least one report succeeded, False otherwise.
+        """
+        self.logger.info(f"Starting automated report for: {target_url}")
+        if not self.driver:
+            self.setup_driver(headless=True)
+        success = False
+        for _ in range(report_count):
+            try:
+                self.driver.get(target_url)
+                self.wait_random(purpose="page_load")
+                # Try to find the '...' or 'More' menu for posts/pages/profiles
+                more_btn = None
+                try:
+                    more_btn = self.safe_find_element(
+                        By.XPATH,
+                        "//div[@aria-label='Actions for this post' or @aria-label='More' or contains(@aria-label, 'More') or contains(@aria-label, 'Actions') or @aria-haspopup='menu']",
+                        timeout=5,
+                    )
+                except Exception:
+                    pass
+                if more_btn:
+                    self.safe_click(more_btn)
+                    self.wait_random(purpose="dialog_open")
+                # Find and click 'Find support or report post/page/profile'
+                report_btn = None
+                try:
+                    report_btn = self.safe_find_element(
+                        By.XPATH,
+                        "//*[contains(text(),'Find support') or contains(text(),'Report post') or contains(text(),'Report Page') or contains(text(),'Report profile') or contains(text(),'Report') or contains(text(),'Support') or contains(text(),'Something else') or contains(text(),'Privacy') or contains(text(),'Violation') or contains(text(),'Abuse') or contains(text(),'Harassment')]",
+                        timeout=5,
+                    )
+                except Exception:
+                    pass
+                if report_btn:
+                    self.safe_click(report_btn)
+                    self.wait_random(purpose="dialog_step")
+                # Select 'Privacy' or 'Privacy Violation' or similar
+                privacy_btn = None
+                try:
+                    privacy_btn = self.safe_find_element(
+                        By.XPATH,
+                        "//*[contains(text(),'Privacy') or contains(text(),'violation') or contains(text(),'private') or contains(text(),'personal information') or contains(text(),'shared without consent')]",
+                        timeout=5,
+                    )
+                except Exception:
+                    pass
+                if privacy_btn:
+                    self.safe_click(privacy_btn)
+                    self.wait_random(purpose="dialog_step")
+                # If there's a text area for justification, fill it
+                textarea = None
+                try:
+                    textarea = self.safe_find_element(
+                        By.XPATH, "//textarea | //input[@type='text']", timeout=5
+                    )
+                except Exception:
+                    pass
+                if textarea:
+                    textarea.clear()
+                    textarea.send_keys(justification_text)
+                    self.wait_random(purpose="typing")
+                # If evidence upload is possible, try to upload
+                if evidence_paths:
+                    for path in evidence_paths:
+                        try:
+                            upload_input = self.safe_find_element(
+                                By.XPATH, "//input[@type='file']", timeout=3
+                            )
+                            if upload_input:
+                                upload_input.send_keys(os.path.abspath(path))
+                                self.wait_random(purpose="dialog_step")
+                        except Exception:
+                            continue
+                # Click 'Submit' or 'Send' or 'Done'
+                submit_btn = None
+                try:
+                    submit_btn = self.safe_find_element(
+                        By.XPATH,
+                        "//*[contains(text(),'Submit') or contains(text(),'Send') or contains(text(),'Done') or contains(text(),'Report')]",
+                        timeout=5,
+                    )
+                except Exception:
+                    pass
+                if submit_btn:
+                    self.safe_click(submit_btn)
+                    self.wait_random(purpose="action_confirm")
+                    self.logger.info(f"Report submitted for {target_url}")
+                    success = True
+                else:
+                    self.logger.warning(
+                        f"Could not find submit button for {target_url}"
+                    )
+            except Exception as e:
+                self.logger.error(
+                    f"Error during report automation for {target_url}: {e}"
+                )
+        return success
 
 
 # Compatibility functions

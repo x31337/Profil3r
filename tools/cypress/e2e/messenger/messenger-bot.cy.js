@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Messenger Bot Framework Tests', () => {
   before(() => {
     cy.waitForService(Cypress.env('messenger_bot_url'));

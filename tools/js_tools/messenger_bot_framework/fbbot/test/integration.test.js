@@ -1,3 +1,5 @@
+/* eslint-env mocha, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect */
 const request = require('supertest');
 const express = require('express');
 const app = require('../../tools/js_tools/messenger_bot_framework/fbbot/server'); // Adjust path as needed

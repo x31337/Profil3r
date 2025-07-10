@@ -1,3 +1,5 @@
+/* eslint-env jest, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect, jest */
 const Tester = require('../modules/Tester');
 const EventBus = require('../modules/EventBus');
 

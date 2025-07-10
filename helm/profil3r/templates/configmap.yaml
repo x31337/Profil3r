@@ -1,12 +1,15 @@
 {{- if .Values.configMap.enabled }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "profil3r.fullname" . }}-config
   labels:
-    {{- include "profil3r.labels" . | nindent 4 }}
+    {{- with (include "profil3r.labels" . | fromYaml) }}
+      {{ toYaml . | nindent 4 }}
+    {{- end }}
 data:
   {{- with .Values.configMap.data }}
-  {{- toYaml . | nindent 2 }}
+    {{ toYaml . | nindent 2 }}
   {{- end }}
 {{- end }}

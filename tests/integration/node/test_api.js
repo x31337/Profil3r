@@ -1,3 +1,5 @@
+/* eslint-env mocha, node */
+/* global describe, it, before, after, beforeEach, afterEach, expect */
 /**
  * Integration tests for Node.js services using supertest
  * This file contains various test cases for different API endpoints with positive and negative scenarios.
