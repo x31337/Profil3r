@@ -14,7 +14,10 @@
     "test-python": "python3 -m pytest tests/integration/python/ -v",
     "test-node": "cd tests/integration/node && npm test",
     "test-coverage": "python3 -m pytest tests/integration/python/ --cov=profil3r --cov-report=html --cov-report=term",
-    "test-all": "npm run test-python && npm run test-node"
+    "test-all": "npm run test-python && npm run test-node",
+    "install-all": "cd tools && npm install && cd ../api && npm install && cd .. && npm install",
+    "build": "cd tools && npm run build",
+    "validate-all": "cd tools && npm run validate-all"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
