@@ -1,5 +1,7 @@
 import json
 import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../modules')))
 from datetime import datetime
 
 from cryptography.fernet import Fernet
@@ -8,7 +10,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
-from modules.facebook_automation import FacebookAutomation
+from facebook_automation import FacebookAutomation
 
 app = Flask(__name__)
 CORS(app)
@@ -96,9 +98,40 @@ class TestResult(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-@app.before_first_request
 def create_tables():
-    db.create_all()
+    with app.app_context():
+        db.create_all()
+
+# --- AUTO-FIX: Ensure FLASK_SECRET_KEY is always loaded from DB or generated, and set in app.config at startup ---
+def ensure_flask_secret_key():
+    key = get_secret("FLASK_SECRET_KEY")
+    if not key:
+        key = generate_secret(64)
+        store_secret("FLASK_SECRET_KEY", key)
+        # Also update .env
+        env_path = ".env"
+        if os.path.exists(env_path):
+            with open(env_path, "r") as f:
+                lines = f.readlines()
+            with open(env_path, "w") as f:
+                found = False
+                for line in lines:
+                    if line.startswith("FLASK_SECRET_KEY="):
+                        f.write(f"FLASK_SECRET_KEY={key}\n")
+                        found = True
+                    else:
+                        f.write(line)
+                if not found:
+                    f.write(f"FLASK_SECRET_KEY={key}\n")
+        else:
+            with open(env_path, "w") as f:
+                f.write(f"FLASK_SECRET_KEY={key}\n")
+    app.config["SECRET_KEY"] = key
+
+# Call create_tables() once at startup
+with app.app_context():
+    create_tables()
+    ensure_flask_secret_key()
 
 
 @app.route("/api/report", methods=["POST"])
@@ -277,6 +310,32 @@ def get_latest_test_result():
         "result": json.loads(result.result) if result.result else {},
         "created_at": result.created_at.isoformat(),
     })
+
+# --- AUTO-FIX: Add endpoint to rotate FLASK_SECRET_KEY, update DB and .env, and reload Flask config ---
+@app.route("/api/rotate-flask-secret", methods=["POST"])
+def rotate_flask_secret():
+    new_key = generate_secret(64)
+    store_secret("FLASK_SECRET_KEY", new_key)
+    # Update .env
+    env_path = ".env"
+    if os.path.exists(env_path):
+        with open(env_path, "r") as f:
+            lines = f.readlines()
+        with open(env_path, "w") as f:
+            found = False
+            for line in lines:
+                if line.startswith("FLASK_SECRET_KEY="):
+                    f.write(f"FLASK_SECRET_KEY={new_key}\n")
+                    found = True
+                else:
+                    f.write(line)
+            if not found:
+                f.write(f"FLASK_SECRET_KEY={new_key}\n")
+    else:
+        with open(env_path, "w") as f:
+            f.write(f"FLASK_SECRET_KEY={new_key}\n")
+    app.config["SECRET_KEY"] = new_key
+    return jsonify({"status": "FLASK_SECRET_KEY rotated, updated in DB and .env, and Flask config reloaded"})
 
 
 if __name__ == "__main__":

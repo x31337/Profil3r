@@ -32,6 +32,10 @@
     "max_size": 1048576,
     "backup_count": 3
   },
+  "facebook_automation": {
+    "headless": true,
+    "browser": "chrome"
+  },
   "plateform": {
     "email": {
       "rate_limit": 50,

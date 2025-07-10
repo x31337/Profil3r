@@ -27,6 +27,9 @@ except ImportError:
 class UnifiedCliApp:
     def __init__(self, config_file="config.json"):
         self.config = self._load_config(config_file)
+        # Merge facebook_automation section into main config if present
+        if "facebook_automation" in self.config:
+            self.config.update(self.config["facebook_automation"])
         self._setup_logging()
 
         # Instantiate utility classes that don't manage heavy resources like browsers
@@ -139,7 +142,11 @@ class UnifiedCliApp:
             action = self._get_input(
                 "FB Action (post, like, comment, report, userinfo, friends, simulate, savesession, exit):",
                 "exit",
-            ).lower()
+            )
+            if action is not None:
+                action = action.lower()
+            else:
+                action = "exit"
 
             if action == "post":
                 content = self._get_input(
@@ -151,12 +158,14 @@ class UnifiedCliApp:
                     self.logger.error("Failed to create post.")
 
             elif action == "like":
-                count = int(self._get_input("Max likes:", "1"))
+                count_str = self._get_input("Max likes:", "1")
+                try:
+                    count = int(count_str) if count_str is not None else 1
+                except Exception:
+                    count = 1
                 fb.like_posts(max_likes=count)
 
-            elif (
-                action == "comment"
-            ):  # Simplified: comments on current page or needs target
+            elif action == "comment":  # Simplified: comments on current page or needs target
                 target = self._get_input(
                     "Post URL/Element context (optional, for specific post):"
                 )
@@ -182,9 +191,13 @@ class UnifiedCliApp:
 
             elif action == "userinfo":
                 uid = self._get_input("User ID (default 'me'):", "me")
+                if uid is None:
+                    uid = "me"
                 fields = self._get_input(
                     "Fields (e.g., id,name,email):", "id,name,email"
                 )
+                if fields is None:
+                    fields = "id,name,email"
                 info = fb.get_user_info_graph_api(user_id=uid, fields=fields)
                 if info:
                     self.logger.info(
@@ -193,7 +206,13 @@ class UnifiedCliApp:
 
             elif action == "friends":
                 uid = self._get_input("User ID (default 'me'):", "me")
-                limit = int(self._get_input("Limit:", "20"))
+                if uid is None:
+                    uid = "me"
+                limit_str = self._get_input("Limit:", "20")
+                try:
+                    limit = int(limit_str) if limit_str is not None else 20
+                except Exception:
+                    limit = 20
                 friends = fb.get_friends_graph_api(user_id=uid, limit=limit)
                 if friends is not None:
                     self.logger.info(
@@ -201,7 +220,11 @@ class UnifiedCliApp:
                     )
 
             elif action == "simulate":
-                duration = int(self._get_input("Simulation duration (minutes):", "5"))
+                duration_str = self._get_input("Simulation duration (minutes):", "5")
+                try:
+                    duration = int(duration_str) if duration_str is not None else 5
+                except Exception:
+                    duration = 5
                 fb.simulate_human_activity(duration_minutes=duration)
 
             elif action == "savesession":
@@ -217,7 +240,11 @@ class UnifiedCliApp:
         self.logger.info("\n=== OSINT Utilities ===")
         action = self._get_input(
             "OSINT Action (userrecon, emailfind, github, tempmail, exit):", "exit"
-        ).lower()
+        )
+        if isinstance(action, str):
+            action = action.lower()
+        else:
+            action = "exit"
 
         if action == "userrecon":
             uname = self._get_input("Username for reconnaissance:")
@@ -253,7 +280,7 @@ class UnifiedCliApp:
                 self.logger.info(
                     f"Temp mail generated: {email_info['email']}. Checking for messages..."
                 )
-                self.wait_random(purpose="action_confirm")  # Wait a bit for emails
+                # self.wait_random(purpose="action_confirm")  # Wait a bit for emails (commented out, not defined)
                 messages = self.osint_utils.get_temporary_emails(email_info)
                 if messages:
                     self.logger.info(f"Messages:\n{json.dumps(messages, indent=2)}")

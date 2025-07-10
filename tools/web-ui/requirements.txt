@@ -1,4 +1,5 @@
 Flask
-Flask_SQLAlchemy
-Werkzeug
+Flask-SQLAlchemy
+Flask-Cors
 cryptography
+werkzeug
