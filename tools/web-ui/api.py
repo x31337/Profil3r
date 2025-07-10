@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime
 
+from cryptography.fernet import Fernet
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -42,6 +43,57 @@ if os.environ.get("FB_ACCOUNTS_JSON"):
 elif os.path.exists("fb_accounts.json"):
     with open("fb_accounts.json", "r") as f:
         ACCOUNTS = json.load(f)
+
+
+SETUP_SECRET_KEY = os.environ.get("SETUP_SECRET_KEY", Fernet.generate_key().decode())
+FERNET = Fernet(SETUP_SECRET_KEY.encode())
+
+
+class Secret(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+    value = db.Column(db.LargeBinary, nullable=False)
+
+
+def generate_secret(length=32):
+    import secrets
+    import string
+
+    alphabet = string.ascii_letters + string.digits + string.punctuation
+    return "".join(secrets.choice(alphabet) for _ in range(length))
+
+
+def store_secret(name, value):
+    enc = FERNET.encrypt(value.encode())
+    s = Secret.query.filter_by(name=name).first()
+    if s:
+        s.value = enc
+    else:
+        s = Secret(name=name, value=enc)
+        db.session.add(s)
+    db.session.commit()
+
+
+def get_secret(name):
+    s = Secret.query.filter_by(name=name).first()
+    if s:
+        return FERNET.decrypt(s.value).decode()
+    return None
+
+
+class BuildState(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    state_type = db.Column(db.String(32), nullable=False)  # e.g., 'build', 'test', 'deploy'
+    status = db.Column(db.String(32), nullable=False)  # e.g., 'success', 'failed', 'in_progress'
+    data = db.Column(db.Text, nullable=True)  # JSON-encoded state
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class TestResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    test_type = db.Column(db.String(32), nullable=False)  # e.g., 'cypress', 'unit', 'integration'
+    status = db.Column(db.String(32), nullable=False)
+    result = db.Column(db.Text, nullable=True)  # JSON-encoded result
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 @app.before_first_request
@@ -130,6 +182,101 @@ def get_report(report_id):
 @app.route("/api/evidence/<filename>", methods=["GET"])
 def get_evidence(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
+
+
+@app.route("/api/setup-secrets", methods=["POST"])
+def setup_secrets():
+    # Only allow if not already set up
+    if Secret.query.count() > 0:
+        return jsonify({"error": "Secrets already set up"}), 400
+    # List of all secrets to generate for all services
+    secrets_to_generate = [
+        ("POSTGRES_PASSWORD", 32),
+        ("FLASK_SECRET_KEY", 64),
+        ("API_KEY", 40),
+        ("FB_API_KEY", 32),
+        ("FB_SECRET", 32),
+        ("REAL_EMAIL_API_KEY", 40),
+        ("VERIPHONE_API_KEY", 40),
+        ("GITHUB_TOKEN", 40),
+        ("JWT_SECRET", 64),
+        ("PAGE_ACCESS_TOKEN", 64),
+        ("VERIFY_TOKEN", 32),
+        ("APP_SECRET", 64),
+        ("PROXY_URL", 64),
+        ("OSINT_API_KEY", 40),
+        ("SHODAN_API_KEY", 40),
+        ("VIRUSTOTAL_API_KEY", 40),
+        ("REDIS_URL", 64),
+    ]
+    env_lines = []
+    for name, length in secrets_to_generate:
+        value = generate_secret(length)
+        store_secret(name, value)
+        env_lines.append(f"{name}={value}")
+    # Write to .env (append, but only add if not already present)
+    if os.path.exists(".env"):
+        with open(".env", "r") as f:
+            existing = f.read()
+    else:
+        existing = ""
+    with open(".env", "a") as f:
+        for line in env_lines:
+            key = line.split("=")[0]
+            if key not in existing:
+                f.write(line + "\n")
+    return jsonify({"status": "secrets generated and stored encrypted in DB and .env"})
+
+
+@app.route("/api/save-state", methods=["POST"])
+def save_state():
+    data = request.json
+    state_type = data.get("state_type")
+    status = data.get("status")
+    state_data = json.dumps(data.get("data", {}))
+    build_state = BuildState(state_type=state_type, status=status, data=state_data)
+    db.session.add(build_state)
+    db.session.commit()
+    return jsonify({"status": "state saved", "id": build_state.id})
+
+@app.route("/api/get-latest-state", methods=["GET"])
+def get_latest_state():
+    state_type = request.args.get("state_type")
+    state = BuildState.query.filter_by(state_type=state_type).order_by(BuildState.created_at.desc()).first()
+    if not state:
+        return jsonify({"error": "No state found"}), 404
+    return jsonify({
+        "id": state.id,
+        "state_type": state.state_type,
+        "status": state.status,
+        "data": json.loads(state.data) if state.data else {},
+        "created_at": state.created_at.isoformat(),
+    })
+
+@app.route("/api/save-test-result", methods=["POST"])
+def save_test_result():
+    data = request.json
+    test_type = data.get("test_type")
+    status = data.get("status")
+    result = json.dumps(data.get("result", {}))
+    test_result = TestResult(test_type=test_type, status=status, result=result)
+    db.session.add(test_result)
+    db.session.commit()
+    return jsonify({"status": "test result saved", "id": test_result.id})
+
+@app.route("/api/get-latest-test-result", methods=["GET"])
+def get_latest_test_result():
+    test_type = request.args.get("test_type")
+    result = TestResult.query.filter_by(test_type=test_type).order_by(TestResult.created_at.desc()).first()
+    if not result:
+        return jsonify({"error": "No test result found"}), 404
+    return jsonify({
+        "id": result.id,
+        "test_type": result.test_type,
+        "status": result.status,
+        "result": json.loads(result.result) if result.result else {},
+        "created_at": result.created_at.isoformat(),
+    })
 
 
 if __name__ == "__main__":
