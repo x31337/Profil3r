@@ -1,3 +1,27 @@
+import sys
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "purge-secrets":
+    import os
+    import json
+    from flask import Flask
+    from flask_sqlalchemy import SQLAlchemy
+    app = Flask(__name__)
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+        "DATABASE_URL", "sqlite:///fb_reports.db"
+    )
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db = SQLAlchemy(app)
+    class Secret(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        name = db.Column(db.String(64), unique=True, nullable=False)
+        value = db.Column(db.LargeBinary, nullable=False)
+    with app.app_context():
+        db.create_all()
+        db.session.query(Secret).delete()
+        db.session.commit()
+        print("All secrets purged from the database.")
+    sys.exit(0)
+
+# --- Everything below this line is only run for normal app startup ---
 import json
 import os
 import sys
@@ -338,5 +362,18 @@ def rotate_flask_secret():
     return jsonify({"status": "FLASK_SECRET_KEY rotated, updated in DB and .env, and Flask config reloaded"})
 
 
+@app.route('/')
+def root():
+    return send_from_directory(os.path.dirname(__file__), 'index.html')
+
+@app.route('/<path:path>')
+def static_proxy(path):
+    return send_from_directory(os.path.dirname(__file__), path)
+
+
 if __name__ == "__main__":
+    # Only run normal startup if not purging secrets
+    with app.app_context():
+        create_tables()
+        ensure_flask_secret_key()
     app.run(host="0.0.0.0", port=5050)
