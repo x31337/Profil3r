@@ -56,9 +56,9 @@ db = SQLAlchemy(app)
 
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    target_url = db.Column(db.String(512))
+    target_url = db.Column(db.String(512), index=True)
     justification = db.Column(db.Text)
-    status = db.Column(db.String(32))
+    status = db.Column(db.String(32), index=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     evidence = db.relationship("Evidence", backref="report", lazy=True)
 
@@ -77,9 +77,31 @@ elif os.path.exists("fb_accounts.json"):
     with open("fb_accounts.json", "r") as f:
         ACCOUNTS = json.load(f)
 
-
-SETUP_SECRET_KEY = os.environ.get("SETUP_SECRET_KEY", Fernet.generate_key().decode())
-FERNET = Fernet(SETUP_SECRET_KEY.encode())
+# Ensure SETUP_SECRET_KEY (Fernet key) is configured via environment variable
+# This key is critical for encrypting/decrypting other secrets in the database.
+# If not set, the app should not run or run in a degraded mode.
+raw_setup_secret_key = os.environ.get("SETUP_SECRET_KEY")
+if not raw_setup_secret_key:
+    app.logger.critical(
+        "CRITICAL: SETUP_SECRET_KEY environment variable is not set. "
+        "This key is required for encrypting and decrypting secrets. "
+        "Please generate a key (e.g., using 'python -c \"from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())\"') "
+        "and set it as an environment variable. Application may not function correctly with secrets."
+    )
+    # Fallback to a dummy key to allow app to run but secrets will not be persistent/secure
+    # This is NOT recommended for production.
+    FERNET = Fernet(Fernet.generate_key()) # Ephemeral key, secrets won't survive restart
+else:
+    try:
+        FERNET = Fernet(raw_setup_secret_key.encode())
+        app.logger.info("Successfully initialized Fernet with SETUP_SECRET_KEY from environment.")
+    except Exception as e:
+        app.logger.critical(
+            f"CRITICAL: Failed to initialize Fernet with SETUP_SECRET_KEY: {e}. "
+            "Ensure the key is a valid Fernet key. Application may not function correctly with secrets."
+        )
+        # Fallback to a dummy key if provided key is invalid
+        FERNET = Fernet(Fernet.generate_key())
 
 
 class Secret(db.Model):
@@ -201,20 +223,47 @@ def report():
     db.session.commit()
     # Rotate through accounts for each report
     results = []
+    account_outcomes = [] # To track individual account success/failure
+
     for account in ACCOUNTS:
         email = account.get("email")
         password = account.get("password")
-        config = {"headless": True}
-        with FacebookAutomation(config=config) as fb:
-            if fb.login_facebook(email, password):
-                success = fb.report_content(target_url, justification, evidence_paths)
-                results.append({"email": email, "success": success})
-                report_obj.status = "success" if success else "failed"
-            else:
-                results.append(
-                    {"email": email, "success": False, "error": "Login failed"}
-                )
-                report_obj.status = "failed"
+        # Pass a more complete config, could be expanded later
+        automation_config = {
+            "headless": True,
+            "log_level": app.config.get("LOG_LEVEL", "INFO"), # Inherit log level
+            "browser": app.config.get("SELENIUM_BROWSER", "chrome") # Allow browser config
+        }
+
+        current_result = {"email": email, "success": False, "message": "Unknown error"}
+
+        try:
+            with FacebookAutomation(config=automation_config) as fb:
+                if fb.login_facebook(email, password):
+                    # report_content now expects report_count=1 as it handles one attempt
+                    report_outcome = fb.report_content(target_url, justification, evidence_paths, report_count=1)
+                    current_result["success"] = report_outcome["success"]
+                    current_result["message"] = report_outcome["message"]
+                else:
+                    current_result["message"] = "Login failed"
+        except Exception as e:
+            app.logger.error(f"Exception during FacebookAutomation for {email}: {e}", exc_info=True)
+            current_result["message"] = f"Automation process error: {str(e)}"
+
+        results.append(current_result)
+        account_outcomes.append(current_result["success"])
+
+    # Determine overall report status
+    if not account_outcomes: # No accounts configured
+        report_obj.status = "failed"
+        report_obj.justification += " (No accounts configured for reporting)" # Append to justification
+    elif all(account_outcomes):
+        report_obj.status = "success"
+    elif any(account_outcomes):
+        report_obj.status = "partially_successful"
+    else:
+        report_obj.status = "failed"
+
     db.session.commit()
     return jsonify({"results": results, "report_id": report_obj.id})
 

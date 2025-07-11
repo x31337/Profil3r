@@ -6,14 +6,17 @@ services:
     environment:
       # test/demo password, not a real secret
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
-      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY} # User should set this in .env
+      - SETUP_SECRET_KEY=${SETUP_SECRET_KEY} # User should set this in .env (Fernet key for DB secrets)
+      - LOG_LEVEL=${LOG_LEVEL:-INFO} # Optional: allow configuring app log level
+      - SELENIUM_BROWSER=${SELENIUM_BROWSER:-chrome} # Optional: allow configuring browser for selenium
     depends_on:
       - db
     restart: always
     volumes:
-      - ./fb_accounts.json:/app/tools/web-ui/fb_accounts.json
-      - ./fb_reports.db:/app/tools/web-ui/fb_reports.db
-      - ./:/app/tools/web-ui
+      - ./fb_accounts.json:/app/tools/web-ui/fb_accounts.json # Mount account config
+      # Removed ./fb_reports.db mapping as PostgreSQL is used.
+      - ./:/app/tools/web-ui # Mount current dir for dev (contains api.py, index.html etc.)
   db:
     image: postgres:15
     environment:

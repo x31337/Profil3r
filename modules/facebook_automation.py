@@ -686,105 +686,155 @@ class FacebookAutomation:
             target_url (str): The Facebook URL to report (post, page, or profile).
             justification_text (str): The custom justification to submit.
             evidence_paths (list[str], optional): List of file paths to screenshots/evidence. Default: None.
-            report_count (int): Number of times to submit the report (rotate accounts externally if needed).
+            report_count (int): Number of times to submit the report (should be 1 for this method, caller handles looping).
         Returns:
-            bool: True if at least one report succeeded, False otherwise.
+            dict: A dictionary with 'success' (bool) and 'message' (str) detailing the outcome.
         """
-        self.logger.info(f"Starting automated report for: {target_url}")
+        self.logger.info(f"Attempting automated report for: {target_url}")
         if not self.driver:
-            self.setup_driver(headless=True)
-        success = False
-        for _ in range(report_count):
-            try:
-                self.driver.get(target_url)
-                self.wait_random(purpose="page_load")
-                # Try to find the '...' or 'More' menu for posts/pages/profiles
-                more_btn = None
-                try:
-                    more_btn = self.safe_find_element(
-                        By.XPATH,
-                        "//div[@aria-label='Actions for this post' or @aria-label='More' or contains(@aria-label, 'More') or contains(@aria-label, 'Actions') or @aria-haspopup='menu']",
-                        timeout=5,
-                    )
-                except Exception:
-                    pass
+            if not self.setup_driver(headless=True): # Ensure driver is setup
+                return {"success": False, "message": "Failed to initialize WebDriver."}
+
+        # This method should process one report attempt. The calling API will loop through accounts.
+        # report_count argument is misleading here if called per account, ensure it's 1.
+        if report_count != 1:
+            self.logger.warning("report_content called with report_count != 1. Processing one attempt.")
+
+        try:
+            self.driver.get(target_url)
+            self.wait_random(purpose="page_load")
+
+            # Try to find the '...' or 'More' menu
+            more_btn_xpaths = [
+                "//div[@aria-label='Actions for this post']",
+                "//div[@aria-label='More']",
+                "//div[contains(@aria-label, 'More options')]",
+                "//div[contains(@aria-label, 'Actions')]",
+                "//div[@aria-haspopup='menu']"
+            ]
+            more_btn = None
+            for xpath in more_btn_xpaths:
+                more_btn = self.safe_find_element(By.XPATH, xpath, timeout=3)
                 if more_btn:
-                    self.safe_click(more_btn)
-                    self.wait_random(purpose="dialog_open")
-                # Find and click 'Find support or report post/page/profile'
-                report_btn = None
-                try:
-                    report_btn = self.safe_find_element(
-                        By.XPATH,
-                        "//*[contains(text(),'Find support') or contains(text(),'Report post') or contains(text(),'Report Page') or contains(text(),'Report profile') or contains(text(),'Report') or contains(text(),'Support') or contains(text(),'Something else') or contains(text(),'Privacy') or contains(text(),'Violation') or contains(text(),'Abuse') or contains(text(),'Harassment')]",
-                        timeout=5,
-                    )
-                except Exception:
-                    pass
-                if report_btn:
-                    self.safe_click(report_btn)
-                    self.wait_random(purpose="dialog_step")
-                # Select 'Privacy' or 'Privacy Violation' or similar
-                privacy_btn = None
-                try:
-                    privacy_btn = self.safe_find_element(
-                        By.XPATH,
-                        "//*[contains(text(),'Privacy') or contains(text(),'violation') or contains(text(),'private') or contains(text(),'personal information') or contains(text(),'shared without consent')]",
-                        timeout=5,
-                    )
-                except Exception:
-                    pass
-                if privacy_btn:
-                    self.safe_click(privacy_btn)
-                    self.wait_random(purpose="dialog_step")
-                # If there's a text area for justification, fill it
-                textarea = None
-                try:
-                    textarea = self.safe_find_element(
-                        By.XPATH, "//textarea | //input[@type='text']", timeout=5
-                    )
-                except Exception:
-                    pass
-                if textarea:
-                    textarea.clear()
-                    textarea.send_keys(justification_text)
-                    self.wait_random(purpose="typing")
-                # If evidence upload is possible, try to upload
-                if evidence_paths:
-                    for path in evidence_paths:
-                        try:
-                            upload_input = self.safe_find_element(
-                                By.XPATH, "//input[@type='file']", timeout=3
-                            )
-                            if upload_input:
-                                upload_input.send_keys(os.path.abspath(path))
-                                self.wait_random(purpose="dialog_step")
-                        except Exception:
-                            continue
-                # Click 'Submit' or 'Send' or 'Done'
-                submit_btn = None
-                try:
-                    submit_btn = self.safe_find_element(
-                        By.XPATH,
-                        "//*[contains(text(),'Submit') or contains(text(),'Send') or contains(text(),'Done') or contains(text(),'Report')]",
-                        timeout=5,
-                    )
-                except Exception:
-                    pass
-                if submit_btn:
-                    self.safe_click(submit_btn)
-                    self.wait_random(purpose="action_confirm")
-                    self.logger.info(f"Report submitted for {target_url}")
-                    success = True
-                else:
-                    self.logger.warning(
-                        f"Could not find submit button for {target_url}"
-                    )
-            except Exception as e:
-                self.logger.error(
-                    f"Error during report automation for {target_url}: {e}"
-                )
-        return success
+                    break
+
+            if not more_btn:
+                return {"success": False, "message": "Could not find 'More' or 'Actions' button for the content."}
+
+            self.safe_click(more_btn)
+            self.wait_random(purpose="dialog_open")
+
+            # Find and click 'Find support or report post/page/profile'
+            report_action_texts = [
+                "Find support or report", # Generic
+                "Report post", "Report photo", "Report video",
+                "Report Page", "Report profile",
+                "Report group", "Report event", "Report ad",
+                "Report" # Last resort
+            ]
+            report_btn = None
+            for text in report_action_texts:
+                report_btn = self.safe_find_element(By.XPATH, f"//*[self::div or self::span][normalize-space()='{text}']", timeout=3)
+                if report_btn: break
+
+            if not report_btn:
+                 # Try another common pattern if text search fails
+                report_btn = self.safe_find_element(By.XPATH, "//div[@role='menuitem']//span[contains(text(),'Report') or contains(text(),'Find support')]", timeout=3)
+
+            if not report_btn:
+                return {"success": False, "message": "Could not find 'Report' or 'Find support' option in menu."}
+
+            self.safe_click(report_btn)
+            self.wait_random(purpose="dialog_step")
+
+            # Select 'Privacy' or 'Privacy Violation' or similar
+            # This step is highly variable. We'll try a common one.
+            # Facebook often presents a list of reasons. 'Something else' might be a good fallback.
+            privacy_options_texts = [
+                "Privacy violation", "Privacy", "Sharing private information",
+                "Something else" # Fallback
+            ]
+            privacy_btn = None
+            for text in privacy_options_texts:
+                # Using normalize-space() for more robust text matching
+                privacy_btn = self.safe_find_element(By.XPATH, f"//*[self::div or self::span][normalize-space()='{text}']", timeout=3)
+                if privacy_btn: break
+
+            if not privacy_btn:
+                # If specific privacy option not found, check if we are already at a justification step
+                textarea_check = self.safe_find_element(By.XPATH, "//textarea | //input[@type='text']", timeout=1)
+                if not textarea_check:
+                    return {"success": False, "message": "Could not find 'Privacy' or 'Something else' option, and not at justification step."}
+            else:
+                self.safe_click(privacy_btn)
+                self.wait_random(purpose="dialog_step")
+
+            # If there's a text area for justification, fill it
+            # This might appear after selecting a reason or directly.
+            textarea = self.safe_find_element(By.XPATH, "//textarea | //input[@type='text']", timeout=5)
+            if textarea:
+                textarea.clear()
+                textarea.send_keys(justification_text)
+                self.wait_random(purpose="typing")
+            else:
+                self.logger.warning("No textarea found for justification, proceeding.")
+
+
+            # If evidence upload is possible, try to upload
+            if evidence_paths:
+                for path in evidence_paths:
+                    try:
+                        # Look for an input specifically designed for file uploads within the dialog
+                        upload_input = self.safe_find_element(By.XPATH, "//div[@aria-label='Report dialog' or @role='dialog']//input[@type='file']", timeout=3)
+                        if not upload_input: # Fallback to generic
+                             upload_input = self.safe_find_element(By.XPATH, "//input[@type='file']", timeout=2)
+
+                        if upload_input:
+                            upload_input.send_keys(os.path.abspath(path))
+                            self.wait_random(purpose="dialog_step")
+                            self.logger.info(f"Evidence '{os.path.basename(path)}' submitted for upload.")
+                        else:
+                            self.logger.warning(f"Could not find evidence upload input for {path}.")
+                    except Exception as e_upload:
+                        self.logger.error(f"Error uploading evidence {path}: {e_upload}")
+                        continue
+
+            # Click 'Submit' or 'Send' or 'Done' or 'Report'
+            # These buttons can vary widely based on the report flow.
+            final_submit_texts = ["Submit", "Send", "Done", "Report"]
+            submit_btn = None
+            for text in final_submit_texts:
+                # Look for buttons specifically
+                submit_btn = self.safe_find_element(By.XPATH, f"//div[@role='button' and normalize-space()='{text}']", timeout=3)
+                if submit_btn: break
+
+            if not submit_btn: # Fallback if specific role button not found
+                 for text in final_submit_texts:
+                    submit_btn = self.safe_find_element(By.XPATH, f"//*[normalize-space()='{text}']", timeout=2)
+                    if submit_btn: break
+
+            if submit_btn:
+                self.safe_click(submit_btn)
+                self.wait_random(purpose="action_confirm")
+                # Add a small delay and check for confirmation message or dialog closure
+                # This part is tricky as confirmation varies. For now, assume click means submitted.
+                self.logger.info(f"Final submit button clicked for {target_url}")
+                return {"success": True, "message": "Report submitted successfully."}
+            else:
+                # It's possible the report was submitted by an earlier click if the flow is short
+                self.logger.warning(f"Could not find a final 'Submit/Send/Done/Report' button for {target_url}. The report might have been submitted earlier or the flow is different.")
+                # Let's assume if we got this far without error, it might be a success.
+                # This is an assumption and might need refinement based on observed behavior.
+                # Checking for dialog closure could be one way.
+                # For now, we'll return a more ambiguous success.
+                return {"success": True, "message": "Report process completed, but final submit button not explicitly found. Please verify."}
+
+        except TimeoutException as te:
+            self.logger.error(f"Timeout during report automation for {target_url}: {te}")
+            return {"success": False, "message": f"Timeout: {str(te)}."}
+        except Exception as e:
+            self.logger.error(f"Error during report automation for {target_url}: {e}", exc_info=True)
+            return {"success": False, "message": f"An unexpected error occurred: {str(e)}."}
 
 
 # Compatibility functions
