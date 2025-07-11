@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: auto;
+}
+
+h1, h2 {
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+textarea, input[type="text"], input[type="file"] {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#add-account-btn { background-color: #28a745; }
+#add-account-btn:hover { background-color: #1e7e34; }
+#clear-accounts-btn { background-color: #dc3545; }
+#clear-accounts-btn:hover { background-color: #b02a37; }
+#start-reporting-btn { background-color: #17a2b8; }
+#start-reporting-btn:hover { background-color: #117a8b; }
+#stop-reporting-btn { background-color: #ffc107; color: #212529; }
+#stop-reporting-btn:hover { background-color: #d39e00; }
+
+
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+}
+
+#account-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#account-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#account-list li input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#account-list li button {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    background-color: #dc3545;
+}
+#account-list li button:hover {
+    background-color: #c82333;
+}
+
+
+#log-output {
+    background-color: #222;
+    color: #eee;
+    padding: 15px;
+    height: 300px;
+    overflow-y: scroll;
+    border-radius: 4px;
+    font-family: "Courier New", Courier, monospace;
+    white-space: pre-wrap;
+    border: 1px solid #444;
+    margin-top: 10px;
+}
+
+#summary-output {
+    background-color: #e9f7ef;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #d0e9c6;
+    margin-top: 10px;
+}
+#summary-output p { margin: 5px 0; }
+#summary-details-list {
+    padding-left: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+
+.disclaimer {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    text-align: center;
+}
+
+#evidence-file-names {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: -10px; /* Pull up slightly */
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
