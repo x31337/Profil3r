@@ -17,15 +17,28 @@ RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}') && \
     unzip /tmp/chromedriver.zip -d /usr/local/bin/ && \
     rm /tmp/chromedriver.zip
 
+# Create a non-root user and group
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
 # Set up app directory
 WORKDIR /app
-COPY modules /app/modules
-COPY tools/web-ui /app/tools/web-ui
 
-# Install Python dependencies
-RUN pip install -r /app/modules/requirements.txt
+# Copy requirements first for layer caching
+COPY modules/requirements.txt /app/modules/requirements.txt
+RUN pip install --no-cache-dir -r /app/modules/requirements.txt
+
+# Copy the rest of the application code
+COPY modules /app/modules/
+COPY tools/web-ui /app/tools/web-ui/
+
+# Change ownership of the app directory to the non-root user
+RUN chown -R appuser:appgroup /app
+
+# Switch to the non-root user
+USER appuser
 
 WORKDIR /app/tools/web-ui
 EXPOSE 5050
 
-CMD ["gunicorn", "-b", "0.0.0.0:5050", "api:app"]
+# Ensure Gunicorn can write its logs if any, or adjust Gunicorn logging if needed
+CMD ["gunicorn", "--bind", "0.0.0.0:5050", "api:app"]
