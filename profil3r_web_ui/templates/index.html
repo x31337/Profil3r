@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Profil3r Web UI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        textarea { width: 95%; padding: 10px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ddd; font-size: 16px; min-height: 100px; }
+        .button-container { text-align: center; }
+        button { background-color: #5cb85c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #4cae4c; }
+        .results { margin-top: 30px; padding: 15px; border: 1px solid #eee; border-radius: 4px; background-color: #f9f9f9; }
+        .results h2 { margin-top: 0; color: #5cb85c; }
+        .results a { color: #337ab7; text-decoration: none; }
+        .results a:hover { text-decoration: underline; }
+        .error { color: red; font-weight: bold; margin-bottom: 15px; text-align: center; }
+        .loader {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none; /* Hidden by default */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Profil3r OSINT Tool</h1>
+
+        {% if error_message %}
+            <p class="error">{{ error_message }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('run_profil3r') }}" method="post" id="profil3rForm">
+            <label for="profiles">Enter Profile Names/Usernames (one or more, separated by spaces or new lines):</label>
+            <textarea id="profiles" name="profiles" rows="5" required></textarea>
+            <div class="button-container">
+                <button type="submit">Run Profil3r</button>
+            </div>
+        </form>
+
+        <div class="loader" id="loadingSpinner"></div>
+
+        {% if report_filename %}
+            <div class="results">
+                <h2>Report Ready</h2>
+                <p>Your Profil3r report is ready for download:</p>
+                <p><a href="{{ url_for('download_report', filename=report_filename) }}">{{ report_filename }}</a></p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('profil3rForm').addEventListener('submit', function() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
