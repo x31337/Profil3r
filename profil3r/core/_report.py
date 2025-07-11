@@ -37,14 +37,23 @@ def generate_json_report(self):
 
 
 # Generate a report in HTML format containing the collected data
-# Report will be in "./reports/html"
-# You can modify th path in the config.json file
-def generate_HTML_report(self):
-    # Create ./reports/html directory if not exists
-    if not os.path.exists("reports/html"):
-        os.makedirs("reports/html")
-
-    separators = [value for key, value in self.CONFIG["separators"].items()]
+# Report will be in "./reports/html" or a specified path
+# You can modify the default path in the config.json file
+def generate_HTML_report(self, output_filepath=None):
+    if output_filepath:
+        # Ensure the directory for the output_filepath exists
+        output_dir = os.path.dirname(output_filepath)
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        file_name = output_filepath
+    else:
+        # Default behavior: Create ./reports/html directory if not exists
+        if not os.path.exists("reports/html"):
+            os.makedirs("reports/html")
+        separators = [value for key, value in self.CONFIG["separators"].items()]
+        file_name = self.CONFIG["html_report_path"].format(
+            "_".join([item for item in self.items if item not in separators])
+        )
 
     dirname = os.path.dirname(__file__)
     html_content = open(os.path.join(dirname, "./ressources/report.tpl")).read()
@@ -52,7 +61,7 @@ def generate_HTML_report(self):
     js_content = open(os.path.join(dirname, "./ressources/report.js")).read()
 
     html_report = Template(html_content).render(
-        title=" ".join(self.items),
+        title=" ".join(self.items) if self.items else "Profil3r Report", # Handle cases where self.items might be empty
         time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         version=self.version,
         results=self.result.items(),
@@ -60,21 +69,21 @@ def generate_HTML_report(self):
         script=js_content,
     )
 
-    file_name = self.CONFIG["html_report_path"].format(
-        "_".join([item for item in self.items if item not in separators])
-    )
     try:
         with open(file_name, "w") as fp:
             fp.write(html_report)
     except Exception as e:
-        print(e)
+        print(f"Error writing HTML report to {file_name}: {e}") # Added more specific error message
 
-    print(
-        Colors.BOLD
-        + "[+] "
-        + Colors.ENDC
-        + "HTML report was generated in {}".format(file_name)
-    )
+    # Only print to console if not called with a specific output_filepath (i.e., CLI mode)
+    if not output_filepath:
+        print(
+            Colors.BOLD
+            + "[+] "
+            + Colors.ENDC
+            + "HTML report was generated in {}".format(file_name)
+        )
+    return file_name # Return the path of the generated report
 
 
 # Generate a report in CSV format containing the collected data
@@ -120,11 +129,12 @@ def generate_csv_report(self):
     )
 
 
-def generate_report(self):
-    # Create ./reports directory if not exists
+def generate_report(self, html_output_filepath=None):
+    # Create ./reports directory if not exists (for default JSON/CSV paths)
     if not os.path.exists("reports"):
         os.makedirs("reports")
 
-    self.generate_json_report()
-    self.generate_HTML_report()
-    self.generate_csv_report()
+    self.generate_json_report() # Keeps its default behavior for now
+    html_report_path = self.generate_HTML_report(output_filepath=html_output_filepath)
+    self.generate_csv_report()  # Keeps its default behavior for now
+    return html_report_path # Return the path of the generated HTML report
