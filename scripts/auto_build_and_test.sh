@@ -12,7 +12,7 @@ python3 tools/web-ui/api.py setup-secrets --silent || true
 
 # 2. Build and start services with Docker Compose
 global_progress "Building and starting services with Docker Compose..."
-docker compose -f tools/web-ui/docker-compose.yml up --build -d
+docker compose -f build/docker-compose.yml up --build -d
 
 # 3. Wait for services to be healthy
 global_progress "Waiting for backend, frontend, and db to become healthy..."
@@ -49,7 +49,7 @@ git push || true
 
 # 7. Tail logs for error detection (in background)
 global_progress "Tailing backend logs in background for error detection..."
-docker compose -f tools/web-ui/docker-compose.yml logs backend | tail -n 50 &
+docker compose -f build/docker-compose.yml logs backend | tail -n 50 &
 
 # Final status
 global_progress "Automation complete. All steps executed in a single background console."

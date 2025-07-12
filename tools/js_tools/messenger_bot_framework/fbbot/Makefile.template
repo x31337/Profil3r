@@ -11,7 +11,7 @@ build:
 	@echo "Building service..."
 	@# Add your build commands here
 	@# Example for Node.js: npm run build
-	@# Example for Python: pip install -r requirements.txt
+	@# Example for Python: pip install -r dependencies/requirements.txt
 	@# Example for Ruby: bundle install
 	@# Example for PHP: composer install
 

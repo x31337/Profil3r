@@ -2,10 +2,10 @@
 # This script installs runtime dependencies and specified type hints.
 
 echo "Installing runtime dependencies from requirements.txt..."
-if [ -f "requirements.txt" ]; then
-    pip3 install -r requirements.txt
+if [ -f "dependencies/requirements.txt" ]; then
+    pip3 install -r dependencies/requirements.txt
 else
-    echo "ERROR: requirements.txt not found!"
+    echo "ERROR: dependencies/requirements.txt not found!"
     exit 1
 fi
 

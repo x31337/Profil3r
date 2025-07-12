@@ -21,7 +21,7 @@ class Domain:
     def possible_domains(self):
         possible_domains = []
 
-        # search all TLD (.com, .net, .org...), you can add more in the config.json file
+        # search all TLD (.com, .net, .org...), you can add more in the config/config.json file
         for domain in self.tld:
             for permutation in self.permutations_list:
                 possible_domains.append(

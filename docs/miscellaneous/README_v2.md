@@ -118,7 +118,7 @@ cd Pr0f1l3r
 
 # Install dependencies for modern suite
 cd modules/
-pip install -r requirements.txt
+pip install -r dependencies/requirements.txt
 
 # Run the unified interface
 python main.py
@@ -145,7 +145,7 @@ npm start
 
 # Example: E4GL30S1NT
 cd E4GL30S1NT/
-pip install -r requirements.txt
+pip install -r dependencies/requirements.txt
 python E4GL30S1NT.py
 ```
 
@@ -190,7 +190,7 @@ interactor.like_posts(10)
 
 ### Global Configuration
 
-The main `config.json` file controls:
+The main `config/config.json` file controls:
 
 - Report paths and formats
 - Platform settings

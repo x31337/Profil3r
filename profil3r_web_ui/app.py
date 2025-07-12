@@ -22,7 +22,7 @@ app = Flask(__name__)
 # Directory to store generated reports
 REPORTS_DIR = os.path.join(current_dir, "reports")
 # Path to Profil3r's main configuration file
-PROFIL3R_CONFIG_PATH = os.path.join(parent_dir, "config.json") # Assumes config.json is in the parent directory
+PROFIL3R_CONFIG_PATH = os.path.join(parent_dir, "config/config.json") # Assumes config.json is in the parent directory
 
 if not os.path.exists(REPORTS_DIR):
     os.makedirs(REPORTS_DIR)
@@ -30,7 +30,7 @@ app.config["REPORTS_DIR"] = REPORTS_DIR
 
 if not os.path.exists(PROFIL3R_CONFIG_PATH):
     # This is a critical error, the app can't run without Profil3r's config
-    print(f"CRITICAL ERROR: Profil3r config.json not found at {PROFIL3R_CONFIG_PATH}")
+    print(f"CRITICAL ERROR: Profil3r config/config.json not found at {PROFIL3R_CONFIG_PATH}")
     # In a real app, you might exit or raise a more specific Flask error
     # For now, printing and letting it potentially fail later if Core() needs it immediately.
 # --- End Configuration ---
@@ -89,7 +89,7 @@ def run_profil3r_route(): # Renamed to avoid conflict if 'run_profil3r' is a fun
         print(f"ValueError during Profil3r execution: {ve}")
         return redirect(url_for("index", error_message=str(ve)))
     except FileNotFoundError as fnfe:
-        print(f"FileNotFoundError during Profil3r execution (e.g., config.json missing?): {fnfe}")
+        print(f"FileNotFoundError during Profil3r execution (e.g., config/config.json missing?): {fnfe}")
         return redirect(url_for("index", error_message=f"A required file was not found: {fnfe}"))
     except Exception as e:
         # Log the full error for debugging

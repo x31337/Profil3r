@@ -552,7 +552,7 @@ class AutoBuildSystem {
     }
 
     // Install requirements if exists
-    const requirementsPath = path.join(servicePath, 'requirements.txt');
+    const requirementsPath = path.join(servicePath, 'dependencies/requirements.txt');
     if (fs.existsSync(requirementsPath)) {
       execSync(`pip3 install -r "${requirementsPath}"`, { stdio: 'inherit' });
     }

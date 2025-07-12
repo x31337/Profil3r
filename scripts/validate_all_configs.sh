@@ -33,10 +33,10 @@ cd "$PROJECT_DIR"
 
 # Find all config files
 CONFIG_FILES=(
-    "config.json"
-    "config.dev.json"
-    "config.ci.json"
-    "config.prod.json"
+    "../config/config.json"
+    "../config/config.dev.json"
+    "../config/config.ci.json"
+    "../config/config.prod.json"
 )
 
 echo -e "${YELLOW}📋 Found configuration files:${NC}"

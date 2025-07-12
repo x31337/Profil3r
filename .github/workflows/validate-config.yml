@@ -33,7 +33,7 @@ jobs:
 
       - name: Test individual configs
         run: |
-          python3 scripts/validate_config.py config.json
-          python3 scripts/validate_config.py config.dev.json
-          python3 scripts/validate_config.py config.ci.json
-          python3 scripts/validate_config.py config.prod.json
+          python3 scripts/validate_config.py ../config/config.json
+          python3 scripts/validate_config.py ../config/config.dev.json
+          python3 scripts/validate_config.py ../config/config.ci.json
+          python3 scripts/validate_config.py ../config/config.prod.json

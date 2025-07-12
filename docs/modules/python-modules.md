@@ -170,7 +170,7 @@ python -m modules.main --help
 
 #### Configuration
 
-The CLI reads from `config.json`:
+The CLI reads from `config/config.json`:
 
 ```json
 {
@@ -243,5 +243,5 @@ Key Python packages required:
 Install with:
 
 ```bash
-pip install -r requirements.txt
+pip install -r dependencies/requirements.txt
 ```

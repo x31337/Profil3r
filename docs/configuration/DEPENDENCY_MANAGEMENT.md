@@ -9,7 +9,7 @@ project.
 
 ### 1. Python Dependencies
 
-- **Requirements file**: `/requirements.txt`
+- **Requirements file**: `dependencies/requirements.txt`
 - **Lockfile**: `/requirements.lock`
 - **Conflict resolution**: Replaced `PyInquirer>=1.0.3` with `questionary>=1.3.0` to resolve
   `prompt_toolkit` version conflict
@@ -86,7 +86,7 @@ Two configuration files were created:
 
 ```bash
 # Generate Python lockfile
-pip-compile --output-file=requirements.lock requirements.txt
+pip-compile --output-file=dependencies/requirements.lock dependencies/requirements.txt
 
 # Generate Node.js lockfiles
 npm ci  # Run in each directory with package.json
@@ -94,7 +94,7 @@ npm ci  # Run in each directory with package.json
 
 ## File Changes
 
-- Modified: `/requirements.txt` (replaced PyInquirer with questionary, added prompt_toolkit
+- Modified: `dependencies/requirements.txt` (replaced PyInquirer with questionary, added prompt_toolkit
   constraint)
 - Created: `/requirements.lock` (Python dependency lockfile)
 - Created: `/.github/dependabot.yml` (Dependabot configuration)

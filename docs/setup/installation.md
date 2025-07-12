@@ -35,7 +35,7 @@
 1. **Install Python dependencies:**
 
    ```bash
-   pip install -r requirements.txt
+   pip install -r dependencies/requirements.txt
    ```
 
 2. **Install JavaScript dependencies:**
@@ -54,8 +54,8 @@
 
 4. **Configure settings:**
    ```bash
-   cp config.dev.json config.json
-   # Edit config.json with your API keys
+   cp config/config.dev.json config/config.json
+   # Edit config/config.json with your API keys
    ```
 
 ## Configuration

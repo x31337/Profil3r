@@ -31,19 +31,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install pip-audit bandit[toml]
           # Install project dependencies for audit
-          pip install -r requirements.txt
+          pip install -r dependencies/requirements.txt
 
       - name: Run pip-audit (vulnerability scanning)
         run: |
           echo "Running pip-audit to scan for known vulnerabilities..."
-          pip-audit --format=json --output=pip-audit-results.json
+          pip-audit --format=json --output=reports/pip-audit-results.json
           pip-audit --format=text
 
       - name: Run bandit (security linting)
         run: |
           echo "Running bandit to scan for security issues..."
-          bandit -r . -f json -o bandit-results.json
-          bandit -r . -f txt
+          bandit -r . -f json -o reports/bandit-results.json --configfile config/.bandit
+          bandit -r . -f txt --configfile config/.bandit
 
       - name: Upload pip-audit results
         if: always()

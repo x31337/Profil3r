@@ -23,7 +23,7 @@ WORKDIR /app
 COPY . /app
 
 # Install Python dependencies without caching for smaller image size
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r dependencies/requirements.txt
 
 # Add a non-root user for security and switch to it
 # --disabled-password: No password authentication
