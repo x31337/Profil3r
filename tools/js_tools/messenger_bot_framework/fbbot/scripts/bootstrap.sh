@@ -122,9 +122,9 @@ build_services() {
         fi
 
         # Check if Makefile exists in the container
-        if docker exec "$service" test -f Makefile 2>/dev/null; then
+        if docker exec "$service" test -f build/Makefile 2>/dev/null; then
             log_info "Building $service..."
-            docker exec "$service" make build || log_warning "Build failed for $service"
+            docker exec "$service" make -f build/Makefile build
         else
             log_info "No Makefile found in $service, skipping build"
         fi
@@ -204,7 +204,7 @@ services:
             - node_modules/
             - __pycache__/
         - action: restart
-          path: requirements.txt
+          path: ../../../../dependencies/requirements.txt
     command: |
       sh -c '
         pip install watchdog &&

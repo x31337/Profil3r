@@ -73,7 +73,7 @@ def main():
         description="Validate Profil3r configuration files",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""Examples:
-  python validate_config.py config.json
+  python validate_config.py ../config/config.json
   python validate_config.py config.dev.json
   python validate_config.py config.*.json  # Validate all environment configs
         """,

@@ -35,7 +35,7 @@ curl http://localhost:4444/api/health
 
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+pip install -r dependencies/requirements.txt
 
 # Start interactive CLI
 python -m modules.main
@@ -277,7 +277,7 @@ event_manager.subscribe('profile_found', on_profile_found)
 
 ```bash
 # Dependency installation
-pip install -r requirements.txt
+pip install -r dependencies/requirements.txt
 
 # Running tests
 python -m pytest

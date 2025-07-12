@@ -10,7 +10,7 @@ from profil3r.core.colors import Colors
 
 # Generate a report in JSON format containing the collected data
 # Report will be in "./reports/json"
-# You can modify th path in the config.json file
+# You can modify th path in the config/config.json file
 def generate_json_report(self):
     # Create ./reports/json directory if not exists
     if not os.path.exists("reports/json"):
@@ -38,7 +38,7 @@ def generate_json_report(self):
 
 # Generate a report in HTML format containing the collected data
 # Report will be in "./reports/html" or a specified path
-# You can modify the default path in the config.json file
+# You can modify the default path in the config/config.json file
 def generate_HTML_report(self, output_filepath=None):
     if output_filepath:
         # Ensure the directory for the output_filepath exists
@@ -88,7 +88,7 @@ def generate_HTML_report(self, output_filepath=None):
 
 # Generate a report in CSV format containing the collected data
 # Report will be in "./reports/csv"
-# You can modify th path in the config.json file
+# You can modify th path in the config/config.json file
 def generate_csv_report(self):
     # Create ./reports/csv directory if not exists
     if not os.path.exists("reports/csv"):

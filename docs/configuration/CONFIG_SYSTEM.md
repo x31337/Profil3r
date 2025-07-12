@@ -23,7 +23,7 @@ Profil3r/
 │   ├── validate_config.py          # Python validation script
 │   ├── validate_all_configs.sh     # Shell script for CI/CD
 │   └── requirements.txt            # Dependencies for validation
-├── config.json                     # Default configuration
+├── config/config.json                     # Default configuration
 ├── config.dev.json                 # Development environment
 ├── config.ci.json                  # CI/CD environment
 └── config.prod.json                # Production environment
@@ -103,7 +103,7 @@ Support for Python, JavaScript, and PHP:
 Basic usage:
 
 ```bash
-python3 scripts/validate_config.py config.json
+python3 scripts/validate_config.py config/config.json
 ```
 
 Advanced usage:
@@ -113,10 +113,10 @@ Advanced usage:
 python3 scripts/validate_config.py config.*.json
 
 # Use custom schema
-python3 scripts/validate_config.py --schema custom.schema.json config.json
+python3 scripts/validate_config.py --schema custom.schema.json config/config.json
 
 # Quiet mode (only errors)
-python3 scripts/validate_config.py --quiet config.json
+python3 scripts/validate_config.py --quiet config/config.json
 ```
 
 ### CI/CD Integration (`scripts/validate_all_configs.sh`)
@@ -144,9 +144,9 @@ import json
 from pathlib import Path
 
 def load_config(env='prod'):
-    config_file = f"config.{env}.json"
+    config_file = f"config/config.{env}.json"
     if not Path(config_file).exists():
-        config_file = "config.json"  # Fallback to default
+        config_file = "config/config.json"  # Fallback to default
 
     with open(config_file, 'r') as f:
         return json.load(f)
@@ -174,7 +174,7 @@ timeout = config.get('profil3r', {}).get('timeout', 10)
 ```
 
 2. Update schema if needed (new types, properties)
-3. Validate configuration: `python3 scripts/validate_config.py config.json`
+3. Validate configuration: `python3 scripts/validate_config.py config/config.json`
 
 ### Pipeline Integration
 
@@ -211,8 +211,8 @@ stage('Validate Config') {
 
 ### From Old Configuration
 
-1. **Backup existing config**: `cp config.json config.json.backup`
-2. **Run validation**: `python3 scripts/validate_config.py config.json`
+1. **Backup existing config**: `cp config/config.json config/config.json.backup`
+2. **Run validation**: `python3 scripts/validate_config.py config/config.json`
 3. **Add new sections** if validation fails:
    ```json
    {

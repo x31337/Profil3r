@@ -16,9 +16,9 @@ NC='\033[0m' # No Color
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFIG_DIR="$SCRIPT_DIR/config"
-LOGS_DIR="$SCRIPT_DIR/logs"
-AUTOMATION_DIR="$SCRIPT_DIR/automation"
+CONFIG_DIR="$SCRIPT_DIR/../config"
+LOGS_DIR="$SCRIPT_DIR/../logs"
+AUTOMATION_DIR="$SCRIPT_DIR/../automation"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 LOG_FILE="$LOGS_DIR/automation_${TIMESTAMP}.log"
 
@@ -226,7 +226,7 @@ install_dependencies() {
     npm install
 
     # Python dependencies
-    pip install -r requirements.txt
+    pip install -r dependencies/requirements.txt
 
     # Tool dependencies
     cd tools && npm install --legacy-peer-deps
@@ -366,11 +366,11 @@ build_php() {
 build_docker() {
     log "INFO" "Building Docker images..."
 
-    if [[ -f "docker-compose.yml" ]]; then
-        docker-compose build
+    if [[ -f "build/docker-compose.yml" ]]; then
+        docker-compose -f build/docker-compose.yml build
         log "SUCCESS" "Docker images built"
     else
-        log "WARN" "No docker-compose.yml found"
+        log "WARN" "No docker-compose.yml found in build/"
     fi
 }
 
@@ -531,14 +531,14 @@ validate_config() {
 
     # Check required config files
     local required_configs=(
-        "config.json"
-        "package.json"
-        "requirements.txt"
+        "config/config.json"
+        "dependencies/package.json"
+        "dependencies/requirements.txt"
     )
 
-    for config in "${required_configs[@]}"; do
-        if [[ ! -f "$config" ]]; then
-            log "ERROR" "Required configuration file missing: $config"
+    for config_item in "${required_configs[@]}"; do
+        if [[ ! -f "../$config_item" ]]; then
+            log "ERROR" "Required configuration file missing: $config_item"
             exit 1
         fi
     done
@@ -710,7 +710,7 @@ update_components() {
     npm update
 
     # Update Python packages
-    pip install --upgrade -r requirements.txt
+    pip install --upgrade -r dependencies/requirements.txt
 
     # Update tools
     cd tools && npm update

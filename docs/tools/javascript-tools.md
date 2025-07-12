@@ -33,7 +33,7 @@ npm install
 
 ### Configuration
 
-Create a `config.json` file:
+Create a `config/config.json` file:
 
 ```json
 {
@@ -190,7 +190,7 @@ bot.on('attachment', event => {
 
 ### Configuration
 
-Create a `config.json` file:
+Create a `config/config.json` file:
 
 ```json
 {

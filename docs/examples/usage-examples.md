@@ -208,7 +208,7 @@ done
   "default_fb_email": "your_fb_email@example.com",
   "headless": true,
   "browser": "chrome",
-  "profil3r_config_path": "profil3r/config.json",
+  "profil3r_config_path": "config/config.json",
   "wait_general_min": 2.0,
   "wait_general_max": 5.0,
   "max_retries": 3,

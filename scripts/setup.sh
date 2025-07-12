@@ -311,9 +311,9 @@ install_project_deps() {
     log "INFO" "Installing project dependencies..."
 
     # Python dependencies
-    if [[ -f "modules/requirements.txt" ]]; then
-        log "INFO" "Installing Python dependencies from modules/requirements.txt..."
-        pip3 install -r modules/requirements.txt 2>&1 | tee -a ./build_logs/pip_install.log
+    if [[ -f "dependencies/requirements.txt" ]]; then
+        log "INFO" "Installing Python dependencies from dependencies/requirements.txt..."
+        pip3 install -r dependencies/requirements.txt 2>&1 | tee -a ./build_logs/pip_install.log
         log "INFO" "Python dependencies installed successfully"
     fi
 

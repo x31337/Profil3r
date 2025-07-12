@@ -4,9 +4,9 @@
   "type": "module",
   "description": "Code quality and formatting tools for Profil3r project",
   "scripts": {
-    "prepare": "husky install",
-    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
-    "format": "prettier --write .",
+    "prepare": "cd .. && husky install",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --fix --config config/eslint.config.js",
+    "format": "prettier --write . --config config/.prettierrc",
     "pre-commit": "lint-staged",
     "commitlint": "commitlint --edit",
     "semantic-release": "semantic-release",
@@ -21,22 +21,22 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix --config config/eslint.config.js",
+      "prettier --write --config config/.prettierrc"
     ],
     "*.{json,css,html,md,yml,yaml}": [
-      "prettier --write"
+      "prettier --write --config config/.prettierrc"
     ],
     "*.py": [
-      "black",
-      "isort",
-      "flake8"
+      "black --config config/pyproject.toml",
+      "isort --settings-path config/pyproject.toml",
+      "flake8 --config config/pyproject.toml"
     ],
     "*.php": [
-      "php-cs-fixer fix"
+      "php-cs-fixer fix --config=config/.php-cs-fixer.php"
     ],
     "*.rb": [
-      "rubocop -A"
+      "rubocop -A --config config/.rubocop.yml"
     ]
   },
   "devDependencies": {

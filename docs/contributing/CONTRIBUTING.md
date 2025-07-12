@@ -37,7 +37,7 @@ contribute effectively to our modular architecture.
 
    ```bash
    # Python dependencies
-   pip install -r requirements.txt
+   pip install -r dependencies/requirements.txt
 
    # Node.js dependencies
    npm install

@@ -23,9 +23,9 @@ def run(self, profiles_list=None, html_report_filepath=None, interactive=True):
         self.menu() # Show menu only in interactive mode
     else:
         # For non-interactive mode, we need to ensure `self.CONFIG["selected_modules"]` is set.
-        # The default behavior from config.json is to select all modules if "all" is present.
-        # If `self.menu()` is not called, we need to manually set this up or ensure config.json has a default.
-        # Let's assume `get_report_modules()` handles the default "all" case from config.json correctly.
+        # The default behavior from config/config.json is to select all modules if "all" is present.
+        # If `self.menu()` is not called, we need to manually set this up or ensure config/config.json has a default.
+        # Let's assume `get_report_modules()` handles the default "all" case from config/config.json correctly.
         pass
 
     self.get_permutations()

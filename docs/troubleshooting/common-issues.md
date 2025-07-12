@@ -35,7 +35,7 @@ sudo kill -9 $(lsof -t -i:3000)
 sudo kill -9 $(lsof -t -i:8000)
 sudo kill -9 $(lsof -t -i:4444)
 
-# Or modify port mapping in docker-compose.yml
+# Or modify port mapping in build/docker-compose.yml
 ```
 
 ### 3. Out of Disk Space
@@ -173,7 +173,7 @@ docker network inspect profil3r_default
 # Check container resource usage
 docker stats
 
-# Limit container resources in docker-compose.yml
+# Limit container resources in build/docker-compose.yml
 services:
   profil3r-core:
     deploy:
@@ -217,7 +217,7 @@ If you're still experiencing issues:
 1. **Check the logs**: Always start with `docker-compose logs -f`
 2. **Search existing issues**: Check the project's GitHub issues
 3. **Create a bug report**: Include logs, system info, and reproduction steps
-4. **Use verbose mode**: Enable debug logging in `config.json`
+4. **Use verbose mode**: Enable debug logging in `config/config.json`
 
 ```json
 {

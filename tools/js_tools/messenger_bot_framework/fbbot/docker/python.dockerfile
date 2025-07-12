@@ -5,7 +5,7 @@ FROM python:3.9-slim AS base
 # Dependencies stage
 FROM base AS dependencies
 WORKDIR /app
-COPY requirements.txt ./
+COPY ../../../../dependencies/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Production image

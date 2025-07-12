@@ -41,7 +41,7 @@ jobs:
           pip install pre-commit black isort flake8
 
       - name: Install Node.js dependencies
-        run: npm install
+        run: npm install --prefix dependencies
 
       - name: Install RuboCop
         run: gem install rubocop
@@ -50,10 +50,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pre-commit
-          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          key: pre-commit-${{ hashFiles('config/.pre-commit-config.yaml') }}
 
       - name: Run pre-commit
-        run: pre-commit run --all-files
+        run: pre-commit run --all-files --config config/.pre-commit-config.yaml
 
   python-quality:
     runs-on: ubuntu-latest

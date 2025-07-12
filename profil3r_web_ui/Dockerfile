@@ -8,8 +8,8 @@ WORKDIR /app
 # This assumes the Docker build context is the root of the repository.
 # So, files are copied from 'profil3r' and 'profil3r_web_ui' into the image.
 COPY ./profil3r /app/profil3r
-COPY ./config.json /app/config.json
-COPY ./requirements.txt /app/requirements.txt
+COPY ./config/config.json /app/config/config.json
+COPY ./dependencies/requirements.txt /app/dependencies/requirements.txt
 
 # Copy the web UI application files
 COPY ./profil3r_web_ui /app/profil3r_web_ui
@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Python dependencies for Profil3r
 # Some dependencies in Profil3r's requirements might be for specific OS or have tricky deps.
 # Order of installation might matter, or specific versions might be needed.
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/dependencies/requirements.txt
 
 # Install Flask (specific to the web UI)
 RUN pip install --no-cache-dir Flask==2.1.2 Jinja2==3.1.2 Werkzeug==2.1.2 itsdangerous==2.1.2 click==8.1.3 MarkupSafe==2.1.1

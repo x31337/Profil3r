@@ -16,7 +16,7 @@ The `bootstrap.sh` script sets up your complete local development environment wi
 
 1. **Version Verification**: Checks that Docker, Node.js, and Python are installed with compatible versions
 2. **Container Management**: Stops any existing containers and starts fresh development containers
-3. **Service Building**: Runs `make build` inside each service container (if Makefile exists)
+3. **Service Building**: Runs `make build` inside each service container (if build/Makefile exists)
 4. **Development Tools**: Installs file watching tools (nodemon, watchdog, rerun) in containers
 5. **File Watching Setup**: Creates `docker-compose.watch.yml` for live reload functionality
 6. **Health Checks**: Verifies all services are running and responding on their ports

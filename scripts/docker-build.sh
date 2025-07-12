@@ -190,12 +190,12 @@ build_all() {
 # Deploy function
 deploy() {
     local environment=$1
-    local compose_file="docker-compose.yml"
+    local compose_file="build/docker-compose.yml"
 
     case $environment in
         "dev"|"development")
             create_dev_override
-            compose_file="docker-compose.yml"
+            compose_file="build/docker-compose.yml"
             ;;
         "prod"|"production")
             compose_file="docker-compose.prod.yml"

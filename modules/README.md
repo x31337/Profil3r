@@ -133,7 +133,7 @@ event_manager.emit('profile_found', {
 Modules use a centralized configuration system:
 
 ```python
-# config.json
+# config/config.json
 {
   "log_level": "INFO",
   "facebook_automation": {

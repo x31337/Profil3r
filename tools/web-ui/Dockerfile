@@ -24,8 +24,8 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
 
 # Copy requirements first for layer caching
-COPY modules/requirements.txt /app/modules/requirements.txt
-RUN pip install --no-cache-dir -r /app/modules/requirements.txt
+COPY dependencies/requirements.txt /app/dependencies/requirements.txt
+RUN pip install --no-cache-dir -r /app/dependencies/requirements.txt
 
 # Copy the rest of the application code
 COPY modules /app/modules/

@@ -35,7 +35,7 @@
 
 ### USE:
 
-- For Put or Modify API KEY Type `python3 E4GL30S1NT.py configs` or edit configs/config.json
+- For Put or Modify API KEY Type `python3 E4GL30S1NT.py configs` or edit configs/config.json (Note: This is a legacy file and might not be affected by the root-level `config.json` move)
 - For use `phoneinfo` you need a [Veriphone API key](https://veriphone.io/), if you don't have this
   key you can use this test key to test the tool: KEY: `47703D994B174BACBDC5AD734CC381B4`
 - For use `mailfinder` you need a [real-email API key](https://isitarealemail.com/), if you don't

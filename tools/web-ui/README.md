@@ -127,7 +127,7 @@ Cypress tests are included to verify the UI functionality.
 - The application services (`backend`, `db`, `frontend`) must be running.
 
 ### Option 1: Using Docker Compose (Recommended)
-The `docker-compose.yml` file provides a way to execute commands in the `frontend` service context. However, the default `nginx:alpine` image doesn't include Cypress or Node.js. For a fully containerized test run, you might need a dedicated Cypress service or run tests from your host machine against the running application.
+The `build/docker-compose.yml` file provides a way to execute commands in the `frontend` service context. However, the default `nginx:alpine` image doesn't include Cypress or Node.js. For a fully containerized test run, you might need a dedicated Cypress service or run tests from your host machine against the running application.
 
 A more common approach if your host has Node.js/Cypress:
 1. Ensure the application is running: `cd tools/web-ui && docker compose up -d`

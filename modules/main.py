@@ -25,7 +25,7 @@ except ImportError:
 
 
 class UnifiedCliApp:
-    def __init__(self, config_file="config.json"):
+    def __init__(self, config_file="config/config.json"):
         self.config = self._load_config(config_file)
         # Merge facebook_automation section into main config if present
         if "facebook_automation" in self.config:
@@ -358,7 +358,7 @@ class UnifiedCliApp:
                 # Option 2: Use its Core class if that's the intended library usage.
                 # The original `modules/main.py` used:
                 # from profil3r.core import Core
-                # core = Core('./config.json') # Profil3r might need its own config path
+                # core = Core('config/config.json') # Profil3r might need its own config path
                 # core.run()
 
                 # For now, let's try to mimic the original call more closely if the path is an issue.
@@ -373,7 +373,7 @@ class UnifiedCliApp:
                 # Let's try to instantiate and run its main class if it's `Profil3r` from `profil3r.profil3r`
                 profil3r_instance = Profil3r(
                     config_path=self.config.get(
-                        "profil3r_config_path", "profil3r/config.json"
+                        "profil3r_config_path", "config/config.json"
                     )
                 )
                 profil3r_instance.run()  # Assuming it has a run method
@@ -424,7 +424,7 @@ def main():
     parser = argparse.ArgumentParser(description="Unified Automation and OSINT CLI.")
     parser.add_argument(
         "--config",
-        default="config.json",
+        default="config/config.json",
         help="Path to the main JSON configuration file.",
     )
     # Add more specific command-line arguments later to bypass interactive menu

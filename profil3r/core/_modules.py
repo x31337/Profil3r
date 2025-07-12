@@ -2,7 +2,7 @@ import json
 import os
 
 
-# Change the "report_elements" array in the config.json file
+# Change the "report_elements" array in the config/config.json file
 # input is an array, for exemple : ["facebook", "twitter"]
 def modules_update(self, modules):
     new_config = self.CONFIG

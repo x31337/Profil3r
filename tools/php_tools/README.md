@@ -33,7 +33,7 @@ This project converts a collection of PHP scripts located in `tools/php_tools/fa
 <details>
 <summary>Getting Started (Standalone)</summary>
 
-While this service is typically managed by the main project's `docker-compose.yml`, you can also build and run it standalone for development or testing.
+While this service is typically managed by the main project's `build/docker-compose.yml`, you can also build and run it standalone for development or testing.
 
 ### 1. Build the Docker Image
 
@@ -267,7 +267,7 @@ I'll refactor this to work with a local Docker-based API service instead of the 
 
 ## Dockerized API Solution
 
-### 1. First, create a `docker-compose.yml` file:
+### 1. First, create a `build/docker-compose.yml` file:
 
 ```yaml
 version: '3.8'

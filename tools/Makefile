@@ -1,5 +1,10 @@
 # Makefile for Profil3r Tools
 
+# This Makefile is for tool-specific commands.
+# The main docker-compose.yml is now in build/docker-compose.yml
+# If any commands here need to reference the main docker-compose,
+# they should use ../build/docker-compose.yml
+
 .PHONY: install build test clean validate health-check
 
 # Install all dependencies

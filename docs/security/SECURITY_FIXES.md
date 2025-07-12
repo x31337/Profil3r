@@ -134,7 +134,7 @@ python -m bandit -r modules/ -s B113,B404,B603 -f json
 
 ## Dependencies Added
 
-Add to your requirements.txt:
+Add to your dependencies/requirements.txt:
 
 ```
 python-dotenv>=0.19.0
