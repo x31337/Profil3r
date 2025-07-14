@@ -24,7 +24,7 @@
     "pkg": "^5.8.1",
     "request": "^2.88.2",
     "seedrandom": "^3.0.5",
-    "ts-messenger-api": "^0.0.1"
+    "ts-messenger-api": "^1.0.4"
   },
   "pkg": {
     "assets": [
