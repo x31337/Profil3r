@@ -44,7 +44,7 @@
     "cypress": "^13.6.0",
     "cypress-image-diff-js": "^2.4.0",
     "eslint": "^8.55.0",
-    "nyc": "^15.1.0",
+    "nyc": "^17.1.0",
     "pm2": "^6.0.8",
     "simple-git": "^3.20.0",
     "wait-on": "^8.0.3",
