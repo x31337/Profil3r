@@ -8,28 +8,46 @@ import './App.css';
 function App() {
   return (
     <div>
+
       <nav>
+
         <ul>
+
           <li>
-            <Link to="/">Home</Link>
+                        <Link to='/'>Home</Link>
+
           </li>
+
           <li>
-            <Link to="/reports">All Reports</Link>
+                        <Link to='/reports'>All Reports</Link>
+
           </li>
+
           <li>
-            <Link to="/reports/new">New Report</Link>
+                        <Link to='/reports/new'>New Report</Link>
+
           </li>
+
         </ul>
+
       </nav>
 
       <main>
+
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/reports" element={<ReportList />} />
-          <Route path="/reports/new" element={<ReportForm />} />
-          <Route path="/reports/:id" element={<ReportView />} />
+
+          <Route path='/' element={<Home />} />
+
+          <Route path='/reports' element={<ReportList />} />
+
+          <Route path='/reports/new' element={<ReportForm />} />
+
+          <Route path='/reports/:id' element={<ReportView />} />
+
         </Routes>
+
       </main>
+
     </div>
   );
 }

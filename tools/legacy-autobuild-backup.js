@@ -128,7 +128,7 @@ class AutoBuildSystem {
       });
     });
 
-    app.post('/api/build', async (req, res) => {
+    app.post('/api/build', async(req, res) => {
       try {
         const result = await this.fullBuildCycle();
         res.json({ success: true, result });
@@ -137,7 +137,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/test', async (req, res) => {
+    app.post('/api/test', async(req, res) => {
       try {
         const result = await this.runAllTests();
         res.json({ success: true, result });
@@ -146,7 +146,7 @@ class AutoBuildSystem {
       }
     });
 
-    app.post('/api/deploy', async (req, res) => {
+    app.post('/api/deploy', async(req, res) => {
       try {
         const result = await this.deployChanges();
         res.json({ success: true, result });
@@ -191,33 +191,33 @@ class AutoBuildSystem {
 
         try {
           switch (type) {
-            case 'build':
-              await this.fullBuildCycle();
-              break;
-            case 'test':
-              await this.runAllTests();
-              break;
-            case 'deploy':
-              await this.deployChanges();
-              break;
-            case 'fix':
-              await this.autoFixIssues();
-              break;
-            case 'auto-install':
-              await this.autoInstallDependencies();
-              break;
-            case 'auto-configure':
-              await this.autoConfigureProject();
-              break;
-            case 'auto-push':
-              await this.autoPushChanges();
-              break;
-            case 'cypress':
-              await this.runCypressTests();
-              break;
-            case 'full-cycle':
-              await this.runFullAutoCycle();
-              break;
+          case 'build':
+            await this.fullBuildCycle();
+            break;
+          case 'test':
+            await this.runAllTests();
+            break;
+          case 'deploy':
+            await this.deployChanges();
+            break;
+          case 'fix':
+            await this.autoFixIssues();
+            break;
+          case 'auto-install':
+            await this.autoInstallDependencies();
+            break;
+          case 'auto-configure':
+            await this.autoConfigureProject();
+            break;
+          case 'auto-push':
+            await this.autoPushChanges();
+            break;
+          case 'cypress':
+            await this.runCypressTests();
+            break;
+          case 'full-cycle':
+            await this.runFullAutoCycle();
+            break;
           }
         } catch (error) {
           console.error(`WebSocket command failed: ${error.message}`);
@@ -281,7 +281,7 @@ class AutoBuildSystem {
       this.state.buildQueue.push(triggerFile);
 
       // Debounce builds
-      setTimeout(async () => {
+      setTimeout(async() => {
         if (this.state.buildQueue.length > 0) {
           const files = [...this.state.buildQueue];
           this.state.buildQueue = [];
@@ -503,15 +503,15 @@ class AutoBuildSystem {
     }
 
     switch (service.type) {
-      case 'node':
-        await this.buildNodeService(service, servicePath);
-        break;
-      case 'python':
-        await this.buildPythonService(service, servicePath);
-        break;
-      case 'php':
-        await this.buildPHPService(service, servicePath);
-        break;
+    case 'node':
+      await this.buildNodeService(service, servicePath);
+      break;
+    case 'python':
+      await this.buildPythonService(service, servicePath);
+      break;
+    case 'php':
+      await this.buildPHPService(service, servicePath);
+      break;
     }
   }
 
@@ -552,7 +552,10 @@ class AutoBuildSystem {
     }
 
     // Install requirements if exists
-    const requirementsPath = path.join(servicePath, 'dependencies/requirements.txt');
+    const requirementsPath = path.join(
+      servicePath,
+      'dependencies/requirements.txt'
+    );
     if (fs.existsSync(requirementsPath)) {
       execSync(`pip3 install -r "${requirementsPath}"`, { stdio: 'inherit' });
     }
@@ -993,53 +996,53 @@ module.exports = defineConfig({
     <table>
         <tr><th>Service</th><th>Status</th><th>Timestamp</th></tr>
         ${Object.entries(report.services)
-          .map(
-            ([name, status]) => `
+    .map(
+      ([name, status]) => `
             <tr>
                 <td>${name}</td>
                 <td class="${status.status === 'built' ? 'success' : 'error'}">${status.status}</td>
                 <td>${status.timestamp}</td>
             </tr>
         `
-          )
-          .join('')}
+    )
+    .join('')}
     </table>
 
     <h2>🔍 Health Checks</h2>
     <table>
         <tr><th>Service</th><th>Status</th><th>Timestamp</th></tr>
         ${Object.entries(report.healthChecks)
-          .map(
-            ([name, health]) => `
+    .map(
+      ([name, health]) => `
             <tr>
                 <td>${name}</td>
                 <td class="${health.status === 'healthy' ? 'success' : 'error'}">${health.status}</td>
                 <td>${health.timestamp}</td>
             </tr>
         `
-          )
-          .join('')}
+    )
+    .join('')}
     </table>
 
     ${
-      report.errors.length > 0
-        ? `
+  report.errors.length > 0
+    ? `
     <h2>❌ Errors</h2>
     <ul>
         ${report.errors
-          .map(
-            error => `
+    .map(
+      error => `
             <li class="error">
                 <strong>${error.type}:</strong> ${error.message}
                 <em>(${error.timestamp})</em>
             </li>
         `
-          )
-          .join('')}
+    )
+    .join('')}
     </ul>
     `
-        : ''
-    }
+    : ''
+}
 
 </body>
 </html>`;
@@ -1049,7 +1052,7 @@ module.exports = defineConfig({
   }
 
   startHealthMonitoring() {
-    setInterval(async () => {
+    setInterval(async() => {
       for (const service of this.config.services) {
         if (service.port) {
           try {
@@ -1103,22 +1106,22 @@ module.exports = defineConfig({
     const ext = path.extname(filePath);
 
     switch (ext) {
-      case '.js':
-      case '.ts':
-        try {
-          execSync(`npx eslint "${filePath}" --fix`, {
-            cwd: this.config.projectRoot,
-            stdio: 'inherit'
-          });
+    case '.js':
+    case '.ts':
+      try {
+        execSync(`npx eslint "${filePath}" --fix`, {
+          cwd: this.config.projectRoot,
+          stdio: 'inherit'
+        });
 
-          execSync(`npx prettier --write "${filePath}"`, {
-            cwd: this.config.projectRoot,
-            stdio: 'inherit'
-          });
-        } catch (error) {
-          console.warn(`⚠️ Could not auto-fix ${filePath}:`, error.message);
-        }
-        break;
+        execSync(`npx prettier --write "${filePath}"`, {
+          cwd: this.config.projectRoot,
+          stdio: 'inherit'
+        });
+      } catch (error) {
+        console.warn(`⚠️ Could not auto-fix ${filePath}:`, error.message);
+      }
+      break;
     }
   }
 
@@ -1523,14 +1526,14 @@ jobs:
 }
 
 // Handle graceful shutdown
-process.on('SIGINT', async () => {
+process.on('SIGINT', async() => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }
   process.exit(0);
 });
 
-process.on('SIGTERM', async () => {
+process.on('SIGTERM', async() => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }

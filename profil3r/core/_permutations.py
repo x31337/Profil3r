@@ -16,14 +16,14 @@ def get_permutations(self):
 
             # True if there are two consecutive separators in the permutation, for exemple : ["john", ".", "-", "doe"]
             consecutives_separators = False in [
-                (not perm[i] in self.separators) or (not perm[i + 1] in self.separators)
+                (perm[i] not in self.separators) or (perm[i + 1] not in self.separators)
                 for i in range(len(perm) - 1)
             ]
 
             # Remove combinations that start or end by a dot or have consecutives separators
             if (
-                not perm[0] in self.separators
-                and not perm[-1] in self.separators
+                perm[0] not in self.separators
+                and perm[-1] not in self.separators
                 and not consecutives_separators
             ):
                 self.permutations_list.append("".join(perm))

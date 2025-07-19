@@ -3,10 +3,7 @@ Integration tests for Python services using pytest-asyncio and httpx.
 This file contains various test cases for different API endpoints with positive and negative scenarios.
 """
 
-import json
-
 import pytest
-from httpx import AsyncClient
 
 
 @pytest.mark.asyncio

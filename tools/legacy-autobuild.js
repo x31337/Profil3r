@@ -284,7 +284,7 @@ class AutoBuildSystem {
 
     // Register routes with delegation
     apiRoutes.forEach(route => {
-      app[route.method](route.path, async (req, res) => {
+      app[route.method](route.path, async(req, res) => {
         try {
           const result = await route.handler();
           res.json({ success: true, result });
@@ -827,14 +827,14 @@ class AutoBuildSystem {
 }
 
 // Handle graceful shutdown
-process.on('SIGINT', async () => {
+process.on('SIGINT', async() => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }
   process.exit(0);
 });
 
-process.on('SIGTERM', async () => {
+process.on('SIGTERM', async() => {
   if (global.autoBuildSystem) {
     await global.autoBuildSystem.shutdown();
   }

@@ -94,8 +94,8 @@ npm ci  # Run in each directory with package.json
 
 ## File Changes
 
-- Modified: `dependencies/requirements.txt` (replaced PyInquirer with questionary, added prompt_toolkit
-  constraint)
+- Modified: `dependencies/requirements.txt` (replaced PyInquirer with questionary, added
+  prompt_toolkit constraint)
 - Created: `/requirements.lock` (Python dependency lockfile)
 - Created: `/.github/dependabot.yml` (Dependabot configuration)
 - Created: `/renovate.json` (Renovate configuration)

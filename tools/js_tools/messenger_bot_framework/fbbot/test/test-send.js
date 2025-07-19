@@ -17,7 +17,7 @@ const test = require('tape'),
 //   "message_id": "mid.1456970487936:c34767dfe57ee6e339"
 // }
 
-common.iterateSendings(function (sending, handle, callback) {
+common.iterateSendings(function(sending, handle, callback) {
   const type = handle.split('-')[0];
 
   test.test(
@@ -26,7 +26,7 @@ common.iterateSendings(function (sending, handle, callback) {
       ' with ' +
       Object.keys(sending.arguments).join(', ') +
       ' arguments',
-    function (t) {
+    function(t) {
       // three checks for erroneous requests, and six checks for successful requests
       // with addition or expected extra tests
       t.plan(
@@ -41,7 +41,7 @@ common.iterateSendings(function (sending, handle, callback) {
           sending.arguments.user.id ||
           (expectedPhone ? null : sending.arguments.user);
       common.startApiServer(
-        function (request, respond) {
+        function(request, respond) {
           t.equal(
             request.query.access_token,
             common.fbbot.pageAccessToken,
@@ -54,7 +54,7 @@ common.iterateSendings(function (sending, handle, callback) {
           );
           respond(sending.response);
         },
-        function (fbbotOptions, done) {
+        function(fbbotOptions, done) {
           let args = [],
             fbbot;
 
@@ -85,7 +85,7 @@ common.iterateSendings(function (sending, handle, callback) {
 
           // count events
           if (sending.count) {
-            fbbot.on(sending.count.hook, function (payload) {
+            fbbot.on(sending.count.hook, function(payload) {
               t.equal(
                 typeof payload,
                 'object',
@@ -95,7 +95,7 @@ common.iterateSendings(function (sending, handle, callback) {
           }
 
           // check events
-          fbbot.on('send.message', function (data) {
+          fbbot.on('send.message', function(data) {
             if (expectedId) {
               t.equal(
                 data.parent.recipient.id,
@@ -113,7 +113,7 @@ common.iterateSendings(function (sending, handle, callback) {
 
           fbbot.send.apply(
             fbbot,
-            args.concat(function (error, result) {
+            args.concat(function(error, result) {
               if (sending.error) {
                 t.ok(
                   error.message.match(sending.error),

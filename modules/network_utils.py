@@ -5,7 +5,7 @@ Provides network-related OSINT and utility functions like IP lookup, domain info
 
 import json
 import os
-import socket  # For infoga to resolve hostname if IP is given
+import re
 import subprocess  # For iplocation's curl fallback
 import textwrap  # for godorker
 
@@ -384,7 +384,7 @@ if __name__ == "__main__":
             "inurl:admin.php site:example.com", num_results=3
         )
         if dork_results and "results" in dork_results:
-            test_logger.info(f"Dork results for 'inurl:admin.php site:example.com':")
+            test_logger.info("Dork results for 'inurl:admin.php site:example.com':")
             for res in dork_results["results"]:
                 test_logger.info(f"  Title: {res['title']}, URL: {res['url']}")
         elif dork_results and "error" in dork_results:

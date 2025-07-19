@@ -28,7 +28,7 @@ const types = [
  * @param {function} callback - invoked after type casting is done
  */
 function typeCast(payload, callback) {
-  const type = find(types, function (t) {
+  const type = find(types, function(t) {
     return t in payload;
   });
 

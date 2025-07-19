@@ -1,5 +1,4 @@
 import json
-import os
 
 
 # Change the "report_elements" array in the config/config.json file

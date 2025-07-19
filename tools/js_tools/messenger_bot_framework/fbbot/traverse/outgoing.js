@@ -66,7 +66,7 @@ function middleware(branch, payload, callback) {
   this._run(
     normalized,
     payload,
-    function (error, resolvedPayload) {
+    function(error, resolvedPayload) {
       let normalizeType;
 
       if (payload['template_type']) {

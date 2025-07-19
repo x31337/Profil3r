@@ -151,8 +151,8 @@ More middleware examples could be found in [incoming](incoming/) folder.
 
 ### Sending messages to user
 
-Here are two ways of sending messages, using per-instance fbbot.send method,
-or the one tailored to the user, provided to the event handlers.
+Here are two ways of sending messages, using per-instance fbbot.send method, or the one tailored to
+the user, provided to the event handlers.
 
 ```javascript
 var express = require('express');
@@ -205,7 +205,8 @@ Fbbot.logger.output({
 
 ### Fbbot#use
 
-Adds middleware for both incoming and outgoing flows. Outgoing hooks prefixed with `send`. Each middleware handler function expected to invoke callback with payload object, modified or not.
+Adds middleware for both incoming and outgoing flows. Outgoing hooks prefixed with `send`. Each
+middleware handler function expected to invoke callback with payload object, modified or not.
 
 ```javascript
 fbbot.use([String hook ,] Function handler)
@@ -227,7 +228,8 @@ List of available hooks could be found [below](#hooks).
 
 ### Fbbot#on
 
-Adds event listener for both incoming and outgoing flows. Outgoing events (hooks) prefixed with `send`. Each event listener function will receive `send` method tailored for the event in question.
+Adds event listener for both incoming and outgoing flows. Outgoing events (hooks) prefixed with
+`send`. Each event listener function will receive `send` method tailored for the event in question.
 
 ```javascript
 fbbot.on(String hook, Function listener)
@@ -241,27 +243,32 @@ listener(Object payload, Function send)
 ```
 
 - `payload`: chunk of the payload corresponding to the attached hook.<sup>1</sup>
-- `send`: function being tailored specifically for the event – baked in user id where it's available,
-  and set of convenience methods for sending specific message types, [listed below](#convenience-methods).
+- `send`: function being tailored specifically for the event – baked in user id where it's
+  available, and set of convenience methods for sending specific message types,
+  [listed below](#convenience-methods).
 
-<sup>1</sup> Message payload augmented with `type` property and reference `user` object. All payloads have prototype object with reference to the "parent" object.
+<sup>1</sup> Message payload augmented with `type` property and reference `user` object. All
+payloads have prototype object with reference to the "parent" object.
 
 List of available hooks could be found [below](#hooks).
 
 ### Fbbot#send
 
-Sends provided payload to the specified (by either `id` or `phone_number`) user,
-reconstructs platform expected payload based on the message type and minimal data set.
+Sends provided payload to the specified (by either `id` or `phone_number`) user, reconstructs
+platform expected payload based on the message type and minimal data set.
 
-Will automatically stringify payload object for _postback_ buttons, since Messenger Platform expects it to be a string.
+Will automatically stringify payload object for _postback_ buttons, since Messenger Platform expects
+it to be a string.
 
 ```javascript
 fbbot.send(String|Object user, [String type ,] [String|Array|Object payload ,] [Function callback]);
 ```
 
-- `user`: user id or phone number, provided via string (user id) or object with `id` or `phone_number` properties.
+- `user`: user id or phone number, provided via string (user id) or object with `id` or
+  `phone_number` properties.
 - `type`: _(optional)_ message type, if not provided, will fallback to `Fbbot#MESSAGE` type.
-- `payload`: _(optional)_ payload object for the chosen message type, not expected for `MARK_SEEN`, `TYPING_ON` and `TYPING_OFF` types.
+- `payload`: _(optional)_ payload object for the chosen message type, not expected for `MARK_SEEN`,
+  `TYPING_ON` and `TYPING_OFF` types.
 - `callback`: _(optional)_ standard error-back pattern, with `response` object as second argument.
 
 List of available message types could be found [below](#message-types).
@@ -316,7 +323,8 @@ send.typingOff([Function callback])
 
 #### `send.text`
 
-Sends text message. Expects text string as payload. Will truncate provided string to 320 characters, as per Messenger Platform limitations.
+Sends text message. Expects text string as payload. Will truncate provided string to 320 characters,
+as per Messenger Platform limitations.
 
 ```javascript
 send.text(String text [, Function callback])
@@ -356,7 +364,8 @@ send.file(String url [, Function callback])
 
 #### `send.generic`
 
-Sends generic template attachment. Expects array of "card" objects as payload. Will send first 10 elements, as per Messenger Platform limitations.
+Sends generic template attachment. Expects array of "card" objects as payload. Will send first 10
+elements, as per Messenger Platform limitations.
 
 ```javascript
 send.generic(Array elements [, Function callback])
@@ -366,7 +375,8 @@ Example payload could be found [below](#generic).
 
 #### `send.button`
 
-Sends button template attachment. Expects object with text and array of buttons as payload. Will send first 3 buttons, as per Messenger Platform limitations.
+Sends button template attachment. Expects object with text and array of buttons as payload. Will
+send first 3 buttons, as per Messenger Platform limitations.
 
 ```javascript
 send.button(Object payload [, Function callback])
@@ -376,7 +386,8 @@ Example payload could be found [below](#button).
 
 #### `send.receipt`
 
-Sends receipt template attachment. Expects receipt object as payload. Will send first 100 item elements, as per Messenger Platform limitations.
+Sends receipt template attachment. Expects receipt object as payload. Will send first 100 item
+elements, as per Messenger Platform limitations.
 
 ```javascript
 send.receipt(Object payload [, Function callback])
@@ -386,7 +397,9 @@ Example payload could be found [below](#receipt).
 
 #### `send.quickReplies`
 
-Sends quick replies object. Expects object with text and array of quick_reply buttons as payload. Will send first 10 buttons, as per Messenger Platform limitations. Will automatically stringify payload property.
+Sends quick replies object. Expects object with text and array of quick_reply buttons as payload.
+Will send first 10 buttons, as per Messenger Platform limitations. Will automatically stringify
+payload property.
 
 ```javascript
 send.quickReplies(Object payload [, Function callback])
@@ -451,7 +464,8 @@ Doesn't require payload, corresponds to `typing_off` sender action.
 
 #### `TEXT`
 
-Treats payload as text message. Expects text string as payload. Will truncate provided string to 320 characters, as per Messenger Platform limitations.
+Treats payload as text message. Expects text string as payload. Will truncate provided string to 320
+characters, as per Messenger Platform limitations.
 
 #### `IMAGE`
 
@@ -471,7 +485,8 @@ Treats payload as generic file attachment. Expects string with url to a file as 
 
 #### `GENERIC`
 
-Treats payload as generic template attachment. Expects array of "card" objects as payload. Will send first 10 elements, as per Messenger Platform limitations.
+Treats payload as generic template attachment. Expects array of "card" objects as payload. Will send
+first 10 elements, as per Messenger Platform limitations.
 
 Example payload:
 
@@ -521,7 +536,8 @@ Example payload:
 
 #### `BUTTON`
 
-Treats payload as button template attachment. Expects object with text and array of buttons as payload. Will send first 3 buttons, as per Messenger Platform limitations.
+Treats payload as button template attachment. Expects object with text and array of buttons as
+payload. Will send first 3 buttons, as per Messenger Platform limitations.
 
 Example payload:
 
@@ -547,7 +563,8 @@ Example payload:
 
 #### `RECEIPT`
 
-Treats payload as receipt template attachment. Expects receipt object as payload. Will send first 100 item elements, as per Messenger Platform limitations.
+Treats payload as receipt template attachment. Expects receipt object as payload. Will send first
+100 item elements, as per Messenger Platform limitations.
 
 Example payload:
 
@@ -606,7 +623,9 @@ Example payload:
 
 #### `QUICK_REPLIES`
 
-Treats payload as quick replies object. Expects object with text and array of quick_reply buttons as payload. Will send first 10 buttons, as per Messenger Platform limitations. Will automatically stringify payload property.
+Treats payload as quick replies object. Expects object with text and array of quick_reply buttons as
+payload. Will send first 10 buttons, as per Messenger Platform limitations. Will automatically
+stringify payload property.
 
 Example payload:
 
@@ -661,16 +680,18 @@ Available incoming hooks (in the following order):
   - `attachment.location`: applied to location attachments only.
 
 <sup>2</sup> Some undocumented case when user sends only link without any other text in the message,
-your bot would receive as dual quantum state message, which would have regular text field with the link as text,
-as well as attachment object with type `fallback` with `url` field and prefetched `title` of the linked page.
-Example of such payload could be found in [message-attachment-fallback-text.json](test/fixtures/incoming/message-attachment-fallback-text.json).
+your bot would receive as dual quantum state message, which would have regular text field with the
+link as text, as well as attachment object with type `fallback` with `url` field and prefetched
+`title` of the linked page. Example of such payload could be found in
+[message-attachment-fallback-text.json](test/fixtures/incoming/message-attachment-fallback-text.json).
 
 Sample payloads could be found in [incoming fixtures](test/fixtures/incoming) folder.
 
 #### Outgoing
 
 - `send`: applied to the entire outgoing payload.
-- `send.message`: applied to all outgoing messages (status updates, like `typing_on` are not messages).
+- `send.message`: applied to all outgoing messages (status updates, like `typing_on` are not
+  messages).
 - `send.attachment`: applied to outgoing attachments.
   - `send.attachment.audio`: applied to outgoing audio attachments only.
   - `send.attachment.file`: applied to outgoing file attachments only.
@@ -683,16 +704,21 @@ Sample payloads could be found in [incoming fixtures](test/fixtures/incoming) fo
   - `send.payload.receipt`: applied to payload objects with receipt template.
   - `send.payload.button`: applied to payload objects with button template.
 - `send.element`: applied per each element of the outgoing payload.
-- `send.button`: applied per button options within message, either button template or buttons option within other templates.
+- `send.button`: applied per button options within message, either button template or buttons option
+  within other templates.
   - `send.button.web_url`: applied to buttons with urls only.
   - `send.button.postback`: applied to postback buttons only.
   - `send.button.phone_number`: applied to call buttons only.
   - `send.button.element_share`: applied to share buttons only.<sup>3</sup>
   - `send.button.payment`: applied to buy buttons only.<sup>4</sup>
 
-<sup>3</sup> The [Share Button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/share-button) only works with the Generic Template.
+<sup>3</sup> The
+[Share Button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/share-button)
+only works with the Generic Template.
 
-<sup>4</sup> The [Buy Button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/buy-button) only works with the Generic Template and it must be the first button.
+<sup>4</sup> The
+[Buy Button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/buy-button)
+only works with the Generic Template and it must be the first button.
 
 ## Roadmap
 

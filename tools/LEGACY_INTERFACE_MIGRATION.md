@@ -1,6 +1,7 @@
 # Legacy Interface Migration - Thin Wrappers
 
-This document explains how the legacy autobuild system has been refactored to use thin wrappers that proxy to new modular components.
+This document explains how the legacy autobuild system has been refactored to use thin wrappers that
+proxy to new modular components.
 
 ## Architecture Changes
 
@@ -239,7 +240,8 @@ All existing API endpoints maintained:
 
 ## Summary
 
-The legacy interface now uses thin wrappers that maintain the same public API while delegating to specialized modules. This provides:
+The legacy interface now uses thin wrappers that maintain the same public API while delegating to
+specialized modules. This provides:
 
 - ✅ **Backward compatibility** - External scripts work unchanged
 - ✅ **Improved architecture** - Modular, maintainable code

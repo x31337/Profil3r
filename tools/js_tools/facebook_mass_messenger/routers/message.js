@@ -65,7 +65,7 @@ module.exports = (app, users) => {
     res.send((req.session.messages.length - 1).toString());
   });
 
-  app.post('/sendmessage', async (req, res) => {
+  app.post('/sendmessage', async(req, res) => {
     if (!req.session.uid) return res.end();
 
     if (req.messageIDInvalid) return res.end();
@@ -86,7 +86,7 @@ module.exports = (app, users) => {
       const api = await login({ appState: user.cookies });
       await api.listen();
 
-      const sendMessages = async (current = 0) => {
+      const sendMessages = async(current = 0) => {
         if (current >= req.session.friends[req.messageID].length) {
           req.session.messages.splice(req.messageID, 1);
           req.session.friends.splice(req.messageID, 1);

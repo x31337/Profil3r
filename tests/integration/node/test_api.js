@@ -41,8 +41,8 @@ const testData = {
   nonexistentResource: 'nonexistent123456789',
   largeInput: 'a'.repeat(1000),
   specialChars: '!@#$%^&*()_+-=[]{}|;:,.<>?',
-  sqlInjection: "'; DROP TABLE users; --",
-  xssPayload: "<script>alert('xss')</script>",
+  sqlInjection: '\'; DROP TABLE users; --',
+  xssPayload: '<script>alert(\'xss\')</script>',
   unicodeInput: 'тест用户名🚀',
   messageData: {
     recipient: 'test@example.com',
@@ -89,7 +89,7 @@ const makeRequest = (service, path) => {
 describe('Integration Tests - Node.js Services', () => {
   describe('Health Check Endpoints', () => {
     Object.keys(TEST_CONFIG.services).forEach(service => {
-      it(`should return 200 for ${service} health check`, async () => {
+      it(`should return 200 for ${service} health check`, async() => {
         const endpoint = apiEndpoints.health[service];
         if (endpoint) {
           const res = await makeRequest(service, endpoint)
@@ -106,7 +106,7 @@ describe('Integration Tests - Node.js Services', () => {
 
   describe('OSINT API Endpoints', () => {
     describe('Username Search', () => {
-      it('should return 200 for valid username search', async () => {
+      it('should return 200 for valid username search', async() => {
         const endpoint = apiEndpoints.osint.username.replace(
           '{username}',
           testData.validUsername
@@ -120,7 +120,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.body.username).to.equal(testData.validUsername);
       });
 
-      it('should return 400 for invalid username search', async () => {
+      it('should return 400 for invalid username search', async() => {
         const endpoint = apiEndpoints.osint.username.replace(
           '{username}',
           testData.invalidUsername
@@ -133,7 +133,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.body).to.have.property('error');
       });
 
-      it('should return 404 for nonexistent username', async () => {
+      it('should return 404 for nonexistent username', async() => {
         const endpoint = apiEndpoints.osint.username.replace(
           '{username}',
           testData.nonexistentResource
@@ -147,7 +147,7 @@ describe('Integration Tests - Node.js Services', () => {
     });
 
     describe('Email Lookup', () => {
-      it('should return 200 for valid email lookup', async () => {
+      it('should return 200 for valid email lookup', async() => {
         const endpoint = apiEndpoints.osint.email.replace(
           '{email}',
           testData.validEmail
@@ -160,7 +160,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.body).to.have.property('email');
       });
 
-      it('should return 400 for invalid email lookup', async () => {
+      it('should return 400 for invalid email lookup', async() => {
         const endpoint = apiEndpoints.osint.email.replace(
           '{email}',
           testData.invalidEmail
@@ -175,7 +175,7 @@ describe('Integration Tests - Node.js Services', () => {
     });
 
     describe('Domain Information', () => {
-      it('should return 200 for valid domain lookup', async () => {
+      it('should return 200 for valid domain lookup', async() => {
         const endpoint = apiEndpoints.osint.domain.replace(
           '{domain}',
           testData.validDomain
@@ -188,7 +188,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.body).to.have.property('domain');
       });
 
-      it('should return 400 for invalid domain lookup', async () => {
+      it('should return 400 for invalid domain lookup', async() => {
         const endpoint = apiEndpoints.osint.domain.replace(
           '{domain}',
           testData.invalidDomain
@@ -205,7 +205,7 @@ describe('Integration Tests - Node.js Services', () => {
 
   describe('Facebook Messenger API', () => {
     describe('Message Management', () => {
-      it('should set message successfully', async () => {
+      it('should set message successfully', async() => {
         const res = await makeRequest(
           'facebook-messenger',
           apiEndpoints.facebook.setmessage
@@ -217,7 +217,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.status).to.equal(200);
       });
 
-      it('should get message successfully', async () => {
+      it('should get message successfully', async() => {
         const res = await makeRequest(
           'facebook-messenger',
           apiEndpoints.facebook.getmessage
@@ -229,7 +229,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.body).to.have.property('message');
       });
 
-      it('should create new message successfully', async () => {
+      it('should create new message successfully', async() => {
         const res = await makeRequest(
           'facebook-messenger',
           apiEndpoints.facebook.newmessage
@@ -240,7 +240,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.status).to.equal(200);
       });
 
-      it('should fail to send message without valid session', async () => {
+      it('should fail to send message without valid session', async() => {
         const res = await makeRequest(
           'facebook-messenger',
           apiEndpoints.facebook.sendmessage
@@ -254,7 +254,7 @@ describe('Integration Tests - Node.js Services', () => {
     });
 
     describe('Friends Management', () => {
-      it('should get friends list with authentication', async () => {
+      it('should get friends list with authentication', async() => {
         const res = await makeRequest(
           'facebook-messenger',
           apiEndpoints.facebook.friends
@@ -266,7 +266,7 @@ describe('Integration Tests - Node.js Services', () => {
         expect(res.status).to.equal(200);
       });
 
-      it('should fail to get friends list without authentication', async () => {
+      it('should fail to get friends list without authentication', async() => {
         const res = await makeRequest(
           'facebook-messenger',
           apiEndpoints.facebook.friends
@@ -280,7 +280,7 @@ describe('Integration Tests - Node.js Services', () => {
   });
 
   describe('Security Tests', () => {
-    it('should prevent SQL injection attacks', async () => {
+    it('should prevent SQL injection attacks', async() => {
       const endpoint = apiEndpoints.osint.username.replace(
         '{username}',
         testData.sqlInjection
@@ -294,7 +294,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(res.body.error).to.contain('Invalid input');
     });
 
-    it('should prevent XSS attacks', async () => {
+    it('should prevent XSS attacks', async() => {
       const endpoint = apiEndpoints.osint.username.replace(
         '{username}',
         encodeURIComponent(testData.xssPayload)
@@ -307,7 +307,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(res.body).to.have.property('error');
     });
 
-    it('should handle large input gracefully', async () => {
+    it('should handle large input gracefully', async() => {
       const endpoint = apiEndpoints.osint.username.replace(
         '{username}',
         testData.largeInput
@@ -319,7 +319,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(res.status).to.equal(413); // Payload too large
     });
 
-    it('should handle special characters properly', async () => {
+    it('should handle special characters properly', async() => {
       const endpoint = apiEndpoints.osint.username.replace(
         '{username}',
         encodeURIComponent(testData.specialChars)
@@ -331,7 +331,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(res.status).to.equal(400);
     });
 
-    it('should handle unicode input correctly', async () => {
+    it('should handle unicode input correctly', async() => {
       const endpoint = apiEndpoints.osint.username.replace(
         '{username}',
         encodeURIComponent(testData.unicodeInput)
@@ -345,7 +345,7 @@ describe('Integration Tests - Node.js Services', () => {
   });
 
   describe('Rate Limiting Tests', () => {
-    it('should enforce rate limiting on OSINT endpoints', async () => {
+    it('should enforce rate limiting on OSINT endpoints', async() => {
       const endpoint = apiEndpoints.osint.username.replace(
         '{username}',
         'rate_limit_test'
@@ -369,7 +369,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(rateLimitedRequests.length).to.be.greaterThan(0);
     });
 
-    it('should enforce rate limiting on Facebook operations', async () => {
+    it('should enforce rate limiting on Facebook operations', async() => {
       const endpoint = apiEndpoints.facebook.friends;
 
       // Make multiple requests to trigger rate limiting
@@ -393,7 +393,7 @@ describe('Integration Tests - Node.js Services', () => {
   });
 
   describe('Error Handling Tests', () => {
-    it('should return 404 for non-existent endpoints', async () => {
+    it('should return 404 for non-existent endpoints', async() => {
       const res = await makeRequest('js-tools', '/api/nonexistent')
         .get('/api/nonexistent')
         .timeout(TEST_CONFIG.timeouts.request);
@@ -401,7 +401,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(res.status).to.equal(404);
     });
 
-    it('should return 405 for unsupported HTTP methods', async () => {
+    it('should return 405 for unsupported HTTP methods', async() => {
       const res = await makeRequest('js-tools', apiEndpoints.health['js-tools'])
         .delete(apiEndpoints.health['js-tools'])
         .timeout(TEST_CONFIG.timeouts.request);
@@ -409,7 +409,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(res.status).to.equal(405);
     });
 
-    it('should return proper error format', async () => {
+    it('should return proper error format', async() => {
       const endpoint = apiEndpoints.osint.username.replace(
         '{username}',
         testData.invalidUsername
@@ -426,7 +426,7 @@ describe('Integration Tests - Node.js Services', () => {
   });
 
   describe('Performance Tests', () => {
-    it('should respond to health checks within acceptable time', async () => {
+    it('should respond to health checks within acceptable time', async() => {
       const startTime = Date.now();
       const res = await makeRequest('js-tools', apiEndpoints.health['js-tools'])
         .get(apiEndpoints.health['js-tools'])
@@ -437,7 +437,7 @@ describe('Integration Tests - Node.js Services', () => {
       expect(responseTime).to.be.below(500); // 500ms threshold
     });
 
-    it('should handle concurrent requests efficiently', async () => {
+    it('should handle concurrent requests efficiently', async() => {
       const endpoint = apiEndpoints.health['js-tools'];
 
       const requests = [];

@@ -4,11 +4,11 @@ const restify = require('restify'),
   tape = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
-tape('restify', function (test) {
-  common.iterateRequests(function (request, handle, callback) {
+tape('restify', function(test) {
+  common.iterateRequests(function(request, handle, callback) {
     const payloadType = handle.split('-')[0];
 
-    test.test('with ' + handle, function (t) {
+    test.test('with ' + handle, function(t) {
       t.plan(request.expected.plan);
 
       const server = restify.createServer(),
@@ -21,8 +21,8 @@ tape('restify', function (test) {
       server.post(common.server.endpoint, fbbot.requestHandler);
 
       // start the server
-      server.listen(common.server.port, function () {
-        common.sendRequest(handle, function (error, response) {
+      server.listen(common.server.port, function() {
+        common.sendRequest(handle, function(error, response) {
           t.error(error, 'POST request should return no error');
           t.equal(
             response.statusCode,
@@ -30,7 +30,7 @@ tape('restify', function (test) {
             'POST request should return code 200'
           );
 
-          server.close(function () {
+          server.close(function() {
             t.ok(true, 'make sure server is closed');
           });
         });
@@ -39,7 +39,7 @@ tape('restify', function (test) {
   });
 });
 
-tape('restify - handshake - success', function (t) {
+tape('restify - handshake - success', function(t) {
   t.plan(4);
 
   const server = restify.createServer(),
@@ -49,8 +49,8 @@ tape('restify - handshake - success', function (t) {
   server.post(common.server.endpoint, fbbot.requestHandler);
 
   // start the server
-  server.listen(common.server.port, function () {
-    common.sendHandshake('ok', function (error, response) {
+  server.listen(common.server.port, function() {
+    common.sendHandshake('ok', function(error, response) {
       t.error(error, 'GET request should return no error');
       t.equal(response.statusCode, 200, 'GET request should return code 200');
       t.equal(
@@ -59,14 +59,14 @@ tape('restify - handshake - success', function (t) {
         'should receive provided challenge back'
       );
 
-      server.close(function () {
+      server.close(function() {
         t.ok(true, 'make sure server is closed');
       });
     });
   });
 });
 
-tape('restify - handshake - failed', function (t) {
+tape('restify - handshake - failed', function(t) {
   t.plan(4);
 
   const server = restify.createServer(),
@@ -76,8 +76,8 @@ tape('restify - handshake - failed', function (t) {
   server.post(common.server.endpoint, fbbot.requestHandler);
 
   // start the server
-  server.listen(common.server.port, function () {
-    common.sendHandshake('bad', function (error, response) {
+  server.listen(common.server.port, function() {
+    common.sendHandshake('bad', function(error, response) {
       t.error(error, 'GET request should return no error');
       t.equal(response.statusCode, 400, 'GET request should return code 400');
       t.equal(
@@ -86,7 +86,7 @@ tape('restify - handshake - failed', function (t) {
         'should received error message'
       );
 
-      server.close(function () {
+      server.close(function() {
         t.ok(true, 'make sure server is closed');
       });
     });

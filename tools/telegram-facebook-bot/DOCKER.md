@@ -28,7 +28,8 @@ docker run -e BOT_TOKEN=your_bot_token telegram-facebook-bot
 
 ## Configuration
 
-The bot requires proper configuration files to function. See the main README.md for configuration details.
+The bot requires proper configuration files to function. See the main README.md for configuration
+details.
 
 ## Notes
 

@@ -4,11 +4,11 @@ const Hapi = require('hapi'),
   tape = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
-tape('hapi', function (test) {
-  common.iterateRequests(function (request, handle, callback) {
+tape('hapi', function(test) {
+  common.iterateRequests(function(request, handle, callback) {
     const payloadType = handle.split('-')[0];
 
-    test.test('with ' + handle, function (t) {
+    test.test('with ' + handle, function(t) {
       t.plan(request.expected.plan);
 
       const server = new Hapi.Server(),
@@ -32,12 +32,12 @@ tape('hapi', function (test) {
       });
 
       // start the server
-      server.start(function () {
-        common.sendRequest(handle, function (error, response) {
+      server.start(function() {
+        common.sendRequest(handle, function(error, response) {
           t.error(error, 'should be no error');
           t.equal(response.statusCode, 200, 'should return code 200');
 
-          server.stop(function () {
+          server.stop(function() {
             t.ok(true, 'make sure server is closed');
           });
         });
@@ -46,7 +46,7 @@ tape('hapi', function (test) {
   });
 });
 
-tape('hapi - handshake - success', function (t) {
+tape('hapi - handshake - success', function(t) {
   t.plan(4);
 
   const server = new Hapi.Server(),
@@ -67,8 +67,8 @@ tape('hapi - handshake - success', function (t) {
   });
 
   // start the server
-  server.start(function () {
-    common.sendHandshake('ok', function (error, response) {
+  server.start(function() {
+    common.sendHandshake('ok', function(error, response) {
       t.error(error, 'GET request should return no error');
       t.equal(response.statusCode, 200, 'GET request should return code 200');
       t.equal(
@@ -77,14 +77,14 @@ tape('hapi - handshake - success', function (t) {
         'should receive provided challenge back'
       );
 
-      server.stop(function () {
+      server.stop(function() {
         t.ok(true, 'make sure server is closed');
       });
     });
   });
 });
 
-tape('hapi - handshake - failed', function (t) {
+tape('hapi - handshake - failed', function(t) {
   t.plan(4);
 
   const server = new Hapi.Server(),
@@ -105,8 +105,8 @@ tape('hapi - handshake - failed', function (t) {
   });
 
   // start the server
-  server.start(function () {
-    common.sendHandshake('bad', function (error, response) {
+  server.start(function() {
+    common.sendHandshake('bad', function(error, response) {
       t.error(error, 'GET request should return no error');
       t.equal(response.statusCode, 400, 'GET request should return code 400');
       t.equal(
@@ -115,7 +115,7 @@ tape('hapi - handshake - failed', function (t) {
         'should received error message'
       );
 
-      server.stop(function () {
+      server.stop(function() {
         t.ok(true, 'make sure server is closed');
       });
     });

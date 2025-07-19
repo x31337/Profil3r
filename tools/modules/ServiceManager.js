@@ -32,33 +32,33 @@ class ServiceManager {
       let child;
 
       switch (service.type) {
-        case 'node':
-          child = spawn('npm', ['start'], {
+      case 'node':
+        child = spawn('npm', ['start'], {
+          cwd: servicePath,
+          stdio: 'inherit',
+          detached: true
+        });
+        break;
+      case 'python':
+        child = spawn('python3', ['app.py'], {
+          cwd: servicePath,
+          stdio: 'inherit',
+          detached: true
+        });
+        break;
+      case 'php':
+        child = spawn(
+          'php',
+          ['-S', `localhost:${service.port}`, 'index.php'],
+          {
             cwd: servicePath,
             stdio: 'inherit',
             detached: true
-          });
-          break;
-        case 'python':
-          child = spawn('python3', ['app.py'], {
-            cwd: servicePath,
-            stdio: 'inherit',
-            detached: true
-          });
-          break;
-        case 'php':
-          child = spawn(
-            'php',
-            ['-S', `localhost:${service.port}`, 'index.php'],
-            {
-              cwd: servicePath,
-              stdio: 'inherit',
-              detached: true
-            }
-          );
-          break;
-        default:
-          throw new Error(`Unsupported service type: ${service.type}`);
+          }
+        );
+        break;
+      default:
+        throw new Error(`Unsupported service type: ${service.type}`);
       }
 
       this.services[service.name] = {
@@ -278,7 +278,7 @@ class ServiceManager {
       clearInterval(this.healthCheckInterval);
     }
 
-    this.healthCheckInterval = setInterval(async () => {
+    this.healthCheckInterval = setInterval(async() => {
       const healthChecks = await this.performAllHealthChecks();
 
       // Check for unhealthy services and attempt restart

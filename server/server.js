@@ -10,9 +10,11 @@ app.use(express.json());
 // MongoDB connection
 // The MONGO_URI will typically be 'mongodb://mongo:27017/reports' in a Docker environment
 // For local development outside Docker, it might be 'mongodb://localhost:27017/reports'
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/metaMasReporterDB';
+const MONGO_URI =
+  process.env.MONGO_URI || 'mongodb://localhost:27017/metaMasReporterDB';
 
-mongoose.connect(MONGO_URI)
+mongoose
+  .connect(MONGO_URI)
   .then(() => console.log('MongoDB connected successfully.'))
   .catch(err => console.error('MongoDB connection error:', err));
 
@@ -26,7 +28,11 @@ const reportSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   date: { type: Date, default: Date.now },
-  status: { type: String, default: 'open', enum: ['open', 'in progress', 'closed'] }
+  status: {
+    type: String,
+    default: 'open',
+    enum: ['open', 'in progress', 'closed']
+  }
 });
 
 const Report = mongoose.model('Report', reportSchema);
@@ -34,7 +40,7 @@ const Report = mongoose.model('Report', reportSchema);
 // API Endpoints for Reports
 
 // GET all reports
-app.get('/reports', async (req, res) => {
+app.get('/reports', async(req, res) => {
   try {
     const reports = await Report.find();
     res.json(reports);
@@ -44,7 +50,7 @@ app.get('/reports', async (req, res) => {
 });
 
 // POST a new report
-app.post('/reports', async (req, res) => {
+app.post('/reports', async(req, res) => {
   const report = new Report({
     title: req.body.title,
     description: req.body.description,
@@ -64,7 +70,7 @@ app.get('/reports/:id', getReport, (req, res) => {
 });
 
 // PUT (update) a report by ID
-app.put('/reports/:id', getReport, async (req, res) => {
+app.put('/reports/:id', getReport, async(req, res) => {
   if (req.body.title != null) {
     res.report.title = req.body.title;
   }
@@ -83,7 +89,7 @@ app.put('/reports/:id', getReport, async (req, res) => {
 });
 
 // DELETE a report by ID
-app.delete('/reports/:id', getReport, async (req, res) => {
+app.delete('/reports/:id', getReport, async(req, res) => {
   try {
     await res.report.deleteOne(); // Changed from res.report.remove() which is deprecated
     res.json({ message: 'Deleted Report' });

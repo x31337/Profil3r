@@ -2,7 +2,9 @@
 
 ## Overview
 
-This implementation successfully wires event propagation and state synchronization in the AutoBuildSystem by subscribing to key EventBus events and updating the legacy `this.state` structure accordingly.
+This implementation successfully wires event propagation and state synchronization in the
+AutoBuildSystem by subscribing to key EventBus events and updating the legacy `this.state` structure
+accordingly.
 
 ## Key Features
 
@@ -41,7 +43,8 @@ This implementation successfully wires event propagation and state synchronizati
 #### Testing Events
 
 - `tests-started`: Sets `state.testing = true`
-- `tests-completed`: Sets `state.testing = false`, updates `state.testResults`, increments `state.testCount`
+- `tests-completed`: Sets `state.testing = false`, updates `state.testResults`, increments
+  `state.testCount`
 - `tests-failed`: Sets `state.testing = false`, adds error to `state.errors`
 - `unit-test-completed`: Relays event to WebSocket clients
 - `unit-test-failed`: Adds error to `state.errors`
@@ -150,4 +153,5 @@ When a build starts in the Builder module:
 
 ## Files Modified
 
-- `/Users/x/x/Profil3r/tools/auto-build-system.js`: Added `subscribeToEvents()` method and event subscriptions
+- `/Users/x/x/Profil3r/tools/auto-build-system.js`: Added `subscribeToEvents()` method and event
+  subscriptions

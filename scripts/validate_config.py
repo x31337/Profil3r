@@ -13,11 +13,9 @@ Exit codes:
 
 import argparse
 import json
-import os
 import sys
 from pathlib import Path
 
-import jsonschema
 from jsonschema import ValidationError, validate
 
 

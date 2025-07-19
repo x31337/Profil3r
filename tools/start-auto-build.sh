@@ -63,7 +63,7 @@ install_dependencies() {
 
     # Install auto-build system dependencies
     print_status "Installing auto-build system dependencies..."
-    npm install express ws chokidar axios simple-git pm2 nyc
+    npm install express ws chokidar axios simple-git nodemon nyc
 
     # Install Cypress and related dependencies
     print_status "Installing Cypress and testing dependencies..."
@@ -194,21 +194,14 @@ check_running() {
 start_auto_build() {
     print_header "🚀 Starting Auto Build System..."
 
-    # Start in background with PM2 if available
-    if command -v pm2 &> /dev/null; then
-        print_status "Starting with PM2..."
-        pm2 start auto-build-system.js --name "profil3r-auto-build"
-        pm2 save
-        print_status "Auto-build system started with PM2"
-        print_status "Use 'pm2 logs profil3r-auto-build' to view logs"
-        print_status "Use 'pm2 stop profil3r-auto-build' to stop"
-    else
-        print_status "Starting in background..."
-        nohup node auto-build-system.js > logs/auto-build.log 2>&1 &
-        echo $! > logs/auto-build.pid
-        print_status "Auto-build system started in background"
-        print_status "PID: $(cat logs/auto-build.pid)"
-    fi
+    # Start in background
+    print_status "Starting in background..."
+    nohup node auto-build-system.js > logs/auto-build.log 2>&1 &
+    echo $! > logs/auto-build.pid
+    print_status "Auto-build system started in background"
+    print_status "PID: $(cat logs/auto-build.pid)"
+    print_status "Use 'tail -f logs/auto-build.log' to view logs"
+    print_status "Use 'npm run auto-build-stop' to stop"
 
     # Wait for services to start
     sleep 5

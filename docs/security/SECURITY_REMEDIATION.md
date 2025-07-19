@@ -19,7 +19,8 @@ The following files were modified to remove hardcoded secrets:
 - `tools/php_tools/facebook_scripts/reg-fb-acc.php`
   - Same changes as above (duplicate file)
 
-- `scripts/legacy/E4GL30S1NT/configs/config.json` (Note: This is a legacy file and might not be affected by the root-level `config.json` move)
+- `scripts/legacy/E4GL30S1NT/configs/config.json` (Note: This is a legacy file and might not be
+  affected by the root-level `config.json` move)
   - Removed hardcoded real-email API key: `0c6ad1fd-f753-4628-8c0a-7968e722c6c7`
   - Replaced with environment variable placeholder: `${REAL_EMAIL_API_KEY}`
 

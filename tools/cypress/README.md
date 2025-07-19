@@ -1,6 +1,8 @@
 # Enhanced Cypress Test Suite
 
-This enhanced Cypress test suite provides comprehensive end-to-end testing for the Profil3r tools with visual regression testing, cross-browser support, mobile viewport testing, and parallel execution capabilities.
+This enhanced Cypress test suite provides comprehensive end-to-end testing for the Profil3r tools
+with visual regression testing, cross-browser support, mobile viewport testing, and parallel
+execution capabilities.
 
 ## Features
 

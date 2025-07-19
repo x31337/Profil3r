@@ -40,53 +40,53 @@ async function generateHTMLReport(report, outputPath) {
     <table>
         <tr><th>Service</th><th>Status</th><th>Timestamp</th></tr>
         ${Object.entries(report.services)
-          .map(
-            ([name, status]) => `
+    .map(
+      ([name, status]) => `
             <tr>
                 <td>${name}</td>
                 <td class="${status.status === 'built' ? 'success' : 'error'}">${status.status}</td>
                 <td>${status.timestamp}</td>
             </tr>
         `
-          )
-          .join('')}
+    )
+    .join('')}
     </table>
 
     <h2>🔍 Health Checks</h2>
     <table>
         <tr><th>Service</th><th>Status</th><th>Timestamp</th></tr>
         ${Object.entries(report.healthChecks)
-          .map(
-            ([name, health]) => `
+    .map(
+      ([name, health]) => `
             <tr>
                 <td>${name}</td>
                 <td class="${health.status === 'healthy' ? 'success' : 'error'}">${health.status}</td>
                 <td>${health.timestamp}</td>
             </tr>
         `
-          )
-          .join('')}
+    )
+    .join('')}
     </table>
 
     ${
-      report.errors.length > 0
-        ? `
+  report.errors.length > 0
+    ? `
     <h2>❌ Errors</h2>
     <ul>
         ${report.errors
-          .map(
-            error => `
+    .map(
+      error => `
             <li class="error">
                 <strong>${error.type}:</strong> ${error.message}
                 <em>(${error.timestamp})</em>
             </li>
         `
-          )
-          .join('')}
+    )
+    .join('')}
     </ul>
     `
-        : ''
-    }
+    : ''
+}
 
 </body>
 </html>`;

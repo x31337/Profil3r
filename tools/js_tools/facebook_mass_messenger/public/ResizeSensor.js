@@ -5,7 +5,7 @@
  * directory of this distribution and at
  * https://github.com/marcj/css-element-queries/blob/master/LICENSE.
  */
-(function (root, factory) {
+(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(factory);
   } else if (typeof exports === 'object') {
@@ -13,7 +13,7 @@
   } else {
     root.ResizeSensor = factory();
   }
-})(typeof window !== 'undefined' ? window : this, function () {
+})(typeof window !== 'undefined' ? window : this, function() {
   // Make sure it does not throw in a SSR (Server Side Rendering) situation
   if (typeof window === 'undefined') {
     return null;
@@ -33,7 +33,7 @@
     globalWindow.requestAnimationFrame ||
     globalWindow.mozRequestAnimationFrame ||
     globalWindow.webkitRequestAnimationFrame ||
-    function (fn) {
+    function(fn) {
       return globalWindow.setTimeout(fn, 20);
     };
 
@@ -90,7 +90,7 @@
    * @param {Object} style
    */
   function setStyle(element, style) {
-    Object.keys(style).forEach(function (key) {
+    Object.keys(style).forEach(function(key) {
       element.style[key] = style[key];
     });
   }
@@ -103,25 +103,25 @@
    *
    * @constructor
    */
-  const ResizeSensor = function (element, callback) {
+  const ResizeSensor = function(element, callback) {
     /**
      *
      * @constructor
      */
     function EventQueue() {
       let q = [];
-      this.add = function (ev) {
+      this.add = function(ev) {
         q.push(ev);
       };
 
       let i, j;
-      this.call = function (sizeInfo) {
+      this.call = function(sizeInfo) {
         for (i = 0, j = q.length; i < j; i++) {
           q[i].call(this, sizeInfo);
         }
       };
 
-      this.remove = function (ev) {
+      this.remove = function(ev) {
         const newQueue = [];
         for (i = 0, j = q.length; i < j; i++) {
           if (q[i] !== ev) newQueue.push(q[i]);
@@ -129,7 +129,7 @@
         q = newQueue;
       };
 
-      this.length = function () {
+      this.length = function() {
         return q.length;
       };
     }
@@ -214,7 +214,7 @@
       let initialHiddenCheck = true;
       let lastAnimationFrame = 0;
 
-      const resetExpandShrink = function () {
+      const resetExpandShrink = function() {
         const width = element.offsetWidth;
         const height = element.offsetHeight;
 
@@ -228,7 +228,7 @@
         shrink.scrollTop = height + 10;
       };
 
-      const reset = function () {
+      const reset = function() {
         // Check if element is hidden
         if (initialHiddenCheck) {
           const invisible =
@@ -236,7 +236,7 @@
           if (invisible) {
             // Check in next frame
             if (!lastAnimationFrame) {
-              lastAnimationFrame = requestAnimationFrame(function () {
+              lastAnimationFrame = requestAnimationFrame(function() {
                 lastAnimationFrame = 0;
 
                 reset();
@@ -254,7 +254,7 @@
       };
       element.resizeSensor.resetSensor = reset;
 
-      const onResized = function () {
+      const onResized = function() {
         rafId = 0;
 
         if (!dirty) return;
@@ -267,7 +267,7 @@
         }
       };
 
-      const onScroll = function () {
+      const onScroll = function() {
         size = getElementSize(element);
         dirty = size.width !== lastWidth || size.height !== lastHeight;
 
@@ -278,7 +278,7 @@
         reset();
       };
 
-      const addEvent = function (el, name, cb) {
+      const addEvent = function(el, name, cb) {
         if (el.attachEvent) {
           el.attachEvent('on' + name, cb);
         } else {
@@ -293,27 +293,27 @@
       requestAnimationFrame(reset);
     }
 
-    forEachElement(element, function (elem) {
+    forEachElement(element, function(elem) {
       attachResizeEvent(elem, callback);
     });
 
-    this.detach = function (ev) {
+    this.detach = function(ev) {
       ResizeSensor.detach(element, ev);
     };
 
-    this.reset = function () {
+    this.reset = function() {
       element.resizeSensor.resetSensor();
     };
   };
 
-  ResizeSensor.reset = function (element) {
-    forEachElement(element, function (elem) {
+  ResizeSensor.reset = function(element) {
+    forEachElement(element, function(elem) {
       elem.resizeSensor.resetSensor();
     });
   };
 
-  ResizeSensor.detach = function (element, ev) {
-    forEachElement(element, function (elem) {
+  ResizeSensor.detach = function(element, ev) {
+    forEachElement(element, function(elem) {
       if (!elem) return;
       if (elem.resizedAttached && typeof ev === 'function') {
         elem.resizedAttached.remove(ev);
@@ -330,7 +330,7 @@
   };
 
   if (typeof MutationObserver !== 'undefined') {
-    const observer = new MutationObserver(function (mutations) {
+    const observer = new MutationObserver(function(mutations) {
       for (const i in mutations) {
         if (mutations.hasOwnProperty(i)) {
           const items = mutations[i].addedNodes;
@@ -343,7 +343,7 @@
       }
     });
 
-    document.addEventListener('DOMContentLoaded', function (event) {
+    document.addEventListener('DOMContentLoaded', function(event) {
       observer.observe(document.body, {
         childList: true,
         subtree: true

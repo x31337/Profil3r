@@ -6,7 +6,6 @@ Modern Social Media Automation and Profiling Tool
 This is the main entry point for the modernized Pr0f1l3r suite.
 """
 
-import os
 import sys
 from pathlib import Path
 

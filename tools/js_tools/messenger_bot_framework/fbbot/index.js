@@ -172,7 +172,7 @@ function Fbbot(options) {
  * // This method is called automatically by the framework
  * // when using with Express, Hapi, or other HTTP servers
  */
-Fbbot.prototype._handler = function (request, respond) {
+Fbbot.prototype._handler = function(request, respond) {
   this.logger.info(request);
 
   // GET request handling
@@ -187,7 +187,7 @@ Fbbot.prototype._handler = function (request, respond) {
 
   this._incoming.traverse(
     request.body,
-    function (err, payload) {
+    function(err, payload) {
       this.emit('end', err, payload);
     }.bind(this)
   );

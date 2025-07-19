@@ -1,15 +1,20 @@
 # PHP Facebook Tools Web App
 
-This project converts a collection of PHP scripts located in `tools/php_tools/facebook_scripts/` into a web application with a modern UI, running inside a Docker container. This web app is a component of the larger "Comprehensive Facebook & OSINT Automation Toolkit".
+This project converts a collection of PHP scripts located in `tools/php_tools/facebook_scripts/`
+into a web application with a modern UI, running inside a Docker container. This web app is a
+component of the larger "Comprehensive Facebook & OSINT Automation Toolkit".
 
 <details>
 <summary>Features</summary>
 
 - Web interface for interacting with various Facebook-related PHP scripts.
-- Dockerized for easy setup and deployment (via the main project's Docker Compose setup or standalone).
+- Dockerized for easy setup and deployment (via the main project's Docker Compose setup or
+  standalone).
 - Built with Slim PHP framework.
 - Styled with Bootstrap for a responsive UI.
-- Dynamically discovers PHP scripts from the `tools/php_tools/facebook_scripts/` directory and lists them. - Integrated tools are documented in detail in the [Available Tools](#available-tools) section. - Other detected scripts are listed as "Coming Soon" in the UI.
+- Dynamically discovers PHP scripts from the `tools/php_tools/facebook_scripts/` directory and lists
+them. - Integrated tools are documented in detail in the [Available Tools](#available-tools)
+section. - Other detected scripts are listed as "Coming Soon" in the UI.
 </details>
 
 <details>
@@ -22,10 +27,13 @@ This project converts a collection of PHP scripts located in `tools/php_tools/fa
 <summary>Structure (within `tools/php_tools/` and project root)</summary>
 
 - `tools/php_tools/Dockerfile`: Defines the Docker image for this specific PHP application.
-- `tools/php_tools/facebook_scripts/`: The original PHP scripts that are being wrapped by this web app.
+- `tools/php_tools/facebook_scripts/`: The original PHP scripts that are being wrapped by this web
+  app.
 - `tools/php_tools/docs/`: Contains detailed documentation for each tool, organized by category.
-- `src/`: (Project root) Contains the refactored PHP tool logic (e.g., `AccountChecker.php`, `PageCreator.php`).
-- `public/`: (Project root) Web server document root for this app, contains `index.php` (Slim front controller).
+- `src/`: (Project root) Contains the refactored PHP tool logic (e.g., `AccountChecker.php`,
+  `PageCreator.php`).
+- `public/`: (Project root) Web server document root for this app, contains `index.php` (Slim front
+  controller).
 - `templates/`: (Project root) HTML templates for the UI.
 - `composer.json`: (Project root) PHP dependencies for this app.
 </details>
@@ -33,7 +41,8 @@ This project converts a collection of PHP scripts located in `tools/php_tools/fa
 <details>
 <summary>Getting Started (Standalone)</summary>
 
-While this service is typically managed by the main project's `build/docker-compose.yml`, you can also build and run it standalone for development or testing.
+While this service is typically managed by the main project's `build/docker-compose.yml`, you can
+also build and run it standalone for development or testing.
 
 ### 1. Build the Docker Image
 
@@ -63,7 +72,8 @@ docker run -d -p 8080:8080 --name php-fb-tools-container php-fb-tools-app
 Explanation of flags:
 
 - `-d`: Run the container in detached mode (in the background).
-- `-p 8080:8080`: Map port 8080 on your host machine to port 8080 in the container (where the app is running). This matches the port specified in the main project's README.
+- `-p 8080:8080`: Map port 8080 on your host machine to port 8080 in the container (where the app is
+  running). This matches the port specified in the main project's README.
 - `--name php-fb-tools-container`: Assign a name to the running container for easier management.
 - `php-fb-tools-app`: The name of the image you built.
 
@@ -73,13 +83,16 @@ Open your web browser and navigate to:
 
 [http://localhost:8080](http://localhost:8080)
 
-You should see the homepage listing the available tools. The `/health` endpoint is also available at [http://localhost:8080/health](http://localhost:8080/health).
+You should see the homepage listing the available tools. The `/health` endpoint is also available at
+[http://localhost:8080/health](http://localhost:8080/health).
 
 </details>
 
 ## Available Tools
 
-The application provides a web UI for various PHP scripts. Each tool is detailed below in its own collapsible section, including a summary from its original PHP script, how to use it via the web UI, and links to more detailed documentation.
+The application provides a web UI for various PHP scripts. Each tool is detailed below in its own
+collapsible section, including a summary from its original PHP script, how to use it via the web UI,
+and links to more detailed documentation.
 
 ### Account Management
 
@@ -90,7 +103,8 @@ Tools related to managing Facebook user accounts.
 
 **Original Script Description:**
 
-This PHP script is designed to change Facebook account information using the Facebook Graph API. Here's a breakdown of what it does:
+This PHP script is designed to change Facebook account information using the Facebook Graph API.
+Here's a breakdown of what it does:
 
 ### Key Features:
 
@@ -111,7 +125,8 @@ This PHP script is designed to change Facebook account information using the Fac
 ### Security Concerns:
 
 1. **Access Token Exposure**:
-   - The script requires a Facebook access token which is hardcoded as `$token = "here is your fb access token";`
+   - The script requires a Facebook access token which is hardcoded as
+     `$token = "here is your fb access token";`
    - Storing access tokens in plain text is a security risk
 
 2. **Privacy Settings**:
@@ -144,17 +159,21 @@ This PHP script is designed to change Facebook account information using the Fac
 
 ### How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, locate and select the "Change Facebook Account Info" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, locate and select the "Change Facebook
+      Account Info" tool (or a similar name).
 
 2.  **Authentication / Account Identification:**
-    - You will likely need to provide an access token or session cookies for the Facebook account you wish to modify.
+    - You will likely need to provide an access token or session cookies for the Facebook account
+      you wish to modify.
     - Alternatively, it might ask for a User ID and then separate credentials.
 
 3.  **Specify Changes:**
-    - The UI should present fields for the information you can change (e.g., "New Name", "New Password", "Update Bio").
+    - The UI should present fields for the information you can change (e.g., "New Name", "New
+      Password", "Update Bio").
     - Fill in only the fields corresponding to the information you want to update.
 
 4.  **Submit:**
@@ -162,23 +181,29 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
 
 ### Inputs Required
 
-- **Account Credentials/Token:** Valid access token or session cookies with permissions to modify account information.
+- **Account Credentials/Token:** Valid access token or session cookies with permissions to modify
+  account information.
 - **Target Information:** The new values for the account details you wish to change.
 - Potentially current password if changing password or sensitive info.
 
 ### Expected Output
 
 - **Success:** A confirmation message indicating that the account information has been updated.
-- **Failure:** An error message detailing why the update failed (e.g., incorrect password, invalid token, permission issues, Facebook security blocks).
+- **Failure:** An error message detailing why the update failed (e.g., incorrect password, invalid
+  token, permission issues, Facebook security blocks).
 
 ### Notes & Considerations
 
-- **Security:** Modifying account information is a sensitive operation. Ensure you are using a secure connection and trust the application environment.
+- **Security:** Modifying account information is a sensitive operation. Ensure you are using a
+  secure connection and trust the application environment.
 - **Permissions:** The provided token/credentials must have the necessary permissions.
-- **Facebook Policies:** Automated changes to account information might be against Facebook's terms of service depending on the method and frequency. Use responsibly.
-- The exact fields that can be modified are dependent on the `change-fb-acc-info.php` script's implementation.
+- **Facebook Policies:** Automated changes to account information might be against Facebook's terms
+  of service depending on the method and frequency. Use responsibly.
+- The exact fields that can be modified are dependent on the `change-fb-acc-info.php` script's
+  implementation.
 
-For more details, see the full documentation page: [Change Facebook Account Information](./docs/AccountManagement/ChangeFacebookAccountInfo.md)
+For more details, see the full documentation page:
+[Change Facebook Account Information](./docs/AccountManagement/ChangeFacebookAccountInfo.md)
 
 </details>
 
@@ -187,7 +212,9 @@ For more details, see the full documentation page: [Change Facebook Account Info
 
 **Original Script Description:**
 
-This PHP script checks whether a Facebook account is active ("live") or disabled ("died") by querying the Facebook Graph API for the account's profile picture. Here's a breakdown of how it works:
+This PHP script checks whether a Facebook account is active ("live") or disabled ("died") by
+querying the Facebook Graph API for the account's profile picture. Here's a breakdown of how it
+works:
 
 1. **Setup**:
    - The script defines a Facebook user ID (`$uid`) that needs to be checked
@@ -200,9 +227,9 @@ This PHP script checks whether a Facebook account is active ("live") or disabled
 3. **Response Handling**:
    - Checks if the HTTP response code is 200 (success)
    - If successful, decodes the JSON response
-   - The script then checks two conditions to determine if the account is active:
-     a) If the response contains valid `data` and `url` fields
-     b) If the URL is not pointing to Facebook's default placeholder image
+   - The script then checks two conditions to determine if the account is active: a) If the response
+     contains valid `data` and `url` fields b) If the URL is not pointing to Facebook's default
+     placeholder image
 
 4. **Output**:
    - If both conditions are met: "ID is: {uid} live."
@@ -214,7 +241,8 @@ This PHP script checks whether a Facebook account is active ("live") or disabled
 1. This script uses an older version of the Graph API (v3.3) which may be deprecated
 2. The default placeholder image URL might change over time
 3. Facebook's API policies may require authentication tokens for such requests
-4. The script would be more useful if it accepted the UID as a parameter rather than having it hardcoded
+4. The script would be more useful if it accepted the UID as a parameter rather than having it
+   hardcoded
 
 To improve this script, you might want to:
 
@@ -227,10 +255,12 @@ To improve this script, you might want to:
 ### How to Use via Web UI
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, locate and click on the "Check Facebook Account Status" tool.
+    - On the main page of the PHP Facebook Tools Web App, locate and click on the "Check Facebook
+      Account Status" tool.
 
 2.  **Enter User ID:**
-    - You will be presented with an input field labeled something like "Facebook User ID" or "Enter User ID".
+    - You will be presented with an input field labeled something like "Facebook User ID" or "Enter
+      User ID".
     - Type or paste the numerical Facebook User ID of the account you wish to check.
 
 3.  **Submit:**
@@ -249,10 +279,12 @@ To improve this script, you might want to:
 
 ### Notes & Considerations
 
-- The accuracy and detail of the status depend on the method used by the `check-fb-acc.php` script and Facebook's current platform behavior.
+- The accuracy and detail of the status depend on the method used by the `check-fb-acc.php` script
+  and Facebook's current platform behavior.
 - Ensure the User ID is correct and for the intended Facebook profile.
 
-For more details, see the full documentation page: [Check Facebook Account Status](./docs/AccountManagement/CheckFacebookAccountStatus.md)
+For more details, see the full documentation page:
+[Check Facebook Account Status](./docs/AccountManagement/CheckFacebookAccountStatus.md)
 
 </details>
 
@@ -263,7 +295,8 @@ For more details, see the full documentation page: [Check Facebook Account Statu
 
 # Refactored Facebook Account Registration Script
 
-I'll refactor this to work with a local Docker-based API service instead of the external `api.tuberboy.com`. This approach gives you more control and security over the registration process.
+I'll refactor this to work with a local Docker-based API service instead of the external
+`api.tuberboy.com`. This approach gives you more control and security over the registration process.
 
 ## Dockerized API Solution
 
@@ -470,10 +503,13 @@ echo "</pre>";
 
 ### How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary. Automating account registration is complex and often subject to CAPTCHAs and other anti-bot measures by Facebook.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary. Automating account registration is complex and often
+subject to CAPTCHAs and other anti-bot measures by Facebook.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, find and select the "Register Facebook Account" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, find and select the "Register Facebook
+      Account" tool (or a similar name).
 
 2.  **Enter Registration Details:**
     - The UI will likely present a form with fields for necessary registration information, such as:
@@ -486,21 +522,25 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
     - Fill in all required details for the new account.
 
 3.  **Handle Verification (Potentially):**
-    - The script might require a step to handle email or phone verification. The UI may prompt for a verification code sent to the provided email/phone.
-    - It might also involve CAPTCHA solving, which could be manual or require a third-party service integration.
+    - The script might require a step to handle email or phone verification. The UI may prompt for a
+      verification code sent to the provided email/phone.
+    - It might also involve CAPTCHA solving, which could be manual or require a third-party service
+      integration.
 
 4.  **Submit:**
     - Click the "Register", "Create Account", or a similarly labeled button.
 
 ### Inputs Required
 
-- **Registration Information:** All details required by Facebook for account creation (name, email/phone, password, DOB, gender).
+- **Registration Information:** All details required by Facebook for account creation (name,
+  email/phone, password, DOB, gender).
 - **Verification Codes (if applicable):** Codes sent to email or phone.
 - **CAPTCHA solutions (if applicable).**
 
 ### Expected Output
 
-- **Success:** A confirmation message indicating that the account has been successfully registered. It might provide some details of the new account.
+- **Success:** A confirmation message indicating that the account has been successfully registered.
+  It might provide some details of the new account.
 - **Failure:** An error message detailing why the registration failed. Common reasons include:
   - Information already in use (email, phone).
   - Weak password.
@@ -511,12 +551,16 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
 
 ### Notes & Considerations
 
-- **Facebook's Terms of Service:** Automating account creation is often against Facebook's Terms of Service. Accounts created this way may be quickly flagged or disabled. Use with extreme caution and responsibility.
-- **Reliability:** This is a very sensitive script. Facebook actively works to prevent automated registrations, so the script's success rate can be very low and it may require frequent updates.
+- **Facebook's Terms of Service:** Automating account creation is often against Facebook's Terms of
+  Service. Accounts created this way may be quickly flagged or disabled. Use with extreme caution
+  and responsibility.
+- **Reliability:** This is a very sensitive script. Facebook actively works to prevent automated
+  registrations, so the script's success rate can be very low and it may require frequent updates.
 - **Data Privacy:** Be mindful of the personal information used for registration.
 - The `reg-fb-acc.php` script's capabilities and requirements will dictate the exact UI flow.
 
-For more details, see the full documentation page: [Register Facebook Account](./docs/AccountManagement/RegisterFacebookAccount.md)
+For more details, see the full documentation page:
+[Register Facebook Account](./docs/AccountManagement/RegisterFacebookAccount.md)
 
 </details>
 
@@ -529,7 +573,8 @@ Tools related to managing Facebook pages.
 
 **Original Script Description:**
 
-This PHP script appears to be designed to create a Facebook Page programmatically using Facebook's Graph API. Here's an analysis of what it does:
+This PHP script appears to be designed to create a Facebook Page programmatically using Facebook's
+Graph API. Here's an analysis of what it does:
 
 ### Key Components:
 
@@ -578,10 +623,12 @@ This PHP script appears to be designed to create a Facebook Page programmaticall
 ### How to Use via Web UI
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, find and select the "Create Facebook Page" tool.
+    - On the main page of the PHP Facebook Tools Web App, find and select the "Create Facebook Page"
+      tool.
 
 2.  **Enter Required Information:**
-    - **Access Token:** Input a valid Facebook access token that has the necessary permissions to create pages. This token should belong to the account under which you want to create the page.
+    - **Access Token:** Input a valid Facebook access token that has the necessary permissions to
+      create pages. This token should belong to the account under which you want to create the page.
     - **Page Name:** Specify the desired name for the new Facebook Page.
 
 3.  **Submit:**
@@ -594,8 +641,10 @@ This PHP script appears to be designed to create a Facebook Page programmaticall
 
 ### Expected Output
 
-- **Success:** If page creation is successful, the UI will likely display a confirmation message, possibly including the new Page ID or a link to the page.
-- **Failure:** If page creation fails, an error message will be displayed. This could be due to various reasons:
+- **Success:** If page creation is successful, the UI will likely display a confirmation message,
+  possibly including the new Page ID or a link to the page.
+- **Failure:** If page creation fails, an error message will be displayed. This could be due to
+  various reasons:
   - Invalid or expired access token.
   - Insufficient permissions associated with the token.
   - The page name being invalid or already in use in a conflicting way.
@@ -604,12 +653,19 @@ This PHP script appears to be designed to create a Facebook Page programmaticall
 
 ### Notes & Considerations
 
-- **API Stability:** This tool relies on Facebook API calls that can be unstable or change without notice. Its functionality may be affected by Facebook's platform updates.
-- **Token Permissions:** A standard user access token might not be sufficient. You might need a token with specific `page_management` or similar permissions.
-- **Security (from main README):** The original `create-fb-page.php` script (and its refactored version `PageCreator.php`) might use `CURLOPT_SSL_VERIFYPEER = FALSE` and `CURLOPT_SSL_VERIFYHOST = FALSE`. This is a security risk and should ideally be addressed by enabling SSL verification and ensuring proper certificate handling in a production environment.
-- Refer to the main project documentation or Facebook's developer resources for the most up-to-date information on required token permissions and API usage for page creation.
+- **API Stability:** This tool relies on Facebook API calls that can be unstable or change without
+  notice. Its functionality may be affected by Facebook's platform updates.
+- **Token Permissions:** A standard user access token might not be sufficient. You might need a
+  token with specific `page_management` or similar permissions.
+- **Security (from main README):** The original `create-fb-page.php` script (and its refactored
+  version `PageCreator.php`) might use `CURLOPT_SSL_VERIFYPEER = FALSE` and
+  `CURLOPT_SSL_VERIFYHOST = FALSE`. This is a security risk and should ideally be addressed by
+  enabling SSL verification and ensuring proper certificate handling in a production environment.
+- Refer to the main project documentation or Facebook's developer resources for the most up-to-date
+  information on required token permissions and API usage for page creation.
 
-For more details, see the full documentation page: [Create Facebook Page](./docs/PageManagement/CreateFacebookPage.md)
+For more details, see the full documentation page:
+[Create Facebook Page](./docs/PageManagement/CreateFacebookPage.md)
 
 </details>
 
@@ -618,10 +674,12 @@ For more details, see the full documentation page: [Create Facebook Page](./docs
 
 **Original Script Description:**
 
-This PHP script appears to be designed to fetch Facebook pages associated with a user account using the Facebook Graph API. Here's a breakdown of what it does:
+This PHP script appears to be designed to fetch Facebook pages associated with a user account using
+the Facebook Graph API. Here's a breakdown of what it does:
 
 1. It sets up a GraphQL request to Facebook's API endpoint (`graph.facebook.com/graphql`)
-2. The request includes various parameters and headers that mimic a request from the Facebook mobile app
+2. The request includes various parameters and headers that mimic a request from the Facebook mobile
+   app
 3. It requires a valid access token (currently empty in the script)
 4. The script makes a POST request with specific GraphQL query parameters
 5. It processes the response to extract page information including:
@@ -632,39 +690,49 @@ This PHP script appears to be designed to fetch Facebook pages associated with a
 
 Important notes about this script:
 
-1. **Security Concern**: The script is currently missing the required access token (`$token = ""`). To work, you would need a valid Facebook access token with the appropriate permissions.
-2. **Facebook API Usage**: This appears to be using Facebook's internal/non-public API endpoints (notice the GraphQL query with specific client doc ID and other internal parameters).
+1. **Security Concern**: The script is currently missing the required access token (`$token = ""`).
+   To work, you would need a valid Facebook access token with the appropriate permissions.
+2. **Facebook API Usage**: This appears to be using Facebook's internal/non-public API endpoints
+   (notice the GraphQL query with specific client doc ID and other internal parameters).
 3. **Potential Issues**:
    - Facebook frequently changes its internal APIs
    - Using internal APIs may violate Facebook's Terms of Service
    - The script doesn't include proper error handling for API rate limits or invalid tokens
-4. Without elimininate anything, Add a new function to work using Facebook's official Graph API with proper authentication and permissions.
+4. Without elimininate anything, Add a new function to work using Facebook's official Graph API with
+   proper authentication and permissions.
 
 ### How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, locate and select the "Get All Pages" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, locate and select the "Get All Pages" tool
+      (or a similar name).
 
 2.  **Provide Account Identifier:**
-    - The UI will likely require an **Access Token** for the Facebook account whose pages you want to list.
-    - Alternatively, it might ask for other forms of authentication or user identification if the script supports them.
+    - The UI will likely require an **Access Token** for the Facebook account whose pages you want
+      to list.
+    - Alternatively, it might ask for other forms of authentication or user identification if the
+      script supports them.
 
 3.  **Submit:**
     - Click the "Get Pages", "Fetch Pages", or a similarly labeled button.
 
 ### Inputs Required
 
-- **Access Token:** A valid Facebook access token with permissions to view the user's pages (e.g., `pages_show_list` or similar).
+- **Access Token:** A valid Facebook access token with permissions to view the user's pages (e.g.,
+  `pages_show_list` or similar).
 
 ### Expected Output
 
 - **Success:** A list of Facebook Pages will be displayed. This list might include:
   - Page Name
   - Page ID
-  - Potentially other details like page category or number of likes, depending on the script's implementation.
-- **Failure:** An error message indicating why the pages could not be retrieved. This could be due to:
+  - Potentially other details like page category or number of likes, depending on the script's
+    implementation.
+- **Failure:** An error message indicating why the pages could not be retrieved. This could be due
+  to:
   - Invalid or expired access token.
   - Insufficient permissions for the token.
   - The account having no associated pages.
@@ -672,11 +740,15 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
 
 ### Notes & Considerations
 
-- **Token Permissions:** Ensure the access token has the necessary permissions to access the list of pages.
-- **Pagination:** If an account manages a very large number of pages, the script or UI might implement pagination to display the results.
-- The specific details returned for each page are dependent on the `get-all-pages.php` script and the Facebook API endpoints it uses.
+- **Token Permissions:** Ensure the access token has the necessary permissions to access the list of
+  pages.
+- **Pagination:** If an account manages a very large number of pages, the script or UI might
+  implement pagination to display the results.
+- The specific details returned for each page are dependent on the `get-all-pages.php` script and
+  the Facebook API endpoints it uses.
 
-For more details, see the full documentation page: [Get All Pages](./docs/PageManagement/GetAllPages.md)
+For more details, see the full documentation page:
+[Get All Pages](./docs/PageManagement/GetAllPages.md)
 
 </details>
 
@@ -685,7 +757,8 @@ For more details, see the full documentation page: [Get All Pages](./docs/PageMa
 
 **Original Script Description:**
 
-This PHP script is designed to like and follow a Facebook page using Facebook's Graph API. Here's a breakdown of what it does:
+This PHP script is designed to like and follow a Facebook page using Facebook's Graph API. Here's a
+breakdown of what it does:
 
 ### Key Components:
 
@@ -696,41 +769,57 @@ This PHP script is designed to like and follow a Facebook page using Facebook's 
 
 2. **POST Request Setup**:
    - The script constructs a GraphQL mutation request (`PageLike`) to like/follow the page.
-   - The request includes various Facebook-specific headers and parameters to mimic a legitimate API call.
+   - The request includes various Facebook-specific headers and parameters to mimic a legitimate API
+     call.
 
 3. **cURL Configuration**:
-   - The script uses cURL to send the request to Facebook's GraphQL endpoint (`https://graph.facebook.com/graphql`).
-   - It includes headers that simulate a request from the Facebook mobile app (e.g., `user-agent` mimics the Facebook Android app).
+   - The script uses cURL to send the request to Facebook's GraphQL endpoint
+     (`https://graph.facebook.com/graphql`).
+   - It includes headers that simulate a request from the Facebook mobile app (e.g., `user-agent`
+     mimics the Facebook Android app).
    - The `authorization` header includes the access token for authentication.
 
 4. **Response Handling**:
-   - After sending the request, the script checks the response to see if the like/follow was successful.
-   - If `does_viewer_like` is `true` in the response, it confirms success. Otherwise, it reports failure.
+   - After sending the request, the script checks the response to see if the like/follow was
+     successful.
+   - If `does_viewer_like` is `true` in the response, it confirms success. Otherwise, it reports
+     failure.
 
 ### Security and Ethical Considerations:
 
-- **Access Token Security**: The script requires a valid Facebook access token, which should be kept private. Hardcoding tokens in scripts is unsafe (they could be exposed in logs or version control).
-- **Rate Limits**: Facebook imposes rate limits on API calls. Excessive automated likes/follows could trigger restrictions.
-- **Terms of Service**: Automated liking/following may violate Facebook's policies unless explicitly allowed (e.g., for testing with explicit permission).
+- **Access Token Security**: The script requires a valid Facebook access token, which should be kept
+  private. Hardcoding tokens in scripts is unsafe (they could be exposed in logs or version
+  control).
+- **Rate Limits**: Facebook imposes rate limits on API calls. Excessive automated likes/follows
+  could trigger restrictions.
+- **Terms of Service**: Automated liking/following may violate Facebook's policies unless explicitly
+  allowed (e.g., for testing with explicit permission).
 
 ### Improvements:
 
-1. **Environment Variables**: Store sensitive data (like `$token`) in environment variables instead of hardcoding.
+1. **Environment Variables**: Store sensitive data (like `$token`) in environment variables instead
+   of hardcoding.
 2. **Error Handling**: Add more detailed error handling (e.g., invalid token, rate limits).
 3. **Logging**: Log responses for debugging without exposing sensitive data.
 4. **Validation**: Validate `$pageid` and `$actorid` before making the request.
 
 ### How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, locate and select the "Like/Follow Page" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, locate and select the "Like/Follow Page"
+      tool (or a similar name).
 
 2.  **Provide Necessary Information:**
-    - **Access Token:** Input a valid Facebook access token for the account that will perform the like/follow action.
-    - **Page ID or URL:** Enter the Facebook Page ID or the full URL of the page you want to like/follow.
-    - **Action Type (if applicable):** The UI might have a selector for "Like" or "Follow" if the script distinguishes between them or if Facebook's API requires specifying the action. Often, "liking" a page automatically "follows" it.
+    - **Access Token:** Input a valid Facebook access token for the account that will perform the
+      like/follow action.
+    - **Page ID or URL:** Enter the Facebook Page ID or the full URL of the page you want to
+      like/follow.
+    - **Action Type (if applicable):** The UI might have a selector for "Like" or "Follow" if the
+      script distinguishes between them or if Facebook's API requires specifying the action. Often,
+      "liking" a page automatically "follows" it.
 
 3.  **Submit:**
     - Click the "Like Page", "Follow Page", "Submit", or a similarly labeled button.
@@ -753,11 +842,15 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
 
 ### Notes & Considerations
 
-- **Permissions:** The access token needs appropriate permissions to perform social actions like liking or following pages.
-- **Facebook's Policies:** Automating likes/follows, especially in large volumes, can be against Facebook's terms of service and may lead to account restrictions. Use responsibly.
-- The exact behavior (e.g., if "like" also means "follow") depends on the `like-follow-page.php` script and Facebook's API implementation at the time.
+- **Permissions:** The access token needs appropriate permissions to perform social actions like
+  liking or following pages.
+- **Facebook's Policies:** Automating likes/follows, especially in large volumes, can be against
+  Facebook's terms of service and may lead to account restrictions. Use responsibly.
+- The exact behavior (e.g., if "like" also means "follow") depends on the `like-follow-page.php`
+  script and Facebook's API implementation at the time.
 
-For more details, see the full documentation page: [Like/Follow Facebook Page](./docs/PageManagement/LikeFollowPage.md)
+For more details, see the full documentation page:
+[Like/Follow Facebook Page](./docs/PageManagement/LikeFollowPage.md)
 
 </details>
 
@@ -770,7 +863,8 @@ Tools for working with access tokens and Facebook IDs.
 
 **Original Script Description:**
 
-This PHP script checks whether Facebook access tokens stored in a file are still valid or need to be removed. Here's a breakdown of what it does:
+This PHP script checks whether Facebook access tokens stored in a file are still valid or need to be
+removed. Here's a breakdown of what it does:
 
 1. **Initial Setup**:
    - Sets no time limit (`set_time_limit(0)`)
@@ -795,7 +889,8 @@ This PHP script checks whether Facebook access tokens stored in a file are still
 
 **Key Observations**:
 
-- The script specifically looks for tokens that return an OAuthException with the message "The user is enrolled in a blocking, logged-in checkpoint"
+- The script specifically looks for tokens that return an OAuthException with the message "The user
+  is enrolled in a blocking, logged-in checkpoint"
 - Only completely removes tokens that meet this specific error condition
 - Doesn't handle other potential error cases or successful responses
 - Has very permissive file permissions (0777) which could be a security concern
@@ -811,10 +906,12 @@ This PHP script checks whether Facebook access tokens stored in a file are still
 
 ### How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, find and select the "Check Token Liveliness" or "Validate Access Token" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, find and select the "Check Token
+      Liveliness" or "Validate Access Token" tool (or a similar name).
 
 2.  **Enter Access Token:**
     - You will be presented with an input field labeled "Access Token".
@@ -829,19 +926,24 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
 
 ### Expected Output
 
-- **Valid Token:** If the token is live and valid, the UI will display a confirmation message. It might also show some basic information associated with the token, such as:
+- **Valid Token:** If the token is live and valid, the UI will display a confirmation message. It
+  might also show some basic information associated with the token, such as:
   - User ID it belongs to.
   - Application ID it's associated with.
   - Scopes/permissions granted.
   - Expiration time.
-- **Invalid Token:** If the token is invalid, expired, or revoked, the UI will display an error message or a status indicating it's not active.
+- **Invalid Token:** If the token is invalid, expired, or revoked, the UI will display an error
+  message or a status indicating it's not active.
 
 ### Notes & Considerations
 
-- **Token Information:** The amount of detail shown for a valid token depends on the `check-token-live.php` script's implementation and what Facebook's Graph API Debugger (or similar mechanism) returns.
+- **Token Information:** The amount of detail shown for a valid token depends on the
+  `check-token-live.php` script's implementation and what Facebook's Graph API Debugger (or similar
+  mechanism) returns.
 - This tool is useful for quickly verifying if a token can be used for other operations.
 
-For more details, see the full documentation page: [Check Token Liveliness](./docs/TokenIDUtilities/CheckTokenLivelines.md)
+For more details, see the full documentation page:
+[Check Token Liveliness](./docs/TokenIDUtilities/CheckTokenLivelines.md)
 
 </details>
 
@@ -850,9 +952,11 @@ For more details, see the full documentation page: [Check Token Liveliness](./do
 
 **Original Script Description:**
 
-This PHP script is designed to extract a Facebook access token from a user's cookies. Here's a breakdown of what it does:
+This PHP script is designed to extract a Facebook access token from a user's cookies. Here's a
+breakdown of what it does:
 
-1. **Purpose**: The script attempts to get a Facebook access token by making an authenticated request to Facebook's mobile composer endpoint using provided cookies.
+1. **Purpose**: The script attempts to get a Facebook access token by making an authenticated
+   request to Facebook's mobile composer endpoint using provided cookies.
 2. **Main Flow**:
    - Checks if a cookie is set
    - Makes a cURL request to Facebook's mobile endpoint
@@ -861,7 +965,8 @@ This PHP script is designed to extract a Facebook access token from a user's coo
 3. **Security Concerns**:
    - This script appears to be for bypassing normal OAuth flows
    - Using cookies to obtain access tokens may violate Facebook's Terms of Service
-   - The script disables SSL verification (CURLOPT_SSL_VERIFYHOST and CURLOPT_SSL_VERIFYPEER set to FALSE), which is a security risk
+   - The script disables SSL verification (CURLOPT_SSL_VERIFYHOST and CURLOPT_SSL_VERIFYPEER set to
+     FALSE), which is a security risk
 4. **Technical Details**:
    - Uses the mobile Facebook endpoint (m.facebook.com)
    - Makes a request to the composer async loader
@@ -874,26 +979,34 @@ This PHP script is designed to extract a Facebook access token from a user's coo
 
 ### How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary. This method is highly dependent on Facebook's internal authentication mechanisms and may be unreliable or require specific cookie formats.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary. This method is highly dependent on Facebook's
+internal authentication mechanisms and may be unreliable or require specific cookie formats.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, locate and select the "Get Access Token from Cookies" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, locate and select the "Get Access Token
+      from Cookies" tool (or a similar name).
 
 2.  **Input Cookies:**
     - The UI will provide a text area or input field where you can paste the Facebook cookies.
-    - These cookies should typically be in a format recognized by the script (e.g., JSON, Netscape cookie format, or a simple string of `name=value` pairs). The UI should specify the expected format if possible.
+    - These cookies should typically be in a format recognized by the script (e.g., JSON, Netscape
+      cookie format, or a simple string of `name=value` pairs). The UI should specify the expected
+      format if possible.
 
 3.  **Submit:**
     - Click the "Get Token", "Extract Token", or a similarly labeled button.
 
 ### Inputs Required
 
-- **Facebook Cookies:** A string or structured representation of the browser cookies for `facebook.com` associated with an active session.
+- **Facebook Cookies:** A string or structured representation of the browser cookies for
+  `facebook.com` associated with an active session.
 
 ### Expected Output
 
-- **Success:** If an access token can be extracted, the UI will display the token. It might also provide options to copy the token.
-- **Failure:** An error message indicating that an access token could not be extracted. This could be due to:
+- **Success:** If an access token can be extracted, the UI will display the token. It might also
+  provide options to copy the token.
+- **Failure:** An error message indicating that an access token could not be extracted. This could
+  be due to:
   - Invalid or expired cookies.
   - Incorrect cookie format.
   - Changes in Facebook's authentication flow that the script cannot handle.
@@ -901,12 +1014,20 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
 
 ### Notes & Considerations
 
-- **Security Risk:** Handling cookies, especially for authentication, is a significant security risk. Ensure you trust the application and the environment where you are inputting these cookies. Cookies can grant full access to your Facebook account.
-- **Reliability:** This method is prone to breakages as Facebook updates its platform. Official OAuth 2.0 flows are the recommended way to obtain access tokens.
-- **Cookie Format:** The success of this tool heavily depends on the `fb-cookies-to-get-access-token.php` script's ability to parse the provided cookie string and the specific cookies Facebook uses at any given time to represent an authenticated session from which a token can be derived.
-- Use this tool with extreme caution and only with cookies you have obtained legitimately and understand the implications of sharing.
+- **Security Risk:** Handling cookies, especially for authentication, is a significant security
+  risk. Ensure you trust the application and the environment where you are inputting these cookies.
+  Cookies can grant full access to your Facebook account.
+- **Reliability:** This method is prone to breakages as Facebook updates its platform. Official
+  OAuth 2.0 flows are the recommended way to obtain access tokens.
+- **Cookie Format:** The success of this tool heavily depends on the
+  `fb-cookies-to-get-access-token.php` script's ability to parse the provided cookie string and the
+  specific cookies Facebook uses at any given time to represent an authenticated session from which
+  a token can be derived.
+- Use this tool with extreme caution and only with cookies you have obtained legitimately and
+  understand the implications of sharing.
 
-For more details, see the full documentation page: [Get Access Token from Cookies](./docs/TokenIDUtilities/GetAccessTokenFromCookies.md)
+For more details, see the full documentation page:
+[Get Access Token from Cookies](./docs/TokenIDUtilities/GetAccessTokenFromCookies.md)
 
 </details>
 
@@ -915,7 +1036,8 @@ For more details, see the full documentation page: [Get Access Token from Cookie
 
 **Original Script Description:**
 
-This PHP script is designed to retrieve a Facebook profile or page ID from a given Facebook URL. Here's a breakdown of how it works:
+This PHP script is designed to retrieve a Facebook profile or page ID from a given Facebook URL.
+Here's a breakdown of how it works:
 
 1. **Function `getFBID($url)`**:
    - Takes a Facebook URL as input (e.g., 'https://www.facebook.com/tuberboy')
@@ -940,13 +1062,15 @@ This PHP script is designed to retrieve a Facebook profile or page ID from a giv
 
 **Potential Issues**:
 
-1. **Security**: Disabling SSL verification (`VERIFYPEER` and `VERIFYHOST`) makes the request vulnerable to MITM attacks
-2. **Reliability**: Facebook frequently changes its HTML structure, so these regex patterns may break
+1. **Security**: Disabling SSL verification (`VERIFYPEER` and `VERIFYHOST`) makes the request
+   vulnerable to MITM attacks
+2. **Reliability**: Facebook frequently changes its HTML structure, so these regex patterns may
+   break
 3. **Rate Limiting**: Facebook may block repeated requests from the same IP
 4. **Mobile Site**: The script relies on m.facebook.com which might not always be available
 
-**Usage Example**:
-The script is called at the end with `echo getFBID('https://www.facebook.com/tuberboy');` to demonstrate its use.
+**Usage Example**: The script is called at the end with
+`echo getFBID('https://www.facebook.com/tuberboy');` to demonstrate its use.
 
 For production use, you might want to:
 
@@ -958,49 +1082,74 @@ For production use, you might want to:
 
 ### How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, locate and select the "Find Facebook ID" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, locate and select the "Find Facebook ID"
+      tool (or a similar name).
 
 2.  **Enter Profile Identifier:**
     - The UI will have an input field for a "Facebook Profile URL" or "Username".
-    - Enter the full URL of the Facebook profile (e.g., `https://www.facebook.com/username`) or just the username.
+    - Enter the full URL of the Facebook profile (e.g., `https://www.facebook.com/username`) or just
+      the username.
 
 3.  **Submit:**
     - Click the "Find ID", "Get ID", or a similarly labeled button.
 
 ### Inputs Required
 
-- **Facebook Profile URL or Username:** The web address of the Facebook profile or its unique username.
+- **Facebook Profile URL or Username:** The web address of the Facebook profile or its unique
+  username.
 
 ### Expected Output
 
 - **Success:** If the User ID can be found, the UI will display the numerical ID.
-- **Failure:** An error message indicating that the User ID could not be found. This might happen if:
+- **Failure:** An error message indicating that the User ID could not be found. This might happen
+  if:
   - The profile URL or username is invalid or does not exist.
   - The profile is private and its ID cannot be easily discovered.
-  - Facebook's structure has changed, and the script can no longer find the ID using its current method.
+  - Facebook's structure has changed, and the script can no longer find the ID using its current
+    method.
 
 ### Notes & Considerations
 
-- **Vanity URLs:** Facebook allows users to have vanity URLs (e.g., `/username`) in addition to their numerical ID-based URLs. This tool is useful for resolving vanity URLs back to the underlying User ID.
-- **Graph API:** Some methods of finding User IDs might involve querying Facebook's Graph API or parsing page source, which can be subject to changes and rate limits.
-- The reliability of the `get-find-fb-id.php` script depends on the stability of Facebook's profile page structure or API access for this information.
+- **Vanity URLs:** Facebook allows users to have vanity URLs (e.g., `/username`) in addition to
+  their numerical ID-based URLs. This tool is useful for resolving vanity URLs back to the
+  underlying User ID.
+- **Graph API:** Some methods of finding User IDs might involve querying Facebook's Graph API or
+  parsing page source, which can be subject to changes and rate limits.
+- The reliability of the `get-find-fb-id.php` script depends on the stability of Facebook's profile
+  page structure or API access for this information.
 
-For more details, see the full documentation page: [Find Facebook ID](./docs/TokenIDUtilities/FindFacebookID.md)
+For more details, see the full documentation page:
+[Find Facebook ID](./docs/TokenIDUtilities/FindFacebookID.md)
 
 </details>
 
-Scripts from the `tools/php_tools/facebook_scripts/` directory that are not yet fully integrated into the web UI or documented above may be listed with a "Coming Soon" notice in the application. To integrate them, their logic needs to be refactored into classes within the `src/FacebookTools/` directory (project root) and corresponding routes/handlers added in `public/index.php` (project root), along with creating their documentation page in `tools/php_tools/docs/`.
+Scripts from the `tools/php_tools/facebook_scripts/` directory that are not yet fully integrated
+into the web UI or documented above may be listed with a "Coming Soon" notice in the application. To
+integrate them, their logic needs to be refactored into classes within the `src/FacebookTools/`
+directory (project root) and corresponding routes/handlers added in `public/index.php` (project
+root), along with creating their documentation page in `tools/php_tools/docs/`.
 
 <details>
 <summary>Development Notes</summary>
 
-- **PHP Built-in Server**: The application runs on PHP's built-in web server inside the Docker container. This is suitable for development and light usage. The main project might use a different setup when orchestrating with Docker Compose.
-- **Facebook API Calls**: Some scripts, particularly those related to page creation or account modification, interact with Facebook APIs that might be unofficial or subject to change. Functionality can be affected by Facebook's updates.
-- **Error Handling**: Basic error handling is in place. For production, more comprehensive logging and error management would be recommended.
-- **Security**: - Scripts like `PageCreator.php` (derived from `create-fb-page.php`) may use `CURLOPT_SSL_VERIFYPEER = FALSE` and `CURLOPT_SSL_VERIFYHOST = FALSE`. This is a security risk and should be addressed for production use by enabling SSL verification and ensuring proper certificate handling. - Input validation and sanitization are basic. Enhance as needed for security. - Be cautious when using tools that handle sensitive data like access tokens or cookies (e.g., "Get Access Token from Cookies").
+- **PHP Built-in Server**: The application runs on PHP's built-in web server inside the Docker
+  container. This is suitable for development and light usage. The main project might use a
+  different setup when orchestrating with Docker Compose.
+- **Facebook API Calls**: Some scripts, particularly those related to page creation or account
+  modification, interact with Facebook APIs that might be unofficial or subject to change.
+  Functionality can be affected by Facebook's updates.
+- **Error Handling**: Basic error handling is in place. For production, more comprehensive logging
+  and error management would be recommended.
+- **Security**: - Scripts like `PageCreator.php` (derived from `create-fb-page.php`) may use
+`CURLOPT_SSL_VERIFYPEER = FALSE` and `CURLOPT_SSL_VERIFYHOST = FALSE`. This is a security risk and
+should be addressed for production use by enabling SSL verification and ensuring proper certificate
+handling. - Input validation and sanitization are basic. Enhance as needed for security. - Be
+cautious when using tools that handle sensitive data like access tokens or cookies (e.g., "Get
+Access Token from Cookies").
 </details>
 
 <details>

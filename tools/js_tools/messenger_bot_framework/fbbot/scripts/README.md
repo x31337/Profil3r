@@ -4,7 +4,8 @@ This directory contains scripts to help with local development setup and workflo
 
 ## Bootstrap Script
 
-The `bootstrap.sh` script sets up your complete local development environment with all services, file watching, and health checks.
+The `bootstrap.sh` script sets up your complete local development environment with all services,
+file watching, and health checks.
 
 ### Usage
 
@@ -14,7 +15,8 @@ The `bootstrap.sh` script sets up your complete local development environment wi
 
 ### What it does
 
-1. **Version Verification**: Checks that Docker, Node.js, and Python are installed with compatible versions
+1. **Version Verification**: Checks that Docker, Node.js, and Python are installed with compatible
+   versions
 2. **Container Management**: Stops any existing containers and starts fresh development containers
 3. **Service Building**: Runs `make build` inside each service container (if build/Makefile exists)
 4. **Development Tools**: Installs file watching tools (nodemon, watchdog, rerun) in containers

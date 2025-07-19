@@ -71,7 +71,7 @@ const common = (module.exports = {
 // load request fixtures
 glob
   .sync(path.join(__dirname, './fixtures/incoming/*.json'))
-  .forEach(function (file) {
+  .forEach(function(file) {
     const name = path.basename(file, '.json');
 
     common.requests[name] = require(file);
@@ -89,7 +89,7 @@ glob
 // load sending fixtures
 glob
   .sync(path.join(__dirname, './fixtures/outgoing/*.json'))
-  .forEach(function (file) {
+  .forEach(function(file) {
     const name = path.basename(file, '.json');
     common.sendings[name] = require(file);
   });
@@ -108,8 +108,8 @@ function setupTests(fbbot, payloadType, subject, t, callback) {
   shared.perRequest(fbbot, payloadType, subject, t, callback);
 
   // iterate over entries-messages
-  subject.expected.entry.forEach(function (entry) {
-    entry.messaging.forEach(function (message) {
+  subject.expected.entry.forEach(function(entry) {
+    entry.messaging.forEach(function(message) {
       shared.perMessage(fbbot, payloadType, message, t);
     });
   });
@@ -134,11 +134,11 @@ function iterateRequests(iterator) {
 function iterateSendings(iterator) {
   asynckit.serial(
     common.sendings,
-    function (item, type, callback) {
+    function(item, type, callback) {
       // each item is an array by itself
       asynckit.serial(
         item,
-        function (test, id, cb) {
+        function(test, id, cb) {
           // differentiate elements within same type
           iterator(test, type + '-' + id, cb);
         },
@@ -199,7 +199,7 @@ function sendHandshake(type, callback) {
 function startApiServer(handler, callback) {
   var server = http
     .createServer(agnostic(handler))
-    .listen(common.api.port, function () {
+    .listen(common.api.port, function() {
       // supply endpoint to the consumer
       const tailoredOptions = util._extend(common.fbbot, {
         apiUrl: 'http://localhost:' + common.api.port + '/?access_token='

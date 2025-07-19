@@ -19,10 +19,9 @@ import json
 import logging
 import re
 import time
-from urllib.parse import parse_qs, unquote, urlparse
+from urllib.parse import parse_qs, urlparse
 
 import requests
-import requests_html
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -326,7 +325,7 @@ def handle_shares(post):
         share_area = post["HTML"].select_one("span._1nb_.fwn")
         shared_page_link, shared_page = share_area.a["href"], share_area.a.string
         link = (
-            "\U0001F4E4 <a href='"
+            "\U0001f4e4 <a href='"
             + str(shared_page_link)
             + "'>"
             + str(shared_page)

@@ -10,7 +10,8 @@ function ReportView() {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/api/reports/${id}`)
+      axios
+        .get(`/api/reports/${id}`)
         .then(response => {
           setReport(response.data);
           setLoading(false);
@@ -29,15 +30,34 @@ function ReportView() {
 
   return (
     <div>
-      <h2>Report Details</h2>
-      <p><strong>ID:</strong> {report._id}</p>
-      <p><strong>Title:</strong> {report.title}</p>
-      <p><strong>Description:</strong> {report.description}</p>
-      <p><strong>Status:</strong> {report.status}</p>
-      <p><strong>Date Created:</strong> {new Date(report.date).toLocaleDateString()}</p>
+            <h2>Report Details</h2>
+
+      <p>
+        <strong>ID:</strong> {report._id}
+      </p>
+
+      <p>
+        <strong>Title:</strong> {report.title}
+      </p>
+
+      <p>
+        <strong>Description:</strong> {report.description}
+      </p>
+
+      <p>
+        <strong>Status:</strong> {report.status}
+      </p>
+
+      <p>
+        <strong>Date Created:</strong>
+        {new Date(report.date).toLocaleDateString()}
+      </p>
+
       <br />
-      <Link to="/reports">Back to All Reports</Link>
+            <Link to='/reports'>Back to All Reports</Link>
+
       {/* TODO: Add links/buttons for Edit and Delete functionality here */}
+
     </div>
   );
 }

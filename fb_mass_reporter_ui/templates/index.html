@@ -1,80 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facebook Mass Reporter</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
     <div class="container">
-        <h1>Facebook Mass Reporter</h1>
+      <h1>Facebook Mass Reporter</h1>
 
-        <div class="disclaimer">
-            <p><strong>Disclaimer:</strong> This tool automates interactions with Facebook. Use responsibly and ethically. Automated reporting may violate Facebook's Terms of Service and could lead to account restrictions or bans. The developers assume no liability for misuse. For educational and analytical purposes only.</p>
-        </div>
+      <div class="disclaimer">
+        <p>
+          <strong>Disclaimer:</strong> This tool automates interactions with
+          Facebook. Use responsibly and ethically. Automated reporting may
+          violate Facebook's Terms of Service and could lead to account
+          restrictions or bans. The developers assume no liability for misuse.
+          For educational and analytical purposes only.
+        </p>
+      </div>
 
-        <div class="section" id="account-management-section">
-            <h2>1. Facebook Account Management</h2>
-            <div id="account-error-display" class="error-message"></div>
-            <div>
-                <label for="cookie-data">Paste Facebook Cookie JSON here:</label>
-                <textarea id="cookie-data" rows="3" placeholder='[{"name": "c_user", "value": "...", "domain": ".facebook.com", ...}, {"name": "xs", ...}]'></textarea>
-            </div>
-            <div>
-                <label for="account-alias">Account Alias (Optional):</label>
-                <input type="text" id="account-alias" placeholder="My Main Reporting Account">
-            </div>
-            <button id="add-account-btn">Add Account</button>
-            <button id="clear-accounts-btn">Clear All Accounts</button>
-            <h3>Selected Accounts for Reporting:</h3>
-            <div id="account-list">
-                <ul><!-- Account list items will be populated by JS --></ul>
-            </div>
+      <div class="section" id="account-management-section">
+        <h2>1. Facebook Account Management</h2>
+        <div id="account-error-display" class="error-message"></div>
+        <div>
+          <label for="cookie-data">Paste Facebook Cookie JSON here:</label>
+          <textarea
+            id="cookie-data"
+            rows="3"
+            placeholder='[{"name": "c_user", "value": "...", "domain": ".facebook.com", ...}, {"name": "xs", ...}]'
+          ></textarea>
         </div>
+        <div>
+          <label for="account-alias">Account Alias (Optional):</label>
+          <input
+            type="text"
+            id="account-alias"
+            placeholder="My Main Reporting Account"
+          />
+        </div>
+        <button id="add-account-btn">Add Account</button>
+        <button id="clear-accounts-btn">Clear All Accounts</button>
+        <h3>Selected Accounts for Reporting:</h3>
+        <div id="account-list">
+          <ul>
+            <!-- Account list items will be populated by JS -->
+          </ul>
+        </div>
+      </div>
 
-        <div class="section" id="reporting-details-section">
-            <h2>2. Target & Reporting Details</h2>
-            <div>
-                <label for="target-urls">Target URLs (one per line):</label>
-                <textarea id="target-urls" rows="5" placeholder="https://www.facebook.com/profile_to_report\nhttps://www.facebook.com/another_user/posts/12345..."></textarea>
-            </div>
-            <div>
-                <label for="justification-text">Justification Text:</label>
-                <textarea id="justification-text" rows="3" placeholder="This content violates privacy by sharing personal information without consent."></textarea>
-            </div>
-            <div>
-                <label for="evidence-files">Evidence Files (Optional):</label>
-                <input type="file" id="evidence-files" multiple>
-                <div id="evidence-file-names"><!-- Selected file names will be shown here by JS --></div>
-            </div>
+      <div class="section" id="reporting-details-section">
+        <h2>2. Target & Reporting Details</h2>
+        <div>
+          <label for="target-urls">Target URLs (one per line):</label>
+          <textarea
+            id="target-urls"
+            rows="5"
+            placeholder="https://www.facebook.com/profile_to_report\nhttps://www.facebook.com/another_user/posts/12345..."
+          ></textarea>
         </div>
+        <div>
+          <label for="justification-text">Justification Text:</label>
+          <textarea
+            id="justification-text"
+            rows="3"
+            placeholder="This content violates privacy by sharing personal information without consent."
+          ></textarea>
+        </div>
+        <div>
+          <label for="evidence-files">Evidence Files (Optional):</label>
+          <input type="file" id="evidence-files" multiple />
+          <div id="evidence-file-names">
+            <!-- Selected file names will be shown here by JS -->
+          </div>
+        </div>
+      </div>
 
-        <div class="section" id="reporting-controls-section">
-            <h2>3. Reporting Controls</h2>
-            <div id="reporting-error-display" class="error-message"></div>
-            <button id="start-reporting-btn" disabled>Start Mass Reporting</button>
-            <button id="stop-reporting-btn" style="display:none;">Stop Reporting</button>
-        </div>
+      <div class="section" id="reporting-controls-section">
+        <h2>3. Reporting Controls</h2>
+        <div id="reporting-error-display" class="error-message"></div>
+        <button id="start-reporting-btn" disabled>Start Mass Reporting</button>
+        <button id="stop-reporting-btn" style="display: none">
+          Stop Reporting
+        </button>
+      </div>
 
-        <div class="section" id="live-log-section">
-            <h2>4. Live Log</h2>
-            <div id="log-output"><!-- Live logs will appear here --></div>
-        </div>
+      <div class="section" id="live-log-section">
+        <h2>4. Live Log</h2>
+        <div id="log-output"><!-- Live logs will appear here --></div>
+      </div>
 
-        <div class="section" id="summary-section">
-            <h2>5. Summary</h2>
-            <div id="summary-output">
-                <p>Total Targets Queued: <span id="summary-total">0</span></p>
-                <p>Processed Targets: <span id="summary-processed">0</span></p>
-                <p>Successful Reports: <span id="summary-successful">0</span></p>
-                <p>Failed Reports: <span id="summary-failed">0</span></p>
-                <h4>Details:</h4>
-                <ul id="summary-details-list"><!-- Summary details will be populated here --></ul>
-            </div>
+      <div class="section" id="summary-section">
+        <h2>5. Summary</h2>
+        <div id="summary-output">
+          <p>Total Targets Queued: <span id="summary-total">0</span></p>
+          <p>Processed Targets: <span id="summary-processed">0</span></p>
+          <p>Successful Reports: <span id="summary-successful">0</span></p>
+          <p>Failed Reports: <span id="summary-failed">0</span></p>
+          <h4>Details:</h4>
+          <ul id="summary-details-list">
+            <!-- Summary details will be populated here -->
+          </ul>
         </div>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
+  </body>
 </html>

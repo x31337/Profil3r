@@ -130,35 +130,35 @@ class AutoFixEngine {
 
     try {
       switch (ext) {
-        case '.js':
-        case '.ts':
-          await this.runFix(
-            `npx eslint "${filePath}" --fix`,
-            `ESLint fix for ${filePath}`
-          );
-          await this.runFix(
-            `npx prettier --write "${filePath}"`,
-            `Prettier format for ${filePath}`
-          );
-          break;
-        case '.json':
-          await this.runFix(
-            `npx prettier --write "${filePath}"`,
-            `Prettier format for ${filePath}`
-          );
-          break;
-        case '.py':
-          await this.runFix(
-            `python3 -m py_compile "${filePath}"`,
-            `Python compile for ${filePath}`
-          );
-          break;
-        case '.php':
-          await this.runFix(
-            `php -l "${filePath}"`,
-            `PHP syntax check for ${filePath}`
-          );
-          break;
+      case '.js':
+      case '.ts':
+        await this.runFix(
+          `npx eslint "${filePath}" --fix`,
+          `ESLint fix for ${filePath}`
+        );
+        await this.runFix(
+          `npx prettier --write "${filePath}"`,
+          `Prettier format for ${filePath}`
+        );
+        break;
+      case '.json':
+        await this.runFix(
+          `npx prettier --write "${filePath}"`,
+          `Prettier format for ${filePath}`
+        );
+        break;
+      case '.py':
+        await this.runFix(
+          `python3 -m py_compile "${filePath}"`,
+          `Python compile for ${filePath}`
+        );
+        break;
+      case '.php':
+        await this.runFix(
+          `php -l "${filePath}"`,
+          `PHP syntax check for ${filePath}`
+        );
+        break;
       }
 
       this.eventBus.broadcast('file-auto-fix-completed', { file: filePath });

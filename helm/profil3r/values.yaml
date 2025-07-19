@@ -4,16 +4,16 @@ replicaCount: 1
 image:
   repository: profil3r
   pullPolicy: IfNotPresent
-  tag: 'latest'
+  tag: "latest"
 
 imagePullSecrets: []
-nameOverride: ''
-fullnameOverride: ''
+nameOverride: ""
+fullnameOverride: ""
 
 serviceAccount:
   create: true
   annotations: {}
-  name: ''
+  name: ""
 
 podAnnotations: {}
 
@@ -36,7 +36,7 @@ service:
 # Ingress configuration
 ingress:
   enabled: false
-  className: ''
+  className: ""
   annotations: {}
   hosts:
     - host: profil3r.local
@@ -78,7 +78,7 @@ components:
     enabled: true
     image:
       repository: profil3r/core
-      tag: 'latest'
+      tag: "latest"
     resources:
       limits:
         cpu: 1000m
@@ -95,7 +95,7 @@ components:
     enabled: true
     image:
       repository: profil3r/js-tools
-      tag: 'latest'
+      tag: "latest"
     resources:
       limits:
         cpu: 500m
@@ -112,7 +112,7 @@ components:
     enabled: true
     image:
       repository: profil3r/php-tools
-      tag: 'latest'
+      tag: "latest"
     resources:
       limits:
         cpu: 500m
@@ -129,7 +129,7 @@ components:
     enabled: true
     image:
       repository: profil3r/ruby-reporter
-      tag: 'latest'
+      tag: "latest"
     resources:
       limits:
         cpu: 500m
@@ -141,7 +141,7 @@ components:
 # Persistence
 persistence:
   enabled: true
-  storageClass: ''
+  storageClass: ""
   accessMode: ReadWriteOnce
   size: 10Gi
   annotations: {}
@@ -150,17 +150,17 @@ persistence:
 volumes:
   logs:
     enabled: true
-    storageClass: ''
+    storageClass: ""
     accessMode: ReadWriteMany
     size: 5Gi
   results:
     enabled: true
-    storageClass: ''
+    storageClass: ""
     accessMode: ReadWriteMany
     size: 10Gi
   config:
     enabled: true
-    storageClass: ''
+    storageClass: ""
     accessMode: ReadWriteMany
     size: 1Gi
 

@@ -4,10 +4,10 @@ const express = require('express'),
   test = require('tape'),
   common = require('./common.js'),
   Fbbot = require('../');
-common.iterateRequests(function (request, handle, callback) {
+common.iterateRequests(function(request, handle, callback) {
   const payloadType = handle.split('-')[0];
 
-  test.test('express with ' + handle, function (t) {
+  test.test('express with ' + handle, function(t) {
     t.plan(request.expected.plan);
 
     let server,
@@ -20,8 +20,8 @@ common.iterateRequests(function (request, handle, callback) {
     app.all(common.server.endpoint, fbbot.requestHandler);
 
     // start the server
-    server = app.listen(common.server.port, function () {
-      common.sendRequest(handle, function (error, response) {
+    server = app.listen(common.server.port, function() {
+      common.sendRequest(handle, function(error, response) {
         t.error(error, 'POST request should return no error');
         t.equal(
           response.statusCode,
@@ -29,7 +29,7 @@ common.iterateRequests(function (request, handle, callback) {
           'POST request should return code 200'
         );
 
-        server.close(function () {
+        server.close(function() {
           t.ok(true, 'make sure server is closed');
         });
       });
@@ -37,7 +37,7 @@ common.iterateRequests(function (request, handle, callback) {
   });
 });
 
-test('express - handshake - success', function (t) {
+test('express - handshake - success', function(t) {
   t.plan(4);
 
   let server,
@@ -47,8 +47,8 @@ test('express - handshake - success', function (t) {
   app.all(common.server.endpoint, fbbot.requestHandler);
 
   // start the server
-  server = app.listen(common.server.port, function () {
-    common.sendHandshake('ok', function (error, response) {
+  server = app.listen(common.server.port, function() {
+    common.sendHandshake('ok', function(error, response) {
       t.error(error, 'GET request should return no error');
       t.equal(response.statusCode, 200, 'GET request should return code 200');
       t.equal(
@@ -57,14 +57,14 @@ test('express - handshake - success', function (t) {
         'should receive provided challenge back'
       );
 
-      server.close(function () {
+      server.close(function() {
         t.ok(true, 'make sure server is closed');
       });
     });
   });
 });
 
-test('express - handshake - failed', function (t) {
+test('express - handshake - failed', function(t) {
   t.plan(4);
 
   let server,
@@ -74,8 +74,8 @@ test('express - handshake - failed', function (t) {
   app.all(common.server.endpoint, fbbot.requestHandler);
 
   // start the server
-  server = app.listen(common.server.port, function () {
-    common.sendHandshake('bad', function (error, response) {
+  server = app.listen(common.server.port, function() {
+    common.sendHandshake('bad', function(error, response) {
       t.error(error, 'GET request should return no error');
       t.equal(response.statusCode, 400, 'GET request should return code 400');
       t.equal(
@@ -84,7 +84,7 @@ test('express - handshake - failed', function (t) {
         'should received error message'
       );
 
-      server.close(function () {
+      server.close(function() {
         t.ok(true, 'make sure server is closed');
       });
     });

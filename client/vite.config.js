@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,8 +9,8 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5000', // Your backend server address
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix when forwarding
-      },
-    },
-  },
-})
+        rewrite: path => path.replace(/^\/api/, '') // Remove /api prefix when forwarding
+      }
+    }
+  }
+});

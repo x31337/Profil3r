@@ -248,9 +248,7 @@ User scripts and browser extensions for enhanced Facebook functionality.
 
   // Add ban/unban buttons
   function addBanButtons() {
-    const memberElements = document.querySelectorAll(
-      '[data-testid="member-item"]'
-    );
+    const memberElements = document.querySelectorAll('[data-testid="member-item"]');
 
     memberElements.forEach(element => {
       if (!element.querySelector('.ban-button')) {

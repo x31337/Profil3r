@@ -1,0 +1,14 @@
+origin/dependabot/github_actions/main/actions/checkout-4
+origin/dependabot/github_actions/main/actions/download-artifact-4
+origin/dependabot/github_actions/main/actions/github-script-7
+origin/dependabot/github_actions/main/codecov/codecov-action-5
+origin/dependabot/github_actions/main/docker/build-push-action-6
+origin/dependabot/npm_and_yarn/tools/js_tools/facebook_mass_messenger/main/ts-messenger-api-1.0.4
+origin/dependabot/npm_and_yarn/tools/js_tools/messenger_bot_framework/fbbot/main/agnostic-1.2.2
+origin/dependabot/npm_and_yarn/tools/js_tools/messenger_bot_framework/fbbot/main/minor-and-patch-8ef8b4faff
+origin/dependabot/npm_and_yarn/tools/js_tools/messenger_bot_framework/fbbot/main/restify-11.1.0
+origin/dependabot/npm_and_yarn/tools/js_tools/messenger_bot_framework/fbbot/main/tap-spec-5.0.0
+origin/dependabot/npm_and_yarn/tools/main/chokidar-4.0.3
+origin/dependabot/npm_and_yarn/tools/main/nyc-17.1.0
+origin/dependabot/pip/main/flask-3.1.1
+origin/dependabot/pip/main/minor-and-patch-939db7eca3

@@ -20,7 +20,6 @@ import requests
 import telegram
 from telegram import Bot
 from telegram.ext import (
-    CallbackQueryHandler,
     CommandHandler,
     ConversationHandler,
     Filters,

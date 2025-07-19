@@ -4,6 +4,7 @@ Provides various OSINT gathering capabilities like username reconnaissance, emai
 """
 
 import json
+import logging
 import os
 import random
 import re

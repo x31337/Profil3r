@@ -107,15 +107,15 @@ class Builder {
     }
 
     switch (service.type) {
-      case 'node':
-        await this.buildNodeService(service, servicePath);
-        break;
-      case 'python':
-        await this.buildPythonService(service, servicePath);
-        break;
-      case 'php':
-        await this.buildPHPService(service, servicePath);
-        break;
+    case 'node':
+      await this.buildNodeService(service, servicePath);
+      break;
+    case 'python':
+      await this.buildPythonService(service, servicePath);
+      break;
+    case 'php':
+      await this.buildPHPService(service, servicePath);
+      break;
     }
   }
 
@@ -147,7 +147,10 @@ class Builder {
       }
     }
 
-    const requirementsPath = path.join(servicePath, 'dependencies/requirements.txt');
+    const requirementsPath = path.join(
+      servicePath,
+      'dependencies/requirements.txt'
+    );
     if (fs.existsSync(requirementsPath)) {
       execSync(`pip3 install -r "${requirementsPath}"`, { stdio: 'inherit' });
     }
@@ -170,7 +173,7 @@ class Builder {
     if (this.buildQueue.length === 0) {
       this.buildQueue.push(triggerFile);
 
-      setTimeout(async () => {
+      setTimeout(async() => {
         if (this.buildQueue.length > 0) {
           const files = [...this.buildQueue];
           this.buildQueue = [];

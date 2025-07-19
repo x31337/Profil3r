@@ -17,14 +17,14 @@ describe('AutoFixEngine', () => {
     autoFixEngine = new AutoFixEngine(mockConfig, eventBus);
   });
 
-  it('should match pattern and run associated fix', async () => {
+  it('should match pattern and run associated fix', async() => {
     const errorMessage = 'npm ERR! peer dep missing xyz';
     const fix = await autoFixEngine.mapErrorToFix(errorMessage);
     expect(fix).toBe('npm install --legacy-peer-deps');
   });
 
-  it('should broadcast fix completion events', async () => {
-    jest.spyOn(autoFixEngine, 'runFix').mockImplementationOnce(async () => {});
+  it('should broadcast fix completion events', async() => {
+    jest.spyOn(autoFixEngine, 'runFix').mockImplementationOnce(async() => {});
     await autoFixEngine.autoFixIssues();
     expect(eventBus.getSubscribers('auto-fix-completed').size).toBeGreaterThan(
       0

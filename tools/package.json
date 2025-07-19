@@ -33,9 +33,9 @@
     "serve-test-env": "concurrently \"npm run start-services\" \"sleep 10 && npm run test-e2e\"",
     "health-check": "node scripts/health-check.js",
     "auto-build": "node auto-build-system.js",
-    "auto-build-daemon": "pm2 start auto-build-system.js --name profil3r-auto-build",
-    "auto-build-stop": "pm2 stop profil3r-auto-build",
-    "auto-build-logs": "pm2 logs profil3r-auto-build"
+    "auto-build-daemon": "nohup node auto-build-system.js > logs/auto-build.log 2>&1 & echo $! > logs/auto-build.pid",
+    "auto-build-stop": "[ -f logs/auto-build.pid ] && kill $(cat logs/auto-build.pid) && rm logs/auto-build.pid || echo 'No PID file found'",
+    "auto-build-logs": "tail -f logs/auto-build.log"
   },
   "devDependencies": {
     "axios": "^1.6.2",
@@ -45,7 +45,7 @@
     "cypress-image-diff-js": "^2.4.0",
     "eslint": "^8.55.0",
     "nyc": "^17.1.0",
-    "pm2": "^6.0.8",
+    "nodemon": "^3.0.2",
     "simple-git": "^3.20.0",
     "wait-on": "^8.0.3",
     "ws": "^8.14.2"

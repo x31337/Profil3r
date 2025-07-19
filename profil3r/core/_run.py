@@ -11,16 +11,21 @@ def run(self, profiles_list=None, html_report_filepath=None, interactive=True):
     self.parse_arguments(profiles_list=profiles_list)
 
     # Ensure self.items is populated
-    if not hasattr(self, 'items') or not self.items:
+    if not hasattr(self, "items") or not self.items:
         if interactive:
-            print(Colors.BOLD + Colors.FAIL + "[!] No profiles provided. Use -p option for CLI." + Colors.ENDC)
+            print(
+                Colors.BOLD
+                + Colors.FAIL
+                + "[!] No profiles provided. Use -p option for CLI."
+                + Colors.ENDC
+            )
         # For non-interactive (web UI), this should ideally be caught before calling run,
         # but as a safeguard, return None or raise an error.
         # Raising an error might be better for the web UI to catch and display.
         raise ValueError("No profiles provided to Profil3r.")
 
     if interactive:
-        self.menu() # Show menu only in interactive mode
+        self.menu()  # Show menu only in interactive mode
     else:
         # For non-interactive mode, we need to ensure `self.CONFIG["selected_modules"]` is set.
         # The default behavior from config/config.json is to select all modules if "all" is present.
@@ -32,8 +37,15 @@ def run(self, profiles_list=None, html_report_filepath=None, interactive=True):
 
     if not self.permutations_list:
         if interactive:
-            print(Colors.BOLD + Colors.FAIL + "[!] No permutations generated. Check your profile inputs and separators configuration." + Colors.ENDC)
-        raise ValueError("No permutations generated. Check profile inputs and separators.")
+            print(
+                Colors.BOLD
+                + Colors.FAIL
+                + "[!] No permutations generated. Check your profile inputs and separators configuration."
+                + Colors.ENDC
+            )
+        raise ValueError(
+            "No permutations generated. Check profile inputs and separators."
+        )
 
     if interactive:
         # Number of permutations to test per service
@@ -55,7 +67,9 @@ def run(self, profiles_list=None, html_report_filepath=None, interactive=True):
             + Colors.BOLD
             + "[+] "
             + Colors.ENDC
-            + "{} \n".format(str("\n " + Colors.BOLD + "[+] " + Colors.ENDC).join(modules_to_run))
+            + "{} \n".format(
+                str("\n " + Colors.BOLD + "[+] " + Colors.ENDC).join(modules_to_run)
+            )
         )
 
     # Clear previous results before running modules
@@ -69,18 +83,24 @@ def run(self, profiles_list=None, html_report_filepath=None, interactive=True):
             thread.start()
         else:
             if interactive:
-                print(Colors.BOLD + Colors.FAIL + f"[!] Module '{module_name}' not found in configured modules." + Colors.ENDC)
-
+                print(
+                    Colors.BOLD
+                    + Colors.FAIL
+                    + f"[!] Module '{module_name}' not found in configured modules."
+                    + Colors.ENDC
+                )
 
     for thread in threads:
         thread.join()
 
     # Pass the desired HTML report filepath to generate_report
-    generated_report_path = self.generate_report(html_output_filepath=html_report_filepath)
+    generated_report_path = self.generate_report(
+        html_output_filepath=html_report_filepath
+    )
 
     if interactive:
         # The generate_report method (and its sub-methods like generate_HTML_report)
         # already prints confirmation messages for CLI.
         pass
 
-    return generated_report_path # Return the path to the generated HTML report
+    return generated_report_path  # Return the path to the generated HTML report

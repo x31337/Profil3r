@@ -3,14 +3,14 @@
 const tape = require('tape'),
   Traverse = require('../traverse/index.js'),
   steps = { '': 'a', a: 'b', b: 'c' };
-tape('traverse - default', function (t) {
+tape('traverse - default', function(t) {
   t.plan(6);
 
   let slider,
     original = (slider = { a: { b: { c: { d: 25 } } } }),
     // + "auto" constructor
     tr = Traverse(steps, {
-      middleware: function (branch, payload, cb) {
+      middleware: function(branch, payload, cb) {
         t.deepEqual(
           payload,
           branch ? slider[branch] : slider,
@@ -25,29 +25,29 @@ tape('traverse - default', function (t) {
         cb(null, payload);
       }
     });
-  tr.traverse(original, function (err, result) {
+  tr.traverse(original, function(err, result) {
     t.error(err, 'expect no errors');
     t.deepEqual(result, original, 'expect unchanged result object');
   });
 });
 
-tape('traverse - short circuit', function (t) {
+tape('traverse - short circuit', function(t) {
   t.plan(2);
 
   const original = { a: { b: 42 } },
     tr = new Traverse(steps);
-  tr.traverse(original, function (err, result) {
+  tr.traverse(original, function(err, result) {
     t.equal(err.message, 'payload <b> is not an Object');
     t.deepEqual(result, undefined, 'expect no result object');
   });
 });
 
-tape('traverse - middleware error', function (t) {
+tape('traverse - middleware error', function(t) {
   t.plan(3);
 
   const original = { a: { b: { c: { d: 25 } } } },
     tr = new Traverse(steps, {
-      middleware: function (branch, payload, cb) {
+      middleware: function(branch, payload, cb) {
         t.deepEqual(
           payload,
           original,
@@ -57,7 +57,7 @@ tape('traverse - middleware error', function (t) {
         cb(new Error('Meh'), payload);
       }
     });
-  tr.traverse(original, function (err, result) {
+  tr.traverse(original, function(err, result) {
     t.equal(err.message, 'Meh', 'expect middleware error');
     t.deepEqual(
       result,
@@ -67,12 +67,12 @@ tape('traverse - middleware error', function (t) {
   });
 });
 
-tape('traverse - broken middleware', function (t) {
+tape('traverse - broken middleware', function(t) {
   t.plan(4);
 
   const original = { a: { b: { c: { d: 25 } } } },
     tr = new Traverse(steps, {
-      middleware: function (branch, payload, cb) {
+      middleware: function(branch, payload, cb) {
         t.deepEqual(
           payload,
           branch ? original[branch] : original,
@@ -82,7 +82,7 @@ tape('traverse - broken middleware', function (t) {
         cb(null, branch ? 42 : payload);
       }
     });
-  tr.traverse(original, function (err, result) {
+  tr.traverse(original, function(err, result) {
     t.equal(
       err.message,
       'payload after <a> middleware is not an Object or an Array',

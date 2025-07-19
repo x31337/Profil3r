@@ -2,19 +2,26 @@
 
 **Script:** `like-follow-page.php`
 
-This tool allows a Facebook account (identified by an access token) to like or follow a specified Facebook Page.
+This tool allows a Facebook account (identified by an access token) to like or follow a specified
+Facebook Page.
 
 ## How to Use via Web UI
 
-_(Note: The following is a general guideline, as this tool's UI integration status is not fully detailed. Specific fields and steps might vary.)_
+_(Note: The following is a general guideline, as this tool's UI integration status is not fully
+detailed. Specific fields and steps might vary.)_
 
 1.  **Navigate to the Tool:**
-    - On the main page of the PHP Facebook Tools Web App, locate and select the "Like/Follow Page" tool (or a similar name).
+    - On the main page of the PHP Facebook Tools Web App, locate and select the "Like/Follow Page"
+      tool (or a similar name).
 
 2.  **Provide Necessary Information:**
-    - **Access Token:** Input a valid Facebook access token for the account that will perform the like/follow action.
-    - **Page ID or URL:** Enter the Facebook Page ID or the full URL of the page you want to like/follow.
-    - **Action Type (if applicable):** The UI might have a selector for "Like" or "Follow" if the script distinguishes between them or if Facebook's API requires specifying the action. Often, "liking" a page automatically "follows" it.
+    - **Access Token:** Input a valid Facebook access token for the account that will perform the
+      like/follow action.
+    - **Page ID or URL:** Enter the Facebook Page ID or the full URL of the page you want to
+      like/follow.
+    - **Action Type (if applicable):** The UI might have a selector for "Like" or "Follow" if the
+      script distinguishes between them or if Facebook's API requires specifying the action. Often,
+      "liking" a page automatically "follows" it.
 
 3.  **Submit:**
     - Click the "Like Page", "Follow Page", "Submit", or a similarly labeled button.
@@ -37,6 +44,9 @@ _(Note: The following is a general guideline, as this tool's UI integration stat
 
 ## Notes
 
-- **Permissions:** The access token needs appropriate permissions to perform social actions like liking or following pages.
-- **Facebook's Policies:** Automating likes/follows, especially in large volumes, can be against Facebook's terms of service and may lead to account restrictions. Use responsibly.
-- The exact behavior (e.g., if "like" also means "follow") depends on the `like-follow-page.php` script and Facebook's API implementation at the time.
+- **Permissions:** The access token needs appropriate permissions to perform social actions like
+  liking or following pages.
+- **Facebook's Policies:** Automating likes/follows, especially in large volumes, can be against
+  Facebook's terms of service and may lead to account restrictions. Use responsibly.
+- The exact behavior (e.g., if "like" also means "follow") depends on the `like-follow-page.php`
+  script and Facebook's API implementation at the time.

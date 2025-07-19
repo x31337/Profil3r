@@ -90,11 +90,15 @@ if not raw_setup_secret_key:
     )
     # Fallback to a dummy key to allow app to run but secrets will not be persistent/secure
     # This is NOT recommended for production.
-    FERNET = Fernet(Fernet.generate_key()) # Ephemeral key, secrets won't survive restart
+    FERNET = Fernet(
+        Fernet.generate_key()
+    )  # Ephemeral key, secrets won't survive restart
 else:
     try:
         FERNET = Fernet(raw_setup_secret_key.encode())
-        app.logger.info("Successfully initialized Fernet with SETUP_SECRET_KEY from environment.")
+        app.logger.info(
+            "Successfully initialized Fernet with SETUP_SECRET_KEY from environment."
+        )
     except Exception as e:
         app.logger.critical(
             f"CRITICAL: Failed to initialize Fernet with SETUP_SECRET_KEY: {e}. "
@@ -223,7 +227,7 @@ def report():
     db.session.commit()
     # Rotate through accounts for each report
     results = []
-    account_outcomes = [] # To track individual account success/failure
+    account_outcomes = []  # To track individual account success/failure
 
     for account in ACCOUNTS:
         email = account.get("email")
@@ -231,8 +235,10 @@ def report():
         # Pass a more complete config, could be expanded later
         automation_config = {
             "headless": True,
-            "log_level": app.config.get("LOG_LEVEL", "INFO"), # Inherit log level
-            "browser": app.config.get("SELENIUM_BROWSER", "chrome") # Allow browser config
+            "log_level": app.config.get("LOG_LEVEL", "INFO"),  # Inherit log level
+            "browser": app.config.get(
+                "SELENIUM_BROWSER", "chrome"
+            ),  # Allow browser config
         }
 
         current_result = {"email": email, "success": False, "message": "Unknown error"}
@@ -241,22 +247,28 @@ def report():
             with FacebookAutomation(config=automation_config) as fb:
                 if fb.login_facebook(email, password):
                     # report_content now expects report_count=1 as it handles one attempt
-                    report_outcome = fb.report_content(target_url, justification, evidence_paths, report_count=1)
+                    report_outcome = fb.report_content(
+                        target_url, justification, evidence_paths, report_count=1
+                    )
                     current_result["success"] = report_outcome["success"]
                     current_result["message"] = report_outcome["message"]
                 else:
                     current_result["message"] = "Login failed"
         except Exception as e:
-            app.logger.error(f"Exception during FacebookAutomation for {email}: {e}", exc_info=True)
+            app.logger.error(
+                f"Exception during FacebookAutomation for {email}: {e}", exc_info=True
+            )
             current_result["message"] = f"Automation process error: {str(e)}"
 
         results.append(current_result)
         account_outcomes.append(current_result["success"])
 
     # Determine overall report status
-    if not account_outcomes: # No accounts configured
+    if not account_outcomes:  # No accounts configured
         report_obj.status = "failed"
-        report_obj.justification += " (No accounts configured for reporting)" # Append to justification
+        report_obj.justification += (
+            " (No accounts configured for reporting)"  # Append to justification
+        )
     elif all(account_outcomes):
         report_obj.status = "success"
     elif any(account_outcomes):
